@@ -22,6 +22,17 @@
     "apollo-errors": "^1.9.0",
     "apollo-server-cache-redis": "^0.3.1",
     "apollo-server-express": "^2.4.2",
-    "express": "^4.16.4"
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "graphql": "^14.1.1",
+    "graphql-custom-types": "^1.5.0",
+    "graphql-iso-date": "^3.6.1",
+    "graphql-type-json": "^0.2.1",
+    "ioredis": "^4.6.2",
+    "lodash": "^4.17.11",
+    "require-dir": "^1.2.0"
+  },
+  "devDependencies": {
+    "prettier": "^1.16.4"
   }
 }
