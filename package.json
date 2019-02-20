@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "format": "prettier --write \"lib/**/*.js\""
+    "format": "prettier --write \"lib/**/*.js\"",
+    "integration": "mocha test/integration --recursive --exit"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,12 @@
     "require-dir": "^1.2.0"
   },
   "devDependencies": {
-    "prettier": "^1.16.4"
+    "apollo-server-testing": "^2.4.2",
+    "chai": "^4.2.0",
+    "mocha": "^6.0.0",
+    "nock": "^10.0.6",
+    "prettier": "^1.16.4",
+    "sinon": "^7.2.4",
+    "sinon-chai": "^3.3.0"
   }
 }
