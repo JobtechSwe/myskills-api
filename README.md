@@ -9,7 +9,7 @@
 - In mydata repo, navigate to /operator
 - Create a .env file with
   ```
-  port=4000
+  PORT=4000
   ```
 - Run `npm run dev`.
 

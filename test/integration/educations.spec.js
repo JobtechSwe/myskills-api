@@ -1,8 +1,8 @@
+const sinon = require('sinon')
+const nock = require('nock')
 const { createTestClient } = require('apollo-server-testing')
 const { gql } = require('apollo-server-express')
 const { expect } = require('chai')
-const { DOMAIN } = require('../../lib/config')
-const sinon = require('sinon')
 
 const GET_EDUCATIONS = gql`
   query getEducations {
@@ -13,22 +13,25 @@ const GET_EDUCATIONS = gql`
 `
 
 const ADD_EDUCATION = gql`
-  query addEducation($name: String!) {
-    addEducation(name: $name) {
+  mutation addEducation($name: String!, $id: String!) {
+    addEducation(education: { name: $name, id: $id }) {
+      id
       name
     }
   }
 `
 
-// nock.recorder.rec()
 describe('#educations', () => {
   let query
+  let mutate
   let mydata
+
   beforeEach(() => {
     mydata = {
       getData: sinon.stub(),
-      setData: sinon.stub(),
+      saveData: sinon.stub(),
     }
+
     const { server } = require(`${process.cwd()}/lib/server`)
     const context = server.context({})
 
@@ -41,6 +44,7 @@ describe('#educations', () => {
     })
 
     const client = createTestClient(server)
+    mutate = client.mutate
     query = client.query
   })
 
@@ -62,7 +66,28 @@ describe('#educations', () => {
     })
   })
 
-  xdescribe('addEducation', () => {
-    it('should be possible to add an education')
+  describe('addEducation', () => {
+    beforeEach(() => {
+      mydata.saveData.resolves([
+        {
+          id: '123',
+          name: 'Simon :)',
+        },
+      ])
+    })
+
+    it('should be possible to add an education', async () => {
+      const {
+        data: { addEducation },
+      } = await mutate({
+        mutation: ADD_EDUCATION,
+        variables: {
+          id: 'id',
+          name: 'simon',
+        },
+      })
+
+      expect(addEducation[0].name).to.equal('Simon :)')
+    })
   })
 })
