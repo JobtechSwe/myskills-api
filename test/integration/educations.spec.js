@@ -2,28 +2,40 @@ const { createTestClient } = require('apollo-server-testing')
 const { gql } = require('apollo-server-express')
 const nock = require('nock')
 const { expect } = require('chai')
+const { DOMAIN } = require('../../lib/config')
+const sinon = require('sinon')
 
 const GET_EDUCATIONS = gql`
   query getEducations {
     getEducations {
-      id
+      name
     }
   }
 `
 
+const ADD_EDUCATION = gql`
+  query addEducation($name: String!) {
+    addEducation(name: $name) {
+      name
+    }
+  }
+`
+
+// nock.recorder.rec()
 describe('#educations', () => {
   let query
-  before(() => {
-    nock('http://localhost:4000')
-      .post('/api/clients')
-      .reply(200)
-      .persist()
-
+  let mydata
+  beforeEach(() => {
+    mydata = {
+      getData: sinon.stub(),
+      setData: sinon.stub(),
+    }
     const { server } = require(`${process.cwd()}/lib/server`)
     const context = server.context({})
 
     server.context = () => ({
       ...context,
+      mydata,
       headers: {
         token: 'sometoken',
       },
@@ -34,32 +46,22 @@ describe('#educations', () => {
   })
 
   describe('getEducations', () => {
-    it('should get educations', async () => {
-      const data = await query({
-        query: GET_EDUCATIONS,
-        options: {
-          context: {
-            headers: {
-              token: 'pancakes',
-            },
-          },
+    beforeEach(() => {
+      mydata.getData.resolves([
+        {
+          name: 'Simon',
         },
-      })
+      ])
+    })
 
-      console.log('data', data)
-      expect(data).not.to.be.null
+    it('should get educations', async () => {
+      const { data } = await query({
+        query: GET_EDUCATIONS,
+      })
+      console.log('data: ', data)
+      expect(data.getEducations[0].name).to.equal('Simon')
     })
   })
-
-  // const someQuery = graphql(GET_EDUCATIONS, {
-  //   options: {
-  //     context: {
-  //       headers: {
-  //         'x-custom-header': 'pancakes',
-  //       },
-  //     },
-  //   },
-  // })
 
   xdescribe('addEducation', () => {
     it('should be possible to add an education')
