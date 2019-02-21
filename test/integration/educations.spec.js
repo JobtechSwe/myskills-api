@@ -1,6 +1,5 @@
 const { createTestClient } = require('apollo-server-testing')
 const { gql } = require('apollo-server-express')
-const nock = require('nock')
 const { expect } = require('chai')
 const { DOMAIN } = require('../../lib/config')
 const sinon = require('sinon')
@@ -58,7 +57,7 @@ describe('#educations', () => {
       const { data } = await query({
         query: GET_EDUCATIONS,
       })
-      console.log('data: ', data)
+
       expect(data.getEducations[0].name).to.equal('Simon')
     })
   })
