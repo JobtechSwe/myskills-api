@@ -1,6 +1,6 @@
 const { DOMAIN: domain } = require('../config')
 
-const defaultRequest = durationInSeconds => ({
+const defaultRequest = (durationInSeconds: number) => ({
   scope: [
     {
       domain,

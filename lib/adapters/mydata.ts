@@ -1,6 +1,7 @@
-const mydata = require('@mydata/client')
-const keyValueStore = require('../services/keyValueStore')
-const { DOMAIN } = require('../config')
+import { connect, create, routes, events } from '@mydata/client'
+
+import keyValueStore from '../services/keyValueStore'
+import { DOMAIN } from '../config'
 
 const config = {
   displayName: 'mySkills',
@@ -18,19 +19,27 @@ const config = {
   keyValueStore,
 }
 
-const mydataOperator = mydata.create(config)
+const mydataOperator = create(config)
 const createConfig = area => ({
   area,
-  domain: DOMAIN,
+  domain: config.DOMAIN,
 })
 
-async function getData({ token, area }) {
+async function getData({ area, token }: { area: string; token: string }) {
   const config = createConfig(area)
   const data = await mydataOperator.data.auth(token).read(config)
-  return data[DOMAIN][area].data
+  return data[config.domain][area].data
 }
 
-async function saveData({ token, data, area }) {
+async function saveData({
+  area,
+  data,
+  token,
+}: {
+  area: string
+  data: string
+  token: string
+}) {
   const config = createConfig(area)
   const allData = await mydataOperator.data.auth(token).read(config)
   const currentDataForDomainArea = allData[DOMAIN][area].data
@@ -45,8 +54,4 @@ async function saveData({ token, data, area }) {
   return updatedData.data
 }
 
-module.exports = {
-  ...mydataOperator,
-  getData,
-  saveData,
-}
+export { connect, getData, mydataOperator, saveData, routes, events }

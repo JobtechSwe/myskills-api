@@ -1,6 +1,6 @@
-const redis = require('../adapters/redis')
+import redis from '../adapters/redis'
 
-async function save(key, value, ttl) {
+export async function save(key: string, value: string, ttl: number) {
   await redis.set(key, value)
   if (typeof ttl === 'number') {
     await redis.expire(key, Math.round(ttl / 1000))
@@ -9,15 +9,15 @@ async function save(key, value, ttl) {
   }
 }
 
-async function load(key) {
+export async function load(key: string) {
   return redis.get(key)
 }
 
-async function remove(key) {
+export async function remove(key: string) {
   return redis.del(key)
 }
 
-module.exports = {
+export default {
   save,
   load,
   remove,

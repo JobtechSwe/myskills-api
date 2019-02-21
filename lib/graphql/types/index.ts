@@ -62,5 +62,4 @@ const typeDefs = gql`
     getSkills: [Skill]!
   }
 `
-
-module.exports = [...Object.values(types), typeDefs]
+export default [...Object.values(types), typeDefs]

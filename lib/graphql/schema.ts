@@ -25,8 +25,7 @@ const customScalarResolvers = {
   GraphQLUUID,
   Password: new GraphQLPassword(8),
 }
-
-module.exports = {
+export default {
   typeDefs: [customScalarSchema, ...typeDefs],
   resolvers: merge(resolvers, customScalarResolvers),
 }

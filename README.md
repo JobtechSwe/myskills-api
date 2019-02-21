@@ -21,4 +21,4 @@
   DROPBOX_KEY=somedropboxkey
   OPERATOR_URL=http://192.168.1.68:4000/api
   ```
-- Run app in my data repo with `react-native run-ios`
+- Run app in mydata repo with `react-native run-ios`

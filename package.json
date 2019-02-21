@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "start": "node dist/server.js",
     "format": "prettier --write \"lib/**/*.js\"",
     "integration": "mocha test/integration --recursive --require test/integrationSetup.js --exit",
     "unit": "jest --detectOpenHandles",
+    "build-ts": "tsc",
+    "build-ts:watch": "tsc -w",
     "unit:watch": "jest --verbose --watch --detectOpenHandles"
   },
   "repository": {
@@ -37,6 +39,10 @@
     "require-dir": "^1.2.0"
   },
   "devDependencies": {
+    "@types/graphql": "^14.0.7",
+    "@types/ioredis": "^4.0.8",
+    "@types/lodash": "^4.14.121",
+    "@types/redis": "^2.8.10",
     "apollo-server-testing": "^2.4.2",
     "chai": "^4.2.0",
     "jest": "^24.1.0",
@@ -45,7 +51,8 @@
     "nodemon": "^1.18.10",
     "prettier": "^1.16.4",
     "sinon": "^7.2.4",
-    "sinon-chai": "^3.3.0"
+    "sinon-chai": "^3.3.0",
+    "typescript": "^3.3.3"
   },
   "jest": {
     "testPathIgnorePatterns": [

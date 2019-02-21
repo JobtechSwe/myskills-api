@@ -1,4 +1,4 @@
-const Redis = require('ioredis')
+import Redis from 'ioredis'
 
 const connectionString = process.env.REDIS || 'redis://localhost:6380/'
 
@@ -9,4 +9,4 @@ const redis = new Redis(connectionString, {
   },
 })
 
-module.exports = redis
+export default redis

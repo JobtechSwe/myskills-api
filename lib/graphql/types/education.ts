@@ -1,17 +1,14 @@
 const { gql } = require('apollo-server-express')
 
 const typeDefs = gql`
-  input ExperienceInput {
+  type Education {
     id: String!
     name: String
-    years: String!
   }
 
-  type Experience {
+  input EducationInput {
     id: String!
     name: String
-    years: String!
   }
 `
-
-module.exports = typeDefs
+export default typeDefs

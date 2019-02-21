@@ -1,22 +1,24 @@
-const config = require('./config')
-const bodyParser = require('body-parser')
-const express = require('express')
-const schema = require('./graphql/schema')
-const {
-  connect: mydataConnect,
-  routes: mydataRoutes,
-  events: mydataEvents,
+// const config = require('./config')
+import config from './config'
+import bodyParser from 'body-parser'
+import express from 'express'
+import schema from './graphql/schema'
+
+import {
+  connect as mydataConnect,
+  routes as mydataRoutes,
+  events as mydataEvents,
   saveData,
   getData,
-} = require('./adapters/operator')
-const { ApolloServer } = require('apollo-server-express')
-const { formatError } = require('apollo-errors')
-const { RedisCache } = require('apollo-server-cache-redis')
-const {
+} from './adapters/mydata'
+import { ApolloServer } from 'apollo-server-express'
+import { formatError } from 'apollo-errors'
+import { RedisCache } from 'apollo-server-cache-redis'
+import {
   getConsentRequest,
   saveConsent,
   saveConsentRequest,
-} = require('./services/db')
+} from './services/db'
 
 const app = express()
 app.set('etag', 'strong')
@@ -84,7 +86,7 @@ const appInstance = app
   })
   .setTimeout(60000 * 20)
 
-module.exports = {
+export default {
   app: appInstance,
   server,
 }
