@@ -1,6 +1,10 @@
-import { Context } from "apollo-server-core";
+import { Context } from 'apollo-server-core'
 
-export default async (_: any, { language }: any, { headers: { token }, mydata }: Context) => {
+export default async (
+  _: any,
+  { language }: any,
+  { headers: { token }, mydata }: Context
+) => {
   try {
     return mydata.saveData({
       area: 'languages',

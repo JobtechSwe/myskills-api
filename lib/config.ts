@@ -10,7 +10,7 @@ const defaults = {
   SERVER_PORT: 3000,
 }
 
-const config = _.pick(Object.assign(defaults, process.env), [
+const config = _.pick({ ...defaults, ...process.env }, [
   'DOMAIN',
   'REDIS_API_HOST',
   'REDIS_API_PORT',
