@@ -1,5 +1,5 @@
 import { mydataOperator } from '../../../adapters/mydata'
-import defaultRequest from '../../../services/consents'
+import { defaultRequest } from '../../../services/consents'
 
 export default async () => {
   const request = defaultRequest(3600 * 24 * 31)

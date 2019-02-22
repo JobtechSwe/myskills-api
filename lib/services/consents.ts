@@ -1,4 +1,5 @@
 import config from '../config'
+import { saveConsent, saveConsentRequest } from './db'
 
 const defaultRequest = (durationInSeconds: number) => ({
   expiry: Math.round(Date.now() / 1000 + durationInSeconds),
@@ -42,4 +43,14 @@ const defaultRequest = (durationInSeconds: number) => ({
   ],
 })
 
-export default defaultRequest
+const onConsentApproved = async (consent: any) => {
+  console.log('consent: ', consent)
+  try {
+    await saveConsent(consent)
+    await saveConsentRequest(consent)
+  } catch (e) {
+    console.log('write error: ', e)
+  }
+}
+
+export { defaultRequest, onConsentApproved }

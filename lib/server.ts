@@ -5,6 +5,7 @@ import schema from './graphql/schema'
 import { ApolloServer } from 'apollo-server-express'
 import { formatError } from 'apollo-errors'
 import { RedisCache } from 'apollo-server-cache-redis'
+import { onConsentApproved } from './services/consents'
 
 import {
   getConsentRequest,
@@ -64,15 +65,7 @@ server.applyMiddleware({
 })
 
 app.use(mydataRoutes)
-mydataEvents.on('CONSENT_APPROVED', async (consent: any) => {
-  console.log('consent: ', consent)
-  try {
-    await saveConsent(consent)
-    await saveConsentRequest(consent)
-  } catch (e) {
-    console.log('write error: ', e)
-  }
-})
+mydataEvents.on('CONSENT_APPROVED', onConsentApproved)
 
 /**
  * Start
