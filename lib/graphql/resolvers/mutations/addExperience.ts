@@ -1,4 +1,5 @@
-module.exports = async (_, { experience }, { headers: { token }, mydata }) => {
+import { Context } from "apollo-server-core";
+export default async (_: any, { experience }: { experience: Experience }, { headers: { token }, mydata }: Context) => {
   try {
     return mydata.saveData({
       area: 'experiences',

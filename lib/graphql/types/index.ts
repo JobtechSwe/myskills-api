@@ -62,4 +62,7 @@ const typeDefs = gql`
     getSkills: [Skill]!
   }
 `
-export default [...Object.values(types), typeDefs]
+const typesTypedefs = [...Object.values(types)].map((type: any) => type.typeDefs)
+
+module.exports = [...typesTypedefs, typeDefs]
+// export default [...Object.values(types), typeDefs]

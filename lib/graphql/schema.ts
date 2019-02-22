@@ -1,8 +1,8 @@
 const { merge } = require('lodash')
-const resolvers = require('./resolvers')
+import resolvers from './resolvers'
 const jsonType = require('graphql-type-json')
 const { GraphQLDate } = require('graphql-iso-date')
-const typeDefs = require('./types')
+const typeDefsz = require('./types')
 
 const {
   GraphQLEmail,
@@ -25,7 +25,8 @@ const customScalarResolvers = {
   GraphQLUUID,
   Password: new GraphQLPassword(8),
 }
-export default {
-  typeDefs: [customScalarSchema, ...typeDefs],
+
+module.exports = {
+  typeDefs: [customScalarSchema, ...typeDefsz],
   resolvers: merge(resolvers, customScalarResolvers),
 }

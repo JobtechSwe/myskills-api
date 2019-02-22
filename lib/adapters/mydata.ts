@@ -1,12 +1,12 @@
 import { connect, create, routes, events } from '@mydata/client'
 
 import keyValueStore from '../services/keyValueStore'
-import { DOMAIN } from '../config'
+import myConfig from '../config'
 
 const config = {
   displayName: 'mySkills',
   description: 'store mySkills',
-  clientId: DOMAIN,
+  clientId: myConfig.DOMAIN,
   operator: 'http://localhost:4000',
   jwksPath: '/jwks',
   eventsPath: '/events',
@@ -19,16 +19,22 @@ const config = {
   keyValueStore,
 }
 
+interface Config {
+  area: string
+  domain: string
+}
+
 const mydataOperator = create(config)
-const createConfig = area => ({
+const createConfig = (area: string): Config => ({
   area,
-  domain: config.DOMAIN,
+  domain: myConfig.DOMAIN,
 })
 
 async function getData({ area, token }: { area: string; token: string }) {
   const config = createConfig(area)
   const data = await mydataOperator.data.auth(token).read(config)
-  return data[config.domain][area].data
+
+  return data[myConfig.DOMAIN][area].data
 }
 
 async function saveData({
@@ -42,7 +48,7 @@ async function saveData({
 }) {
   const config = createConfig(area)
   const allData = await mydataOperator.data.auth(token).read(config)
-  const currentDataForDomainArea = allData[DOMAIN][area].data
+  const currentDataForDomainArea = allData[myConfig.DOMAIN][area].data
   const updatedData = {
     data: currentDataForDomainArea
       ? [...new Set([...currentDataForDomainArea, data])]

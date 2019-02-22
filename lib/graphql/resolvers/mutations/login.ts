@@ -1,7 +1,7 @@
-const { consents } = require('../../../adapters/operator')
+const { consents } = require('../../../adapters/mydata')
 const defaultRequest = require('../../../services/consents')
 
-module.exports = async () => {
+export default async () => {
   const request = defaultRequest(3600 * 24 * 31)
   const pendingRequest = await consents.request(request)
 

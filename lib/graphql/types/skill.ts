@@ -1,6 +1,6 @@
 const { gql } = require('apollo-server-express')
 
-const typeDefs = gql`
+export const typeDefs = gql`
   input SkillInput {
     id: String!
     name: String
@@ -12,4 +12,4 @@ const typeDefs = gql`
   }
 `
 
-export default typeDefs
+// export default typeDefs

@@ -18,4 +18,3 @@ const config = _.pick(Object.assign(defaults, process.env), [
 ])
 
 export default config
-export { DOMAIN, REDIS_API_HOST, REDIS_API_PORT, SERVER_PORT } from config

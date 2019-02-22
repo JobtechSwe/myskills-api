@@ -15,7 +15,7 @@ jest.mock('@mydata/client', () => ({
   create: () => mockOperator,
 }))
 
-const operator = require(`${process.cwd()}/lib/adapters/operator`)
+const operator = require(`${process.cwd()}/lib/adapters/mydata`)
 
 describe('#operator', () => {
   let area, data, education, token

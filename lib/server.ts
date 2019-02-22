@@ -2,8 +2,8 @@
 import config from './config'
 import bodyParser from 'body-parser'
 import express from 'express'
-import schema from './graphql/schema'
-
+// import schema from './graphql/schema'
+const schema = require('./graphql/schema')
 import {
   connect as mydataConnect,
   routes as mydataRoutes,
@@ -11,6 +11,8 @@ import {
   saveData,
   getData,
 } from './adapters/mydata'
+console.log(mydataRoutes);
+
 import { ApolloServer } from 'apollo-server-express'
 import { formatError } from 'apollo-errors'
 import { RedisCache } from 'apollo-server-cache-redis'
@@ -49,7 +51,7 @@ const server = new ApolloServer({
     host: config.REDIS_API_HOST,
     port: config.REDIS_API_PORT,
   }),
-  context: ({ req: { headers } = {} }) => ({
+  context: ({ req: { headers = {} } = {} }: any) => ({
     headers,
     mydata: {
       getData,
@@ -64,7 +66,7 @@ server.applyMiddleware({
 })
 
 app.use(mydataRoutes)
-mydataEvents.on('CONSENT_APPROVED', async consent => {
+mydataEvents.on('CONSENT_APPROVED', async (consent:any) => {
   console.log('consent: ', consent)
   try {
     await saveConsent(consent)
