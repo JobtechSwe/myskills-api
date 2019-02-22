@@ -1,14 +1,14 @@
-import { merge } from 'lodash'
 import resolvers from './resolvers'
 import jsonType from 'graphql-type-json'
-import GraphQLDate from 'graphql-iso-date'
 import typeDefsz from './types'
+import { GraphQLDate } from 'graphql-iso-date'
+import { merge } from 'lodash'
 
-const {
+import {
   GraphQLEmail,
   GraphQLUUID,
   GraphQLPassword,
-} = require('graphql-custom-types')
+} from 'graphql-custom-types'
 
 const customScalarSchema = `
   scalar JSON

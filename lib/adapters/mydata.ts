@@ -1,7 +1,6 @@
-import { connect, create, events, routes } from '@mydata/client'
-
 import myConfig from '../config'
 import keyValueStore from '../services/keyValueStore'
+import { create } from '@mydata/client'
 
 const config = {
   clientId: myConfig.DOMAIN,
@@ -61,5 +60,7 @@ async function saveData({
 
   return updatedData.data
 }
+
+const { connect, routes, events } = mydataOperator
 
 export { connect, getData, mydataOperator, saveData, routes, events }

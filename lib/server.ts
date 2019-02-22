@@ -2,7 +2,6 @@ import config from './config'
 import bodyParser from 'body-parser'
 import express from 'express'
 import schema from './graphql/schema'
-
 import { ApolloServer } from 'apollo-server-express'
 import { formatError } from 'apollo-errors'
 import { RedisCache } from 'apollo-server-cache-redis'

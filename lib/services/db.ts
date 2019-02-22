@@ -1,9 +1,9 @@
-const redis = require('../adapters/redis')
+import redis from '../adapters/redis'
 
 const consentPrefix = 'consentId:'
 const consentRequestPrefix = 'consentRequestId:'
 
-export const saveConsent = (consent:any) =>
+export const saveConsent = (consent: any) =>
   redis.set(`${consentPrefix}${consent.consentId}`, JSON.stringify(consent))
 
 export const getConsent = async (id: string) => {

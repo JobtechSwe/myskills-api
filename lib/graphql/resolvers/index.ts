@@ -1,4 +1,4 @@
-const reqdir = require('require-dir')
+import reqdir from 'require-dir'
 const Mutation = reqdir('./mutations')
 const Query = reqdir('./queries')
 
