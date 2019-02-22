@@ -1,5 +1,4 @@
 import { connect, create, routes, events } from '@mydata/client'
-
 import keyValueStore from '../services/keyValueStore'
 import myConfig from '../config'
 

@@ -1,9 +1,18 @@
-// const config = require('./config')
 import config from './config'
 import bodyParser from 'body-parser'
 import express from 'express'
-// import schema from './graphql/schema'
-const schema = require('./graphql/schema')
+import schema from './graphql/schema'
+
+import { ApolloServer } from 'apollo-server-express'
+import { formatError } from 'apollo-errors'
+import { RedisCache } from 'apollo-server-cache-redis'
+
+import {
+  getConsentRequest,
+  saveConsent,
+  saveConsentRequest,
+} from './services/db'
+
 import {
   connect as mydataConnect,
   routes as mydataRoutes,
@@ -11,16 +20,6 @@ import {
   saveData,
   getData,
 } from './adapters/mydata'
-console.log(mydataRoutes);
-
-import { ApolloServer } from 'apollo-server-express'
-import { formatError } from 'apollo-errors'
-import { RedisCache } from 'apollo-server-cache-redis'
-import {
-  getConsentRequest,
-  saveConsent,
-  saveConsentRequest,
-} from './services/db'
 
 const app = express()
 app.set('etag', 'strong')
@@ -66,7 +65,7 @@ server.applyMiddleware({
 })
 
 app.use(mydataRoutes)
-mydataEvents.on('CONSENT_APPROVED', async (consent:any) => {
+mydataEvents.on('CONSENT_APPROVED', async (consent: any) => {
   console.log('consent: ', consent)
   try {
     await saveConsent(consent)

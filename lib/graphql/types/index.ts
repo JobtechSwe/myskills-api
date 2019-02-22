@@ -1,6 +1,6 @@
-const reqdir = require('require-dir')
+import reqdir from 'require-dir'
+import { gql } from 'apollo-server-express'
 const types = reqdir('./')
-const { gql } = require('apollo-server-express')
 
 const typeDefs = gql`
   type Login {
@@ -62,7 +62,8 @@ const typeDefs = gql`
     getSkills: [Skill]!
   }
 `
-const typesTypedefs = [...Object.values(types)].map((type: any) => type.typeDefs)
+const typesTypedefs = [...Object.values(types)].map(
+  (type: any) => type.typeDefs
+)
 
-module.exports = [...typesTypedefs, typeDefs]
-// export default [...Object.values(types), typeDefs]
+export default [...typesTypedefs, typeDefs]

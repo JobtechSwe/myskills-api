@@ -44,9 +44,12 @@
   "devDependencies": {
     "@types/dotenv": "^6.1.0",
     "@types/graphql": "^14.0.7",
+    "@types/graphql-iso-date": "^3.3.1",
+    "@types/graphql-type-json": "^0.1.3",
     "@types/ioredis": "^4.0.8",
     "@types/lodash": "^4.14.121",
     "@types/redis": "^2.8.10",
+    "@types/require-dir": "^1.0.0",
     "apollo": "^2.5.1",
     "apollo-server-testing": "^2.4.2",
     "chai": "^4.2.0",
