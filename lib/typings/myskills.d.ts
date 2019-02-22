@@ -13,3 +13,10 @@ declare interface Skill {
   id: string
   name?: string
 }
+
+declare enum Area {
+  languages,
+  educations,
+  experiences,
+  skills,
+}

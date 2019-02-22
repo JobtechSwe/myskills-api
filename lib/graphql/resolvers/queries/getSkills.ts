@@ -1,6 +1,10 @@
-import { Context } from "apollo-server-core";
+import { Context } from 'apollo-server-core'
+import { IApolloServerContext } from '../../../../lib/server'
 
-const getSkills = async (_: any, _args: any, { headers: { token }, mydata }: Context) =>
-  mydata.getData({ token, area: 'skills' })
+const getSkills = async (
+  _: any,
+  args: any,
+  { headers: { token }, mydata }: Context<IApolloServerContext>
+): Promise<Skill> => mydata.getData({ token, area: Area.skills })
 
 export default getSkills

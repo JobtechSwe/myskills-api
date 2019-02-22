@@ -1,13 +1,13 @@
-import resolvers from './resolvers'
-import jsonType from 'graphql-type-json'
-import typeDefsz from './types'
 import { GraphQLDate } from 'graphql-iso-date'
+import jsonType from 'graphql-type-json'
 import { merge } from 'lodash'
+import resolvers from './resolvers'
+import typeDefsz from './types'
 
 import {
   GraphQLEmail,
-  GraphQLUUID,
   GraphQLPassword,
+  GraphQLUUID,
 } from 'graphql-custom-types'
 
 const customScalarSchema = `
@@ -19,14 +19,14 @@ const customScalarSchema = `
 `
 
 const customScalarResolvers = {
-  JSON: jsonType,
   GraphQLDate,
   GraphQLEmail,
   GraphQLUUID,
+  JSON: jsonType,
   Password: new GraphQLPassword(8),
 }
 
 export default {
-  typeDefs: [customScalarSchema, ...typeDefsz],
   resolvers: merge(resolvers, customScalarResolvers),
+  typeDefs: [customScalarSchema, ...typeDefsz],
 }

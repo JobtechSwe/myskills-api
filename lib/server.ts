@@ -1,25 +1,34 @@
-import config from './config'
-import bodyParser from 'body-parser'
-import express from 'express'
-import schema from './graphql/schema'
-import { ApolloServer } from 'apollo-server-express'
 import { formatError } from 'apollo-errors'
 import { RedisCache } from 'apollo-server-cache-redis'
+import { Context } from 'apollo-server-core'
+import { ApolloServer } from 'apollo-server-express'
+import bodyParser from 'body-parser'
+import express from 'express'
+import config from './config'
+import schema from './graphql/schema'
 import { onConsentApproved } from './services/consents'
 
-import {
-  getConsentRequest,
-  saveConsent,
-  saveConsentRequest,
-} from './services/db'
+import { getConsentRequest } from './services/db'
 
 import {
   connect as mydataConnect,
-  routes as mydataRoutes,
   events as mydataEvents,
-  saveData,
   getData,
+  IDataInput,
+  ISaveDataInput,
+  routes as mydataRoutes,
+  saveData,
 } from './adapters/mydata'
+
+export interface IApolloServerContext {
+  headers: {
+    token: string
+  }
+  mydata: {
+    getData: (input: IDataInput) => Promise<any>
+    saveData: (input: ISaveDataInput) => Promise<any>
+  }
+}
 
 const app = express()
 app.set('etag', 'strong')
@@ -44,19 +53,21 @@ app.get('/approved/:id', async (req, res, next) => {
 })
 
 const server = new ApolloServer({
-  ...schema,
-  formatError,
   cache: new RedisCache({
     host: config.REDIS_API_HOST,
     port: config.REDIS_API_PORT,
   }),
-  context: ({ req: { headers = {} } = {} }: any) => ({
+  context: ({
+    req: { headers = {} } = {},
+  }: Context<any>): IApolloServerContext => ({
     headers,
     mydata: {
       getData,
       saveData,
     },
   }),
+  formatError,
+  ...schema,
 })
 
 server.applyMiddleware({

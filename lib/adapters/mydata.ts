@@ -1,6 +1,6 @@
+import { create } from '@mydata/client'
 import myConfig from '../config'
 import keyValueStore from '../services/keyValueStore'
-import { create } from '@mydata/client'
 
 const config = {
   clientId: myConfig.DOMAIN,
@@ -19,32 +19,32 @@ const config = {
 }
 
 interface IConfig {
-  area: string
+  area: Area
   domain: string
 }
 
+export interface IDataInput {
+  area: Area
+  token: string
+}
+
+export interface ISaveDataInput extends IDataInput {
+  data: object | string
+}
+
 const mydataOperator = create(config)
-const createConfig = (area: string): IConfig => ({
+const createConfig = (area: Area): IConfig => ({
   area,
   domain: myConfig.DOMAIN,
 })
 
-async function getData({ area, token }: { area: string; token: string }) {
+async function getData({ area, token }: IDataInput) {
   const areaConfig = createConfig(area)
   const data = await mydataOperator.data.auth(token).read(areaConfig)
-
   return data[myConfig.DOMAIN][area].data
 }
 
-async function saveData({
-  area,
-  data,
-  token,
-}: {
-  area: string
-  data: string
-  token: string
-}) {
+async function saveData({ area, data, token }: ISaveDataInput) {
   const areaConfig = createConfig(area)
   const allData = await mydataOperator.data.auth(token).read(areaConfig)
   const currentDataForDomainArea = allData[myConfig.DOMAIN][area].data

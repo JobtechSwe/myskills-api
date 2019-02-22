@@ -18,7 +18,7 @@ export async function remove(key: string) {
 }
 
 export default {
-  save,
   load,
   remove,
+  save,
 }

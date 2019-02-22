@@ -1,13 +1,14 @@
 import { Context } from 'apollo-server-core'
+import { IApolloServerContext } from '../../../../lib/server'
 
 export default async (
   _: any,
   { education }: any,
-  { headers: { token }, mydata }: Context
+  { headers: { token }, mydata }: Context<IApolloServerContext>
 ) => {
   try {
     return mydata.saveData({
-      area: 'educations',
+      area: Area.educations,
       data: education,
       token,
     })

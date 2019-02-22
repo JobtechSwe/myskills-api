@@ -1,11 +1,24 @@
 import config from '../config'
 import { saveConsent, saveConsentRequest } from './db'
 
-const defaultRequest = (durationInSeconds: number) => ({
+export interface IScope {
+  area: Area
+  description: string
+  domain: string
+  lawfulBasis: string
+  permissions: string[]
+  purpose: string
+}
+export interface IDefaultRequest {
+  expiry: number
+  scope: IScope[]
+}
+
+const defaultRequest = (durationInSeconds: number): IDefaultRequest => ({
   expiry: Math.round(Date.now() / 1000 + durationInSeconds),
   scope: [
     {
-      area: 'languages',
+      area: Area.languages,
       description:
         'A list of your work experiences, educations, language proficiencies and so on that you have entered in the service.',
       domain: config.DOMAIN,
@@ -14,7 +27,7 @@ const defaultRequest = (durationInSeconds: number) => ({
       purpose: 'In order to create a CV using our website.',
     },
     {
-      area: 'educations',
+      area: Area.educations,
       description:
         'A list of your work experiences, educations, language proficiencies and so on that you have entered in the service.',
       domain: config.DOMAIN,
@@ -23,7 +36,7 @@ const defaultRequest = (durationInSeconds: number) => ({
       purpose: 'In order to create a CV using our website.',
     },
     {
-      area: 'experiences',
+      area: Area.experiences,
       description:
         'A list of your work experiences, educations, language proficiencies and so on that you have entered in the service.',
       domain: config.DOMAIN,
@@ -32,7 +45,7 @@ const defaultRequest = (durationInSeconds: number) => ({
       purpose: 'In order to create a CV using our website.',
     },
     {
-      area: 'skills',
+      area: Area.skills,
       description:
         'A list of your work skills, educations, language proficiencies and so on that you have entered in the service.',
       domain: config.DOMAIN,

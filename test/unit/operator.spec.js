@@ -1,4 +1,4 @@
-const { DOMAIN } = require(`${process.cwd()}/lib/config`)
+const { DOMAIN } = require(`${process.cwd()}/dist/config`).default
 
 const authFunctions = {
   read: jest.fn(),
@@ -15,10 +15,10 @@ jest.mock('@mydata/client', () => ({
   create: () => mockOperator,
 }))
 
-const operator = require(`${process.cwd()}/lib/adapters/mydata`)
+const operator = require(`${process.cwd()}/dist/adapters/mydata`)
 
 describe('#operator', () => {
-  let area, data, education, token
+  let area, data, token
 
   beforeEach(() => {
     area = 'education'
