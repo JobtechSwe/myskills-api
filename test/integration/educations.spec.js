@@ -32,7 +32,7 @@ describe('#educations', () => {
       saveData: sinon.stub(),
     }
 
-    const { server } = require(`${process.cwd()}/lib/server`)
+    const { server } = require(`${process.cwd()}/dist/server`)
     const context = server.context({})
 
     server.context = () => ({
