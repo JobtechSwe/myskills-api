@@ -1,0 +1,21 @@
+{
+  "extends": ["@iteam/eslint-config-iteam-node", "prettier"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "modules": true
+    },
+    "ecmaVersion": 8,
+    "sourceType": "module"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.tsx", "**/*.ts"],
+      "rules": {
+        "no-undef": "off",
+        "no-unused-vars": "off"
+      }
+    }
+  ]
+}
