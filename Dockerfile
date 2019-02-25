@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY package.json ./
 COPY package-lock.json ./
-RUN npm ci -s
+RUN npm ci
 
 COPY /lib ./lib
 COPY tsconfig.json ./
@@ -18,7 +18,7 @@ WORKDIR /app
 
 COPY package.json ./
 COPY package-lock.json ./
-RUN npm ci -s --only=production
+RUN npm ci --only=production
 
 COPY --from=builder /app/dist ./dist
 
