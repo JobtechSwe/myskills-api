@@ -1,3 +1,4 @@
+import { Area } from '../../../types'
 import { Language, QueryResolvers } from '../../../__generated__/myskills'
 
 export const getLanguages: QueryResolvers.GetLanguagesResolver = (

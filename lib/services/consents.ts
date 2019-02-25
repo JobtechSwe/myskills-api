@@ -1,4 +1,5 @@
 import config from '../config'
+import { Area } from '../types'
 import { saveConsent, saveConsentRequest } from './db'
 
 export interface Scope {

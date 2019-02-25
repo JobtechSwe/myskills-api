@@ -1,3 +1,4 @@
+import { Area } from '../../../types'
 import { Experience, QueryResolvers } from '../../../__generated__/myskills'
 
 export const getExperiences: QueryResolvers.GetEducationsResolver = async (
