@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
-dotenv.config()
-
 import _ from 'lodash'
+
+dotenv.config()
 
 const defaults = {
   DOMAIN: 'http://localhost:3000',
