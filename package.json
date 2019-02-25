@@ -9,7 +9,7 @@
     "dev": "ts-node-dev --no-notify lib/server.ts",
     "format": "prettier --write \"lib/**/*.js\"",
     "integration": "jest --detectOpenHandles --config ./jest-integration.config.js",
-    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "lint": "eslint 'lib/**/*.{ts,tsx}'",
     "build": "npm run lint && npm run unit && npm run build-ts",
     "build-ts": "tsc",
     "build-ts:watch": "tsc -w",
@@ -49,6 +49,7 @@
   "devDependencies": {
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",
+    "@iteam/eslint-config-iteam-node": "^0.1.0",
     "@types/dotenv": "^6.1.0",
     "@types/graphql": "^14.0.7",
     "@types/graphql-iso-date": "^3.3.1",
@@ -58,8 +59,11 @@
     "@types/lodash": "^4.14.121",
     "@types/redis": "^2.8.10",
     "@types/require-dir": "^1.0.0",
+    "@typescript-eslint/eslint-plugin": "^1.4.1",
     "apollo-server-testing": "^2.4.2",
     "chai": "^4.2.0",
+    "eslint": "^5.14.1",
+    "eslint-config-prettier": "^4.0.0",
     "graphql-code-generator": "^0.17.0",
     "graphql-codegen-introspection": "^0.17.0",
     "graphql-codegen-typescript-common": "^0.17.0",
@@ -75,8 +79,6 @@
     "sinon-chai": "^3.3.0",
     "ts-jest": "^24.0.0",
     "ts-node-dev": "^1.0.0-pre.32",
-    "tslint": "^5.12.1",
-    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.3.3"
   },
   "commitlint": {

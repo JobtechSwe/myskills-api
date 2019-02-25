@@ -17,7 +17,7 @@ export const saveConsentRequest = (consent: any) =>
     JSON.stringify(consent)
   )
 
-export const getConsentRequest = async (id: string) => {
+export const getConsentRequest = async <T = any>(id: string): Promise<T> => {
   const data = await redis.get(`${consentRequestPrefix}${id}`)
   return JSON.parse(data || '')
 }

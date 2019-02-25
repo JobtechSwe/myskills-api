@@ -62,6 +62,7 @@ const typeDefs = gql`
     getSkills: [Skill]!
   }
 `
+
 const typesTypedefs = [...Object.values(types)].map(
   (type: any) => type.typeDefs
 )
