@@ -17,7 +17,7 @@ const typeDefs = gql`
     """
     Login an existing user
     """
-    login: Login
+    login: Login!
 
     """
     Add languages

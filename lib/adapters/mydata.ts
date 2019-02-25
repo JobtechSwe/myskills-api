@@ -38,13 +38,13 @@ const createConfig = (area: Area): IConfig => ({
   domain: myConfig.DOMAIN,
 })
 
-async function getData({ area, token }: IDataInput) {
+async function getData<T = any>({ area, token }: IDataInput): Promise<T> {
   const areaConfig = createConfig(area)
   const data = await mydataOperator.data.auth(token).read(areaConfig)
   return data[myConfig.DOMAIN][area].data
 }
 
-async function saveData({ area, data, token }: ISaveDataInput) {
+async function saveData({ area, data, token }: ISaveDataInput): Promise<any[]> {
   const areaConfig = createConfig(area)
   const allData = await mydataOperator.data.auth(token).read(areaConfig)
   const currentDataForDomainArea = allData[myConfig.DOMAIN][area].data

@@ -1,13 +1,13 @@
 import { Context } from 'apollo-server-core'
-import { IApolloServerContext } from '../../../../lib/server'
+import { IApolloServerContext, Resolver } from '../../../../lib/server'
 
-export default async (
+export const addExperience = async (
   _: any,
   { experience }: { experience: Experience },
   { headers: { token }, mydata }: Context<IApolloServerContext>
-): Promise<Experience> => {
+) => {
   try {
-    return mydata.saveData({
+    return mydata.saveData<Experience>({
       area: Area.experiences,
       data: experience,
       token,
@@ -16,3 +16,5 @@ export default async (
     console.log('addExperience err:', e)
   }
 }
+
+export default addExperience

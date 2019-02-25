@@ -11,5 +11,3 @@ export const typeDefs = gql`
     name: String
   }
 `
-
-// export default typeDefs

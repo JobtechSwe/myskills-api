@@ -1,15 +1,8 @@
-import { formatError } from 'apollo-errors'
 import { RedisCache } from 'apollo-server-cache-redis'
 import { Context } from 'apollo-server-core'
 import { ApolloServer } from 'apollo-server-express'
 import bodyParser from 'body-parser'
 import express from 'express'
-import config from './config'
-import schema from './graphql/schema'
-import { onConsentApproved } from './services/consents'
-
-import { getConsentRequest } from './services/db'
-
 import {
   connect as mydataConnect,
   events as mydataEvents,
@@ -19,16 +12,27 @@ import {
   routes as mydataRoutes,
   saveData,
 } from './adapters/mydata'
+import config from './config'
+import schema from './graphql/schema'
+import { onConsentApproved } from './services/consents'
+import { getConsentRequest } from './services/db'
+import { GraphQLFieldResolver } from 'graphql'
 
 export interface IApolloServerContext {
   headers: {
     token: string
   }
   mydata: {
-    getData: (input: IDataInput) => Promise<any>
-    saveData: (input: ISaveDataInput) => Promise<any>
+    getData: typeof getData
+    saveData: typeof saveData
   }
 }
+
+export type Resolver<Args = void, Parent = any> = GraphQLFieldResolver<
+  Parent,
+  IApolloServerContext,
+  Args
+>
 
 const app = express()
 app.set('etag', 'strong')
@@ -66,7 +70,6 @@ const server = new ApolloServer({
       saveData,
     },
   }),
-  formatError,
   ...schema,
 })
 

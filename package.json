@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/server.js",
+    "dev": "ts-node-dev --no-notify lib/server.ts",
     "format": "prettier --write \"lib/**/*.js\"",
     "integration": "mocha test/integration --recursive --require test/integrationSetup.js --exit",
     "unit": "jest --detectOpenHandles",
@@ -64,6 +65,7 @@
     "prettier": "^1.16.4",
     "sinon": "^7.2.4",
     "sinon-chai": "^3.3.0",
+    "ts-node-dev": "^1.0.0-pre.32",
     "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.3.3"
