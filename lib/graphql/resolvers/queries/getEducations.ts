@@ -2,7 +2,7 @@ import { Resolver } from '../../../../lib/server'
 
 export const getEducations: Resolver = async (
   _,
-  args,
+  _args,
   { headers: { token }, mydata }
 ) => mydata.getData<Education[]>({ token, area: Area.educations })
 

@@ -8,7 +8,7 @@ export const saveConsent = (consent: any) =>
 
 export const getConsent = async (id: string) => {
   const data = await redis.get(`${consentPrefix}${id}`)
-  return JSON.parse(data)
+  return JSON.parse(data || '')
 }
 
 export const saveConsentRequest = (consent: any) =>
@@ -19,5 +19,5 @@ export const saveConsentRequest = (consent: any) =>
 
 export const getConsentRequest = async (id: string) => {
   const data = await redis.get(`${consentRequestPrefix}${id}`)
-  return JSON.parse(data)
+  return JSON.parse(data || '')
 }

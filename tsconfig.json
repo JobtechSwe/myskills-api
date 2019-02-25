@@ -4,8 +4,11 @@
     "esModuleInterop": true,
     "target": "es6",
     "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "moduleResolution": "node",
     "sourceMap": true,
+    "strict": true,
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {

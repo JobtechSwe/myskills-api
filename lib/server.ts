@@ -3,12 +3,11 @@ import { Context } from 'apollo-server-core'
 import { ApolloServer } from 'apollo-server-express'
 import bodyParser from 'body-parser'
 import express from 'express'
+import { GraphQLFieldResolver } from 'graphql'
 import {
   connect as mydataConnect,
   events as mydataEvents,
   getData,
-  IDataInput,
-  ISaveDataInput,
   routes as mydataRoutes,
   saveData,
 } from './adapters/mydata'
@@ -16,7 +15,6 @@ import config from './config'
 import schema from './graphql/schema'
 import { onConsentApproved } from './services/consents'
 import { getConsentRequest } from './services/db'
-import { GraphQLFieldResolver } from 'graphql'
 
 export interface IApolloServerContext {
   headers: {
@@ -45,7 +43,7 @@ app.use(
 )
 
 // Mydata mydataOperator approval route
-app.get('/approved/:id', async (req, res, next) => {
+app.get('/approved/:id', async (req, res) => {
   const result = await getConsentRequest(req.params.id)
   if (result) {
     res.send({
