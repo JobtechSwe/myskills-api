@@ -1,7 +1,8 @@
 {
   "extends": ["tslint:latest", "tslint-config-prettier"],
   "rules": {
-    "no-console": false
+    "no-console": [true, "dev"],
+    "no-implicit-dependencies": false
   },
   "linterOptions": {
     "exclude": ["node_modules/**"]

@@ -15,5 +15,5 @@
       "*": ["node_modules/*", "lib/types/*"]
     }
   },
-  "include": ["lib/**/*"]
+  "include": ["lib/**/*", "test/**/*"]
 }

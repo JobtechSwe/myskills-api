@@ -44,10 +44,3 @@ declare module '@mydata/client' {
 
   function create(options: Options): Create
 }
-
-declare enum Area {
-  languages,
-  educations,
-  experiences,
-  skills,
-}

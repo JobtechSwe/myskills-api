@@ -1,4 +1,4 @@
-const nock = require('nock')
+import nock from 'nock'
 
 // Mock client connect request away,
 // that is started when initiating server.js
