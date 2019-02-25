@@ -9,9 +9,11 @@
     "dev": "ts-node-dev --no-notify lib/server.ts",
     "format": "prettier --write \"lib/**/*.js\"",
     "integration": "mocha test/integration --recursive --require test/integrationSetup.js --exit",
-    "unit": "jest --detectOpenHandles",
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "build": "npm run lint && npm run unit && npm run build-ts",
     "build-ts": "tsc",
     "build-ts:watch": "tsc -w",
+    "unit": "jest --detectOpenHandles",
     "unit:watch": "jest --verbose --watch --detectOpenHandles",
     "generate": "apollo codegen:generate --target typescript"
   },
