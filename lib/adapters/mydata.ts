@@ -1,8 +1,10 @@
-import { create } from '@mydata/client'
+import client from '@mydata/client'
+console.log('client', client)
 import myConfig from '../config'
 import keyValueStore from '../services/keyValueStore'
 import { Area } from '../types'
 
+const { create } = client
 const config = {
   clientId: myConfig.DOMAIN,
   clientKeys: {
@@ -32,6 +34,7 @@ export interface DataInput {
 export interface SaveDataInput extends DataInput {
   data: object | string
 }
+console.log('create', create)
 
 const mydataOperator = create(config)
 const createConfig = (area: Area): Config => ({
@@ -66,5 +69,6 @@ async function saveData<T = any[]>({
 }
 
 const { connect, consents, routes, events } = mydataOperator
-
+console.log('vad är routes?', routes)
+console.log('vad är mydata ens?', mydataOperator)
 export { connect, consents, getData, mydataOperator, saveData, routes, events }

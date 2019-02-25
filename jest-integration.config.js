@@ -1,5 +1,6 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  testPathIgnorePatterns: ['<rootDir>/test/unit/'],
+  testMatch: ['<rootDir>/test/integration/**/*.spec.ts'],
+  globalSetup: '<rootDir>/test/integrationSetup.ts',
 }

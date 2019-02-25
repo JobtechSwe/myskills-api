@@ -37,14 +37,14 @@ app.get('/approved/:id', async (req, res) => {
     res.sendStatus(404)
   }
 })
-
+console.log('vad är mydata routes?', mydataRoutes)
 app.use(mydataRoutes)
 mydataEvents.on('CONSENT_APPROVED', onConsentApproved)
 
 /**
  * GraphQL
  */
-const server = new ApolloServer({
+export const server = new ApolloServer({
   cache: new RedisCache({
     host: config.REDIS_API_HOST,
     port: config.REDIS_API_PORT,
