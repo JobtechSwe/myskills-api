@@ -1,9 +1,9 @@
-import { Resolver } from '../../../../lib/server'
+import { Language, QueryResolvers } from '../../../__generated__/myskills'
 
-export const getLanguages: Resolver = (
+export const getLanguages: QueryResolvers.GetLanguagesResolver = (
   _,
   _args,
   { headers: { token }, mydata }
-) => mydata.getData<string[]>({ token, area: Area.languages })
+) => mydata.getData<Language[]>({ token, area: Area.languages })
 
 export default getLanguages

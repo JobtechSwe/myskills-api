@@ -17,3 +17,10 @@ declare module '@mydata/client' {
 
   function create(options: Options): any
 }
+
+declare enum Area {
+  languages,
+  educations,
+  experiences,
+  skills,
+}

@@ -1,22 +1,18 @@
-import { Resolver } from '../../../../lib/server'
+import { MutationResolvers, Education } from '../../../__generated__/myskills'
 
-interface IAddEducationArgs {
-  education: Education
-}
-
-export const addEducation: Resolver<IAddEducationArgs> = async (
+export const addEducation: MutationResolvers.AddEducationResolver = async (
   _,
   { education },
   { headers: { token }, mydata }
 ) => {
   try {
-    return mydata.saveData({
+    return mydata.saveData<Education>({
       area: Area.educations,
       data: education,
       token,
     })
   } catch (e) {
-    console.log('Add education error: ', e)
+    throw new Error(`Add education error: ${e}`)
   }
 }
 

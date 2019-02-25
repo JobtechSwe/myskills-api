@@ -1,6 +1,9 @@
-import { Resolver } from '../../../../lib/server'
+import { QueryResolvers, Skill } from '../../../__generated__/myskills'
 
-const getSkills: Resolver = async (_, _args, { headers: { token }, mydata }) =>
-  mydata.getData<Skill[]>({ token, area: Area.skills })
+const getSkills: QueryResolvers.GetSkillsResolver = async (
+  _,
+  _args,
+  { headers: { token }, mydata }
+) => mydata.getData<Skill[]>({ token, area: Area.skills })
 
 export default getSkills

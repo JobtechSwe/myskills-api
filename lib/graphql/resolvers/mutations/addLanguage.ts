@@ -1,22 +1,18 @@
-import { Resolver } from '../../../../lib/server'
+import { Language, MutationResolvers } from '../../../__generated__/myskills'
 
-interface IAddLangaugeArgs {
-  language: string
-}
-
-export const addLanguage: Resolver<IAddLangaugeArgs> = async (
+export const addLanguage: MutationResolvers.AddLanguageResolver = async (
   _,
   { language },
   { headers: { token }, mydata }
 ) => {
   try {
-    return mydata.saveData<string>({
+    return mydata.saveData<Language>({
       area: Area.languages,
       data: language,
       token,
     })
   } catch (e) {
-    console.log('addlanguage:', e)
+    throw new Error(`addlanguage: ${e}`)
   }
 }
 export default addLanguage

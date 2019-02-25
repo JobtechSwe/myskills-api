@@ -1,22 +1,18 @@
-import { Resolver } from '../../../../lib/server'
+import { Experience, MutationResolvers } from '../../../__generated__/myskills'
 
-interface IAddExperienceArgs {
-  experience: Experience
-}
-
-export const addExperience: Resolver<IAddExperienceArgs> = async (
+export const addExperience: MutationResolvers.AddExperienceResolver = async (
   _,
   { experience },
   { headers: { token }, mydata }
 ) => {
   try {
-    return mydata.saveData<Experience[]>({
+    return mydata.saveData<Experience>({
       area: Area.experiences,
       data: experience,
       token,
     })
   } catch (e) {
-    console.log('addExperience err:', e)
+    throw new Error(`addExperience err: ${e}`)
   }
 }
 

@@ -3,7 +3,6 @@ import { Context } from 'apollo-server-core'
 import { ApolloServer } from 'apollo-server-express'
 import bodyParser from 'body-parser'
 import express from 'express'
-import { GraphQLFieldResolver } from 'graphql'
 import {
   connect as mydataConnect,
   events as mydataEvents,
@@ -15,22 +14,7 @@ import config from './config'
 import schema from './graphql/schema'
 import { onConsentApproved } from './services/consents'
 import { getConsentRequest } from './services/db'
-
-export interface IApolloServerContext {
-  headers: {
-    token: string
-  }
-  mydata: {
-    getData: typeof getData
-    saveData: typeof saveData
-  }
-}
-
-export type Resolver<Args = void, Parent = any> = GraphQLFieldResolver<
-  Parent,
-  IApolloServerContext,
-  Args
->
+import { IApolloServerContext } from './typings/context'
 
 const app = express()
 app.set('etag', 'strong')

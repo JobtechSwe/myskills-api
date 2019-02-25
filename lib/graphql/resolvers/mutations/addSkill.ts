@@ -1,10 +1,6 @@
-import { Resolver } from '../../../../lib/server'
+import { MutationResolvers, Skill } from '../../../__generated__/myskills'
 
-interface IAddSkillArgs {
-  skill: Skill
-}
-
-export const addSkill: Resolver<IAddSkillArgs> = async (
+export const addSkill: MutationResolvers.AddSkillResolver = async (
   _,
   { skill },
   { headers: { token }, mydata }
@@ -16,7 +12,7 @@ export const addSkill: Resolver<IAddSkillArgs> = async (
       token,
     })
   } catch (e) {
-    console.log('addSkill error: ', e)
+    throw new Error(`addSkill error: ${e}`)
   }
 }
 

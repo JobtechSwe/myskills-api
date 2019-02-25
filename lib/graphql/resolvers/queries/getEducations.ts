@@ -1,6 +1,6 @@
-import { Resolver } from '../../../../lib/server'
+import { Education, QueryResolvers } from '../../../__generated__/myskills'
 
-export const getEducations: Resolver = async (
+export const getEducations: QueryResolvers.GetEducationsResolver = async (
   _,
   _args,
   { headers: { token }, mydata }
