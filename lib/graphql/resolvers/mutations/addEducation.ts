@@ -1,10 +1,13 @@
-import { Context } from 'apollo-server-core'
-import { IApolloServerContext } from '../../../../lib/server'
+import { Resolver } from '../../../../lib/server'
 
-export default async (
-  _: any,
-  { education }: any,
-  { headers: { token }, mydata }: Context<IApolloServerContext>
+interface IAddEducationArgs {
+  education: Education
+}
+
+export const addEducation: Resolver<IAddEducationArgs> = async (
+  _,
+  { education },
+  { headers: { token }, mydata }
 ) => {
   try {
     return mydata.saveData({
@@ -16,3 +19,5 @@ export default async (
     console.log('Add education error: ', e)
   }
 }
+
+export default addEducation

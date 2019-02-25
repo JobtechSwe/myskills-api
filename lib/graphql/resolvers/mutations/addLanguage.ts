@@ -1,13 +1,16 @@
-import { Context } from 'apollo-server-core'
-import { IApolloServerContext } from '../../../../lib/server'
+import { Resolver } from '../../../../lib/server'
 
-export default async (
-  _: any,
-  { language }: any,
-  { headers: { token }, mydata }: Context<IApolloServerContext>
-): Promise<any> => {
+interface IAddLangaugeArgs {
+  language: string
+}
+
+export const addLanguage: Resolver<IAddLangaugeArgs> = async (
+  _,
+  { language },
+  { headers: { token }, mydata }
+) => {
   try {
-    return mydata.saveData({
+    return mydata.saveData<string>({
       area: Area.languages,
       data: language,
       token,
@@ -16,3 +19,4 @@ export default async (
     console.log('addlanguage:', e)
   }
 }
+export default addLanguage

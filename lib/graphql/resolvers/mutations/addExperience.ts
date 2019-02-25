@@ -1,10 +1,13 @@
-import { Context } from 'apollo-server-core'
-import { IApolloServerContext, Resolver } from '../../../../lib/server'
+import { Resolver } from '../../../../lib/server'
 
-export const addExperience = async (
-  _: any,
-  { experience }: { experience: Experience },
-  { headers: { token }, mydata }: Context<IApolloServerContext>
+interface IAddExperienceArgs {
+  experience: Experience
+}
+
+export const addExperience: Resolver<IAddExperienceArgs> = async (
+  _,
+  { experience },
+  { headers: { token }, mydata }
 ) => {
   try {
     return mydata.saveData<Experience[]>({

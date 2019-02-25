@@ -1,13 +1,16 @@
-import { Context } from 'apollo-server-core'
-import { IApolloServerContext } from '../../../../lib/server'
+import { Resolver } from '../../../../lib/server'
 
-export default async (
-  _: any,
-  { skill }: any,
-  { headers: { token }, mydata }: Context<IApolloServerContext>
-): Promise<Skill> => {
+interface IAddSkillArgs {
+  skill: Skill
+}
+
+export const addSkill: Resolver<IAddSkillArgs> = async (
+  _,
+  { skill },
+  { headers: { token }, mydata }
+) => {
   try {
-    return mydata.saveData({
+    return mydata.saveData<Skill>({
       area: Area.skills,
       data: skill,
       token,
@@ -16,3 +19,5 @@ export default async (
     console.log('addSkill error: ', e)
   }
 }
+
+export default addSkill

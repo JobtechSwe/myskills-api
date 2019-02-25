@@ -48,7 +48,7 @@ async function saveData<T = any[]>({
   area,
   data,
   token,
-}: ISaveDataInput): Promise<any> {
+}: ISaveDataInput): Promise<T[]> {
   const areaConfig = createConfig(area)
   const currentDataForDomainArea = await getData<any[]>({ area, token })
   const updatedData = {
