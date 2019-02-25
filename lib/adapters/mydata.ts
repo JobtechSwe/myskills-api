@@ -64,6 +64,6 @@ async function saveData<T = any[]>({
   return updatedData.data
 }
 
-const { connect, routes, events } = mydataOperator
+const { connect, consents, routes, events } = mydataOperator
 
-export { connect, getData, mydataOperator, saveData, routes, events }
+export { connect, consents, getData, mydataOperator, saveData, routes, events }

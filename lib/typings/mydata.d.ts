@@ -1,4 +1,8 @@
 declare module '@mydata/client' {
+  type KeyValue = {
+    [key: string]: any
+  }
+
   interface Options {
     clientId: string
     clientKeys: ClientKeys
@@ -15,7 +19,30 @@ declare module '@mydata/client' {
     publicKey: string
   }
 
-  function create(options: Options): any
+  interface Auth {
+    read: <T = KeyValue>(config: any) => Promise<T>
+    write: <T = KeyValue>(config: any) => Promise<T>
+  }
+
+  type Connect = () => void
+
+  interface Data {
+    auth: (token: string) => Auth
+  }
+
+  interface Consents {
+    request: <T = any>(request: KeyValue) => Promise<T>
+  }
+
+  interface Create {
+    connect: Connect
+    consents: Consents
+    data: Data
+    events: any
+    routes: any
+  }
+
+  function create(options: Options): Create
 }
 
 declare enum Area {

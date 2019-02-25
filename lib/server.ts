@@ -5,6 +5,7 @@ import bodyParser from 'body-parser'
 import express from 'express'
 import {
   connect as mydataConnect,
+  consents,
   events as mydataEvents,
   getData,
   routes as mydataRoutes,
@@ -48,6 +49,7 @@ const server = new ApolloServer({
   }: Context<any>): IApolloServerContext => ({
     headers,
     mydata: {
+      consents,
       getData,
       saveData,
     },
