@@ -18,27 +18,27 @@ const config = {
   operator: 'http://localhost:4000',
 }
 
-interface IConfig {
+interface Config {
   area: Area
   domain: string
 }
 
-export interface IDataInput {
+export interface DataInput {
   area: Area
   token: string
 }
 
-export interface ISaveDataInput extends IDataInput {
+export interface SaveDataInput extends DataInput {
   data: object | string
 }
 
 const mydataOperator = create(config)
-const createConfig = (area: Area): IConfig => ({
+const createConfig = (area: Area): Config => ({
   area,
   domain: myConfig.DOMAIN,
 })
 
-async function getData<T = any>({ area, token }: IDataInput): Promise<T> {
+async function getData<T = any>({ area, token }: DataInput): Promise<T> {
   const areaConfig = createConfig(area)
   const data = await mydataOperator.data.auth(token).read(areaConfig)
   return data[myConfig.DOMAIN][area].data
@@ -48,7 +48,7 @@ async function saveData<T = any[]>({
   area,
   data,
   token,
-}: ISaveDataInput): Promise<T[]> {
+}: SaveDataInput): Promise<T[]> {
   const areaConfig = createConfig(area)
   const currentDataForDomainArea = await getData<any[]>({ area, token })
   const updatedData = {

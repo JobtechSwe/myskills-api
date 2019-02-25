@@ -1,7 +1,7 @@
 import config from '../config'
 import { saveConsent, saveConsentRequest } from './db'
 
-export interface IScope {
+export interface Scope {
   area: Area
   description: string
   domain: string
@@ -10,9 +10,9 @@ export interface IScope {
   purpose: string
 }
 
-export interface IDefaultRequest {
+export interface DefaultRequest {
   expiry: number
-  scope: IScope[]
+  scope: Scope[]
 }
 
 const createConsent = (area: Area) => ({
@@ -25,7 +25,7 @@ const createConsent = (area: Area) => ({
   purpose: 'In order to create a CV using our website.',
 })
 
-const defaultRequest = (durationInSeconds: number): IDefaultRequest => ({
+const defaultRequest = (durationInSeconds: number): DefaultRequest => ({
   expiry: Math.round(Date.now() / 1000 + durationInSeconds),
   scope: [
     createConsent(Area.languages),

@@ -25,7 +25,7 @@ app.use(
   })
 )
 
-// Mydata mydataOperator approval route
+// MyData approval route
 app.get('/approved/:id', async (req, res) => {
   const result = await getConsentRequest<{ accessToken: string }>(req.params.id)
 
@@ -38,6 +38,12 @@ app.get('/approved/:id', async (req, res) => {
   }
 })
 
+app.use(mydataRoutes)
+mydataEvents.on('CONSENT_APPROVED', onConsentApproved)
+
+/**
+ * GraphQL
+ */
 const server = new ApolloServer({
   cache: new RedisCache({
     host: config.REDIS_API_HOST,
@@ -58,9 +64,6 @@ server.applyMiddleware({
   app,
   path: '/graphql',
 })
-
-app.use(mydataRoutes)
-mydataEvents.on('CONSENT_APPROVED', onConsentApproved)
 
 /**
  * Start
