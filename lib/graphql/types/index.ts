@@ -1,5 +1,5 @@
-import reqdir from 'require-dir'
 import { gql } from 'apollo-server-express'
+import reqdir from 'require-dir'
 const types = reqdir('./')
 
 const typeDefs = gql`

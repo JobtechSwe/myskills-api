@@ -1,4 +1,5 @@
 import { MutationResolvers, Skill } from '../../../__generated__/myskills'
+import { Area } from '../../../types'
 
 export const addSkill: MutationResolvers.AddSkillResolver = async (
   _,

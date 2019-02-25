@@ -1,5 +1,5 @@
-import { defaultRequest } from '../../../services/consents'
 import { Login, MutationResolvers } from '../../../__generated__/myskills'
+import { defaultRequest } from '../../../services/consents'
 
 export const login: MutationResolvers.LoginResolver = async (
   _,

@@ -1,4 +1,5 @@
-const { DOMAIN } = require(`${process.cwd()}/dist/config`).default
+import config from '../../lib/config'
+import { Area } from '../../lib/types'
 
 const authFunctions = {
   read: jest.fn(),
@@ -15,18 +16,20 @@ jest.mock('@mydata/client', () => ({
   create: () => mockOperator,
 }))
 
-const operator = require(`${process.cwd()}/dist/adapters/mydata`)
+import { getData, saveData } from '../../lib/adapters/mydata'
 
 describe('#operator', () => {
-  let area, data, token
+  let area: Area
+  let data: { token: string }
+  let token: string
 
   beforeEach(() => {
-    area = 'education'
+    area = Area.educations
     data = { token }
     token = 'foobar'
 
     authFunctions.read.mockResolvedValue({
-      [DOMAIN]: {
+      [config.DOMAIN]: {
         [area]: {
           data: [data],
         },
@@ -35,13 +38,13 @@ describe('#operator', () => {
   })
 
   test('should get data', async () => {
-    const result = await operator.getData({ token, area })
+    const result = await getData({ token, area })
 
     expect(result).toEqual([data])
   })
 
   test('should save data', async () => {
-    const result = await operator.saveData({ token, data, area })
+    const result = await saveData({ token, data, area })
 
     expect(result).toEqual([data])
   })

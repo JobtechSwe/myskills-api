@@ -1,6 +1,7 @@
 import { create } from '@mydata/client'
 import myConfig from '../config'
 import keyValueStore from '../services/keyValueStore'
+import { Area } from '../types'
 
 const config = {
   clientId: myConfig.DOMAIN,

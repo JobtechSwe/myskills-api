@@ -1,4 +1,5 @@
-import { MutationResolvers, Education } from '../../../__generated__/myskills'
+import { Education, MutationResolvers } from '../../../__generated__/myskills'
+import { Area } from '../../../types'
 
 export const addEducation: MutationResolvers.AddEducationResolver = async (
   _,
