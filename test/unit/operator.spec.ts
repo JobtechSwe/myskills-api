@@ -1,22 +1,9 @@
+import { create } from '@mydata/client'
+import { getData, saveData } from '../../lib/adapters/mydata'
 import config from '../../lib/config'
 import { Area } from '../../lib/types'
 
-const authFunctions = {
-  read: jest.fn(),
-  write: jest.fn(),
-}
-
-const mockOperator = {
-  data: {
-    auth: () => authFunctions,
-  },
-}
-
-jest.mock('@mydata/client', () => ({
-  create: () => mockOperator,
-}))
-
-import { getData, saveData } from '../../lib/adapters/mydata'
+jest.mock('@mydata/client')
 
 describe('#operator', () => {
   let area: Area
@@ -25,10 +12,10 @@ describe('#operator', () => {
 
   beforeEach(() => {
     area = Area.educations
-    data = { token }
     token = 'foobar'
-
-    authFunctions.read.mockResolvedValue({
+    data = { token }
+    ;(create({} as any).data.auth({} as any)
+      .read as jest.Mock).mockResolvedValue({
       [config.DOMAIN]: {
         [area]: {
           data: [data],
@@ -38,14 +25,10 @@ describe('#operator', () => {
   })
 
   test('should get data', async () => {
-    const result = await getData({ token, area })
-
-    expect(result).toEqual([data])
+    await expect(getData({ token, area })).resolves.toEqual([data])
   })
 
   test('should save data', async () => {
-    const result = await saveData({ token, data, area })
-
-    expect(result).toEqual([data])
+    await expect(saveData({ token, data, area })).resolves.toEqual([data])
   })
 })
