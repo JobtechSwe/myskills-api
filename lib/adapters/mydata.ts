@@ -44,10 +44,13 @@ async function getData<T = any>({ area, token }: IDataInput): Promise<T> {
   return data[myConfig.DOMAIN][area].data
 }
 
-async function saveData({ area, data, token }: ISaveDataInput): Promise<any[]> {
+async function saveData<T = any[]>({
+  area,
+  data,
+  token,
+}: ISaveDataInput): Promise<any> {
   const areaConfig = createConfig(area)
-  const allData = await mydataOperator.data.auth(token).read(areaConfig)
-  const currentDataForDomainArea = allData[myConfig.DOMAIN][area].data
+  const currentDataForDomainArea = await getData<any[]>({ area, token })
   const updatedData = {
     data: currentDataForDomainArea
       ? [...new Set([...currentDataForDomainArea, data])]

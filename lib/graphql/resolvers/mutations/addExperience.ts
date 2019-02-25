@@ -7,7 +7,7 @@ export const addExperience = async (
   { headers: { token }, mydata }: Context<IApolloServerContext>
 ) => {
   try {
-    return mydata.saveData<Experience>({
+    return mydata.saveData<Experience[]>({
       area: Area.experiences,
       data: experience,
       token,
