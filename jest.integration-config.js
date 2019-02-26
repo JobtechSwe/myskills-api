@@ -1,4 +1,5 @@
 module.exports = {
   ...require('./jest.config'),
-  testPathIgnorePatterns: ['<rootDir>/test/unit/'],
+  testPathIgnorePatterns: [],
+  testMatch: ['<rootDir>/test/integration/**/*.spec.(ts|js)'],
 }

@@ -1,3 +1,5 @@
+jest.unmock('redis')
+
 import { gql } from 'apollo-server-express'
 import { createTestClient } from 'apollo-server-testing'
 import server, { appIsReady } from '../../lib/server'
@@ -24,8 +26,13 @@ describe.only('#educations', () => {
   let mutate: any
   let mydata: { getData: any; saveData: any }
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     await appIsReady
+  })
+
+  afterAll(() => server.stop())
+
+  beforeEach(async () => {
     mydata = {
       getData: jest.fn(),
       saveData: jest.fn(),
