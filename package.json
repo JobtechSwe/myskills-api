@@ -74,6 +74,7 @@
     "jest-runner-eslint": "^0.7.3",
     "jest-watch-select-projects": "^0.1.1",
     "jest-watch-typeahead": "^0.2.1",
+    "lint-staged": "^8.1.4",
     "mocha": "^6.0.0",
     "mockdate": "^2.0.2",
     "nock": "^10.0.6",
@@ -90,7 +91,8 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint --edit"
+      "commit-msg": "commitlint --edit",
+      "pre-commit": "lint-staged"
     }
   }
 }
