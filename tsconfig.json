@@ -12,5 +12,6 @@
     "outDir": "dist",
     "baseUrl": "."
   },
-  "include": ["lib/**/*"]
+  "include": ["lib/**/*"],
+  "exclude": ["lib/**/__tests__/*", "lib/**/__mocks__/*"]
 }

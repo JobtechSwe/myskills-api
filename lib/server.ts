@@ -48,6 +48,7 @@ export const server = new ApolloServer({
   cache: new RedisCache({
     host: config.REDIS_API_HOST,
     port: config.REDIS_API_PORT,
+    password: config.REDIS_API_PASSWORD,
   }),
   context: ({ req: { headers = {} } = {} }) => ({
     headers,
