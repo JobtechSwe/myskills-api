@@ -5,6 +5,15 @@ export const getExperiences: QueryResolvers.GetEducationsResolver = async (
   _,
   _args,
   { headers: { token }, mydata }
-) => mydata.getData<Experience[]>({ token, area: Area.experiences })
+) => {
+  try {
+    const result = await mydata.getData<Experience[]>({
+      token,
+      area: Area.experiences,
+    })
 
-export default getExperiences
+    return result
+  } catch (e) {
+    throw new Error(e)
+  }
+}

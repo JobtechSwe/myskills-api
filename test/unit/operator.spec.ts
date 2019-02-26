@@ -31,4 +31,17 @@ describe('#operator', () => {
   test('should save data', async () => {
     await expect(saveData({ token, data, area })).resolves.toEqual([data])
   })
+
+  test('should save data and return same data', async () => {
+    ;(create({} as any).data.auth({} as any)
+      .read as jest.Mock).mockResolvedValue({
+      [config.DOMAIN]: {
+        [area]: {
+          data: null,
+        },
+      },
+    })
+
+    await expect(saveData({ data, token, area })).resolves.toEqual([data])
+  })
 })

@@ -5,6 +5,15 @@ export const getEducations: QueryResolvers.GetEducationsResolver = async (
   _,
   _args,
   { headers: { token }, mydata }
-) => mydata.getData<Education[]>({ token, area: Area.educations })
+) => {
+  try {
+    const result = await mydata.getData<Education[]>({
+      token,
+      area: Area.educations,
+    })
 
-export default getEducations
+    return result
+  } catch (e) {
+    throw new Error(e)
+  }
+}

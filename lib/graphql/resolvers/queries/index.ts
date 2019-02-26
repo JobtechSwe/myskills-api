@@ -1,4 +1,4 @@
-export { getEducations } from './getEducations'
-export { getExperiences } from './getExperiences'
-export { getLanguages } from './getLanguages'
-export { getSkills } from './getSkills'
+export * from './getEducations'
+export * from './getExperiences'
+export * from './getLanguages'
+export * from './getSkills'
