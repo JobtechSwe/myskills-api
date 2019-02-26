@@ -5,7 +5,7 @@ jest.mock('../../../../services/consents', () => ({
   defaultRequest: jest.fn(() => 'defaultRequest'),
 }))
 
-const ctx = {
+const ctx: any = {
   header: {
     token: 'token',
   },
