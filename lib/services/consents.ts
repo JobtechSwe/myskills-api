@@ -43,7 +43,7 @@ const onConsentApproved = async (consent: Consent) => {
     await saveConsent(consent)
     await saveConsentRequest(consent)
   } catch (e) {
-    console.log('write error: ', e)
+    throw new Error(`write error: ${e}`)
   }
 }
 
