@@ -8,7 +8,6 @@ RUN npm ci
 
 COPY /lib ./lib
 COPY tsconfig.json ./
-COPY tslint.json ./
 
 RUN npm run build-ts
 
