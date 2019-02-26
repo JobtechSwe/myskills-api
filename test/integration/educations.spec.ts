@@ -19,7 +19,7 @@ const ADD_EDUCATION = gql`
   }
 `
 
-describe.only('#educations', () => {
+describe('#educations', () => {
   let query: any
   let mutate: any
   let mydata: { getData: any; saveData: any }
@@ -81,7 +81,7 @@ describe.only('#educations', () => {
       ])
     })
 
-    it('should be possible to add an education', async () => {
+    it.only('should be possible to add an education', async () => {
       const {
         data: { addEducation },
       } = await mutate({
