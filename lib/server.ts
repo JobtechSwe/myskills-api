@@ -37,7 +37,7 @@ app.get('/approved/:id', async (req, res) => {
     res.sendStatus(404)
   }
 })
-console.log('vad är mydata routes?', mydataRoutes)
+
 app.use(mydataRoutes)
 mydataEvents.on('CONSENT_APPROVED', onConsentApproved)
 
@@ -68,16 +68,15 @@ server.applyMiddleware({
 /**
  * Start
  */
+
 const port = config.SERVER_PORT
 
-const appInstance = app
-  .listen(port, () => {
+export const appIsReady: Promise<Boolean> = new Promise(resolve =>
+  app.listen(port, () => {
     mydataConnect()
     console.log(`Listening on port: ${port}`)
+    resolve(true)
   })
-  .setTimeout(60000 * 20)
+)
 
-export default {
-  app: appInstance,
-  server,
-}
+export default server

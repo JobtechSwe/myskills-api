@@ -37,7 +37,6 @@ const defaultRequest = (durationInSeconds: number): DefaultRequest => ({
 })
 
 const onConsentApproved = async (consent: any) => {
-  console.log('consent: ', consent)
   try {
     await saveConsent(consent)
     await saveConsentRequest(consent)
