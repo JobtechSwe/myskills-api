@@ -4,7 +4,7 @@ documents: null
 generates:
   lib/__generated__/myskills.d.ts:
     config:
-      contextType: "../typings/context#IApolloServerContext"
+      contextType: "../typings/context#ApolloServerContext"
     plugins:
       - "typescript-common"
       - "typescript-server"

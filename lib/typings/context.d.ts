@@ -1,6 +1,6 @@
 import { getData, saveData, consents } from '../adapters/mydata'
 
-export interface IApolloServerContext {
+export interface ApolloServerContext {
   headers: {
     token: string
   }
