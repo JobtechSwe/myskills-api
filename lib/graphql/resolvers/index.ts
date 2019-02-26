@@ -1,6 +1,5 @@
-import reqdir from 'require-dir'
-const Mutation = reqdir('./mutations')
-const Query = reqdir('./queries')
+import * as Mutation from './mutations'
+import * as Query from './queries'
 
 export default {
   Mutation,

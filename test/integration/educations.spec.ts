@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-express'
 import { createTestClient } from 'apollo-server-testing'
-import { server } from '../../lib/server'
+import server, { appIsReady } from '../../lib/server'
 
 const GET_EDUCATIONS = gql`
   query getEducations {
@@ -19,12 +19,13 @@ const ADD_EDUCATION = gql`
   }
 `
 
-describe('#educations', () => {
+describe.only('#educations', () => {
   let query: any
   let mutate: any
   let mydata: { getData: any; saveData: any }
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    await appIsReady
     mydata = {
       getData: jest.fn(),
       saveData: jest.fn(),
@@ -48,7 +49,7 @@ describe('#educations', () => {
 
   describe('getEducations', () => {
     beforeEach(() => {
-      mydata.getData.mockResolves([
+      mydata.getData.mockResolvedValue([
         {
           name: 'Simon',
         },
@@ -66,7 +67,7 @@ describe('#educations', () => {
 
   describe('addEducation', () => {
     beforeEach(() => {
-      mydata.saveData.mockResolves([
+      mydata.saveData.mockResolvedValue([
         {
           id: '123',
           name: 'Simon :)',

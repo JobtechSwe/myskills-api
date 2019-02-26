@@ -8,7 +8,7 @@
     "start": "node dist/server.js",
     "dev": "ts-node-dev --no-notify lib/server.ts",
     "format": "prettier --write \"lib/**/*.js\"",
-    "integration": "jest --config ./jest-integration.config.js",
+    "integration": "jest --config ./jest.integration-config.js",
     "lint": "eslint 'lib/**/*.{ts,tsx}'",
     "build": "npm run lint && npm run unit && npm run build-ts",
     "build-ts": "tsc",
@@ -44,8 +44,7 @@
     "graphql-iso-date": "^3.6.1",
     "graphql-type-json": "^0.2.1",
     "ioredis": "^4.6.2",
-    "lodash": "^4.17.11",
-    "require-dir": "^1.2.0"
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.5.2",
@@ -60,10 +59,8 @@
     "@types/lodash": "^4.14.121",
     "@types/mockdate": "^2.0.0",
     "@types/redis": "^2.8.10",
-    "@types/require-dir": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^1.4.1",
     "apollo-server-testing": "^2.4.2",
-    "chai": "^4.2.0",
     "eslint": "^5.14.1",
     "eslint-config-prettier": "^4.0.0",
     "graphql-code-generator": "^0.17.0",
@@ -78,8 +75,6 @@
     "nock": "^10.0.6",
     "nodemon": "^1.18.10",
     "prettier": "^1.16.4",
-    "sinon": "^7.2.4",
-    "sinon-chai": "^3.3.0",
     "ts-jest": "^24.0.0",
     "ts-node-dev": "^1.0.0-pre.32",
     "typescript": "^3.3.3"
