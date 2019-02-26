@@ -7,14 +7,14 @@ export const addExperience: MutationResolvers.AddExperienceResolver = async (
   { headers: { token }, mydata }
 ) => {
   try {
-    return mydata.saveData<Experience>({
+    const result = await mydata.saveData<Experience>({
       area: Area.experiences,
       data: experience,
       token,
     })
+
+    return result
   } catch (e) {
     throw new Error(`addExperience err: ${e}`)
   }
 }
-
-export default addExperience

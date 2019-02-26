@@ -6,10 +6,12 @@ export const login: MutationResolvers.LoginResolver = async (
   _args,
   { mydata }
 ) => {
-  const request = defaultRequest(3600 * 24 * 31)
-  const pendingRequest = await mydata.consents.request<Login>(request)
+  try {
+    const request = defaultRequest(3600 * 24 * 31)
+    const pendingRequest = await mydata.consents.request<Login>(request)
 
-  return pendingRequest
+    return pendingRequest
+  } catch (e) {
+    throw new Error(e)
+  }
 }
-
-export default login

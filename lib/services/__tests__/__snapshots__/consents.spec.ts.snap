@@ -5,7 +5,7 @@ Object {
   "expiry": 1551176880,
   "scope": Array [
     Object {
-      "area": 0,
+      "area": "languages",
       "description": "A list of your work experiences, educations, language proficiencies and so on that you have entered in the service.",
       "domain": "http://localhost:3000",
       "lawfulBasis": "CONSENT",
@@ -15,7 +15,7 @@ Object {
       "purpose": "In order to create a CV using our website.",
     },
     Object {
-      "area": 1,
+      "area": "educations",
       "description": "A list of your work experiences, educations, language proficiencies and so on that you have entered in the service.",
       "domain": "http://localhost:3000",
       "lawfulBasis": "CONSENT",
@@ -25,7 +25,7 @@ Object {
       "purpose": "In order to create a CV using our website.",
     },
     Object {
-      "area": 2,
+      "area": "experiences",
       "description": "A list of your work experiences, educations, language proficiencies and so on that you have entered in the service.",
       "domain": "http://localhost:3000",
       "lawfulBasis": "CONSENT",
@@ -35,7 +35,7 @@ Object {
       "purpose": "In order to create a CV using our website.",
     },
     Object {
-      "area": 3,
+      "area": "skills",
       "description": "A list of your work experiences, educations, language proficiencies and so on that you have entered in the service.",
       "domain": "http://localhost:3000",
       "lawfulBasis": "CONSENT",

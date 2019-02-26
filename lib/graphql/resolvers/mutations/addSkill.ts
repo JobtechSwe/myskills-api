@@ -7,14 +7,14 @@ export const addSkill: MutationResolvers.AddSkillResolver = async (
   { headers: { token }, mydata }
 ) => {
   try {
-    return mydata.saveData<Skill>({
+    const result = await mydata.saveData<Skill>({
       area: Area.skills,
       data: skill,
       token,
     })
+
+    return result
   } catch (e) {
     throw new Error(`addSkill error: ${e}`)
   }
 }
-
-export default addSkill
