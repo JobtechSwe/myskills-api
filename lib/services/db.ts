@@ -1,9 +1,10 @@
 import redis from '../adapters/redis'
+import { Consent } from '@mydata/client'
 
 const consentPrefix = 'consentId:'
 const consentRequestPrefix = 'consentRequestId:'
 
-export const saveConsent = (consent: any) =>
+export const saveConsent = (consent: Consent) =>
   redis.set(`${consentPrefix}${consent.consentId}`, JSON.stringify(consent))
 
 export const getConsent = async (id: string) => {
@@ -11,7 +12,7 @@ export const getConsent = async (id: string) => {
   return JSON.parse(data || '')
 }
 
-export const saveConsentRequest = (consent: any) =>
+export const saveConsentRequest = (consent: Consent) =>
   redis.set(
     `${consentRequestPrefix}${consent.consentRequestId}`,
     JSON.stringify(consent)

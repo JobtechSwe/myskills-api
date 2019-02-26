@@ -1,6 +1,7 @@
 import config from '../config'
 import { Area } from '../types'
 import { saveConsent, saveConsentRequest } from './db'
+import { Consent } from '@mydata/client'
 
 export interface Scope {
   area: Area
@@ -36,7 +37,7 @@ const defaultRequest = (durationInSeconds: number): DefaultRequest => ({
   ],
 })
 
-const onConsentApproved = async (consent: any) => {
+const onConsentApproved = async (consent: Consent) => {
   console.log('consent: ', consent)
   try {
     await saveConsent(consent)

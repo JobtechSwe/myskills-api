@@ -40,7 +40,12 @@ declare module '@mydata/client' {
     request: <T = any>(request: KeyValue) => Promise<T>
   }
 
-  type EventsCallback = (consent: any) => void
+  export interface Consent {
+    consentId: string
+    consentRequestId: string
+  }
+
+  type EventsCallback = (consent: Consent) => void
 
   interface Events {
     on: (name: string, cb: EventsCallback) => void
