@@ -1,5 +1,3 @@
-jest.unmock('redis')
-
 import { gql } from 'apollo-server-express'
 import { createTestClient } from 'apollo-server-testing'
 import server, { appIsReady } from '../../lib/server'
@@ -21,7 +19,7 @@ const ADD_EDUCATION = gql`
   }
 `
 
-describe.only('#educations', () => {
+describe('#educations', () => {
   let query: any
   let mutate: any
   let mydata: { getData: any; saveData: any }
@@ -30,7 +28,7 @@ describe.only('#educations', () => {
     await appIsReady
   })
 
-  afterAll(() => server.stop())
+  afterAll(async () => await server.stop())
 
   beforeEach(async () => {
     mydata = {
@@ -49,6 +47,7 @@ describe.only('#educations', () => {
       mydata,
     })
 
+    // @ts-ignore
     const client = createTestClient(server)
     mutate = client.mutate
     query = client.query
@@ -82,7 +81,7 @@ describe.only('#educations', () => {
       ])
     })
 
-    it('should be possible to add an education', async () => {
+    it.only('should be possible to add an education', async () => {
       const {
         data: { addEducation },
       } = await mutate({

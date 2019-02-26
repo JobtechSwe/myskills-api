@@ -13,8 +13,8 @@
     "build": "npm run lint && npm run unit && npm run build-ts",
     "build-ts": "tsc",
     "build-ts:watch": "tsc -w",
-    "unit": "jest",
-    "unit:watch": "jest --watch",
+    "unit": "jest --config ./jest.unit-config.js",
+    "unit:watch": "jest --watch --config ./jest.unit-config.js",
     "coverage": "jest --coverage",
     "generate": "gql-gen --config codegen.yml"
   },
