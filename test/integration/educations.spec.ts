@@ -1,5 +1,3 @@
-jest.unmock('redis')
-
 import { gql } from 'apollo-server-express'
 import { createTestClient } from 'apollo-server-testing'
 import server, { appIsReady } from '../../lib/server'
@@ -30,7 +28,7 @@ describe.only('#educations', () => {
     await appIsReady
   })
 
-  afterAll(() => server.stop())
+  afterAll(async () => await server.stop())
 
   beforeEach(async () => {
     mydata = {
@@ -49,6 +47,7 @@ describe.only('#educations', () => {
       mydata,
     })
 
+    // @ts-ignore
     const client = createTestClient(server)
     mutate = client.mutate
     query = client.query
