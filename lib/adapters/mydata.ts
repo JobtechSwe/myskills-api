@@ -66,5 +66,4 @@ async function saveData<T = any[]>({
 }
 
 const { connect, consents, routes, events } = mydataOperator
-
 export { connect, consents, getData, mydataOperator, saveData, routes, events }

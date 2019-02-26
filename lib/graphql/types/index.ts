@@ -1,6 +1,5 @@
 import { gql } from 'apollo-server-express'
-import reqdir from 'require-dir'
-const types = reqdir('./')
+import * as types from './typesIndex'
 
 const typeDefs = gql`
   type Login {

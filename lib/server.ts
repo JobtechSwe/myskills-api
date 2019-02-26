@@ -44,7 +44,7 @@ mydataEvents.on('CONSENT_APPROVED', onConsentApproved)
 /**
  * GraphQL
  */
-const server = new ApolloServer({
+export const server = new ApolloServer({
   cache: new RedisCache({
     host: config.REDIS_API_HOST,
     port: config.REDIS_API_PORT,
@@ -68,16 +68,15 @@ server.applyMiddleware({
 /**
  * Start
  */
+
 const port = config.SERVER_PORT
 
-const appInstance = app
-  .listen(port, () => {
+export const appIsReady: Promise<Boolean> = new Promise(resolve =>
+  app.listen(port, () => {
     mydataConnect()
     console.log(`Listening on port: ${port}`)
+    resolve(true)
   })
-  .setTimeout(60000 * 20)
+)
 
-export default {
-  app: appInstance,
-  server,
-}
+export default server
