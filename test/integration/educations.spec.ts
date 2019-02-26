@@ -1,8 +1,8 @@
-const sinon = require('sinon')
-const nock = require('nock')
-const { createTestClient } = require('apollo-server-testing')
-const { gql } = require('apollo-server-express')
-const { expect } = require('chai')
+jest.unmock('redis')
+
+import { gql } from 'apollo-server-express'
+import { createTestClient } from 'apollo-server-testing'
+import server, { appIsReady } from '../../lib/server'
 
 const GET_EDUCATIONS = gql`
   query getEducations {
@@ -21,26 +21,32 @@ const ADD_EDUCATION = gql`
   }
 `
 
-describe('#educations', () => {
-  let query
-  let mutate
-  let mydata
+describe.only('#educations', () => {
+  let query: any
+  let mutate: any
+  let mydata: { getData: any; saveData: any }
 
-  beforeEach(() => {
+  beforeAll(async () => {
+    await appIsReady
+  })
+
+  afterAll(() => server.stop())
+
+  beforeEach(async () => {
     mydata = {
-      getData: sinon.stub(),
-      saveData: sinon.stub(),
+      getData: jest.fn(),
+      saveData: jest.fn(),
     }
-
-    const { server } = require(`${process.cwd()}/dist/server`)
+    // @ts-ignore
     const context = server.context({})
 
+    // @ts-ignore
     server.context = () => ({
       ...context,
-      mydata,
       headers: {
         token: 'sometoken',
       },
+      mydata,
     })
 
     const client = createTestClient(server)
@@ -50,7 +56,7 @@ describe('#educations', () => {
 
   describe('getEducations', () => {
     beforeEach(() => {
-      mydata.getData.resolves([
+      mydata.getData.mockResolvedValue([
         {
           name: 'Simon',
         },
@@ -62,13 +68,13 @@ describe('#educations', () => {
         query: GET_EDUCATIONS,
       })
 
-      expect(data.getEducations[0].name).to.equal('Simon')
+      expect(data.getEducations[0].name).toBe('Simon')
     })
   })
 
   describe('addEducation', () => {
     beforeEach(() => {
-      mydata.saveData.resolves([
+      mydata.saveData.mockResolvedValue([
         {
           id: '123',
           name: 'Simon :)',
@@ -87,7 +93,7 @@ describe('#educations', () => {
         },
       })
 
-      expect(addEducation[0].name).to.equal('Simon :)')
+      expect(addEducation[0].name).toBe('Simon :)')
     })
   })
 })

@@ -1,5 +1,4 @@
 import { RedisCache } from 'apollo-server-cache-redis'
-import { Context } from 'apollo-server-core'
 import { ApolloServer } from 'apollo-server-express'
 import bodyParser from 'body-parser'
 import express from 'express'
@@ -15,7 +14,6 @@ import config from './config'
 import schema from './graphql/schema'
 import { onConsentApproved } from './services/consents'
 import { getConsentRequest } from './services/db'
-import { IApolloServerContext } from './typings/context'
 
 const app = express()
 app.set('etag', 'strong')
@@ -27,9 +25,10 @@ app.use(
   })
 )
 
-// Mydata mydataOperator approval route
+// MyData approval route
 app.get('/approved/:id', async (req, res) => {
-  const result = await getConsentRequest(req.params.id)
+  const result = await getConsentRequest<{ accessToken: string }>(req.params.id)
+
   if (result) {
     res.send({
       accessToken: result.accessToken,
@@ -39,14 +38,19 @@ app.get('/approved/:id', async (req, res) => {
   }
 })
 
-const server = new ApolloServer({
+app.use(mydataRoutes)
+mydataEvents.on('CONSENT_APPROVED', onConsentApproved)
+
+/**
+ * GraphQL
+ */
+export const server = new ApolloServer({
   cache: new RedisCache({
     host: config.REDIS_API_HOST,
     port: config.REDIS_API_PORT,
+    password: config.REDIS_API_PASSWORD,
   }),
-  context: ({
-    req: { headers = {} } = {},
-  }: Context<any>): IApolloServerContext => ({
+  context: ({ req: { headers = {} } = {} }) => ({
     headers,
     mydata: {
       consents,
@@ -62,22 +66,18 @@ server.applyMiddleware({
   path: '/graphql',
 })
 
-app.use(mydataRoutes)
-mydataEvents.on('CONSENT_APPROVED', onConsentApproved)
-
 /**
  * Start
  */
+
 const port = config.SERVER_PORT
 
-const appInstance = app
-  .listen(port, () => {
+export const appIsReady: Promise<Boolean> = new Promise(resolve =>
+  app.listen(port, () => {
     mydataConnect()
     console.log(`Listening on port: ${port}`)
+    resolve(true)
   })
-  .setTimeout(60000 * 20)
+)
 
-export default {
-  app: appInstance,
-  server,
-}
+export default server

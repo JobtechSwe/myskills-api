@@ -1,6 +1,5 @@
-import reqdir from 'require-dir'
 import { gql } from 'apollo-server-express'
-const types = reqdir('./')
+import * as types from './typesIndex'
 
 const typeDefs = gql`
   type Login {
@@ -62,6 +61,7 @@ const typeDefs = gql`
     getSkills: [Skill]!
   }
 `
+
 const typesTypedefs = [...Object.values(types)].map(
   (type: any) => type.typeDefs
 )

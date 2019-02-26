@@ -1,7 +1,9 @@
 import config from '../config'
+import { Area } from '../types'
 import { saveConsent, saveConsentRequest } from './db'
+import { Consent } from '@mydata/client'
 
-export interface IScope {
+export interface Scope {
   area: Area
   description: string
   domain: string
@@ -9,60 +11,39 @@ export interface IScope {
   permissions: string[]
   purpose: string
 }
-export interface IDefaultRequest {
+
+export interface DefaultRequest {
   expiry: number
-  scope: IScope[]
+  scope: Scope[]
 }
 
-const defaultRequest = (durationInSeconds: number): IDefaultRequest => ({
+const createConsent = (area: Area) => ({
+  area,
+  description:
+    'A list of your work experiences, educations, language proficiencies and so on that you have entered in the service.',
+  domain: config.DOMAIN,
+  lawfulBasis: 'CONSENT',
+  permissions: ['write'],
+  purpose: 'In order to create a CV using our website.',
+})
+
+const defaultRequest = (durationInSeconds: number): DefaultRequest => ({
   expiry: Math.round(Date.now() / 1000 + durationInSeconds),
   scope: [
-    {
-      area: Area.languages,
-      description:
-        'A list of your work experiences, educations, language proficiencies and so on that you have entered in the service.',
-      domain: config.DOMAIN,
-      lawfulBasis: 'CONSENT',
-      permissions: ['write'],
-      purpose: 'In order to create a CV using our website.',
-    },
-    {
-      area: Area.educations,
-      description:
-        'A list of your work experiences, educations, language proficiencies and so on that you have entered in the service.',
-      domain: config.DOMAIN,
-      lawfulBasis: 'CONSENT',
-      permissions: ['write'],
-      purpose: 'In order to create a CV using our website.',
-    },
-    {
-      area: Area.experiences,
-      description:
-        'A list of your work experiences, educations, language proficiencies and so on that you have entered in the service.',
-      domain: config.DOMAIN,
-      lawfulBasis: 'CONSENT',
-      permissions: ['write'],
-      purpose: 'In order to create a CV using our website.',
-    },
-    {
-      area: Area.skills,
-      description:
-        'A list of your work skills, educations, language proficiencies and so on that you have entered in the service.',
-      domain: config.DOMAIN,
-      lawfulBasis: 'CONSENT',
-      permissions: ['write'],
-      purpose: 'In order to create a CV using our website.',
-    },
+    createConsent(Area.languages),
+    createConsent(Area.educations),
+    createConsent(Area.experiences),
+    createConsent(Area.skills),
   ],
 })
 
-const onConsentApproved = async (consent: any) => {
+const onConsentApproved = async (consent: Consent) => {
   console.log('consent: ', consent)
   try {
     await saveConsent(consent)
     await saveConsentRequest(consent)
   } catch (e) {
-    console.log('write error: ', e)
+    throw new Error(`write error: ${e}`)
   }
 }
 

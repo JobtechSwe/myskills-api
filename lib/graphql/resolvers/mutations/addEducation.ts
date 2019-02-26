@@ -1,4 +1,5 @@
-import { MutationResolvers, Education } from '../../../__generated__/myskills'
+import { Education, MutationResolvers } from '../../../__generated__/myskills'
+import { Area } from '../../../types'
 
 export const addEducation: MutationResolvers.AddEducationResolver = async (
   _,
@@ -6,14 +7,14 @@ export const addEducation: MutationResolvers.AddEducationResolver = async (
   { headers: { token }, mydata }
 ) => {
   try {
-    return mydata.saveData<Education>({
+    const result = await mydata.saveData<Education>({
       area: Area.educations,
       data: education,
       token,
     })
+
+    return result
   } catch (e) {
     throw new Error(`Add education error: ${e}`)
   }
 }
-
-export default addEducation

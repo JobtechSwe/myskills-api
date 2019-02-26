@@ -10,10 +10,8 @@
     "sourceMap": true,
     "strict": true,
     "outDir": "dist",
-    "baseUrl": ".",
-    "paths": {
-      "*": ["node_modules/*", "lib/types/*"]
-    }
+    "baseUrl": "."
   },
-  "include": ["lib/**/*"]
+  "include": ["lib/**/*"],
+  "exclude": ["lib/**/__tests__/*", "lib/**/__mocks__/*"]
 }

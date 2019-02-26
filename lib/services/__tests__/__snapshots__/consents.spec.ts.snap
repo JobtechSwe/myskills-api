@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#defaultRequest it creates a default consent 1`] = `
+Object {
+  "expiry": 1551176880,
+  "scope": Array [
+    Object {
+      "area": "languages",
+      "description": "A list of your work experiences, educations, language proficiencies and so on that you have entered in the service.",
+      "domain": "http://localhost:3000",
+      "lawfulBasis": "CONSENT",
+      "permissions": Array [
+        "write",
+      ],
+      "purpose": "In order to create a CV using our website.",
+    },
+    Object {
+      "area": "educations",
+      "description": "A list of your work experiences, educations, language proficiencies and so on that you have entered in the service.",
+      "domain": "http://localhost:3000",
+      "lawfulBasis": "CONSENT",
+      "permissions": Array [
+        "write",
+      ],
+      "purpose": "In order to create a CV using our website.",
+    },
+    Object {
+      "area": "experiences",
+      "description": "A list of your work experiences, educations, language proficiencies and so on that you have entered in the service.",
+      "domain": "http://localhost:3000",
+      "lawfulBasis": "CONSENT",
+      "permissions": Array [
+        "write",
+      ],
+      "purpose": "In order to create a CV using our website.",
+    },
+    Object {
+      "area": "skills",
+      "description": "A list of your work experiences, educations, language proficiencies and so on that you have entered in the service.",
+      "domain": "http://localhost:3000",
+      "lawfulBasis": "CONSENT",
+      "permissions": Array [
+        "write",
+      ],
+      "purpose": "In order to create a CV using our website.",
+    },
+  ],
+}
+`;

@@ -129,7 +129,7 @@ import {
   GraphQLScalarTypeConfig,
 } from 'graphql'
 
-import { IApolloServerContext } from '../typings/context'
+import { ApolloServerContext } from '../typings/context'
 
 export type Resolver<Result, Parent = {}, TContext = {}, Args = {}> = (
   parent: Parent,
@@ -181,7 +181,7 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
 ) => TResult | Promise<TResult>
 
 export namespace QueryResolvers {
-  export interface Resolvers<TContext = IApolloServerContext, TypeParent = {}> {
+  export interface Resolvers<TContext = ApolloServerContext, TypeParent = {}> {
     /** Get languages */
     getLanguages?: GetLanguagesResolver<Language[], TypeParent, TContext>
     /** Get educations */
@@ -203,28 +203,28 @@ export namespace QueryResolvers {
   export type GetLanguagesResolver<
     R = Language[],
     Parent = {},
-    TContext = IApolloServerContext
+    TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
   export type GetEducationsResolver<
     R = (Maybe<Education>)[],
     Parent = {},
-    TContext = IApolloServerContext
+    TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
   export type GetExperiencesResolver<
     R = (Maybe<Experience>)[],
     Parent = {},
-    TContext = IApolloServerContext
+    TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
   export type GetSkillsResolver<
     R = (Maybe<Skill>)[],
     Parent = {},
-    TContext = IApolloServerContext
+    TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
 }
 
 export namespace EducationResolvers {
   export interface Resolvers<
-    TContext = IApolloServerContext,
+    TContext = ApolloServerContext,
     TypeParent = Education
   > {
     id?: IdResolver<string, TypeParent, TContext>
@@ -235,18 +235,18 @@ export namespace EducationResolvers {
   export type IdResolver<
     R = string,
     Parent = Education,
-    TContext = IApolloServerContext
+    TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
   export type NameResolver<
     R = Maybe<string>,
     Parent = Education,
-    TContext = IApolloServerContext
+    TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
 }
 
 export namespace ExperienceResolvers {
   export interface Resolvers<
-    TContext = IApolloServerContext,
+    TContext = ApolloServerContext,
     TypeParent = Experience
   > {
     id?: IdResolver<string, TypeParent, TContext>
@@ -259,23 +259,23 @@ export namespace ExperienceResolvers {
   export type IdResolver<
     R = string,
     Parent = Experience,
-    TContext = IApolloServerContext
+    TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
   export type NameResolver<
     R = Maybe<string>,
     Parent = Experience,
-    TContext = IApolloServerContext
+    TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
   export type YearsResolver<
     R = string,
     Parent = Experience,
-    TContext = IApolloServerContext
+    TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
 }
 
 export namespace SkillResolvers {
   export interface Resolvers<
-    TContext = IApolloServerContext,
+    TContext = ApolloServerContext,
     TypeParent = Skill
   > {
     id?: IdResolver<string, TypeParent, TContext>
@@ -286,17 +286,17 @@ export namespace SkillResolvers {
   export type IdResolver<
     R = string,
     Parent = Skill,
-    TContext = IApolloServerContext
+    TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
   export type NameResolver<
     R = Maybe<string>,
     Parent = Skill,
-    TContext = IApolloServerContext
+    TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
 }
 
 export namespace MutationResolvers {
-  export interface Resolvers<TContext = IApolloServerContext, TypeParent = {}> {
+  export interface Resolvers<TContext = ApolloServerContext, TypeParent = {}> {
     /** Login an existing user */
     login?: LoginResolver<Login, TypeParent, TContext>
     /** Add languages */
@@ -320,12 +320,12 @@ export namespace MutationResolvers {
   export type LoginResolver<
     R = Login,
     Parent = {},
-    TContext = IApolloServerContext
+    TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
   export type AddLanguageResolver<
     R = (Maybe<Language>)[],
     Parent = {},
-    TContext = IApolloServerContext
+    TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext, AddLanguageArgs>
   export interface AddLanguageArgs {
     language: Language
@@ -334,7 +334,7 @@ export namespace MutationResolvers {
   export type AddExperienceResolver<
     R = (Maybe<Experience>)[],
     Parent = {},
-    TContext = IApolloServerContext
+    TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext, AddExperienceArgs>
   export interface AddExperienceArgs {
     experience: ExperienceInput
@@ -343,7 +343,7 @@ export namespace MutationResolvers {
   export type AddEducationResolver<
     R = (Maybe<Education>)[],
     Parent = {},
-    TContext = IApolloServerContext
+    TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext, AddEducationArgs>
   export interface AddEducationArgs {
     education: EducationInput
@@ -352,7 +352,7 @@ export namespace MutationResolvers {
   export type AddSkillResolver<
     R = (Maybe<Skill>)[],
     Parent = {},
-    TContext = IApolloServerContext
+    TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext, AddSkillArgs>
   export interface AddSkillArgs {
     skill: SkillInput
@@ -361,7 +361,7 @@ export namespace MutationResolvers {
 
 export namespace LoginResolvers {
   export interface Resolvers<
-    TContext = IApolloServerContext,
+    TContext = ApolloServerContext,
     TypeParent = Login
   > {
     id?: IdResolver<string, TypeParent, TContext>
@@ -372,19 +372,19 @@ export namespace LoginResolvers {
   export type IdResolver<
     R = string,
     Parent = Login,
-    TContext = IApolloServerContext
+    TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
   export type ExpiresResolver<
     R = string,
     Parent = Login,
-    TContext = IApolloServerContext
+    TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
 }
 
 export type CacheControlDirectiveResolver<Result> = DirectiveResolverFn<
   Result,
   CacheControlDirectiveArgs,
-  IApolloServerContext
+  ApolloServerContext
 >
 export interface CacheControlDirectiveArgs {
   maxAge?: Maybe<number>
@@ -396,7 +396,7 @@ export interface CacheControlDirectiveArgs {
 export type SkipDirectiveResolver<Result> = DirectiveResolverFn<
   Result,
   SkipDirectiveArgs,
-  IApolloServerContext
+  ApolloServerContext
 >
 export interface SkipDirectiveArgs {
   /** Skipped when true. */
@@ -407,7 +407,7 @@ export interface SkipDirectiveArgs {
 export type IncludeDirectiveResolver<Result> = DirectiveResolverFn<
   Result,
   IncludeDirectiveArgs,
-  IApolloServerContext
+  ApolloServerContext
 >
 export interface IncludeDirectiveArgs {
   /** Included when true. */
@@ -418,7 +418,7 @@ export interface IncludeDirectiveArgs {
 export type DeprecatedDirectiveResolver<Result> = DirectiveResolverFn<
   Result,
   DeprecatedDirectiveArgs,
-  IApolloServerContext
+  ApolloServerContext
 >
 export interface DeprecatedDirectiveArgs {
   /** Explains why this element was deprecated, usually also including a suggestion for how to access supported similar data. Formatted using the Markdown syntax (as specified by [CommonMark](https://commonmark.org/). */
@@ -446,7 +446,7 @@ export interface UUIDScalarConfig extends GraphQLScalarTypeConfig<Uuid, any> {
   name: 'UUID'
 }
 
-export interface IResolvers<TContext = IApolloServerContext> {
+export interface IResolvers<TContext = ApolloServerContext> {
   Query?: QueryResolvers.Resolvers<TContext>
   Education?: EducationResolvers.Resolvers<TContext>
   Experience?: ExperienceResolvers.Resolvers<TContext>

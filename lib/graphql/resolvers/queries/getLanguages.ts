@@ -1,9 +1,19 @@
+import { Area } from '../../../types'
 import { Language, QueryResolvers } from '../../../__generated__/myskills'
 
-export const getLanguages: QueryResolvers.GetLanguagesResolver = (
+export const getLanguages: QueryResolvers.GetLanguagesResolver = async (
   _,
   _args,
   { headers: { token }, mydata }
-) => mydata.getData<Language[]>({ token, area: Area.languages })
+) => {
+  try {
+    const result = await mydata.getData<Language[]>({
+      token,
+      area: Area.languages,
+    })
 
-export default getLanguages
+    return result
+  } catch (e) {
+    throw new Error(e)
+  }
+}

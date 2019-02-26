@@ -2,8 +2,7 @@ import { GraphQLDate } from 'graphql-iso-date'
 import jsonType from 'graphql-type-json'
 import { merge } from 'lodash'
 import resolvers from './resolvers'
-import typeDefsz from './types'
-
+import typeDefs from './types'
 import {
   GraphQLEmail,
   GraphQLPassword,
@@ -28,5 +27,5 @@ const customScalarResolvers = {
 
 export default {
   resolvers: merge(resolvers, customScalarResolvers),
-  typeDefs: [customScalarSchema, ...typeDefsz],
+  typeDefs: [customScalarSchema, ...typeDefs],
 }
