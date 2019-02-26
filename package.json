@@ -8,13 +8,13 @@
     "start": "node dist/server.js",
     "dev": "ts-node-dev --no-notify lib/server.ts",
     "format": "prettier --write \"lib/**/*.js\"",
-    "integration": "jest --detectOpenHandles --config ./jest-integration.config.js",
+    "integration": "jest --config ./jest-integration.config.js",
     "lint": "eslint 'lib/**/*.{ts,tsx}'",
     "build": "npm run lint && npm run unit && npm run build-ts",
     "build-ts": "tsc",
     "build-ts:watch": "tsc -w",
-    "unit": "jest --detectOpenHandles",
-    "unit:watch": "jest --verbose --watch --detectOpenHandles",
+    "unit": "jest",
+    "unit:watch": "jest --verbose --watch",
     "generate": "gql-gen --config codegen.yml"
   },
   "repository": {
