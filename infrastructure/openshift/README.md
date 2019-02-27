@@ -1,3 +1,17 @@
+# How to do things
+
+## Assumptions
+
+Before you begin, this guide assumes that...
+
+- ...you have the OpenShift CLI installed (oc) version 3.x
+- ...you have a functioning OpenShift cluster
+- ...you have created a project namespace (example: `myskills`)
+- ...you have run `oc login` towards your OpenShift cluster
+- ...you are set oc to use your project `oc project myskills`
+
+### Secrets
+
 #### Github hook
 
 - Create a github hook with a secret and store it somewhere (we used Lastpass for it)
