@@ -1,21 +1,24 @@
 import { gql } from 'apollo-server-express'
 import server, { appIsReady } from '../../lib/server'
 import { getClient } from './integrationUtils'
+import { skillInput } from './__fixtures__/skills'
 
 const GET_SKILLS = gql`
   query getSkills {
     getSkills {
-      id
-      name
+      conceptId
+      term
+      type
     }
   }
 `
 
 const ADD_SKILL = gql`
-  mutation addSkill($name: String!, $id: String!) {
-    addSkill(skill: { name: $name, id: $id }) {
-      id
-      name
+  mutation addSkill($conceptId: String!, $term: String!, $type: String!) {
+    addSkill(skill: { conceptId: $conceptId, term: $term, type: $type }) {
+      conceptId
+      term
+      type
     }
   }
 `
@@ -48,12 +51,7 @@ describe('#skills', () => {
 
   describe('getSkills', () => {
     beforeEach(() => {
-      mydata.getData.mockResolvedValue([
-        {
-          id: 'someId',
-          name: 'Simon',
-        },
-      ])
+      mydata.getData.mockResolvedValue([skillInput])
     })
 
     it('should get skills', async () => {
@@ -61,18 +59,15 @@ describe('#skills', () => {
         query: GET_SKILLS,
       })
 
-      expect(data.getSkills[0].name).toBe('Simon')
+      const addedSkill = data.getSkills[0]
+
+      expect(addedSkill).toMatchObject(skillInput)
     })
   })
 
   describe('addSkill', () => {
     beforeEach(() => {
-      mydata.saveData.mockResolvedValue([
-        {
-          id: '123',
-          name: 'Simon :)',
-        },
-      ])
+      mydata.saveData.mockResolvedValue([skillInput])
     })
 
     it('should be possible to add a skill', async () => {
@@ -80,13 +75,11 @@ describe('#skills', () => {
         data: { addSkill },
       } = await mutate({
         mutation: ADD_SKILL,
-        variables: {
-          id: 'id',
-          name: 'simon',
-        },
+        variables: skillInput,
       })
 
-      expect(addSkill[0].name).toBe('Simon :)')
+      const addedSkill = addSkill[0]
+      expect(addedSkill).toMatchObject(skillInput)
     })
   })
 })

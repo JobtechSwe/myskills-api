@@ -208,7 +208,7 @@
         "description": "",
         "fields": [
           {
-            "name": "id",
+            "name": "conceptId",
             "description": "",
             "args": [],
             "type": {
@@ -220,10 +220,26 @@
             "deprecationReason": null
           },
           {
-            "name": "name",
+            "name": "term",
             "description": "",
             "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "type",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -494,7 +510,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "id",
+            "name": "conceptId",
             "description": "",
             "type": {
               "kind": "NON_NULL",
@@ -504,9 +520,23 @@
             "defaultValue": null
           },
           {
-            "name": "name",
+            "name": "term",
             "description": "",
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "type",
+            "description": "",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
             "defaultValue": null
           }
         ],

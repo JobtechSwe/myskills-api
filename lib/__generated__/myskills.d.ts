@@ -15,9 +15,11 @@ export interface EducationInput {
 }
 
 export interface SkillInput {
-  id: string
+  conceptId: string
 
-  name?: Maybe<string>
+  term: string
+
+  type: string
 }
 
 export enum Language {
@@ -82,9 +84,11 @@ export interface Experience {
 }
 
 export interface Skill {
-  id: string
+  conceptId: string
 
-  name?: Maybe<string>
+  term: string
+
+  type: string
 }
 
 export interface Mutation {
@@ -278,18 +282,25 @@ export namespace SkillResolvers {
     TContext = ApolloServerContext,
     TypeParent = Skill
   > {
-    id?: IdResolver<string, TypeParent, TContext>
+    conceptId?: ConceptIdResolver<string, TypeParent, TContext>
 
-    name?: NameResolver<Maybe<string>, TypeParent, TContext>
+    term?: TermResolver<string, TypeParent, TContext>
+
+    type?: TypeResolver<string, TypeParent, TContext>
   }
 
-  export type IdResolver<
+  export type ConceptIdResolver<
     R = string,
     Parent = Skill,
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
-  export type NameResolver<
-    R = Maybe<string>,
+  export type TermResolver<
+    R = string,
+    Parent = Skill,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type TypeResolver<
+    R = string,
     Parent = Skill,
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
