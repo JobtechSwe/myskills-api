@@ -1,5 +1,15 @@
 export type Maybe<T> = T | null
 
+export interface TaxonomyQueryInput {
+  offset?: Maybe<number>
+
+  limit?: Maybe<number>
+
+  q?: Maybe<string>
+
+  type?: Maybe<Type>
+}
+
 export interface ExperienceInput {
   id: string
 
@@ -25,6 +35,10 @@ export interface SkillInput {
 export enum Language {
   Spanish = 'spanish',
   Swedish = 'swedish',
+}
+
+export enum Type {
+  Skill = 'skill',
 }
 
 export enum CacheControlScope {
@@ -55,6 +69,16 @@ export type Uuid = any
 // ====================================================
 
 // ====================================================
+// Interfaces
+// ====================================================
+
+export interface TaxonomyResponse {
+  search: Search
+
+  total?: Maybe<number>
+}
+
+// ====================================================
 // Types
 // ====================================================
 
@@ -67,6 +91,8 @@ export interface Query {
   getExperiences: (Maybe<Experience>)[]
   /** Get skills */
   getSkills: (Maybe<Skill>)[]
+  /** Get skills from taxonomy */
+  getSkillsFromTaxonomy: TaxonomySkillsResponse
 }
 
 export interface Education {
@@ -89,6 +115,28 @@ export interface Skill {
   term: string
 
   type: string
+}
+
+export interface TaxonomySkillsResponse extends TaxonomyResponse {
+  search: Search
+
+  total?: Maybe<number>
+
+  result: (Maybe<SkillsFromTaxonomy>)[]
+}
+
+export interface Search {
+  offset?: Maybe<number>
+
+  limit?: Maybe<number>
+}
+
+export interface SkillsFromTaxonomy {
+  conceptId?: Maybe<string>
+
+  term?: Maybe<string>
+
+  type?: Maybe<string>
 }
 
 export interface Mutation {
@@ -114,6 +162,9 @@ export interface Login {
 // Arguments
 // ====================================================
 
+export interface GetSkillsFromTaxonomyQueryArgs {
+  params?: Maybe<TaxonomyQueryInput>
+}
 export interface AddLanguageMutationArgs {
   language: Language
 }
@@ -202,6 +253,12 @@ export namespace QueryResolvers {
     >
     /** Get skills */
     getSkills?: GetSkillsResolver<(Maybe<Skill>)[], TypeParent, TContext>
+    /** Get skills from taxonomy */
+    getSkillsFromTaxonomy?: GetSkillsFromTaxonomyResolver<
+      TaxonomySkillsResponse,
+      TypeParent,
+      TContext
+    >
   }
 
   export type GetLanguagesResolver<
@@ -224,6 +281,14 @@ export namespace QueryResolvers {
     Parent = {},
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
+  export type GetSkillsFromTaxonomyResolver<
+    R = TaxonomySkillsResponse,
+    Parent = {},
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext, GetSkillsFromTaxonomyArgs>
+  export interface GetSkillsFromTaxonomyArgs {
+    params?: Maybe<TaxonomyQueryInput>
+  }
 }
 
 export namespace EducationResolvers {
@@ -302,6 +367,86 @@ export namespace SkillResolvers {
   export type TypeResolver<
     R = string,
     Parent = Skill,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+}
+
+export namespace TaxonomySkillsResponseResolvers {
+  export interface Resolvers<
+    TContext = ApolloServerContext,
+    TypeParent = TaxonomySkillsResponse
+  > {
+    search?: SearchResolver<Search, TypeParent, TContext>
+
+    total?: TotalResolver<Maybe<number>, TypeParent, TContext>
+
+    result?: ResultResolver<(Maybe<SkillsFromTaxonomy>)[], TypeParent, TContext>
+  }
+
+  export type SearchResolver<
+    R = Search,
+    Parent = TaxonomySkillsResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type TotalResolver<
+    R = Maybe<number>,
+    Parent = TaxonomySkillsResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type ResultResolver<
+    R = (Maybe<SkillsFromTaxonomy>)[],
+    Parent = TaxonomySkillsResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+}
+
+export namespace SearchResolvers {
+  export interface Resolvers<
+    TContext = ApolloServerContext,
+    TypeParent = Search
+  > {
+    offset?: OffsetResolver<Maybe<number>, TypeParent, TContext>
+
+    limit?: LimitResolver<Maybe<number>, TypeParent, TContext>
+  }
+
+  export type OffsetResolver<
+    R = Maybe<number>,
+    Parent = Search,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type LimitResolver<
+    R = Maybe<number>,
+    Parent = Search,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+}
+
+export namespace SkillsFromTaxonomyResolvers {
+  export interface Resolvers<
+    TContext = ApolloServerContext,
+    TypeParent = SkillsFromTaxonomy
+  > {
+    conceptId?: ConceptIdResolver<Maybe<string>, TypeParent, TContext>
+
+    term?: TermResolver<Maybe<string>, TypeParent, TContext>
+
+    type?: TypeResolver<Maybe<string>, TypeParent, TContext>
+  }
+
+  export type ConceptIdResolver<
+    R = Maybe<string>,
+    Parent = SkillsFromTaxonomy,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type TermResolver<
+    R = Maybe<string>,
+    Parent = SkillsFromTaxonomy,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type TypeResolver<
+    R = Maybe<string>,
+    Parent = SkillsFromTaxonomy,
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
 }
@@ -392,6 +537,17 @@ export namespace LoginResolvers {
   > = Resolver<R, Parent, TContext>
 }
 
+export namespace TaxonomyResponseResolvers {
+  export interface Resolvers {
+    __resolveType: ResolveType
+  }
+  export type ResolveType<
+    R = 'TaxonomySkillsResponse',
+    Parent = TaxonomySkillsResponse,
+    TContext = ApolloServerContext
+  > = TypeResolveFn<R, Parent, TContext>
+}
+
 export type CacheControlDirectiveResolver<Result> = DirectiveResolverFn<
   Result,
   CacheControlDirectiveArgs,
@@ -462,8 +618,12 @@ export interface IResolvers<TContext = ApolloServerContext> {
   Education?: EducationResolvers.Resolvers<TContext>
   Experience?: ExperienceResolvers.Resolvers<TContext>
   Skill?: SkillResolvers.Resolvers<TContext>
+  TaxonomySkillsResponse?: TaxonomySkillsResponseResolvers.Resolvers<TContext>
+  Search?: SearchResolvers.Resolvers<TContext>
+  SkillsFromTaxonomy?: SkillsFromTaxonomyResolvers.Resolvers<TContext>
   Mutation?: MutationResolvers.Resolvers<TContext>
   Login?: LoginResolvers.Resolvers<TContext>
+  TaxonomyResponse?: TaxonomyResponseResolvers.Resolvers
   Date?: GraphQLScalarType
   Email?: GraphQLScalarType
   Json?: GraphQLScalarType

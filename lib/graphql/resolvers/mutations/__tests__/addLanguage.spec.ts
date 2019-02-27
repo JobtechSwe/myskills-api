@@ -1,5 +1,5 @@
 import { addLanguage } from '../addLanguage'
-import { Language } from 'lib/__generated__/myskills'
+import { Language } from '../../../../__generated__/myskills'
 
 const args = {
   language: 'swedish' as Language,

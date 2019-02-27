@@ -59,6 +59,11 @@ const typeDefs = gql`
     Get skills
     """
     getSkills: [Skill]!
+
+    """
+    Get skills from taxonomy
+    """
+    getSkillsFromTaxonomy(params: TaxonomyQueryInput): TaxonomySkillsResponse!
   }
 `
 
