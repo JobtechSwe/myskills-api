@@ -78,6 +78,16 @@ spec:
                   name: redis-ci-password
             - name: MYDATA_OPERATOR
               value: "https://operator-ci.dev.services.jtech.se"
+            - name: MYDATA_OPERATOR_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: private.key
+                  name: mydata-operator
+            - name: MYDATA_OPERATOR_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: public.key
+                  name: mydata-operator
           image: api:latest
           imagePullPolicy: Always
           name: api-ci
@@ -104,3 +114,42 @@ spec:
           kind: ImageStreamTag
           name: "api:latest"
       type: ImageChange
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ci
+  name: api-ci
+spec:
+  ports:
+    - name: http
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+  selector:
+    app: ci
+    deploymentconfig: api-ci
+  type: ClusterIP
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: ci
+  name: api-ci
+spec:
+  host: api.myskills-ci.dev.services.jtech.se
+  port:
+    targetPort: http
+  to:
+    kind: Service
+    name: api-ci
+    weight: 100
+  wildcardPolicy: None
+  # tls:
+  #   valueFrom:
+  #     secretKeyRef:
+  #       key: jtech.se.crt
+  #       name: tls
+  #   termination: edge

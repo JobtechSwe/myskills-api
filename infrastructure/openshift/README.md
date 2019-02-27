@@ -8,6 +8,14 @@
 oc create secret generic github-webhook-secret --from-literal=WebHookSecretKey=create-this-in-github
 ```
 
+#### MyData certificates
+
+- Request certificates from [MyData](http://TODO.link.to.real.mydata.page) and create an Openshift secret (`mydata-operator` that will be referenced in the `api.yml`)
+
+```bash
+oc create secret generic mydata-operator --from-file=/tmp/public.key --from-file=/tmp/private.key
+```
+
 ## CI
 
 #### Prepare dependencies
@@ -27,6 +35,14 @@ oc create secret generic redis-ci-password --from-literal=database-password=crea
 
 #### Deploy CI
 
+##### Deploy the whole stack
+
 ```bash
 oc apply -f ./ci
+```
+
+##### Delete the whole stack
+
+```bash
+oc delete -f ./ci
 ```
