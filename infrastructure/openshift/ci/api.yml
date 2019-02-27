@@ -14,7 +14,7 @@ spec:
   runPolicy: Serial
   source:
     git:
-      ref: feature/ci
+      ref: master
       uri: "https://github.com/JobtechSwe/myskills-api"
     type: Git
   strategy:
