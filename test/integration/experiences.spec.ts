@@ -1,6 +1,7 @@
 import { gql } from 'apollo-server-express'
 import { createTestClient } from 'apollo-server-testing'
 import server, { appIsReady } from '../../lib/server'
+import { getClient } from './integrationUtils'
 
 const GET_EXPERIENCES = gql`
   query getExperiences {
@@ -36,21 +37,14 @@ describe('#experiences', () => {
       getData: jest.fn(),
       saveData: jest.fn(),
     }
-    //@ts-ignore
-    const context = server.context({})
-
-    //@ts-ignore
-    server.context = () => ({
-      ...context,
-      headers: {
-        token: 'sometoken',
+    ;({ query, mutate } = getClient(server, {
+      context: {
+        headers: {
+          token: 'sometoken',
+        },
+        mydata,
       },
-      mydata,
-    })
-
-    const client = createTestClient(server)
-    mutate = client.mutate
-    query = client.query
+    }))
   })
 
   describe('getExperiences', () => {
