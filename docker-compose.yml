@@ -2,5 +2,39 @@ version: '3'
 services:
   redis-api:
     image: redis:5.0
+    networks:
+      mydata:
+        aliases:
+          - redis-api
     ports:
-      - 6380:6379
+      - 6379:6379
+  postgres:
+    image: postgres:9.6
+    ports:
+      - 5432:5432
+    networks:
+      mydata:
+        aliases:
+          - postgres
+    environment:
+      - POSTGRES_USER=postgresuser
+      - POSTGRES_PASSWORD=postgrespassword
+      - POSTGRES_DB=mydata
+      - POSTGRES_INITDB_ARGS=--encoding=utf8
+  mydata-operator:
+    image: operator
+    networks:
+      mydata:
+        aliases:
+          - operator
+    environment:
+      - PORT=6000
+      - PGHOST=postgres
+      - PGUSER=postgresuser
+      - PGPASSWORD=postgrespassword
+      - PGDATABASE=mydata
+      - REDIS=redis://redis-api:6379/
+networks:
+  mydata:
+    external:
+      name: mydata
