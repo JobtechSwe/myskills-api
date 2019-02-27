@@ -73,7 +73,7 @@ describe('#educations', () => {
       ])
     })
 
-    it.only('should be possible to add an education', async () => {
+    it('should be possible to add an education', async () => {
       const {
         data: { addEducation },
       } = await mutate({

@@ -37,7 +37,7 @@ describe('getSkillsFromTaxonomy', () => {
       },
     }))
   })
-  it.only('should get skills from taxonomy', async () => {
+  it('should get skills from taxonomy', async () => {
     const response = await query({
       query: GET_SKILLS_FROM_TAXONOMY,
       variables: { offset: 0, limit: 10 },

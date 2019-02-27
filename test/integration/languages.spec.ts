@@ -14,7 +14,7 @@ const ADD_LANGUAGE = gql`
   }
 `
 
-describe.only('#Languages', () => {
+describe('#Languages', () => {
   let query: any
   let mutate: any
   let mydata: { getData: any; saveData: any }
@@ -53,7 +53,7 @@ describe.only('#Languages', () => {
     })
   })
 
-  describe.only('addLanguage', () => {
+  describe('addLanguage', () => {
     enum Language {
       Swedish = 'swedish',
       English = 'english',
