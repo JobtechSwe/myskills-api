@@ -1,5 +1,4 @@
 import { gql } from 'apollo-server-express'
-import { createTestClient } from 'apollo-server-testing'
 import server, { appIsReady } from '../../lib/server'
 import { getClient } from './integrationUtils'
 
