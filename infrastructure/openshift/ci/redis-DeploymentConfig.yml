@@ -76,25 +76,8 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
-        # - emptyDir: {}
         - name: redis-ci-data
           persistentVolumeClaim:
             claimName: redis-ci-pvc
   triggers:
     - type: ConfigChange
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: ci
-  name: redis-ci
-spec:
-  ports:
-    - name: redis
-      port: 6379
-      protocol: TCP
-      targetPort: 6379
-  selector:
-    name: redis-ci
-  type: ClusterIP
