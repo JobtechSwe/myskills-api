@@ -76,6 +76,8 @@ spec:
                 secretKeyRef:
                   key: database-password
                   name: redis-ci-password
+            - name: MYDATA_OPERATOR
+              value: "https://operator-ci.dev.services.jtech.se"
           image: api:latest
           imagePullPolicy: Always
           name: api-ci

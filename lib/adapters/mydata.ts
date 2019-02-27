@@ -16,7 +16,7 @@ const config = {
   eventsPath: '/events',
   jwksPath: '/jwks',
   keyValueStore,
-  operator: 'http://localhost:4000',
+  operator: myConfig.MYDATA_OPERATOR,
 }
 
 interface Config {

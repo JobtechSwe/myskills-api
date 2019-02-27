@@ -5,6 +5,7 @@ dotenv.config()
 
 const defaults = {
   DOMAIN: 'http://localhost:3000',
+  MYDATA_OPERATOR: 'http://localhost:4000',
   REDIS_API_HOST: 'localhost',
   REDIS_API_PORT: 6380,
   REDIS_API_PASSWORD: undefined,
@@ -13,6 +14,7 @@ const defaults = {
 
 const config = _.pick({ ...defaults, ...process.env }, [
   'DOMAIN',
+  'MYDATA_OPERATOR',
   'REDIS_API_HOST',
   'REDIS_API_PORT',
   'REDIS_API_PASSWORD',
