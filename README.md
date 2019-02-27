@@ -11,6 +11,7 @@
   ```
   PORT=4000
   ```
+- Run the docker-services: `docker-compose up -d`
 - Run `npm run dev`.
 
 ### Start mydata app
