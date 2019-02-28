@@ -14,6 +14,7 @@ import config from './config'
 import schema from './graphql/schema'
 import { onConsentApproved } from './services/consents'
 import { getConsentRequest } from './services/db'
+import TaxonomyAPI from './adapters/taxonomy'
 
 const app = express()
 app.set('etag', 'strong')
@@ -25,7 +26,9 @@ app.use(
   })
 )
 
-// MyData approval route
+/**
+ * MyData - Approval Route
+ */
 app.get('/approved/:id', async (req, res) => {
   const result = await getConsentRequest<{ accessToken: string }>(req.params.id)
 
@@ -44,11 +47,18 @@ mydataEvents.on('CONSENT_APPROVED', onConsentApproved)
 /**
  * GraphQL
  */
+
 export const server = new ApolloServer({
   cache: new RedisCache({
     host: config.REDIS_API_HOST,
     port: config.REDIS_API_PORT,
     password: config.REDIS_API_PASSWORD,
+  }),
+  /**
+   * TODO(@all): Specify the right types
+   */
+  dataSources: () => ({
+    TaxonomyAPI: new TaxonomyAPI(),
   }),
   context: ({ req: { headers = {} } = {} }) => ({
     headers,
