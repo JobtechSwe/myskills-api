@@ -27,8 +27,11 @@ services:
       mydata:
         aliases:
           - operator
+    ports:
+      - 4000:4000
     environment:
-      - PORT=6000
+      - PORT=4000
+      - NODE_ENV=development
       - PGHOST=postgres
       - PGUSER=postgresuser
       - PGPASSWORD=postgrespassword
