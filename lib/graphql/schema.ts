@@ -17,6 +17,18 @@ const customScalarSchema = `
   scalar Password
 `
 
+const result = {
+  TaxonomyResult: {
+    __resolveType(obj: any) {
+      if (obj.type === 'skill') {
+        return 'TaxonomySkillResult'
+      }
+
+      return 'TaxonomyDefaultResult'
+    },
+  },
+}
+
 const customScalarResolvers = {
   GraphQLDate,
   GraphQLEmail,
@@ -26,6 +38,6 @@ const customScalarResolvers = {
 }
 
 export default {
-  resolvers: merge(resolvers, customScalarResolvers),
+  resolvers: merge(resolvers, customScalarResolvers, result),
   typeDefs: [customScalarSchema, ...typeDefs],
 }
