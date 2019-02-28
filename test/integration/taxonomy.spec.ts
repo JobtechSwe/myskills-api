@@ -1,7 +1,7 @@
 import { gql } from 'apollo-server-express'
 import server, { appIsReady } from '../../lib/server'
 import { getClient } from './integrationUtils'
-import { taxonomy, skill } from './__fixtures__/taxonomy'
+import * as taxonomyFixture from './__fixtures__/taxonomy'
 
 const GET_FROM_TAXONOMY = gql`
   query taxonomy($limit: Int, $offset: Int, $taxonomyType: TaxonomyType) {
@@ -43,14 +43,34 @@ describe('taxonomy', () => {
       variables: { offset: 0, limit: 10 },
     })
 
-    expect(data.taxonomy).toMatchObject(taxonomy)
+    expect(data.taxonomy).toMatchObject(taxonomyFixture.taxonomy)
   })
 
-  it('should be able to filter by taxonomy type', async () => {
-    const { data } = await query({
-      query: GET_FROM_TAXONOMY,
-      variables: { offset: 0, limit: 10, taxonomyType: 'skill' },
-    })
-    expect(data.taxonomy).toMatchObject(skill)
-  })
+  it.each`
+    taxonomyType           | fixture
+    ${'COUNTY'}            | ${taxonomyFixture.county}
+    ${'EDUCATION_FIELD_1'} | ${taxonomyFixture.educationField1}
+    ${'EDUCATION_FIELD_2'} | ${taxonomyFixture.educationField2}
+    ${'EDUCATION_FIELD_3'} | ${taxonomyFixture.educationField3}
+    ${'EDUCATION_LEVEL_1'} | ${taxonomyFixture.educationLevel1}
+    ${'EDUCATION_LEVEL_2'} | ${taxonomyFixture.educationLevel2}
+    ${'EDUCATION_LEVEL_3'} | ${taxonomyFixture.educationLevel3}
+    ${'LANGUAGE'}          | ${taxonomyFixture.language}
+    ${'MUNICIPALITY'}      | ${taxonomyFixture.municipality}
+    ${'OCCUPATION_FIELD'}  | ${taxonomyFixture.occupationField}
+    ${'OCCUPATION_GROUP'}  | ${taxonomyFixture.occupationGroup}
+    ${'OCCUPATION_NAME'}   | ${taxonomyFixture.occupationName}
+    ${'SKILL'}             | ${taxonomyFixture.skill}
+    ${'WORKTIME_EXTENT'}   | ${taxonomyFixture.worktimeExtent}
+  `(
+    'should be able to filter by taxonomy type: $taxonomyType',
+    async ({ taxonomyType, fixture }) => {
+      const { data } = await query({
+        query: GET_FROM_TAXONOMY,
+        variables: { offset: 0, limit: 10, taxonomyType },
+      })
+
+      expect(data.taxonomy).toEqual(fixture)
+    }
+  )
 })
