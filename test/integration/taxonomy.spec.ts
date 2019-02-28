@@ -43,7 +43,7 @@ describe('taxonomy', () => {
       variables: { offset: 0, limit: 10 },
     })
 
-    expect(data.taxonomy).toMatchObject(taxonomyFixture.taxonomy)
+    expect(data.taxonomy).toEqual(taxonomyFixture.taxonomy)
   })
 
   it.each`
