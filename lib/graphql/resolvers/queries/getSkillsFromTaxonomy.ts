@@ -1,14 +1,14 @@
 import {
   QueryResolvers,
   TaxonomySkillsResponse,
-  TaxonomyQueryInput,
+  GetSkillsFromTaxonomyQueryArgs,
 } from '../../../__generated__/myskills'
 import { get } from '../../../adapters/taxonomy'
 
 export const getSkillsFromTaxonomy: QueryResolvers.GetSkillsFromTaxonomyResolver = async (
   _,
-  args: TaxonomyQueryInput
+  args: GetSkillsFromTaxonomyQueryArgs
 ) => {
-  const data = await get<TaxonomySkillsResponse>(args)
+  const data = await get<TaxonomySkillsResponse>(args.params || {})
   return data
 }
