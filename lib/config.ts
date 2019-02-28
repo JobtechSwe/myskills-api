@@ -14,6 +14,9 @@ const defaults = {
   REDIS_API_PORT: 6380,
   REDIS_API_PASSWORD: undefined,
   SERVER_PORT: 3000,
+  TAXONOMY_URL_BASE: 'https://sokannonser.dev.services.jtech.se',
+  TAXONOMY_URL_PATH: '/vf/search',
+  TAXONOMY_API_KEY: 'apa',
 }
 
 const config = _.pick({ ...defaults, ...process.env }, [
@@ -25,6 +28,9 @@ const config = _.pick({ ...defaults, ...process.env }, [
   'REDIS_API_PORT',
   'REDIS_API_PASSWORD',
   'SERVER_PORT',
+  'TAXONOMY_URL_BASE',
+  'TAXONOMY_URL_PATH',
+  'TAXONOMY_API_KEY',
 ])
 
 export default config
