@@ -19,7 +19,6 @@ export const getClient = (
     })
   }
 
-  // @ts-ignore
   const client = createTestClient(server)
 
   return { mutate: client.mutate, query: client.query }
