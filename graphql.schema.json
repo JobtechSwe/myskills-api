@@ -90,7 +90,7 @@
             "deprecationReason": null
           },
           {
-            "name": "getSkillsFromTaxonomy",
+            "name": "taxonomy",
             "description": "Get skills from taxonomy",
             "args": [
               {
@@ -109,7 +109,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "TaxonomySkillsResponse",
+                "name": "TaxonomyResponse",
                 "ofType": null
               }
             },
@@ -303,7 +303,7 @@
           {
             "name": "type",
             "description": "",
-            "type": { "kind": "ENUM", "name": "Type", "ofType": null },
+            "type": { "kind": "ENUM", "name": "TaxonomyType", "ofType": null },
             "defaultValue": null
           }
         ],
@@ -323,7 +323,7 @@
       },
       {
         "kind": "ENUM",
-        "name": "Type",
+        "name": "TaxonomyType",
         "description": "",
         "fields": null,
         "inputFields": null,
@@ -334,13 +334,19 @@
             "description": "",
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "municipality",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "possibleTypes": null
       },
       {
         "kind": "OBJECT",
-        "name": "TaxonomySkillsResponse",
+        "name": "TaxonomyResponse",
         "description": "",
         "fields": [
           {
@@ -350,7 +356,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "Search", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "TaxonomySearch",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -359,7 +369,11 @@
             "name": "total",
             "description": "",
             "args": [],
-            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -374,8 +388,8 @@
                 "kind": "LIST",
                 "name": null,
                 "ofType": {
-                  "kind": "OBJECT",
-                  "name": "SkillsFromTaxonomy",
+                  "kind": "INTERFACE",
+                  "name": "TaxonomyResult",
                   "ofType": null
                 }
               }
@@ -385,48 +399,13 @@
           }
         ],
         "inputFields": null,
-        "interfaces": [
-          { "kind": "INTERFACE", "name": "TaxonomyResponse", "ofType": null }
-        ],
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
       {
-        "kind": "INTERFACE",
-        "name": "TaxonomyResponse",
-        "description": "",
-        "fields": [
-          {
-            "name": "search",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": { "kind": "OBJECT", "name": "Search", "ofType": null }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "total",
-            "description": "",
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": [
-          { "kind": "OBJECT", "name": "TaxonomySkillsResponse", "ofType": null }
-        ]
-      },
-      {
         "kind": "OBJECT",
-        "name": "Search",
+        "name": "TaxonomySearch",
         "description": "",
         "fields": [
           {
@@ -452,15 +431,19 @@
         "possibleTypes": null
       },
       {
-        "kind": "OBJECT",
-        "name": "SkillsFromTaxonomy",
+        "kind": "INTERFACE",
+        "name": "TaxonomyResult",
         "description": "",
         "fields": [
           {
             "name": "conceptId",
             "description": "",
             "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -468,7 +451,11 @@
             "name": "term",
             "description": "",
             "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -476,15 +463,22 @@
             "name": "type",
             "description": "",
             "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
         ],
         "inputFields": null,
-        "interfaces": [],
+        "interfaces": null,
         "enumValues": null,
-        "possibleTypes": null
+        "possibleTypes": [
+          { "kind": "OBJECT", "name": "TaxonomyDefaultResult", "ofType": null },
+          { "kind": "OBJECT", "name": "TaxonomySkillResult", "ofType": null }
+        ]
       },
       {
         "kind": "OBJECT",
@@ -1543,6 +1537,112 @@
         "fields": null,
         "inputFields": null,
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxonomyDefaultResult",
+        "description": "",
+        "fields": [
+          {
+            "name": "conceptId",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "term",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "type",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "parentId",
+            "description": "",
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          { "kind": "INTERFACE", "name": "TaxonomyResult", "ofType": null }
+        ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxonomySkillResult",
+        "description": "",
+        "fields": [
+          {
+            "name": "conceptId",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "term",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "type",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          { "kind": "INTERFACE", "name": "TaxonomyResult", "ofType": null }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },

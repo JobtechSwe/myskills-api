@@ -1,4 +1,4 @@
-export const skills = {
+export const taxonomy = {
   result: [
     {
       conceptId: 'tWjg_Y7L_yXK',
@@ -45,4 +45,53 @@ export const skills = {
   ],
   search: { limit: 10, offset: 0 },
   total: 12495,
+}
+
+export const skill = {
+  result: [
+    { conceptId: 'y1Wx_UpU_Gi3', term: '16 mm film', type: 'skill' },
+    {
+      conceptId: 'yPZE_8g9_8BA',
+      term: '2D-animation-Toon Boom Studio',
+      type: 'skill',
+    },
+    { conceptId: 'NC4R_5KK_MY1', term: '2D-grafik-Canvas', type: 'skill' },
+    {
+      conceptId: '28YD_XEz_LJV',
+      term: '2D-grafik-CorelDRAW',
+      type: 'skill',
+    },
+    {
+      conceptId: '6uCy_RbZ_aDM',
+      term: '3D-grafik-Autodesk 3ds Max',
+      type: 'skill',
+    },
+    {
+      conceptId: 'Pwhj_Nx4_adW',
+      term: '3D-grafik-Autodesk Alias',
+      type: 'skill',
+    },
+    {
+      conceptId: 'FQAi_Nxv_4VZ',
+      term: '3D-grafik-Autodesk Maya',
+      type: 'skill',
+    },
+    {
+      conceptId: 'Ddz9_bNV_nbY',
+      term: '3D-grafik-Autodesk Softimage',
+      type: 'skill',
+    },
+    {
+      conceptId: 'wWte_6Xd_fmQ',
+      term: '3D-grafik-MAXON BodyPaint 3D',
+      type: 'skill',
+    },
+    {
+      conceptId: 'HWTe_SaB_wiT',
+      term: '3D-grafik-McNeel Rhino 3D',
+      type: 'skill',
+    },
+  ],
+  search: { limit: 10, offset: 0 },
+  total: 5514,
 }

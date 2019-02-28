@@ -1,11 +1,12 @@
 import { gql } from 'apollo-server-express'
 
 export const typeDefs = gql`
-  enum Type {
+  enum TaxonomyType {
     skill
+    municipality
   }
 
-  type Search {
+  type TaxonomySearch {
     offset: Int
     limit: Int
   }
@@ -14,23 +15,31 @@ export const typeDefs = gql`
     offset: Int
     limit: Int
     q: String
-    type: Type
+    type: TaxonomyType
   }
 
-  interface TaxonomyResponse {
-    search: Search!
-    total: Int
+  type TaxonomyResponse {
+    search: TaxonomySearch!
+    total: Int!
+    result: [TaxonomyResult]!
   }
 
-  type SkillsFromTaxonomy {
-    conceptId: String
-    term: String
-    type: String
+  interface TaxonomyResult {
+    conceptId: String!
+    term: String!
+    type: String!
   }
 
-  type TaxonomySkillsResponse implements TaxonomyResponse {
-    search: Search!
-    total: Int
-    result: [SkillsFromTaxonomy]!
+  type TaxonomySkillResult implements TaxonomyResult {
+    conceptId: String!
+    term: String!
+    type: String!
+  }
+
+  type TaxonomyDefaultResult implements TaxonomyResult {
+    conceptId: String!
+    term: String!
+    type: String!
+    parentId: String
   }
 `
