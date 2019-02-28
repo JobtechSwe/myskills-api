@@ -61,7 +61,7 @@ describe('#skills', () => {
 
       const addedSkill = data.getSkills[0]
 
-      expect(addedSkill).toMatchObject(skillInput)
+      expect(addedSkill).toEqual(skillInput)
     })
   })
 
@@ -79,7 +79,7 @@ describe('#skills', () => {
       })
 
       const addedSkill = addSkill[0]
-      expect(addedSkill).toMatchObject(skillInput)
+      expect(addedSkill).toEqual(skillInput)
     })
   })
 })
