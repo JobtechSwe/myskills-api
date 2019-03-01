@@ -14,17 +14,22 @@ export default class TaxonomyAPI extends RESTDataSource {
 
   async getData<T = any>(query: TaxonomyQueryInput): Promise<T> {
     try {
-      const { data } = await this.get('', {
-        path: this.path,
-        params: query,
-        headers: {
-          'api-key': config.TAXONOMY_API_KEY,
+      return this.get(
+        this.path,
+        {
+          ...(<object>query),
         },
-      })
-
-      return data
+        {
+          headers: {
+            'api-key': config.TAXONOMY_API_KEY,
+          },
+          cacheOptions: {
+            ttl: 60 * 60 * 24 * 30, // 30 days
+          },
+        }
+      )
     } catch (error) {
-      console.log('Error fetching from taxonomy')
+      console.log('Error fetching from taxonomy', error)
       throw new Error(error)
     }
   }
