@@ -2,6 +2,7 @@ import { gql } from 'apollo-server-express'
 import server, { appIsReady } from '../../lib/server'
 import { getClient } from './integrationUtils'
 import { taxonomy, skill } from './__fixtures__/taxonomy'
+import config from '../../lib/config'
 import redis from '../../lib/adapters/redis'
 
 const GET_FROM_TAXONOMY = gql`
@@ -64,9 +65,10 @@ describe('taxonomy', () => {
         query: GET_FROM_TAXONOMY,
         variables: { offset: 0, limit: 10, taxonomyType: 'skill' },
       })
-      const cacheInstance = await redis.get(
-        'httpcache:https://sokannonser.dev.services.jtech.se/vf/search?offset=0&limit=10&type=skill'
-      )
+      const queryURL = `httpcache:${config.TAXONOMY_URL_BASE}${
+        config.TAXONOMY_URL_PATH
+      }?offset=0&limit=10&type=skill`
+      const cacheInstance = await redis.get(queryURL)
       expect(typeof cacheInstance).toBe('string')
     })
   })
