@@ -2,6 +2,8 @@ import { gql } from 'apollo-server-express'
 import server, { appIsReady } from '../../lib/server'
 import { getClient } from './integrationUtils'
 import { taxonomy, skill } from './__fixtures__/taxonomy'
+import config from '../../lib/config'
+import redis from '../../lib/adapters/redis'
 
 const GET_FROM_TAXONOMY = gql`
   query taxonomy($limit: Int, $offset: Int, $taxonomyType: TaxonomyType) {
@@ -37,6 +39,7 @@ describe('taxonomy', () => {
       },
     }))
   })
+
   it('should get all within limit from taxonomy', async () => {
     const { data } = await query({
       query: GET_FROM_TAXONOMY,
@@ -52,5 +55,20 @@ describe('taxonomy', () => {
       variables: { offset: 0, limit: 10, taxonomyType: 'skill' },
     })
     expect(data.taxonomy).toMatchObject(skill)
+  })
+
+  describe('redis cache taxonomy calls', () => {
+    beforeEach(() => redis.flushall())
+
+    it('should cache requests', async () => {
+      await query({
+        query: GET_FROM_TAXONOMY,
+        variables: { offset: 0, limit: 10, taxonomyType: 'skill' },
+      })
+      const cacheInstance = await redis.get(
+        'httpcache:https://sokannonser.dev.services.jtech.se/vf/search?offset=0&limit=10&type=skill'
+      )
+      expect(typeof cacheInstance).toBe('string')
+    })
   })
 })
