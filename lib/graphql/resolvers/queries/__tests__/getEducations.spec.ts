@@ -1,15 +1,5 @@
 import { getEducations } from '../getEducations'
-
-const ctx = {
-  headers: {
-    token: 'token',
-  },
-  mydata: {
-    consents: {} as any,
-    getData: jest.fn(),
-    saveData: jest.fn(),
-  },
-}
+import { ctx } from '../__mocks__/apolloServerContext'
 
 test('gets data from mydata', async () => {
   await getEducations({}, {}, ctx, {} as any)
