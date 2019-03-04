@@ -1,5 +1,5 @@
 import { addExperience } from '../addExperience'
-import { ctx } from '../../__mocks__/apolloServerContext'
+import { ctx } from '../../../__mocks__/apolloServerContext'
 
 const args = {
   experience: {

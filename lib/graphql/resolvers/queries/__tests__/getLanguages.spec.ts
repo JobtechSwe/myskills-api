@@ -1,5 +1,5 @@
 import { getLanguages } from '../getLanguages'
-import { ctx } from '../../__mocks__/apolloServerContext'
+import { ctx } from '../../../__mocks__/apolloServerContext'
 
 test('gets data from mydata', async () => {
   await getLanguages({}, {}, ctx, {} as any)

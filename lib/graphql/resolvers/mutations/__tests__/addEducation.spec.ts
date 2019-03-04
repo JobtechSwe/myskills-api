@@ -1,5 +1,5 @@
 import { addEducation } from '../addEducation'
-import { ctx } from '../../__mocks__/apolloServerContext'
+import { ctx } from '../../../__mocks__/apolloServerContext'
 
 const args = {
   education: {

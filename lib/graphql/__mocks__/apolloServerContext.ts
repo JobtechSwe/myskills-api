@@ -1,5 +1,5 @@
-import TaxonomyAPI from '../../../adapters/taxonomy'
-jest.mock('../../../adapters/taxonomy')
+import TaxonomyAPI from '../../adapters/taxonomy'
+jest.mock('../../adapters/taxonomy')
 
 export const ctx = {
   headers: {

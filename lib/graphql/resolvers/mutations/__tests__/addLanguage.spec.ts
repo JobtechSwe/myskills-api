@@ -1,6 +1,6 @@
 import { addLanguage } from '../addLanguage'
 import { Language } from '../../../../__generated__/myskills'
-import { ctx } from '../../__mocks__/apolloServerContext'
+import { ctx } from '../../../__mocks__/apolloServerContext'
 
 const args = {
   language: 'swedish' as Language,
