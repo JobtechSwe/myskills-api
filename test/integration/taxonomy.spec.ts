@@ -26,6 +26,12 @@ describe('taxonomy', () => {
   let query: Function
   let mydata: { getData: any; saveData: any }
 
+  const queryVars = {
+    offset: 0,
+    limit: 10,
+    taxonomyType: 'skill',
+  }
+
   beforeAll(async () => {
     await appIsReady
   })
@@ -41,9 +47,10 @@ describe('taxonomy', () => {
   })
 
   it('should get all within limit from taxonomy', async () => {
+    const { taxonomyType, ...rest } = queryVars
     const { data } = await query({
       query: GET_FROM_TAXONOMY,
-      variables: { offset: 0, limit: 10 },
+      variables: rest,
     })
 
     expect(data.taxonomy).toMatchObject(taxonomy)
@@ -52,7 +59,7 @@ describe('taxonomy', () => {
   it('should be able to filter by taxonomy type', async () => {
     const { data } = await query({
       query: GET_FROM_TAXONOMY,
-      variables: { offset: 0, limit: 10, taxonomyType: 'skill' },
+      variables: queryVars,
     })
     expect(data.taxonomy).toMatchObject(skill)
   })
@@ -63,11 +70,13 @@ describe('taxonomy', () => {
     it('should cache requests', async () => {
       await query({
         query: GET_FROM_TAXONOMY,
-        variables: { offset: 0, limit: 10, taxonomyType: 'skill' },
+        variables: queryVars,
       })
       const queryURL = `httpcache:${config.TAXONOMY_URL_BASE}${
         config.TAXONOMY_URL_PATH
-      }?offset=0&limit=10&type=skill`
+      }?offset=${queryVars.offset}&limit=${queryVars.limit}&type=${
+        queryVars.taxonomyType
+      }`
       const cacheInstance = await redis.get(queryURL)
       expect(typeof cacheInstance).toBe('string')
     })
