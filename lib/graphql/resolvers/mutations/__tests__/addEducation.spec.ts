@@ -1,20 +1,10 @@
 import { addEducation } from '../addEducation'
+import { ctx } from '../../__mocks__/apolloServerContext'
 
 const args = {
   education: {
     id: '1',
     name: 'Librarian',
-  },
-}
-
-const ctx = {
-  headers: {
-    token: 'token',
-  },
-  mydata: {
-    consents: {} as any,
-    getData: jest.fn(),
-    saveData: jest.fn(),
   },
 }
 

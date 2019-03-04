@@ -1,20 +1,13 @@
 import { addSkill } from '../addSkill'
+import { ctx } from '../../__mocks__/apolloServerContext'
 
 const args = {
   skill: {
     id: '2',
     name: 'Developer',
-  },
-}
-
-const ctx = {
-  headers: {
-    token: 'token',
-  },
-  mydata: {
-    consents: {} as any,
-    getData: jest.fn(),
-    saveData: jest.fn(),
+    conceptId: '',
+    term: '',
+    type: 'skill',
   },
 }
 

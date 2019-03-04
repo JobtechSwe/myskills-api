@@ -1,21 +1,11 @@
 import { addExperience } from '../addExperience'
+import { ctx } from '../../__mocks__/apolloServerContext'
 
 const args = {
   experience: {
     id: '1',
     name: 'Engineer',
     years: '1',
-  },
-}
-
-const ctx = {
-  headers: {
-    token: 'token',
-  },
-  mydata: {
-    consents: {} as any,
-    getData: jest.fn(),
-    saveData: jest.fn(),
   },
 }
 

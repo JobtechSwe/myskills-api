@@ -1,5 +1,5 @@
 import { getEducations } from '../getEducations'
-import { ctx } from '../__mocks__/apolloServerContext'
+import { ctx } from '../../__mocks__/apolloServerContext'
 
 test('gets data from mydata', async () => {
   await getEducations({}, {}, ctx, {} as any)
