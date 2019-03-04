@@ -2,7 +2,6 @@ import { gql } from 'apollo-server-express'
 import server, { appIsReady } from '../../lib/server'
 import { getClient } from './integrationUtils'
 import { taxonomy, skill } from './__fixtures__/taxonomy'
-import config from '../../lib/config'
 import redis from '../../lib/adapters/redis'
 
 const GET_FROM_TAXONOMY = gql`
