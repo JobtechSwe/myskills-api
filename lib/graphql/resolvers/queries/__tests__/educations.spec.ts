@@ -1,8 +1,8 @@
-import { getEducations } from '../getEducations'
 import { ctx } from '../../../__mocks__/apolloServerContext'
+import { educations } from '../educations'
 
 test('gets data from mydata', async () => {
-  await getEducations({}, {}, ctx, {} as any)
+  await educations({}, {}, ctx, {} as any)
 
   expect(ctx.mydata.getData).toHaveBeenCalledWith({
     area: 'educations',
@@ -13,5 +13,5 @@ test('gets data from mydata', async () => {
 test('handles errors', async () => {
   ctx.mydata.getData.mockRejectedValue('err')
 
-  await expect(getEducations({}, {}, ctx, {} as any)).rejects.toThrow('err')
+  await expect(educations({}, {}, ctx, {} as any)).rejects.toThrow('err')
 })

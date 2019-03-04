@@ -19,8 +19,7 @@ export interface DefaultRequest {
 
 const createConsent = (area: Area) => ({
   area,
-  description:
-    'A list of your work experiences, educations, language proficiencies and so on that you have entered in the service.',
+  description: `${area} that you have entered in the service.`,
   domain: config.DOMAIN,
   lawfulBasis: 'CONSENT',
   permissions: ['write'],
@@ -34,6 +33,7 @@ const defaultRequest = (durationInSeconds: number): DefaultRequest => ({
     createConsent(Area.educations),
     createConsent(Area.experiences),
     createConsent(Area.skills),
+    createConsent(Area.profile),
   ],
 })
 

@@ -10,8 +10,8 @@
         "description": "",
         "fields": [
           {
-            "name": "getLanguages",
-            "description": "Get languages",
+            "name": "languages",
+            "description": "Get user languages",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -34,8 +34,8 @@
             "deprecationReason": null
           },
           {
-            "name": "getEducations",
-            "description": "Get educations",
+            "name": "educations",
+            "description": "Get user educations",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -54,8 +54,8 @@
             "deprecationReason": null
           },
           {
-            "name": "getExperiences",
-            "description": "Get experiences",
+            "name": "experiences",
+            "description": "Get user experiences",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -74,8 +74,20 @@
             "deprecationReason": null
           },
           {
-            "name": "getSkills",
-            "description": "Get skills",
+            "name": "profile",
+            "description": "Get user profile",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "OBJECT", "name": "Profile", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "skills",
+            "description": "Get user skills",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -91,7 +103,7 @@
           },
           {
             "name": "taxonomy",
-            "description": "Get skills from taxonomy",
+            "description": "Get from taxonomy",
             "args": [
               {
                 "name": "params",
@@ -220,6 +232,33 @@
               "name": null,
               "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
             },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Profile",
+        "description": "",
+        "fields": [
+          {
+            "name": "firstName",
+            "description": "",
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lastName",
+            "description": "",
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -498,8 +537,8 @@
             "deprecationReason": null
           },
           {
-            "name": "addLanguage",
-            "description": "Add languages",
+            "name": "language",
+            "description": "Add languages to user",
             "args": [
               {
                 "name": "language",
@@ -529,8 +568,8 @@
             "deprecationReason": null
           },
           {
-            "name": "addExperience",
-            "description": "Add experiences",
+            "name": "experience",
+            "description": "Add experiences to user",
             "args": [
               {
                 "name": "experience",
@@ -564,8 +603,8 @@
             "deprecationReason": null
           },
           {
-            "name": "addEducation",
-            "description": "Add education",
+            "name": "education",
+            "description": "Add education to user",
             "args": [
               {
                 "name": "education",
@@ -599,8 +638,35 @@
             "deprecationReason": null
           },
           {
-            "name": "addSkill",
-            "description": "Add skill",
+            "name": "profile",
+            "description": "Add user profile",
+            "args": [
+              {
+                "name": "profile",
+                "description": "",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "ProfileInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "OBJECT", "name": "Profile", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "skill",
+            "description": "Add skill to user",
             "args": [
               {
                 "name": "skill",
@@ -727,6 +793,37 @@
             "name": "name",
             "description": "",
             "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "ProfileInput",
+        "description": "",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "firstName",
+            "description": "",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "lastName",
+            "description": "",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
             "defaultValue": null
           }
         ],

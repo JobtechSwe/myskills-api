@@ -24,6 +24,12 @@ export interface EducationInput {
   name?: Maybe<string>
 }
 
+export interface ProfileInput {
+  firstName: string
+
+  lastName: string
+}
+
 export interface SkillInput {
   conceptId: string
 
@@ -86,15 +92,17 @@ export interface TaxonomyResult {
 // ====================================================
 
 export interface Query {
-  /** Get languages */
-  getLanguages: Language[]
-  /** Get educations */
-  getEducations: (Maybe<Education>)[]
-  /** Get experiences */
-  getExperiences: (Maybe<Experience>)[]
-  /** Get skills */
-  getSkills: (Maybe<Skill>)[]
-  /** Get skills from taxonomy */
+  /** Get user languages */
+  languages: Language[]
+  /** Get user educations */
+  educations: (Maybe<Education>)[]
+  /** Get user experiences */
+  experiences: (Maybe<Experience>)[]
+  /** Get user profile */
+  profile: Profile
+  /** Get user skills */
+  skills: (Maybe<Skill>)[]
+  /** Get from taxonomy */
   taxonomy: TaxonomyResponse
 }
 
@@ -110,6 +118,12 @@ export interface Experience {
   name?: Maybe<string>
 
   years: string
+}
+
+export interface Profile {
+  firstName?: Maybe<string>
+
+  lastName?: Maybe<string>
 }
 
 export interface Skill {
@@ -137,14 +151,16 @@ export interface TaxonomySearch {
 export interface Mutation {
   /** Login an existing user */
   login: Login
-  /** Add languages */
-  addLanguage: (Maybe<Language>)[]
-  /** Add experiences */
-  addExperience: (Maybe<Experience>)[]
-  /** Add education */
-  addEducation: (Maybe<Education>)[]
-  /** Add skill */
-  addSkill: (Maybe<Skill>)[]
+  /** Add languages to user */
+  language: (Maybe<Language>)[]
+  /** Add experiences to user */
+  experience: (Maybe<Experience>)[]
+  /** Add education to user */
+  education: (Maybe<Education>)[]
+  /** Add user profile */
+  profile: Profile
+  /** Add skill to user */
+  skill: (Maybe<Skill>)[]
 }
 
 export interface Login {
@@ -178,16 +194,19 @@ export interface TaxonomySkillResult extends TaxonomyResult {
 export interface TaxonomyQueryArgs {
   params?: Maybe<TaxonomyQueryInput>
 }
-export interface AddLanguageMutationArgs {
+export interface LanguageMutationArgs {
   language: Language
 }
-export interface AddExperienceMutationArgs {
+export interface ExperienceMutationArgs {
   experience: ExperienceInput
 }
-export interface AddEducationMutationArgs {
+export interface EducationMutationArgs {
   education: EducationInput
 }
-export interface AddSkillMutationArgs {
+export interface ProfileMutationArgs {
+  profile: ProfileInput
+}
+export interface SkillMutationArgs {
   skill: SkillInput
 }
 
@@ -250,42 +269,45 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
 
 export namespace QueryResolvers {
   export interface Resolvers<TContext = ApolloServerContext, TypeParent = {}> {
-    /** Get languages */
-    getLanguages?: GetLanguagesResolver<Language[], TypeParent, TContext>
-    /** Get educations */
-    getEducations?: GetEducationsResolver<
-      (Maybe<Education>)[],
-      TypeParent,
-      TContext
-    >
-    /** Get experiences */
-    getExperiences?: GetExperiencesResolver<
+    /** Get user languages */
+    languages?: LanguagesResolver<Language[], TypeParent, TContext>
+    /** Get user educations */
+    educations?: EducationsResolver<(Maybe<Education>)[], TypeParent, TContext>
+    /** Get user experiences */
+    experiences?: ExperiencesResolver<
       (Maybe<Experience>)[],
       TypeParent,
       TContext
     >
-    /** Get skills */
-    getSkills?: GetSkillsResolver<(Maybe<Skill>)[], TypeParent, TContext>
-    /** Get skills from taxonomy */
+    /** Get user profile */
+    profile?: ProfileResolver<Profile, TypeParent, TContext>
+    /** Get user skills */
+    skills?: SkillsResolver<(Maybe<Skill>)[], TypeParent, TContext>
+    /** Get from taxonomy */
     taxonomy?: TaxonomyResolver<TaxonomyResponse, TypeParent, TContext>
   }
 
-  export type GetLanguagesResolver<
+  export type LanguagesResolver<
     R = Language[],
     Parent = {},
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
-  export type GetEducationsResolver<
+  export type EducationsResolver<
     R = (Maybe<Education>)[],
     Parent = {},
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
-  export type GetExperiencesResolver<
+  export type ExperiencesResolver<
     R = (Maybe<Experience>)[],
     Parent = {},
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
-  export type GetSkillsResolver<
+  export type ProfileResolver<
+    R = Profile,
+    Parent = {},
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type SkillsResolver<
     R = (Maybe<Skill>)[],
     Parent = {},
     TContext = ApolloServerContext
@@ -347,6 +369,28 @@ export namespace ExperienceResolvers {
   export type YearsResolver<
     R = string,
     Parent = Experience,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+}
+
+export namespace ProfileResolvers {
+  export interface Resolvers<
+    TContext = ApolloServerContext,
+    TypeParent = Profile
+  > {
+    firstName?: FirstNameResolver<Maybe<string>, TypeParent, TContext>
+
+    lastName?: LastNameResolver<Maybe<string>, TypeParent, TContext>
+  }
+
+  export type FirstNameResolver<
+    R = Maybe<string>,
+    Parent = Profile,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type LastNameResolver<
+    R = Maybe<string>,
+    Parent = Profile,
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
 }
@@ -435,22 +479,16 @@ export namespace MutationResolvers {
   export interface Resolvers<TContext = ApolloServerContext, TypeParent = {}> {
     /** Login an existing user */
     login?: LoginResolver<Login, TypeParent, TContext>
-    /** Add languages */
-    addLanguage?: AddLanguageResolver<(Maybe<Language>)[], TypeParent, TContext>
-    /** Add experiences */
-    addExperience?: AddExperienceResolver<
-      (Maybe<Experience>)[],
-      TypeParent,
-      TContext
-    >
-    /** Add education */
-    addEducation?: AddEducationResolver<
-      (Maybe<Education>)[],
-      TypeParent,
-      TContext
-    >
-    /** Add skill */
-    addSkill?: AddSkillResolver<(Maybe<Skill>)[], TypeParent, TContext>
+    /** Add languages to user */
+    language?: LanguageResolver<(Maybe<Language>)[], TypeParent, TContext>
+    /** Add experiences to user */
+    experience?: ExperienceResolver<(Maybe<Experience>)[], TypeParent, TContext>
+    /** Add education to user */
+    education?: EducationResolver<(Maybe<Education>)[], TypeParent, TContext>
+    /** Add user profile */
+    profile?: ProfileResolver<Profile, TypeParent, TContext>
+    /** Add skill to user */
+    skill?: SkillResolver<(Maybe<Skill>)[], TypeParent, TContext>
   }
 
   export type LoginResolver<
@@ -458,39 +496,48 @@ export namespace MutationResolvers {
     Parent = {},
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
-  export type AddLanguageResolver<
+  export type LanguageResolver<
     R = (Maybe<Language>)[],
     Parent = {},
     TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext, AddLanguageArgs>
-  export interface AddLanguageArgs {
+  > = Resolver<R, Parent, TContext, LanguageArgs>
+  export interface LanguageArgs {
     language: Language
   }
 
-  export type AddExperienceResolver<
+  export type ExperienceResolver<
     R = (Maybe<Experience>)[],
     Parent = {},
     TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext, AddExperienceArgs>
-  export interface AddExperienceArgs {
+  > = Resolver<R, Parent, TContext, ExperienceArgs>
+  export interface ExperienceArgs {
     experience: ExperienceInput
   }
 
-  export type AddEducationResolver<
+  export type EducationResolver<
     R = (Maybe<Education>)[],
     Parent = {},
     TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext, AddEducationArgs>
-  export interface AddEducationArgs {
+  > = Resolver<R, Parent, TContext, EducationArgs>
+  export interface EducationArgs {
     education: EducationInput
   }
 
-  export type AddSkillResolver<
+  export type ProfileResolver<
+    R = Profile,
+    Parent = {},
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext, ProfileArgs>
+  export interface ProfileArgs {
+    profile: ProfileInput
+  }
+
+  export type SkillResolver<
     R = (Maybe<Skill>)[],
     Parent = {},
     TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext, AddSkillArgs>
-  export interface AddSkillArgs {
+  > = Resolver<R, Parent, TContext, SkillArgs>
+  export interface SkillArgs {
     skill: SkillInput
   }
 }
@@ -662,6 +709,7 @@ export interface IResolvers<TContext = ApolloServerContext> {
   Query?: QueryResolvers.Resolvers<TContext>
   Education?: EducationResolvers.Resolvers<TContext>
   Experience?: ExperienceResolvers.Resolvers<TContext>
+  Profile?: ProfileResolvers.Resolvers<TContext>
   Skill?: SkillResolvers.Resolvers<TContext>
   TaxonomyResponse?: TaxonomyResponseResolvers.Resolvers<TContext>
   TaxonomySearch?: TaxonomySearchResolvers.Resolvers<TContext>
