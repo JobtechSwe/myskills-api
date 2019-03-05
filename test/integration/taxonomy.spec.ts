@@ -1,6 +1,8 @@
 import { gql } from 'apollo-server-express'
 import server, { appIsReady } from '../../lib/server'
 import { getClient } from './integrationUtils'
+import config from '../../lib/config'
+import redis from '../../lib/adapters/redis'
 import * as taxonomyFixture from './__fixtures__/taxonomy'
 
 const GET_FROM_TAXONOMY = gql`
@@ -24,6 +26,12 @@ describe('taxonomy', () => {
   let query: Function
   let mydata: { getData: any; saveData: any }
 
+  const queryVars = {
+    offset: 0,
+    limit: 10,
+    taxonomyType: 'SKILL',
+  }
+
   beforeAll(async () => {
     await appIsReady
   })
@@ -37,13 +45,34 @@ describe('taxonomy', () => {
       },
     }))
   })
+
   it('should get all within limit from taxonomy', async () => {
+    const { taxonomyType, ...rest } = queryVars
     const { data } = await query({
       query: GET_FROM_TAXONOMY,
-      variables: { offset: 0, limit: 10 },
+      variables: rest,
     })
 
     expect(data.taxonomy).toEqual(taxonomyFixture.taxonomy)
+  })
+
+  describe('redis cache taxonomy calls', () => {
+    beforeEach(() => redis.flushall())
+
+    it('should cache requests', async () => {
+      await query({
+        query: GET_FROM_TAXONOMY,
+        variables: queryVars,
+      })
+      const queryURL = `httpcache:${config.TAXONOMY_URL_BASE}${
+        config.TAXONOMY_URL_PATH
+      }?offset=${queryVars.offset}&limit=${
+        queryVars.limit
+      }&type=${queryVars.taxonomyType.toLowerCase()}`
+
+      const cacheInstance = await redis.get(queryURL)
+      expect(typeof cacheInstance).toBe('string')
+    })
   })
 
   it.each`

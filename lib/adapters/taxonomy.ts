@@ -1,16 +1,36 @@
-import got from 'got'
+import { RESTDataSource } from 'apollo-datasource-rest'
 import { TaxonomyQueryInput } from '../__generated__/myskills'
 import config from '../config'
 
-export async function get<T = any>(query: TaxonomyQueryInput): Promise<T> {
-  const { body } = await got(config.TAXONOMY_URL_PATH, {
-    baseUrl: config.TAXONOMY_URL_BASE,
-    headers: {
-      'api-key': config.TAXONOMY_API_KEY,
-    },
-    json: true,
-    query,
-  })
+export default class TaxonomyAPI extends RESTDataSource {
+  private path: string
 
-  return body
+  constructor() {
+    super()
+
+    this.baseURL = config.TAXONOMY_URL_BASE
+    this.path = config.TAXONOMY_URL_PATH
+  }
+
+  async getData<T = any>(query: TaxonomyQueryInput): Promise<T> {
+    try {
+      return this.get(
+        this.path,
+        {
+          ...(<object>query),
+        },
+        {
+          headers: {
+            'api-key': config.TAXONOMY_API_KEY,
+          },
+          cacheOptions: {
+            ttl: 60 * 60 * 24 * 30, // 30 days
+          },
+        }
+      )
+    } catch (error) {
+      console.log('Error fetching from taxonomy', error)
+      throw new Error(error)
+    }
+  }
 }
