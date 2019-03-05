@@ -3,4 +3,5 @@ export enum Area {
   educations = 'educations',
   experiences = 'experiences',
   skills = 'skills',
+  profile = 'profile',
 }

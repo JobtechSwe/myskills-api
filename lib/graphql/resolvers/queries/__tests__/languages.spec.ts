@@ -1,11 +1,11 @@
-import { getExperiences } from '../getExperiences'
 import { ctx } from '../../../__mocks__/apolloServerContext'
+import { languages } from '../languages'
 
 test('gets data from mydata', async () => {
-  await getExperiences({}, {}, ctx, {} as any)
+  await languages({}, {}, ctx, {} as any)
 
   expect(ctx.mydata.getData).toHaveBeenCalledWith({
-    area: 'experiences',
+    area: 'languages',
     token: 'token',
   })
 })
@@ -13,5 +13,5 @@ test('gets data from mydata', async () => {
 test('handles errors', async () => {
   ctx.mydata.getData.mockRejectedValue('err')
 
-  await expect(getExperiences({}, {}, ctx, {} as any)).rejects.toThrow('err')
+  await expect(languages({}, {}, ctx, {} as any)).rejects.toThrow('err')
 })

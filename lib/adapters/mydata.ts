@@ -27,8 +27,8 @@ export interface DataInput {
   token: string
 }
 
-export interface SaveDataInput extends DataInput {
-  data: object | string
+export interface SaveDataInput<T> extends DataInput {
+  data: T
 }
 
 const mydataOperator = create(config)
@@ -37,30 +37,35 @@ const createConfig = (area: Area): Config => ({
   domain: myConfig.DOMAIN,
 })
 
-async function getData<T = any>({ area, token }: DataInput): Promise<T> {
+async function getData<T>({ area, token }: DataInput): Promise<T> {
   const areaConfig = createConfig(area)
   const data = await mydataOperator.data.auth(token).read(areaConfig)
   return data[myConfig.DOMAIN][area].data
 }
 
-async function saveData<T = any[]>({
+async function saveData<T>({
   area,
   data,
   token,
-}: SaveDataInput): Promise<T[]> {
+}: SaveDataInput<T>): Promise<T> {
   const areaConfig = createConfig(area)
-  const currentDataForDomainArea = await getData<any[]>({ area, token })
-  const updatedData = {
-    data: currentDataForDomainArea
-      ? [...new Set([...currentDataForDomainArea, data])]
-      : [data],
-  }
+  const currentDataForDomainArea = (await getData<T>({ area, token })) as T
+
+  const updatedData = Array.isArray(data)
+    ? {
+        data: Array.isArray(currentDataForDomainArea)
+          ? [...new Set([...currentDataForDomainArea, ...data])]
+          : data,
+      }
+    : {
+        data,
+      }
 
   await mydataOperator.data
     .auth(token)
     .write({ ...areaConfig, data: updatedData })
 
-  return updatedData.data
+  return updatedData.data as T
 }
 
 const { connect, consents, routes, events } = mydataOperator

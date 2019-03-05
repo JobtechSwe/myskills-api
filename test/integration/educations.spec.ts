@@ -3,16 +3,16 @@ import server, { appIsReady } from '../../lib/server'
 import { getClient } from './integrationUtils'
 
 const GET_EDUCATIONS = gql`
-  query getEducations {
-    getEducations {
+  query educations {
+    educations {
       name
     }
   }
 `
 
 const ADD_EDUCATION = gql`
-  mutation addEducation($name: String!, $id: String!) {
-    addEducation(education: { name: $name, id: $id }) {
+  mutation education($name: String!, $id: String!) {
+    education(education: { name: $name, id: $id }) {
       id
       name
     }
@@ -45,7 +45,7 @@ describe('#educations', () => {
     }))
   })
 
-  describe('getEducations', () => {
+  describe('educations', () => {
     beforeEach(() => {
       mydata.getData.mockResolvedValue([
         {
@@ -59,11 +59,11 @@ describe('#educations', () => {
         query: GET_EDUCATIONS,
       })
 
-      expect(data.getEducations[0].name).toBe('Simon')
+      expect(data.educations[0].name).toBe('Simon')
     })
   })
 
-  describe('addEducation', () => {
+  describe('education', () => {
     beforeEach(() => {
       mydata.saveData.mockResolvedValue([
         {
@@ -75,7 +75,7 @@ describe('#educations', () => {
 
     it('should be possible to add an education', async () => {
       const {
-        data: { addEducation },
+        data: { education },
       } = await mutate({
         mutation: ADD_EDUCATION,
         variables: {
@@ -84,7 +84,7 @@ describe('#educations', () => {
         },
       })
 
-      expect(addEducation[0].name).toBe('Simon :)')
+      expect(education[0].name).toBe('Simon :)')
     })
   })
 })

@@ -3,16 +3,16 @@ import server, { appIsReady } from '../../lib/server'
 import { getClient } from './integrationUtils'
 
 const GET_EXPERIENCES = gql`
-  query getExperiences {
-    getExperiences {
+  query experiences {
+    experiences {
       name
     }
   }
 `
 
 const ADD_EXPERIENCE = gql`
-  mutation addExperience($name: String!, $id: String!, $years: String!) {
-    addExperience(experience: { name: $name, id: $id, years: $years }) {
+  mutation experience($name: String!, $id: String!, $years: String!) {
+    experience(experience: { name: $name, id: $id, years: $years }) {
       id
       name
       years
@@ -46,7 +46,7 @@ describe('#experiences', () => {
     }))
   })
 
-  describe('getExperiences', () => {
+  describe('experiences', () => {
     beforeEach(() => {
       mydata.getData.mockResolvedValue([
         {
@@ -61,11 +61,11 @@ describe('#experiences', () => {
         query: GET_EXPERIENCES,
       })
 
-      expect(data.getExperiences[0].name).toBe('Cookie Eating')
+      expect(data.experiences[0].name).toBe('Cookie Eating')
     })
   })
 
-  describe('addExperience', () => {
+  describe('experience', () => {
     beforeEach(() => {
       mydata.saveData.mockResolvedValue([
         {
@@ -78,7 +78,7 @@ describe('#experiences', () => {
 
     it('should be possible to add an experience', async () => {
       const {
-        data: { addExperience },
+        data: { experience },
       } = await mutate({
         mutation: ADD_EXPERIENCE,
         variables: {
@@ -88,7 +88,7 @@ describe('#experiences', () => {
         },
       })
 
-      expect(addExperience[0].name).toBe('Carpenter')
+      expect(experience[0].name).toBe('Carpenter')
     })
   })
 })

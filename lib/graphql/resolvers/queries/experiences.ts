@@ -1,7 +1,7 @@
 import { Area } from '../../../types'
 import { Experience, QueryResolvers } from '../../../__generated__/myskills'
 
-export const getExperiences: QueryResolvers.GetEducationsResolver = async (
+export const experiences: QueryResolvers.ExperiencesResolver = async (
   _,
   _args,
   { headers: { token }, mydata }
@@ -12,7 +12,7 @@ export const getExperiences: QueryResolvers.GetEducationsResolver = async (
       area: Area.experiences,
     })
 
-    return result
+    return result || []
   } catch (e) {
     throw new Error(e)
   }
