@@ -23,10 +23,16 @@ const ADD_SKILL = gql`
   }
 `
 
+const REMOVE_SKILL = gql`
+  mutation removeSkill($id: String!) {
+    removeSkill(id: $id)
+  }
+`
+
 describe('#skills', () => {
   let query: any
   let mutate: any
-  let mydata: { getData: any; saveData: any }
+  let mydata: { getData: any; saveData: any; removeData: any }
 
   beforeAll(async () => {
     await appIsReady
@@ -38,6 +44,7 @@ describe('#skills', () => {
     mydata = {
       getData: jest.fn(),
       saveData: jest.fn(),
+      removeData: jest.fn(),
     }
     ;({ query, mutate } = getClient(server, {
       context: {
@@ -79,6 +86,25 @@ describe('#skills', () => {
       })
 
       expect(addSkill[0]).toEqual(skillInput)
+    })
+  })
+
+  describe('mutation: removeSkill', () => {
+    beforeEach(() => {
+      mydata.removeData.mockResolvedValue(true)
+    })
+
+    it('should be possible to remove an experience', async () => {
+      const {
+        data: { removeSkill },
+      } = await mutate({
+        mutation: REMOVE_SKILL,
+        variables: {
+          id: '123',
+        },
+      })
+
+      expect(removeSkill).toEqual(true)
     })
   })
 })
