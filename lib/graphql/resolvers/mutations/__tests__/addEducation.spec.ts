@@ -1,36 +1,33 @@
 import { ctx } from '../../../__mocks__/apolloServerContext'
-import { skill } from '../skill'
+import { addEducation } from '../addEducation'
 
 const args = {
-  skill: {
-    id: '2',
-    name: 'Developer',
-    conceptId: '',
-    term: '',
-    type: 'skill',
+  education: {
+    id: '1',
+    name: 'Librarian',
   },
 }
 
 test('save input in mydata', async () => {
-  await skill({}, args, ctx, {} as any)
+  await addEducation({}, args, ctx, {} as any)
 
   expect(ctx.mydata.saveData).toHaveBeenCalledWith({
-    area: 'skills',
-    data: [args.skill],
+    area: 'educations',
+    data: [args.education],
     token: 'token',
   })
 })
 
 test('returns updated data', async () => {
-  const result = [args.skill]
+  const result = [args.education]
 
   ctx.mydata.saveData.mockResolvedValue(result)
 
-  await expect(skill({}, args, ctx, {} as any)).resolves.toEqual(result)
+  await expect(addEducation({}, args, ctx, {} as any)).resolves.toEqual(result)
 })
 
 test('handles errors', async () => {
   ctx.mydata.saveData.mockRejectedValue('err')
 
-  await expect(skill({}, args, ctx, {} as any)).rejects.toThrow('err')
+  await expect(addEducation({}, args, ctx, {} as any)).rejects.toThrow('err')
 })

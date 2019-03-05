@@ -9,8 +9,8 @@ const GET_LANGUAGES = gql`
 `
 
 const ADD_LANGUAGE = gql`
-  mutation language($language: Language!) {
-    language(language: $language)
+  mutation addLanguage($language: Language!) {
+    addLanguage(language: $language)
   }
 `
 
@@ -69,8 +69,7 @@ describe('#Languages', () => {
           language: Language.Swedish,
         },
       })
-
-      expect(data.language[0]).toBe('swedish')
+      expect(data.addLanguage[0]).toBe('swedish')
     })
   })
 })

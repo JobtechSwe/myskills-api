@@ -609,7 +609,7 @@
             "deprecationReason": null
           },
           {
-            "name": "language",
+            "name": "addLanguage",
             "description": "Add languages to user",
             "args": [
               {
@@ -640,7 +640,7 @@
             "deprecationReason": null
           },
           {
-            "name": "experience",
+            "name": "addExperience",
             "description": "Add experiences to user",
             "args": [
               {
@@ -675,7 +675,7 @@
             "deprecationReason": null
           },
           {
-            "name": "education",
+            "name": "addEducation",
             "description": "Add education to user",
             "args": [
               {
@@ -710,7 +710,7 @@
             "deprecationReason": null
           },
           {
-            "name": "profile",
+            "name": "createProfile",
             "description": "Add user profile",
             "args": [
               {
@@ -737,7 +737,7 @@
             "deprecationReason": null
           },
           {
-            "name": "skill",
+            "name": "addSkill",
             "description": "Add skill to user",
             "args": [
               {

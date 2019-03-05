@@ -1,7 +1,7 @@
 import { MutationResolvers, Skill } from '../../../__generated__/myskills'
 import { Area } from '../../../types'
 
-export const skill: MutationResolvers.SkillResolver = async (
+export const addSkill: MutationResolvers.AddSkillResolver = async (
   _,
   { skill },
   { headers: { token }, mydata }

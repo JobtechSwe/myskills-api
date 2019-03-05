@@ -1,4 +1,4 @@
-import { language } from '../language'
+import { addLanguage } from '../addLanguage'
 import { Language } from '../../../../__generated__/myskills'
 import { ctx } from '../../../__mocks__/apolloServerContext'
 
@@ -7,7 +7,7 @@ const args = {
 }
 
 test('save input in mydata', async () => {
-  await language({}, args, ctx, {} as any)
+  await addLanguage({}, args, ctx, {} as any)
 
   expect(ctx.mydata.saveData).toHaveBeenCalledWith({
     area: 'languages',
@@ -21,11 +21,11 @@ test('returns updated data', async () => {
 
   ctx.mydata.saveData.mockResolvedValue(result)
 
-  await expect(language({}, args, ctx, {} as any)).resolves.toEqual(result)
+  await expect(addLanguage({}, args, ctx, {} as any)).resolves.toEqual(result)
 })
 
 test('handles errors', async () => {
   ctx.mydata.saveData.mockRejectedValue('err')
 
-  await expect(language({}, args, ctx, {} as any)).rejects.toThrow('err')
+  await expect(addLanguage({}, args, ctx, {} as any)).rejects.toThrow('err')
 })

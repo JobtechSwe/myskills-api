@@ -1,5 +1,5 @@
 import { ctx } from '../../../__mocks__/apolloServerContext'
-import { experience } from '../experience'
+import { addExperience } from '../addExperience'
 
 const args = {
   experience: {
@@ -10,7 +10,7 @@ const args = {
 }
 
 test('save input in mydata', async () => {
-  await experience({}, args, ctx, {} as any)
+  await addExperience({}, args, ctx, {} as any)
 
   expect(ctx.mydata.saveData).toHaveBeenCalledWith({
     area: 'experiences',
@@ -24,11 +24,11 @@ test('returns updated data', async () => {
 
   ctx.mydata.saveData.mockResolvedValue(result)
 
-  await expect(experience({}, args, ctx, {} as any)).resolves.toEqual(result)
+  await expect(addExperience({}, args, ctx, {} as any)).resolves.toEqual(result)
 })
 
 test('handles errors', async () => {
   ctx.mydata.saveData.mockRejectedValue('err')
 
-  await expect(experience({}, args, ctx, {} as any)).rejects.toThrow('err')
+  await expect(addExperience({}, args, ctx, {} as any)).rejects.toThrow('err')
 })

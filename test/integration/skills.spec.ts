@@ -14,8 +14,8 @@ const GET_SKILLS = gql`
 `
 
 const ADD_SKILL = gql`
-  mutation skill($conceptId: String!, $term: String!, $type: String!) {
-    skill(skill: { conceptId: $conceptId, term: $term, type: $type }) {
+  mutation addskill($conceptId: String!, $term: String!, $type: String!) {
+    addSkill(skill: { conceptId: $conceptId, term: $term, type: $type }) {
       conceptId
       term
       type
@@ -72,14 +72,13 @@ describe('#skills', () => {
 
     it('should be possible to add a skill', async () => {
       const {
-        data: { skill },
+        data: { addSkill },
       } = await mutate({
         mutation: ADD_SKILL,
         variables: skillInput,
       })
 
-      const addedSkill = skill[0]
-      expect(addedSkill).toEqual(skillInput)
+      expect(addSkill[0]).toEqual(skillInput)
     })
   })
 })

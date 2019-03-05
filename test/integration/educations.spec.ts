@@ -11,8 +11,8 @@ const GET_EDUCATIONS = gql`
 `
 
 const ADD_EDUCATION = gql`
-  mutation education($name: String!, $id: String!) {
-    education(education: { name: $name, id: $id }) {
+  mutation addEducation($name: String!, $id: String!) {
+    addEducation(education: { name: $name, id: $id }) {
       id
       name
     }
@@ -75,7 +75,7 @@ describe('#educations', () => {
 
     it('should be possible to add an education', async () => {
       const {
-        data: { education },
+        data: { addEducation },
       } = await mutate({
         mutation: ADD_EDUCATION,
         variables: {
@@ -84,7 +84,7 @@ describe('#educations', () => {
         },
       })
 
-      expect(education[0].name).toBe('Simon :)')
+      expect(addEducation[0].name).toBe('Simon :)')
     })
   })
 })

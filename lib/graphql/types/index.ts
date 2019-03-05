@@ -21,27 +21,27 @@ const typeDefs = gql`
     """
     Add languages to user
     """
-    language(language: Language!): [Language]!
+    addLanguage(language: Language!): [Language]!
 
     """
     Add experiences to user
     """
-    experience(experience: ExperienceInput!): [Experience]!
+    addExperience(experience: ExperienceInput!): [Experience]!
 
     """
     Add education to user
     """
-    education(education: EducationInput!): [Education]!
+    addEducation(education: EducationInput!): [Education]!
 
     """
     Add user profile
     """
-    profile(profile: ProfileInput!): Profile!
+    createProfile(profile: ProfileInput!): Profile!
 
     """
     Add skill to user
     """
-    skill(skill: SkillInput!): [Skill]!
+    addSkill(skill: SkillInput!): [Skill]!
   }
 
   type Query {
