@@ -17,7 +17,7 @@ const customScalarSchema = `
   scalar Password
 `
 
-const result = {
+const custom = {
   TaxonomyResult: {
     __resolveType(obj: any) {
       if (obj.type === 'skill') {
@@ -26,6 +26,22 @@ const result = {
 
       return 'TaxonomyDefaultResult'
     },
+  },
+  TaxonomyType: {
+    COUNTY: 'county',
+    EDUCATION_FIELD_1: 'sun-education-field-1',
+    EDUCATION_FIELD_2: 'sun-education-field-2',
+    EDUCATION_FIELD_3: 'sun-education-field-3',
+    EDUCATION_LEVEL_1: 'sun-education-level-1',
+    EDUCATION_LEVEL_2: 'sun-education-level-2',
+    EDUCATION_LEVEL_3: 'sun-education-level-3',
+    LANGUAGE: 'language',
+    MUNICIPALITY: 'municipality',
+    OCCUPATION_FIELD: 'occupation-field',
+    OCCUPATION_GROUP: 'occupation-group',
+    OCCUPATION_NAME: 'occupation-name',
+    SKILL: 'skill',
+    WORKTIME_EXTENT: 'worktime-extent',
   },
 }
 
@@ -38,6 +54,6 @@ const customScalarResolvers = {
 }
 
 export default {
-  resolvers: merge(resolvers, customScalarResolvers, result),
+  resolvers: merge(resolvers, customScalarResolvers, custom),
   typeDefs: [customScalarSchema, ...typeDefs],
 }
