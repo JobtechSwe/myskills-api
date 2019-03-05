@@ -1,14 +1,6 @@
 import { gql } from 'apollo-server-express'
 import server, { appIsReady } from '../../lib/server'
-import {
-  getClient,
-  createMyDataAccount,
-  approveConsent,
-} from './integrationUtils'
-import { consents } from '../../lib/adapters/mydata'
-import { Login } from '../../lib/__generated__/myskills'
-import { defaultRequest } from '../../lib/services/consents'
-import { getConsentRequest } from '../../lib/services/db'
+import { getConsentedClient } from './integrationUtils'
 
 const GET_EDUCATIONS = gql`
   query getEducations {
@@ -27,7 +19,7 @@ const ADD_EDUCATION = gql`
   }
 `
 
-describe.only('#educations', () => {
+describe('#educations', () => {
   let query: any
   let mutate: any
 
@@ -38,32 +30,11 @@ describe.only('#educations', () => {
   afterAll(async () => await server.stop())
 
   beforeEach(async () => {
-    await createMyDataAccount()
-    const request = defaultRequest(3600 * 24 * 31)
-    const { id } = await consents.request<Login>(request)
-    await approveConsent(id)
-    const { accessToken } = await getConsentRequest(id)
-    ;({ query, mutate } = getClient(server, {
-      context: {
-        headers: {
-          token: accessToken,
-        },
-      },
-    }))
+    ;({ query, mutate } = await getConsentedClient(server))
   })
 
-  describe('getEducations', () => {
-    it('should get educations', async () => {
-      const { data } = await query({
-        query: GET_EDUCATIONS,
-      })
-
-      expect(data.getEducations[0].name).toBe('Simon')
-    })
-  })
-
-  describe.only('addEducation', () => {
-    it.only('should be possible to add an education', async () => {
+  describe('addEducation', () => {
+    it(`should be possible to add and get multiple education for user`, async () => {
       const {
         data: { addEducation },
       } = await mutate({
@@ -74,6 +45,21 @@ describe.only('#educations', () => {
         },
       })
       expect(addEducation[0].name).toBe('High school')
+
+      await mutate({
+        mutation: ADD_EDUCATION,
+        variables: {
+          id: '58',
+          name: 'PhD',
+        },
+      })
+
+      const { data } = await query({
+        query: GET_EDUCATIONS,
+      })
+
+      expect(data.getEducations[0].name).toBe('High school')
+      expect(data.getEducations[1].name).toBe('PhD')
     })
   })
 })
