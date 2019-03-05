@@ -1,6 +1,6 @@
 import got from 'got'
 
-const E2E_SIMULATOR_URL = 'http://localhost:1337'
+const E2E_SIMULATOR_URL = 'http://e2e-simulator:1337'
 import { consents } from '../../lib/adapters/mydata'
 import { Login } from '../../lib/__generated__/myskills'
 import { defaultRequest } from '../../lib/services/consents'
@@ -36,6 +36,7 @@ export const getConsentedClient = async (
   server
 ): Promise<{ query: Function; mutate: Function }> => {
   await createMyDataAccount()
+  console.log('vale')
   const request = defaultRequest(3600 * 24 * 31)
   const { id } = await consents.request<Login>(request)
   await approveConsent(id)
