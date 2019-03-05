@@ -58,8 +58,8 @@ describe('#educations', () => {
         query: GET_EDUCATIONS,
       })
 
-      expect(data.getEducations[0].name).toBe('High school')
-      expect(data.getEducations[1].name).toBe('PhD')
+      expect(data.educations[0].name).toBe('High school')
+      expect(data.educations[1].name).toBe('PhD')
     })
   })
 })
