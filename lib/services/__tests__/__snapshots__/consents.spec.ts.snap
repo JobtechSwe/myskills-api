@@ -6,7 +6,7 @@ Object {
   "scope": Array [
     Object {
       "area": "languages",
-      "description": "A list of your work experiences, educations, language proficiencies and so on that you have entered in the service.",
+      "description": "languages that you have entered in the service.",
       "domain": "http://localhost:3000",
       "lawfulBasis": "CONSENT",
       "permissions": Array [
@@ -16,7 +16,7 @@ Object {
     },
     Object {
       "area": "educations",
-      "description": "A list of your work experiences, educations, language proficiencies and so on that you have entered in the service.",
+      "description": "educations that you have entered in the service.",
       "domain": "http://localhost:3000",
       "lawfulBasis": "CONSENT",
       "permissions": Array [
@@ -26,7 +26,7 @@ Object {
     },
     Object {
       "area": "experiences",
-      "description": "A list of your work experiences, educations, language proficiencies and so on that you have entered in the service.",
+      "description": "experiences that you have entered in the service.",
       "domain": "http://localhost:3000",
       "lawfulBasis": "CONSENT",
       "permissions": Array [
@@ -36,7 +36,17 @@ Object {
     },
     Object {
       "area": "skills",
-      "description": "A list of your work experiences, educations, language proficiencies and so on that you have entered in the service.",
+      "description": "skills that you have entered in the service.",
+      "domain": "http://localhost:3000",
+      "lawfulBasis": "CONSENT",
+      "permissions": Array [
+        "write",
+      ],
+      "purpose": "In order to create a CV using our website.",
+    },
+    Object {
+      "area": "profile",
+      "description": "profile that you have entered in the service.",
       "domain": "http://localhost:3000",
       "lawfulBasis": "CONSENT",
       "permissions": Array [

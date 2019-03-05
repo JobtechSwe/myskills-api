@@ -3,8 +3,8 @@ import server, { appIsReady } from '../../lib/server'
 import { getClient } from './integrationUtils'
 
 const GET_LANGUAGES = gql`
-  query getLanguages {
-    getLanguages
+  query languages {
+    languages
   }
 `
 
@@ -40,7 +40,7 @@ describe('#Languages', () => {
     }))
   })
 
-  describe('getLanguages', () => {
+  describe('languages', () => {
     beforeEach(() => {
       mydata.getData.mockResolvedValue(['swedish'])
     })
@@ -49,11 +49,11 @@ describe('#Languages', () => {
       const { data } = await query({
         query: GET_LANGUAGES,
       })
-      expect(data.getLanguages[0]).toBe('swedish')
+      expect(data.languages[0]).toBe('swedish')
     })
   })
 
-  describe('addLanguage', () => {
+  describe('language', () => {
     enum Language {
       Swedish = 'swedish',
       English = 'english',
@@ -69,7 +69,6 @@ describe('#Languages', () => {
           language: Language.Swedish,
         },
       })
-
       expect(data.addLanguage[0]).toBe('swedish')
     })
   })

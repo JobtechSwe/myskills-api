@@ -7,9 +7,9 @@ export const addEducation: MutationResolvers.AddEducationResolver = async (
   { headers: { token }, mydata }
 ) => {
   try {
-    const result = await mydata.saveData<Education>({
+    const result = await mydata.saveData<Education[]>({
       area: Area.educations,
-      data: education,
+      data: [education],
       token,
     })
 

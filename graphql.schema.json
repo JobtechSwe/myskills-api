@@ -10,8 +10,8 @@
         "description": "",
         "fields": [
           {
-            "name": "getLanguages",
-            "description": "Get languages",
+            "name": "languages",
+            "description": "Get user languages",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -34,8 +34,8 @@
             "deprecationReason": null
           },
           {
-            "name": "getEducations",
-            "description": "Get educations",
+            "name": "educations",
+            "description": "Get user educations",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -54,8 +54,8 @@
             "deprecationReason": null
           },
           {
-            "name": "getExperiences",
-            "description": "Get experiences",
+            "name": "experiences",
+            "description": "Get user experiences",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -74,8 +74,20 @@
             "deprecationReason": null
           },
           {
-            "name": "getSkills",
-            "description": "Get skills",
+            "name": "profile",
+            "description": "Get user profile",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "OBJECT", "name": "Profile", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "skills",
+            "description": "Get user skills",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -91,7 +103,7 @@
           },
           {
             "name": "taxonomy",
-            "description": "Get skills from taxonomy",
+            "description": "Get from taxonomy",
             "args": [
               {
                 "name": "params",
@@ -231,6 +243,33 @@
       },
       {
         "kind": "OBJECT",
+        "name": "Profile",
+        "description": "",
+        "fields": [
+          {
+            "name": "firstName",
+            "description": "",
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lastName",
+            "description": "",
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "Skill",
         "description": "",
         "fields": [
@@ -330,13 +369,85 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "skill",
+            "name": "COUNTY",
             "description": "",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "municipality",
+            "name": "EDUCATION_FIELD_1",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "EDUCATION_FIELD_2",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "EDUCATION_FIELD_3",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "EDUCATION_LEVEL_1",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "EDUCATION_LEVEL_2",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "EDUCATION_LEVEL_3",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "LANGUAGE",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "MUNICIPALITY",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "OCCUPATION_FIELD",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "OCCUPATION_GROUP",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "OCCUPATION_NAME",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SKILL",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "WORKTIME_EXTENT",
             "description": "",
             "isDeprecated": false,
             "deprecationReason": null
@@ -499,7 +610,7 @@
           },
           {
             "name": "addLanguage",
-            "description": "Add languages",
+            "description": "Add languages to user",
             "args": [
               {
                 "name": "language",
@@ -530,7 +641,7 @@
           },
           {
             "name": "addExperience",
-            "description": "Add experiences",
+            "description": "Add experiences to user",
             "args": [
               {
                 "name": "experience",
@@ -565,7 +676,7 @@
           },
           {
             "name": "addEducation",
-            "description": "Add education",
+            "description": "Add education to user",
             "args": [
               {
                 "name": "education",
@@ -599,8 +710,35 @@
             "deprecationReason": null
           },
           {
+            "name": "createProfile",
+            "description": "Add user profile",
+            "args": [
+              {
+                "name": "profile",
+                "description": "",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "ProfileInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "OBJECT", "name": "Profile", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "addSkill",
-            "description": "Add skill",
+            "description": "Add skill to user",
             "args": [
               {
                 "name": "skill",
@@ -727,6 +865,37 @@
             "name": "name",
             "description": "",
             "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "ProfileInput",
+        "description": "",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "firstName",
+            "description": "",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "lastName",
+            "description": "",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
             "defaultValue": null
           }
         ],
@@ -1668,29 +1837,6 @@
       }
     ],
     "directives": [
-      {
-        "name": "cacheControl",
-        "description": "",
-        "locations": ["FIELD_DEFINITION", "OBJECT", "INTERFACE"],
-        "args": [
-          {
-            "name": "maxAge",
-            "description": "",
-            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
-            "defaultValue": null
-          },
-          {
-            "name": "scope",
-            "description": "",
-            "type": {
-              "kind": "ENUM",
-              "name": "CacheControlScope",
-              "ofType": null
-            },
-            "defaultValue": null
-          }
-        ]
-      },
       {
         "name": "skip",
         "description": "Directs the executor to skip this field or fragment when the `if` argument is true.",

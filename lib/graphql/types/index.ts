@@ -19,49 +19,59 @@ const typeDefs = gql`
     login: Login!
 
     """
-    Add languages
+    Add languages to user
     """
     addLanguage(language: Language!): [Language]!
 
     """
-    Add experiences
+    Add experiences to user
     """
     addExperience(experience: ExperienceInput!): [Experience]!
 
     """
-    Add education
+    Add education to user
     """
     addEducation(education: EducationInput!): [Education]!
 
     """
-    Add skill
+    Add user profile
+    """
+    createProfile(profile: ProfileInput!): Profile!
+
+    """
+    Add skill to user
     """
     addSkill(skill: SkillInput!): [Skill]!
   }
 
   type Query {
     """
-    Get languages
+    Get user languages
     """
-    getLanguages: [Language!]!
+    languages: [Language!]!
 
     """
-    Get educations
+    Get user educations
     """
-    getEducations: [Education]!
+    educations: [Education]!
 
     """
-    Get experiences
+    Get user experiences
     """
-    getExperiences: [Experience]!
+    experiences: [Experience]!
 
     """
-    Get skills
+    Get user profile
     """
-    getSkills: [Skill]!
+    profile: Profile!
 
     """
-    Get skills from taxonomy
+    Get user skills
+    """
+    skills: [Skill]!
+
+    """
+    Get from taxonomy
     """
     taxonomy(params: TaxonomyQueryInput): TaxonomyResponse!
   }

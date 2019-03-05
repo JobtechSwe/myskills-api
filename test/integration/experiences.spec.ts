@@ -3,8 +3,8 @@ import server, { appIsReady } from '../../lib/server'
 import { getClient } from './integrationUtils'
 
 const GET_EXPERIENCES = gql`
-  query getExperiences {
-    getExperiences {
+  query experiences {
+    experiences {
       name
     }
   }
@@ -46,7 +46,7 @@ describe('#experiences', () => {
     }))
   })
 
-  describe('getExperiences', () => {
+  describe('experiences', () => {
     beforeEach(() => {
       mydata.getData.mockResolvedValue([
         {
@@ -61,11 +61,11 @@ describe('#experiences', () => {
         query: GET_EXPERIENCES,
       })
 
-      expect(data.getExperiences[0].name).toBe('Cookie Eating')
+      expect(data.experiences[0].name).toBe('Cookie Eating')
     })
   })
 
-  describe('addExperience', () => {
+  describe('experience', () => {
     beforeEach(() => {
       mydata.saveData.mockResolvedValue([
         {

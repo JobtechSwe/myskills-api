@@ -1,22 +1,10 @@
 import { login } from '../login'
 import { defaultRequest } from '../../../../services/consents'
+import { ctx } from '../../../__mocks__/apolloServerContext'
 
 jest.mock('../../../../services/consents', () => ({
   defaultRequest: jest.fn(() => 'defaultRequest'),
 }))
-
-const ctx: any = {
-  header: {
-    token: 'token',
-  },
-  mydata: {
-    consents: {
-      request: jest.fn(),
-    },
-    getData: jest.fn(),
-    saveData: jest.fn(),
-  },
-}
 
 test('creates a consent request', async () => {
   await login({}, {}, ctx, {} as any)

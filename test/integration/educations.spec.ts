@@ -3,8 +3,8 @@ import server, { appIsReady } from '../../lib/server'
 import { getConsentedClient } from './integrationUtils'
 
 const GET_EDUCATIONS = gql`
-  query getEducations {
-    getEducations {
+  query educations {
+    educations {
       name
     }
   }

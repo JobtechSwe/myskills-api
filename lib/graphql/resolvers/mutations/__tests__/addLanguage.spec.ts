@@ -1,19 +1,9 @@
 import { addLanguage } from '../addLanguage'
 import { Language } from '../../../../__generated__/myskills'
+import { ctx } from '../../../__mocks__/apolloServerContext'
 
 const args = {
   language: 'swedish' as Language,
-}
-
-const ctx = {
-  headers: {
-    token: 'token',
-  },
-  mydata: {
-    consents: {} as any,
-    getData: jest.fn(),
-    saveData: jest.fn(),
-  },
 }
 
 test('save input in mydata', async () => {
@@ -21,7 +11,7 @@ test('save input in mydata', async () => {
 
   expect(ctx.mydata.saveData).toHaveBeenCalledWith({
     area: 'languages',
-    data: args.language,
+    data: [args.language],
     token: 'token',
   })
 })

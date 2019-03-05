@@ -1,3 +1,4 @@
+import { ctx } from '../../../__mocks__/apolloServerContext'
 import { addExperience } from '../addExperience'
 
 const args = {
@@ -8,23 +9,12 @@ const args = {
   },
 }
 
-const ctx = {
-  headers: {
-    token: 'token',
-  },
-  mydata: {
-    consents: {} as any,
-    getData: jest.fn(),
-    saveData: jest.fn(),
-  },
-}
-
 test('save input in mydata', async () => {
   await addExperience({}, args, ctx, {} as any)
 
   expect(ctx.mydata.saveData).toHaveBeenCalledWith({
     area: 'experiences',
-    data: args.experience,
+    data: [args.experience],
     token: 'token',
   })
 })

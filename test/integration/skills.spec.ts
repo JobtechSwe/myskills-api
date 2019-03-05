@@ -4,8 +4,8 @@ import { getClient } from './integrationUtils'
 import { skillInput } from './__fixtures__/skills'
 
 const GET_SKILLS = gql`
-  query getSkills {
-    getSkills {
+  query skills {
+    skills {
       conceptId
       term
       type
@@ -14,7 +14,7 @@ const GET_SKILLS = gql`
 `
 
 const ADD_SKILL = gql`
-  mutation addSkill($conceptId: String!, $term: String!, $type: String!) {
+  mutation addskill($conceptId: String!, $term: String!, $type: String!) {
     addSkill(skill: { conceptId: $conceptId, term: $term, type: $type }) {
       conceptId
       term
@@ -49,7 +49,7 @@ describe('#skills', () => {
     }))
   })
 
-  describe('getSkills', () => {
+  describe('skills', () => {
     beforeEach(() => {
       mydata.getData.mockResolvedValue([skillInput])
     })
@@ -59,13 +59,13 @@ describe('#skills', () => {
         query: GET_SKILLS,
       })
 
-      const addedSkill = data.getSkills[0]
+      const addedSkill = data.skills[0]
 
-      expect(addedSkill).toMatchObject(skillInput)
+      expect(addedSkill).toEqual(skillInput)
     })
   })
 
-  describe('addSkill', () => {
+  describe('skill', () => {
     beforeEach(() => {
       mydata.saveData.mockResolvedValue([skillInput])
     })
@@ -78,8 +78,7 @@ describe('#skills', () => {
         variables: skillInput,
       })
 
-      const addedSkill = addSkill[0]
-      expect(addedSkill).toMatchObject(skillInput)
+      expect(addSkill[0]).toEqual(skillInput)
     })
   })
 })

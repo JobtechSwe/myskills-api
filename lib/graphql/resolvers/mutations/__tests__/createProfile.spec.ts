@@ -1,33 +1,33 @@
 import { ctx } from '../../../__mocks__/apolloServerContext'
-import { addEducation } from '../addEducation'
+import { createProfile } from '../createProfile'
 
 const args = {
-  education: {
-    id: '1',
-    name: 'Librarian',
+  profile: {
+    firstName: 'John',
+    lastName: 'Doe',
   },
 }
 
 test('save input in mydata', async () => {
-  await addEducation({}, args, ctx, {} as any)
+  await createProfile({}, args, ctx, {} as any)
 
   expect(ctx.mydata.saveData).toHaveBeenCalledWith({
-    area: 'educations',
-    data: [args.education],
+    area: 'profile',
+    data: args.profile,
     token: 'token',
   })
 })
 
 test('returns updated data', async () => {
-  const result = [args.education]
+  const result = args.profile
 
   ctx.mydata.saveData.mockResolvedValue(result)
 
-  await expect(addEducation({}, args, ctx, {} as any)).resolves.toEqual(result)
+  await expect(createProfile({}, args, ctx, {} as any)).resolves.toEqual(result)
 })
 
 test('handles errors', async () => {
   ctx.mydata.saveData.mockRejectedValue('err')
 
-  await expect(addEducation({}, args, ctx, {} as any)).rejects.toThrow('err')
+  await expect(createProfile({}, args, ctx, {} as any)).rejects.toThrow('err')
 })
