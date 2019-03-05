@@ -44,8 +44,20 @@ export enum Language {
 }
 
 export enum TaxonomyType {
-  Skill = 'skill',
-  Municipality = 'municipality',
+  County = 'COUNTY',
+  EducationField_1 = 'EDUCATION_FIELD_1',
+  EducationField_2 = 'EDUCATION_FIELD_2',
+  EducationField_3 = 'EDUCATION_FIELD_3',
+  EducationLevel_1 = 'EDUCATION_LEVEL_1',
+  EducationLevel_2 = 'EDUCATION_LEVEL_2',
+  EducationLevel_3 = 'EDUCATION_LEVEL_3',
+  Language = 'LANGUAGE',
+  Municipality = 'MUNICIPALITY',
+  OccupationField = 'OCCUPATION_FIELD',
+  OccupationGroup = 'OCCUPATION_GROUP',
+  OccupationName = 'OCCUPATION_NAME',
+  Skill = 'SKILL',
+  WorktimeExtent = 'WORKTIME_EXTENT',
 }
 
 export enum CacheControlScope {
@@ -640,17 +652,6 @@ export namespace TaxonomyResultResolvers {
   > = TypeResolveFn<R, Parent, TContext>
 }
 
-export type CacheControlDirectiveResolver<Result> = DirectiveResolverFn<
-  Result,
-  CacheControlDirectiveArgs,
-  ApolloServerContext
->
-export interface CacheControlDirectiveArgs {
-  maxAge?: Maybe<number>
-
-  scope?: Maybe<CacheControlScope>
-}
-
 /** Directs the executor to skip this field or fragment when the `if` argument is true. */
 export type SkipDirectiveResolver<Result> = DirectiveResolverFn<
   Result,
@@ -727,7 +728,6 @@ export interface IResolvers<TContext = ApolloServerContext> {
 }
 
 export interface IDirectiveResolvers<Result> {
-  cacheControl?: CacheControlDirectiveResolver<Result>
   skip?: SkipDirectiveResolver<Result>
   include?: IncludeDirectiveResolver<Result>
   deprecated?: DeprecatedDirectiveResolver<Result>
