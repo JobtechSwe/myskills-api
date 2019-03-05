@@ -12,8 +12,8 @@ const GET_PROFILE = gql`
 `
 
 const CREATE_PROFILE = gql`
-  mutation profile($firstName: String!, $lastName: String!) {
-    profile(profile: { firstName: $firstName, lastName: $lastName }) {
+  mutation createProfile($firstName: String!, $lastName: String!) {
+    createProfile(profile: { firstName: $firstName, lastName: $lastName }) {
       firstName
       lastName
     }
@@ -74,7 +74,7 @@ describe('#profile', () => {
         },
       })
 
-      expect(data.profile).toEqual({ firstName: 'John', lastName: 'Doe' })
+      expect(data.createProfile).toEqual({ firstName: 'John', lastName: 'Doe' })
     })
   })
 })

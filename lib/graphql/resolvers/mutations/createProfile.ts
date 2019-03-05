@@ -1,7 +1,7 @@
 import { MutationResolvers, Profile } from '../../../__generated__/myskills'
 import { Area } from '../../../types'
 
-export const profile: MutationResolvers.ProfileResolver = async (
+export const createProfile: MutationResolvers.CreateProfileResolver = async (
   _,
   { profile },
   { headers: { token }, mydata }

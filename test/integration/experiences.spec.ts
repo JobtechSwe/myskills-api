@@ -11,8 +11,8 @@ const GET_EXPERIENCES = gql`
 `
 
 const ADD_EXPERIENCE = gql`
-  mutation experience($name: String!, $id: String!, $years: String!) {
-    experience(experience: { name: $name, id: $id, years: $years }) {
+  mutation addExperience($name: String!, $id: String!, $years: String!) {
+    addExperience(experience: { name: $name, id: $id, years: $years }) {
       id
       name
       years
@@ -78,7 +78,7 @@ describe('#experiences', () => {
 
     it('should be possible to add an experience', async () => {
       const {
-        data: { experience },
+        data: { addExperience },
       } = await mutate({
         mutation: ADD_EXPERIENCE,
         variables: {
@@ -88,7 +88,7 @@ describe('#experiences', () => {
         },
       })
 
-      expect(experience[0].name).toBe('Carpenter')
+      expect(addExperience[0].name).toBe('Carpenter')
     })
   })
 })

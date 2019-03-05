@@ -29,7 +29,7 @@ describe('#operator', () => {
   })
 
   test('should save data', async () => {
-    await expect(saveData({ token, data, area })).resolves.toEqual([data])
+    await expect(saveData({ token, data, area })).resolves.toEqual(data)
   })
 
   test('should save data and return same data', async () => {
@@ -42,6 +42,6 @@ describe('#operator', () => {
       },
     })
 
-    await expect(saveData({ data, token, area })).resolves.toEqual([data])
+    await expect(saveData({ data, token, area })).resolves.toEqual(data)
   })
 })
