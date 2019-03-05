@@ -1,0 +1,18 @@
+FROM node:11.7-alpine
+
+WORKDIR /app
+
+COPY /test ./test
+COPY /lib ./lib
+
+COPY jest.config.js ./
+COPY jest.integration-config.js ./
+COPY jest.unit-config.js ./
+COPY tsconfig.json ./
+
+COPY package.json ./
+COPY package-lock.json ./
+
+RUN npm ci
+
+CMD npm run integration

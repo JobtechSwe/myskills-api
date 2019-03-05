@@ -36,6 +36,7 @@ export const getConsentedClient = async (
   server
 ): Promise<{ query: Function; mutate: Function }> => {
   await createMyDataAccount()
+  console.log('vale')
   const request = defaultRequest(3600 * 24 * 31)
   const { id } = await consents.request<Login>(request)
   await approveConsent(id)
