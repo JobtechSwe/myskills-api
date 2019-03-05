@@ -2,8 +2,20 @@ import { gql } from 'apollo-server-express'
 
 export const typeDefs = gql`
   enum TaxonomyType {
-    skill
-    municipality
+    COUNTY
+    EDUCATION_FIELD_1
+    EDUCATION_FIELD_2
+    EDUCATION_FIELD_3
+    EDUCATION_LEVEL_1
+    EDUCATION_LEVEL_2
+    EDUCATION_LEVEL_3
+    LANGUAGE
+    MUNICIPALITY
+    OCCUPATION_FIELD
+    OCCUPATION_GROUP
+    OCCUPATION_NAME
+    SKILL
+    WORKTIME_EXTENT
   }
 
   type TaxonomySearch {
