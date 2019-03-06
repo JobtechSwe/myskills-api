@@ -2,7 +2,7 @@
 
 ## Start dev environment
 
-- Clone [mydata-api](https://github.com/JobtechSwe/mydata-api) repo
+- Clone [myskills](https://github.com/JobtechSwe/myskills-api/) repo
 - Create local docker network: `docker network create myskills`
 - Run the docker-services: `docker-compose up -d`
 - Run `npm run dev`
