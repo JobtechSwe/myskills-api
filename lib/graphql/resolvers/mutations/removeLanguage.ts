@@ -3,13 +3,14 @@ import { Area } from '../../../types'
 
 export const removeLanguage: MutationResolvers.RemoveLanguageResolver = async (
   _,
-  { id },
+  { language },
   { headers: { token }, mydata }
 ) => {
   try {
     const result = await mydata.removeData<Language[]>({
       area: Area.languages,
-      id,
+      id: language,
+      key: '',
       token,
     })
 

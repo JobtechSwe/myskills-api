@@ -61,7 +61,7 @@ const typeDefs = gql`
     """
     Remove language from user
     """
-    removeLanguage(id: String!): Boolean!
+    removeLanguage(language: Language!): Boolean!
   }
 
   type Query {

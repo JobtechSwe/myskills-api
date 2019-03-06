@@ -11,6 +11,7 @@ export const ctx = {
     },
     getData: jest.fn(),
     saveData: jest.fn(),
+    removeData: jest.fn(),
   },
   dataSources: {
     taxonomyAPI: new TaxonomyAPI(),

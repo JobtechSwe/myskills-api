@@ -90,7 +90,7 @@ describe('#Languages', () => {
       } = await mutate({
         mutation: REMOVE_LANGUAGE,
         variables: {
-          id: '123',
+          language: 'swedish',
         },
       })
 

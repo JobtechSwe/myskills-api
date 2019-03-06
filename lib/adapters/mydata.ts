@@ -33,6 +33,7 @@ export interface SaveDataInput<T> extends DataInput {
 
 export interface RemoveDataInput extends DataInput {
   id?: string
+  key?: string
 }
 
 const mydataOperator = create(config)
@@ -74,15 +75,19 @@ async function saveData<T>({
 
 async function removeData<T>({
   area,
-  id: targetId,
+  id: target,
+  key = 'id',
   token,
 }: RemoveDataInput): Promise<boolean> {
   const areaConfig = createConfig(area)
 
   const currentDataForDomainArea = await getData<T>({ area, token })
+
   const updatedData = {
     data: Array.isArray(currentDataForDomainArea)
-      ? currentDataForDomainArea.filter(({ id }) => id !== targetId)
+      ? currentDataForDomainArea.filter(data =>
+          key ? data[key] !== target : data !== target
+        )
       : null,
   }
 

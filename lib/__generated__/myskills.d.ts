@@ -239,7 +239,7 @@ export interface RemoveExperienceMutationArgs {
   id: string
 }
 export interface RemoveLanguageMutationArgs {
-  id: string
+  language: Language
 }
 
 import {
@@ -622,7 +622,7 @@ export namespace MutationResolvers {
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext, RemoveLanguageArgs>
   export interface RemoveLanguageArgs {
-    id: string
+    language: Language
   }
 }
 

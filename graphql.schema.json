@@ -853,14 +853,14 @@
             "description": "Remove language from user",
             "args": [
               {
-                "name": "id",
+                "name": "language",
                 "description": "",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
+                    "kind": "ENUM",
+                    "name": "Language",
                     "ofType": null
                   }
                 },
