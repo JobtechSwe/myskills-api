@@ -9,7 +9,7 @@ services:
     ports:
       - 6380:6379
   postgres:
-    image: postgres:9.6
+    image: postgres:11.2
     ports:
       - 127.0.0.1:5432:5432
     networks:
