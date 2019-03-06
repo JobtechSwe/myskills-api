@@ -19,10 +19,16 @@ const ADD_EDUCATION = gql`
   }
 `
 
+const REMOVE_EDUCATION = gql`
+  mutation removeEducation($id: String!) {
+    removeEducation(id: $id)
+  }
+`
+
 describe('#educations', () => {
   let query: any
   let mutate: any
-  let mydata: { getData: any; saveData: any }
+  let mydata: { getData: any; saveData: any; removeData: any }
 
   beforeAll(async () => {
     await appIsReady
@@ -34,6 +40,7 @@ describe('#educations', () => {
     mydata = {
       getData: jest.fn(),
       saveData: jest.fn(),
+      removeData: jest.fn(),
     }
     ;({ query, mutate } = getClient(server, {
       context: {
@@ -45,7 +52,7 @@ describe('#educations', () => {
     }))
   })
 
-  describe('educations', () => {
+  describe('query: educations', () => {
     beforeEach(() => {
       mydata.getData.mockResolvedValue([
         {
@@ -63,12 +70,12 @@ describe('#educations', () => {
     })
   })
 
-  describe('education', () => {
+  describe('mutation: addEducation', () => {
     beforeEach(() => {
       mydata.saveData.mockResolvedValue([
         {
           id: '123',
-          name: 'Simon :)',
+          name: 'Simon',
         },
       ])
     })
@@ -79,12 +86,31 @@ describe('#educations', () => {
       } = await mutate({
         mutation: ADD_EDUCATION,
         variables: {
-          id: 'id',
-          name: 'simon',
+          id: '123',
+          name: 'Simon',
         },
       })
 
-      expect(addEducation[0].name).toBe('Simon :)')
+      expect(addEducation[0].name).toBe('Simon')
+    })
+  })
+
+  describe('mutation: removeEducation', () => {
+    beforeEach(() => {
+      mydata.removeData.mockResolvedValue(true)
+    })
+
+    it('should be possible to remove an education', async () => {
+      const {
+        data: { removeEducation },
+      } = await mutate({
+        mutation: REMOVE_EDUCATION,
+        variables: {
+          id: '123',
+        },
+      })
+
+      expect(removeEducation).toEqual(true)
     })
   })
 })

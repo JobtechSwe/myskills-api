@@ -20,10 +20,16 @@ const ADD_EXPERIENCE = gql`
   }
 `
 
+const REMOVE_EXPERIENCE = gql`
+  mutation removeExperience($id: String!) {
+    removeExperience(id: $id)
+  }
+`
+
 describe('#experiences', () => {
   let query: any
   let mutate: any
-  let mydata: { getData: any; saveData: any }
+  let mydata: { getData: any; saveData: any; removeData: any }
 
   beforeAll(async () => {
     await appIsReady
@@ -35,6 +41,7 @@ describe('#experiences', () => {
     mydata = {
       getData: jest.fn(),
       saveData: jest.fn(),
+      removeData: jest.fn(),
     }
     ;({ query, mutate } = getClient(server, {
       context: {
@@ -89,6 +96,25 @@ describe('#experiences', () => {
       })
 
       expect(addExperience[0].name).toBe('Carpenter')
+    })
+  })
+
+  describe('mutation: removeExperience', () => {
+    beforeEach(() => {
+      mydata.removeData.mockResolvedValue(true)
+    })
+
+    it('should be possible to remove an experience', async () => {
+      const {
+        data: { removeExperience },
+      } = await mutate({
+        mutation: REMOVE_EXPERIENCE,
+        variables: {
+          id: '123',
+        },
+      })
+
+      expect(removeExperience).toEqual(true)
     })
   })
 })
