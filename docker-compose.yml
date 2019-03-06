@@ -10,14 +10,14 @@ services:
       - SERVER_PORT=3000
       - MYDATA_OPERATOR=http://operator:4000
     networks:
-      mydata:
+      mySkills:
         aliases:
           - myskills-api
 
   redis-api:
     image: redis:5.0
     networks:
-      mydata:
+      mySkills:
         aliases:
           - redis-api
     ports:
@@ -28,7 +28,7 @@ services:
     ports:
       - 5432:5432
     networks:
-      mydata:
+      mySkills:
         aliases:
           - postgres
     environment:
@@ -40,7 +40,7 @@ services:
   mydata-operator:
     image: operator
     networks:
-      mydata:
+      mySkills:
         aliases:
           - operator
     ports:
@@ -60,10 +60,10 @@ services:
     environment:
       - OPERATOR_URL=http://operator:4000/api
     networks:
-      mydata:
+      mySkills:
         aliases:
           - e2e-simulator
 networks:
-  mydata:
+  mySkills:
     external:
-      name: mydata
+      name: mySkills
