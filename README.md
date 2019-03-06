@@ -1,25 +1,33 @@
-# Test locally
+# myskills-api
 
-## Mydata
+## Start dev environment
 
-- Clone mydata repo
-
-## Start operator
-
-- In mydata repo, navigate to /operator
-- Create a .env file with
-  ```
-  PORT=4000
-  ```
+- Clone [mydata-api](https://github.com/JobtechSwe/mydata-api) repo
+- Create local docker network: `docker network create myskills`
 - Run the docker-services: `docker-compose up -d`
-- Run `npm run dev`.
+- Run `npm run dev`
+- Go to `localhost:3000`
 
-### Start mydata app
+## Environment variables
 
-- In mydata repo, navigate to /app
-- Create an .env file with dropbox key and correct operator url (using local IP or ngrok etc.). I.e.
-  ```
-  DROPBOX_KEY=somedropboxkey
-  OPERATOR_URL=http://192.168.1.68:4000/api
-  ```
-- Run app in mydata repo with `react-native run-ios`
+To overide default environment variables add an `.env` file in root.
+
+| Env variables               | Description           |
+| --------------------------- | --------------------- |
+| DOMAIN                      | Application domain    |
+| SERVER_PORT                 | Application port      |
+| MYDATA_OPERATOR             | MyData operator host  |
+| MYDATA_OPERATOR_PRIVATE_KEY | MyData private key    |
+| MYDATA_OPERATOR_PUBLIC_KEY  | MyData public key     |
+| REDIS_API_HOST              | Redis host            |
+| REDIS_API_PORT              | Redis port            |
+| REDIS_API_PASSWORD          | Redis password        |
+| TAXONOMY_URL_BASE           | Jobtech ads API URL   |
+| TAXONOMY_API_KEY            | Jobtech ads API key   |
+| TAXONOMY_URL_PATH           | Jobtech taxonomy path |
+
+## Services
+
+API dependencies
+
+- Redis - For caching taxonomy responses from Jobtech API and user consents
