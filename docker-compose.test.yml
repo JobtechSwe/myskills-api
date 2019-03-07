@@ -3,7 +3,8 @@ services:
   myskills-api:
     build:
       context: .
-      dockerfile: Dockerfile.test
+      target: base
+    command: npm run integration
     environment:
       - REDIS_API_HOST=redis-api
       - REDIS_API_PORT=6379

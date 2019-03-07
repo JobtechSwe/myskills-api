@@ -1,4 +1,5 @@
-FROM node:11.7 as builder
+FROM node:11.7 as base
+ARG cache=1
 
 WORKDIR /app
 
@@ -7,6 +8,11 @@ COPY package-lock.json ./
 RUN npm ci
 
 COPY /lib ./lib
+COPY /test ./test
+
+COPY jest.config.js ./
+COPY jest.integration-config.js ./
+COPY jest.unit-config.js ./
 COPY tsconfig.json ./
 
 RUN npm run build-ts
@@ -22,7 +28,7 @@ COPY package.json ./
 COPY package-lock.json ./
 RUN npm ci --only=production
 
-COPY --from=builder /app/dist ./dist
+COPY --from=base /app/dist ./dist
 
 USER $USER
 
