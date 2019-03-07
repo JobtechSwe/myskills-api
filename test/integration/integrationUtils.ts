@@ -1,6 +1,6 @@
 import got from 'got'
 
-const E2E_SIMULATOR_URL = 'http://e2e-simulator:1337'
+const E2E_SIMULATOR_URL = 'http://mydata-app-as-server:1337'
 import { consents } from '../../lib/adapters/mydata'
 import { Login } from '../../lib/__generated__/myskills'
 import { defaultRequest } from '../../lib/services/consents'

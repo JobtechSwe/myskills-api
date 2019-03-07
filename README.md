@@ -27,7 +27,7 @@
 
 ### Integration tests
 To run the integration-tests
-1. (for now) you need to build the docker images for the operator and e2e-simulator.
-    - [e2e-simulator](https://github.com/JobtechSwe/mydata/blob/master/app/Dockerfile) tagged as `e2e-simulator`. Important First bump the node version to 10.5. Since the flow won't work without it.
+1. (for now) you need to build the docker images for the operator and mydata-app-as-server.
+    - [mydata-app-as-server](https://github.com/JobtechSwe/mydata/blob/master/app/Dockerfile) tagged as `mydata-app-as-server`. Important First bump the node version to 10.5. Since the flow won't work without it.
     - [operator](https://github.com/JobtechSwe/mydata/blob/master/operator/Dockerfile) tagged as `operator`
 2. Run `sh integration-tests.sh`

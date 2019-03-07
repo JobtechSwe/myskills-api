@@ -66,14 +66,14 @@ services:
       postgres:
         condition: service_healthy
 
-  e2e-simulator: #This replaces the phone app in the normal flow.
-    image: e2e-simulator
+  mydata-app-as-server: #This replaces the phone app in the normal flow.
+    image: mydata-app-as-server
     environment:
       - OPERATOR_URL=http://operator:4000/api
     networks:
       myskills:
         aliases:
-          - e2e-simulator
+          - mydata-app-as-server
 networks:
   myskills:
     external:
