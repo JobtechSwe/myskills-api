@@ -42,6 +42,26 @@ const typeDefs = gql`
     Add skill to user
     """
     addSkill(skill: SkillInput!): [Skill]!
+
+    """
+    Remove skill from user
+    """
+    removeSkill(id: String!): Boolean!
+
+    """
+    Remove education from user
+    """
+    removeEducation(id: String!): Boolean!
+
+    """
+    Remove experience from user
+    """
+    removeExperience(id: String!): Boolean!
+
+    """
+    Remove language from user
+    """
+    removeLanguage(language: Language!): Boolean!
   }
 
   type Query {

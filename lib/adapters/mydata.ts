@@ -31,6 +31,11 @@ export interface SaveDataInput<T> extends DataInput {
   data: T
 }
 
+export interface RemoveDataInput extends DataInput {
+  id?: string
+  key?: string
+}
+
 const mydataOperator = create(config)
 const createConfig = (area: Area): Config => ({
   area,
@@ -49,7 +54,7 @@ async function saveData<T>({
   token,
 }: SaveDataInput<T>): Promise<T> {
   const areaConfig = createConfig(area)
-  const currentDataForDomainArea = (await getData<T>({ area, token })) as T
+  const currentDataForDomainArea = await getData<T>({ area, token })
 
   const updatedData = Array.isArray(data)
     ? {
@@ -68,5 +73,40 @@ async function saveData<T>({
   return updatedData.data as T
 }
 
+async function removeData<T>({
+  area,
+  id: target,
+  key = 'id',
+  token,
+}: RemoveDataInput): Promise<boolean> {
+  const areaConfig = createConfig(area)
+
+  const currentDataForDomainArea = await getData<T>({ area, token })
+
+  const updatedData = {
+    data: Array.isArray(currentDataForDomainArea)
+      ? currentDataForDomainArea.filter(data =>
+          key ? data[key] !== target : data !== target
+        )
+      : null,
+  }
+
+  await mydataOperator.data
+    .auth(token)
+    .write({ ...areaConfig, data: updatedData })
+
+  return true
+}
+
 const { connect, consents, routes, events } = mydataOperator
-export { connect, consents, getData, mydataOperator, saveData, routes, events }
+
+export {
+  connect,
+  consents,
+  getData,
+  mydataOperator,
+  saveData,
+  removeData,
+  routes,
+  events,
+}

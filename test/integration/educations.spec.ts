@@ -19,6 +19,12 @@ const ADD_EDUCATION = gql`
   }
 `
 
+const REMOVE_EDUCATION = gql`
+  mutation removeEducation($id: String!) {
+    removeEducation(id: $id)
+  }
+`
+
 describe('#educations', () => {
   let query: any
   let mutate: any
@@ -33,33 +39,44 @@ describe('#educations', () => {
     ;({ query, mutate } = await getConsentedClient(server))
   })
 
-  describe('addEducation', () => {
-    it(`should be possible to add and get multiple education for user`, async () => {
-      const {
-        data: { addEducation },
-      } = await mutate({
-        mutation: ADD_EDUCATION,
-        variables: {
-          id: '123456789',
-          name: 'High school',
-        },
-      })
-      expect(addEducation[0].name).toBe('High school')
-
-      await mutate({
-        mutation: ADD_EDUCATION,
-        variables: {
-          id: '58',
-          name: 'PhD',
-        },
-      })
-
-      const { data } = await query({
-        query: GET_EDUCATIONS,
-      })
-
-      expect(data.educations[0].name).toBe('High school')
-      expect(data.educations[1].name).toBe('PhD')
+  it('should be possible to add and get multiple education for user', async () => {
+    const {
+      data: { addEducation },
+    } = await mutate({
+      mutation: ADD_EDUCATION,
+      variables: {
+        id: '123456789',
+        name: 'High school',
+      },
     })
+    expect(addEducation[0].name).toBe('High school')
+
+    await mutate({
+      mutation: ADD_EDUCATION,
+      variables: {
+        id: '58',
+        name: 'PhD',
+      },
+    })
+
+    const { data } = await query({
+      query: GET_EDUCATIONS,
+    })
+
+    expect(data.educations[0].name).toBe('High school')
+    expect(data.educations[1].name).toBe('PhD')
+  })
+
+  it.skip('should be possible to remove an education', async () => {
+    const {
+      data: { removeEducation },
+    } = await mutate({
+      mutation: REMOVE_EDUCATION,
+      variables: {
+        id: '123',
+      },
+    })
+
+    expect(removeEducation).toEqual(true)
   })
 })

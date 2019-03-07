@@ -173,6 +173,14 @@ export interface Mutation {
   createProfile: Profile
   /** Add skill to user */
   addSkill: (Maybe<Skill>)[]
+  /** Remove skill from user */
+  removeSkill: boolean
+  /** Remove education from user */
+  removeEducation: boolean
+  /** Remove experience from user */
+  removeExperience: boolean
+  /** Remove language from user */
+  removeLanguage: boolean
 }
 
 export interface Login {
@@ -220,6 +228,18 @@ export interface CreateProfileMutationArgs {
 }
 export interface AddSkillMutationArgs {
   skill: SkillInput
+}
+export interface RemoveSkillMutationArgs {
+  id: string
+}
+export interface RemoveEducationMutationArgs {
+  id: string
+}
+export interface RemoveExperienceMutationArgs {
+  id: string
+}
+export interface RemoveLanguageMutationArgs {
+  language: Language
 }
 
 import {
@@ -509,6 +529,14 @@ export namespace MutationResolvers {
     createProfile?: CreateProfileResolver<Profile, TypeParent, TContext>
     /** Add skill to user */
     addSkill?: AddSkillResolver<(Maybe<Skill>)[], TypeParent, TContext>
+    /** Remove skill from user */
+    removeSkill?: RemoveSkillResolver<boolean, TypeParent, TContext>
+    /** Remove education from user */
+    removeEducation?: RemoveEducationResolver<boolean, TypeParent, TContext>
+    /** Remove experience from user */
+    removeExperience?: RemoveExperienceResolver<boolean, TypeParent, TContext>
+    /** Remove language from user */
+    removeLanguage?: RemoveLanguageResolver<boolean, TypeParent, TContext>
   }
 
   export type LoginResolver<
@@ -559,6 +587,42 @@ export namespace MutationResolvers {
   > = Resolver<R, Parent, TContext, AddSkillArgs>
   export interface AddSkillArgs {
     skill: SkillInput
+  }
+
+  export type RemoveSkillResolver<
+    R = boolean,
+    Parent = {},
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext, RemoveSkillArgs>
+  export interface RemoveSkillArgs {
+    id: string
+  }
+
+  export type RemoveEducationResolver<
+    R = boolean,
+    Parent = {},
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext, RemoveEducationArgs>
+  export interface RemoveEducationArgs {
+    id: string
+  }
+
+  export type RemoveExperienceResolver<
+    R = boolean,
+    Parent = {},
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext, RemoveExperienceArgs>
+  export interface RemoveExperienceArgs {
+    id: string
+  }
+
+  export type RemoveLanguageResolver<
+    R = boolean,
+    Parent = {},
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext, RemoveLanguageArgs>
+  export interface RemoveLanguageArgs {
+    language: Language
   }
 }
 

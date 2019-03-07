@@ -1,4 +1,4 @@
-const auth = {
+export const auth = {
   read: jest.fn(),
   write: jest.fn(),
 }

@@ -13,11 +13,16 @@ const ADD_LANGUAGE = gql`
     addLanguage(language: $language)
   }
 `
+const REMOVE_LANGUAGE = gql`
+  mutation removeLanguage($id: String!) {
+    removeLanguage(id: $id)
+  }
+`
 
 describe('#Languages', () => {
   let query: any
   let mutate: any
-  let mydata: { getData: any; saveData: any }
+  let mydata: { getData: any; saveData: any; removeData: any }
 
   beforeAll(async () => {
     await appIsReady
@@ -29,6 +34,7 @@ describe('#Languages', () => {
     mydata = {
       getData: jest.fn(),
       saveData: jest.fn(),
+      removeData: jest.fn(),
     }
     ;({ query, mutate } = getClient(server, {
       context: {
@@ -70,6 +76,25 @@ describe('#Languages', () => {
         },
       })
       expect(data.addLanguage[0]).toBe('swedish')
+    })
+  })
+
+  describe('mutation: removeLanguage', () => {
+    beforeEach(() => {
+      mydata.removeData.mockResolvedValue(true)
+    })
+
+    it('should be possible to remove a language', async () => {
+      const {
+        data: { removeLanguage },
+      } = await mutate({
+        mutation: REMOVE_LANGUAGE,
+        variables: {
+          language: 'swedish',
+        },
+      })
+
+      expect(removeLanguage).toEqual(true)
     })
   })
 })
