@@ -2,11 +2,46 @@
 
 ## Start dev environment
 
-- Clone [myskills](https://github.com/JobtechSwe/myskills-api/) repo
+- Clone [myskills-api](https://github.com/JobtechSwe/myskills-api/) repo
 - Create local docker network: `docker network create myskills`
 - Run the docker-services: `docker-compose up -d`
 - Run `npm run dev`
 - Go to `localhost:3000/graphql`
+
+## Get started with MyData App
+
+- Start the GraphQl API (see above).
+- Clone [mydata](https://github.com/JobtechSwe/mydata) repo
+- Navigate to app directory and follow [README](https://github.com/JobtechSwe/mydata/blob/master/app/README.md) for setup
+- Create an account in the MyData app
+- Then you run the login mutation:
+
+```
+mutation login {
+  login {
+    id
+  }
+}
+```
+
+- Open the MyData app again and navigate to Manage Consent requests and enter the id you got from login mutation.
+- In the MySkills API you should now get an consentRequestId.
+- Add consentRequestId to the header `token`
+- Start by adding an new account:
+
+```
+mutation createProfile {
+  createProfile(profile: {
+    firstName: "Bruce",
+    lastName: "Wayne"
+  }) {
+    firstName
+    lastName
+  }
+}
+```
+
+- Now you cant start using all the other querys and mutations
 
 ## Environment variables
 
