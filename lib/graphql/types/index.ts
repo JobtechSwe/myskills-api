@@ -74,6 +74,11 @@ const typeDefs = gql`
     Get from taxonomy
     """
     taxonomy(params: TaxonomyQueryInput): TaxonomyResponse!
+
+    """
+    Login an existing user
+    """
+    consent: Login!
   }
 `
 
