@@ -19,7 +19,7 @@ const REMOVE_LANGUAGE = gql`
   }
 `
 
-describe('#Languages', () => {
+describe.skip('#Languages', () => {
   let query: any
   let mutate: any
   let mydata: { getData: any; saveData: any; removeData: any }
@@ -84,7 +84,7 @@ describe('#Languages', () => {
       mydata.removeData.mockResolvedValue(true)
     })
 
-    it('should be possible to remove a language', async () => {
+    it.skip('should be possible to remove a language', async () => {
       const {
         data: { removeLanguage },
       } = await mutate({

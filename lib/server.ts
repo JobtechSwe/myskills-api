@@ -81,8 +81,9 @@ server.applyMiddleware({
 const port = config.SERVER_PORT
 
 export const appIsReady: Promise<Boolean> = new Promise(resolve =>
-  app.listen(port, () => {
-    mydataConnect()
+  app.listen(port, async () => {
+    await mydataConnect()
+
     console.log(`Listening on port: ${port}`)
     resolve(true)
   })

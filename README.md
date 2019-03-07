@@ -23,3 +23,11 @@
   OPERATOR_URL=http://192.168.1.68:4000/api
   ```
 - Run app in mydata repo with `react-native run-ios`
+
+
+### Integration tests
+To run the integration-tests
+1. (for now) you need to build the docker images for the operator and mydata-app-as-server.
+    - [mydata-app-as-server](https://github.com/JobtechSwe/mydata/blob/master/app/Dockerfile) tagged as `mydata-app-as-server`. Important First bump the node version to 10.5. Since the flow won't work without it.
+    - [operator](https://github.com/JobtechSwe/mydata/blob/master/operator/Dockerfile) tagged as `operator`
+2. Run `sh integration-tests.sh`
