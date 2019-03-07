@@ -1,6 +1,6 @@
 version: '2.4'
 services:
-  myskills:
+  myskills-api:
     build:
       context: .
       dockerfile: Dockerfile.test
