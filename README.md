@@ -23,3 +23,12 @@
   OPERATOR_URL=http://192.168.1.68:4000/api
   ```
 - Run app in mydata repo with `react-native run-ios`
+
+
+### Integration tests
+To run the integration-tests
+1. Create the network: `docker network create myskills`
+2. (for now) you need to build the docker images for the operator and e2e-simulator.
+    - [e2e-simulator](https://github.com/JobtechSwe/mydata/blob/master/app/Dockerfile) tagged as `e2e-simulator`
+    - [operator](https://github.com/JobtechSwe/mydata/blob/master/operator/Dockerfile) tagged as `operator`
+3. Run docker-compose up -f docker-compose.test.yml up -d
