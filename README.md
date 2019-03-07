@@ -27,8 +27,7 @@
 
 ### Integration tests
 To run the integration-tests
-1. Create the network: `docker network create myskills`
-2. (for now) you need to build the docker images for the operator and e2e-simulator.
+1. (for now) you need to build the docker images for the operator and e2e-simulator.
     - [e2e-simulator](https://github.com/JobtechSwe/mydata/blob/master/app/Dockerfile) tagged as `e2e-simulator`
     - [operator](https://github.com/JobtechSwe/mydata/blob/master/operator/Dockerfile) tagged as `operator`
-3. Run `sh integration-tests.sh`
+2. Run `sh integration-tests.sh`
