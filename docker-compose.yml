@@ -1,34 +1,19 @@
 version: '3'
 services:
-  myskills:
-    build:
-      context: .
-      dockerfile: Dockerfile.test
-    environment:
-      - REDIS_API_HOST=redis-api
-      - REDIS_API_PORT=6379
-      - SERVER_PORT=3000
-      - MYDATA_OPERATOR=http://operator:4000
-    networks:
-      mySkills:
-        aliases:
-          - myskills-api
-
   redis-api:
     image: redis:5.0
     networks:
-      mySkills:
+      mydata:
         aliases:
           - redis-api
     ports:
       - 6380:6379
-
   postgres:
     image: postgres:11
     ports:
       - 5432:5432
     networks:
-      mySkills:
+      mydata:
         aliases:
           - postgres
     environment:
@@ -36,34 +21,20 @@ services:
       - POSTGRES_PASSWORD=postgrespassword
       - POSTGRES_DB=mydata
       - POSTGRES_INITDB_ARGS=--encoding=utf8
-
   mydata-operator:
     image: operator
     networks:
-      mySkills:
+      mydata:
         aliases:
           - operator
-    ports:
-      - 4000:4000
     environment:
-      - PORT=4000
-      - NODE_ENV=development
+      - PORT=6000
       - PGHOST=postgres
       - PGUSER=postgresuser
       - PGPASSWORD=postgrespassword
       - PGDATABASE=mydata
       - REDIS=redis://redis-api:6379/
-    command: bash -c "npm run migrate up && npm run start"
-
-  e2e-simulator: #This replaces the phone app in the normal flow.
-    image: e2e-simulator
-    environment:
-      - OPERATOR_URL=http://operator:4000/api
-    networks:
-      mySkills:
-        aliases:
-          - e2e-simulator
 networks:
-  mySkills:
+  mydata:
     external:
-      name: mySkills
+      name: mydata
