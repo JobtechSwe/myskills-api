@@ -6,7 +6,7 @@
 - Create local docker network: `docker network create myskills`
 - Run the docker-services: `docker-compose up -d`
 - Run `npm run dev`
-- Go to `localhost:3000`
+- Go to `localhost:3000/graphql`
 
 ## Environment variables
 
