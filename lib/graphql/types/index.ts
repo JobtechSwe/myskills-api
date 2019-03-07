@@ -66,6 +66,10 @@ const typeDefs = gql`
 
   type Query {
     """
+    Get auth approved
+    """
+    approved(id: String!): Approved!
+    """
     Get user languages
     """
     languages: [Language!]!

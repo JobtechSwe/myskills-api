@@ -14,7 +14,6 @@ import {
 import config from './config'
 import schema from './graphql/schema'
 import { onConsentApproved } from './services/consents'
-import { getConsentRequest } from './services/db'
 import TaxonomyAPI from './adapters/taxonomy'
 
 const app = express()
@@ -26,21 +25,6 @@ app.use(
     extended: true,
   })
 )
-
-/**
- * MyData - Approval Route
- */
-app.get('/approved/:id', async (req, res) => {
-  const result = await getConsentRequest<{ accessToken: string }>(req.params.id)
-
-  if (result) {
-    res.send({
-      accessToken: result.accessToken,
-    })
-  } else {
-    res.sendStatus(404)
-  }
-})
 
 app.use(mydataRoutes)
 mydataEvents.on('CONSENT_APPROVED', onConsentApproved)

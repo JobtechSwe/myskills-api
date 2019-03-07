@@ -104,6 +104,8 @@ export interface TaxonomyResult {
 // ====================================================
 
 export interface Query {
+  /** Get auth approved */
+  approved: Approved
   /** Get user languages */
   languages: Language[]
   /** Get user educations */
@@ -116,6 +118,10 @@ export interface Query {
   skills: (Maybe<Skill>)[]
   /** Get from taxonomy */
   taxonomy: TaxonomyResponse
+}
+
+export interface Approved {
+  accessToken?: Maybe<string>
 }
 
 export interface Education {
@@ -211,6 +217,9 @@ export interface TaxonomySkillResult extends TaxonomyResult {
 // Arguments
 // ====================================================
 
+export interface ApprovedQueryArgs {
+  id: string
+}
 export interface TaxonomyQueryArgs {
   params?: Maybe<TaxonomyQueryInput>
 }
@@ -301,6 +310,8 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
 
 export namespace QueryResolvers {
   export interface Resolvers<TContext = ApolloServerContext, TypeParent = {}> {
+    /** Get auth approved */
+    approved?: ApprovedResolver<Approved, TypeParent, TContext>
     /** Get user languages */
     languages?: LanguagesResolver<Language[], TypeParent, TContext>
     /** Get user educations */
@@ -317,6 +328,15 @@ export namespace QueryResolvers {
     skills?: SkillsResolver<(Maybe<Skill>)[], TypeParent, TContext>
     /** Get from taxonomy */
     taxonomy?: TaxonomyResolver<TaxonomyResponse, TypeParent, TContext>
+  }
+
+  export type ApprovedResolver<
+    R = Approved,
+    Parent = {},
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext, ApprovedArgs>
+  export interface ApprovedArgs {
+    id: string
   }
 
   export type LanguagesResolver<
@@ -352,6 +372,21 @@ export namespace QueryResolvers {
   export interface TaxonomyArgs {
     params?: Maybe<TaxonomyQueryInput>
   }
+}
+
+export namespace ApprovedResolvers {
+  export interface Resolvers<
+    TContext = ApolloServerContext,
+    TypeParent = Approved
+  > {
+    accessToken?: AccessTokenResolver<Maybe<string>, TypeParent, TContext>
+  }
+
+  export type AccessTokenResolver<
+    R = Maybe<string>,
+    Parent = Approved,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
 }
 
 export namespace EducationResolvers {
@@ -780,6 +815,7 @@ export interface UUIDScalarConfig extends GraphQLScalarTypeConfig<Uuid, any> {
 
 export interface IResolvers<TContext = ApolloServerContext> {
   Query?: QueryResolvers.Resolvers<TContext>
+  Approved?: ApprovedResolvers.Resolvers<TContext>
   Education?: EducationResolvers.Resolvers<TContext>
   Experience?: ExperienceResolvers.Resolvers<TContext>
   Profile?: ProfileResolvers.Resolvers<TContext>
