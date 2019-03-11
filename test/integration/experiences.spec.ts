@@ -83,12 +83,16 @@ describe('#experiences', () => {
       },
     })
 
-    await mutate({
+    const {
+      data: { removeExperience },
+    } = await mutate({
       mutation: REMOVE_EXPERIENCE,
       variables: {
         id: '42',
       },
     })
+    expect(removeExperience).toEqual(true)
+
     const { data: dataAfterDelete } = await query({
       query: GET_EXPERIENCES,
     })
