@@ -23,6 +23,8 @@ services:
       - POSTGRES_INITDB_ARGS=--encoding=utf8
   mydata-operator:
     image: operator
+    ports:
+      - 4000:6000
     networks:
       mydata:
         aliases:
@@ -34,6 +36,7 @@ services:
       - PGPASSWORD=postgrespassword
       - PGDATABASE=mydata
       - REDIS=redis://redis-api:6379/
+      - NODE_ENV=development
 networks:
   mydata:
     external:

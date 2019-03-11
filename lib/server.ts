@@ -1,5 +1,5 @@
 import { RedisCache } from 'apollo-server-cache-redis'
-import { ApolloServer, PubSub } from 'apollo-server-express'
+import { ApolloServer } from 'apollo-server-express'
 import bodyParser from 'body-parser'
 import express from 'express'
 import {
@@ -46,10 +46,10 @@ app.get('/approved/:id', async (req, res) => {
 app.use(mydataRoutes)
 mydataEvents.on('CONSENT_APPROVED', onConsentApproved)
 
-export const pubsub = new PubSub()
 /**
  * GraphQL
  */
+
 export const server = new ApolloServer({
   cache: new RedisCache({
     host: config.REDIS_API_HOST,
@@ -67,7 +67,6 @@ export const server = new ApolloServer({
       saveData,
       removeData,
     },
-    pubsub: pubsub,
   }),
   ...schema,
 })

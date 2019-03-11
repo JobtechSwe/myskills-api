@@ -12,7 +12,6 @@ export interface ApolloServerContext {
     saveData: typeof saveData
     removeData: typeof removeData
   }
-  pubsub: any
   dataSources: {
     taxonomyAPI: TaxonomyAPI
   }

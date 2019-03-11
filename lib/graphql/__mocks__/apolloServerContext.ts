@@ -16,5 +16,4 @@ export const ctx = {
   dataSources: {
     taxonomyAPI: new TaxonomyAPI(),
   },
-  pubsub: {},
 }

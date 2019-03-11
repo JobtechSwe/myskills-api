@@ -101,7 +101,7 @@ const typeDefs = gql`
   }
 
   type Subscription {
-    consentApproved(consent: String!): ConsentResponse!
+    consentApproved(consentRequestId: String!): ConsentResponse!
   }
 `
 
