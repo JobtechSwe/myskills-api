@@ -10,9 +10,7 @@ export const save = async (key: string, value: string, ttl?: number) => {
   }
 }
 
-export const load = (key: string) => {
-  return redis.get(key)
-}
+export const load = (key: string) => redis.get(key)
 
 export const remove = (key: string) => redis.del(key)
 
