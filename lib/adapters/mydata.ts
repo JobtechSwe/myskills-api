@@ -90,6 +90,7 @@ async function removeData<T>({
         )
       : null,
   }
+
   await mydataOperator.data
     .auth(token)
     .write({ ...areaConfig, data: updatedData })

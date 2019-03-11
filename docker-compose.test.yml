@@ -13,7 +13,6 @@ services:
       - REDIS_API_PORT=6379
       - SERVER_PORT=3000
       - MYDATA_OPERATOR=http://operator:4000
-      - DOMAIN=http://myskills-api:3000
     depends_on:
       - mydata-operator
     networks:
