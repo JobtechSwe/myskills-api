@@ -95,6 +95,7 @@ describe('#experiences', () => {
     const { data: dataAfterDelete } = await query({
       query: GET_EXPERIENCES,
     })
+
     const success = dataAfterDelete.experiences.every(
       ({ name }) => name !== 'Philosopher'
     )

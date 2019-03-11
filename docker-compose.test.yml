@@ -4,7 +4,7 @@ services:
     build:
       context: .
       target: base
-    command: npm run integration -- --watchAll
+    command: tail -f /dev/null
     volumes:
       - ./lib:/app/lib
       - ./test:/app/test
@@ -80,6 +80,8 @@ services:
     image: mydata-app-as-server
     environment:
       - OPERATOR_URL=http://operator:4000/api
+    ports:
+      - 1337:1337
     networks:
       myskills:
         aliases:

@@ -91,7 +91,6 @@ async function removeData<T>({
         )
       : null,
   }
-  console.log('read complete')
   await mydataOperator.data
     .auth(token)
     .write({ ...areaConfig, data: updatedData })
