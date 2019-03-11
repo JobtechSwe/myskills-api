@@ -7,7 +7,6 @@ export default class TaxonomyAPI extends RESTDataSource {
 
   constructor() {
     super()
-
     this.baseURL = config.TAXONOMY_URL_BASE
     this.path = config.TAXONOMY_URL_PATH
   }

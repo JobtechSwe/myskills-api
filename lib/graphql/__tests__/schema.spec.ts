@@ -6,3 +6,19 @@ test('exports resolvers and type definitions', () => {
     typeDefs: expect.any(Object),
   })
 })
+
+test('taxonomyResult resolves TaxonomySkillResult if type is skill', () => {
+  const result = schema.resolvers.TaxonomyResult.__resolveType({
+    type: 'skill',
+  })
+
+  expect(result).toEqual('TaxonomySkillResult')
+})
+
+test('taxonomyResult defaults to TaxonomyDefaultResult', () => {
+  const result = schema.resolvers.TaxonomyResult.__resolveType({
+    type: 'anyType',
+  })
+
+  expect(result).toEqual('TaxonomyDefaultResult')
+})
