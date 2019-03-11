@@ -35,23 +35,19 @@ export const getClient = (
 export const getConsentedClient = async (
   server
 ): Promise<{ query: Function; mutate: Function }> => {
-  try {
-    await createMyDataAccount()
-    const request = defaultRequest(3600 * 24 * 31)
-    const { id } = await consents.request<Login>(request)
-    await approveConsent(id)
-    const { accessToken } = await getConsentRequest(id)
+  await createMyDataAccount()
+  const request = defaultRequest(3600 * 24 * 31)
+  const { id } = await consents.request<Login>(request)
+  await approveConsent(id)
+  const { accessToken } = await getConsentRequest(id)
 
-    return getClient(server, {
-      context: {
-        headers: {
-          token: accessToken,
-        },
+  return getClient(server, {
+    context: {
+      headers: {
+        token: accessToken,
       },
-    })
-  } catch (error) {
-    console.log('error from integrationutils:', error)
-  }
+    },
+  })
 }
 
 const createMyDataAccount = (

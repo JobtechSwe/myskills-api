@@ -81,7 +81,6 @@ async function removeData<T>({
 }: RemoveDataInput): Promise<boolean> {
   const areaConfig = createConfig(area)
 
-  console.log('reading:')
   const currentDataForDomainArea = await getData<T>({ area, token })
 
   const updatedData = {

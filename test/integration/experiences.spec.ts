@@ -35,7 +35,7 @@ describe('#experiences', () => {
     await appIsReady
   })
 
-  // afterAll(() => server.stop())
+  afterAll(() => server.stop())
 
   beforeEach(async () => {
     ;({ query, mutate } = await getConsentedClient(server))
@@ -73,7 +73,7 @@ describe('#experiences', () => {
     expect(data.experiences[1].years).toBe('5')
   })
 
-  it.only('should be possible to remove an experience', async () => {
+  it('should be possible to remove an experience', async () => {
     await mutate({
       mutation: ADD_EXPERIENCE,
       variables: {
@@ -83,19 +83,17 @@ describe('#experiences', () => {
       },
     })
 
-    const { data, errors } = await mutate({
+    const { data } = await mutate({
       mutation: REMOVE_EXPERIENCE,
       variables: {
         id: '42',
       },
     })
-    console.log('errors:', JSON.stringify(errors))
     expect(data.removeExperience).toEqual(true)
 
     const { data: dataAfterDelete } = await query({
       query: GET_EXPERIENCES,
     })
-
     const success = dataAfterDelete.experiences.every(
       ({ name }) => name !== 'Philosopher'
     )
