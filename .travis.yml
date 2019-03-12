@@ -2,12 +2,14 @@ language: node_js
 node_js:
   - "10"
 
-install: npm run install
+install:
+  - npm ci
 
 # branches:
 #   except:
 #     - master
 script:
+  - npm run unit
   - bash build.bash
 
 branches:
