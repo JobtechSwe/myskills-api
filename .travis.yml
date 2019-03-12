@@ -7,6 +7,8 @@ install: npm run install
 # branches:
 #   except:
 #     - master
+script:
+  - bash build.bash
 
 branches:
   only:
