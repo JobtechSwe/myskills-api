@@ -10,6 +10,7 @@ services:
       - REDIS_API_PORT=6379
       - SERVER_PORT=3000
       - MYDATA_OPERATOR=http://operator:4000
+      - MYDATA_APP=http://mydata-app:1337
     depends_on:
       - mydata-operator
     networks:
@@ -46,7 +47,7 @@ services:
       retries: 5
 
   mydata-operator:
-    image: operator
+    image: jobtechswe/mydata-operator
     networks:
       myskills:
         aliases:
@@ -66,14 +67,14 @@ services:
       postgres:
         condition: service_healthy
 
-  mydata-app-as-server: #This replaces the phone app in the normal flow.
-    image: mydata-app-as-server
+  mydata-app: #This replaces the phone app in the normal flow.
+    image: jobtechswe/mydata-app
     environment:
       - OPERATOR_URL=http://operator:4000/api
     networks:
       myskills:
         aliases:
-          - mydata-app-as-server
+          - mydata-app
 networks:
   myskills:
     external:
