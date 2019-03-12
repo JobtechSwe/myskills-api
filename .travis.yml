@@ -28,6 +28,7 @@ services:
 after_success:
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
   - export REPO=jobtechswe/myskills-api
-  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  # - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - export TAG="latest"
   - docker build -f Dockerfile -t $REPO:$TAG .
   - docker push $REPO:$TAG
