@@ -1,20 +1,18 @@
 language: node_js
 node_js:
-  - "10"
+  - "11"
 
 install:
   - npm ci
 
-# branches:
-#   except:
-#     - master
 script:
+  - npm run lint
   - npm run unit
-  - bash build.bash
+  - bash infrastructure/build.bash
 
 branches:
-  only:
-    - feat/travis
+  except:
+    - master
 
 notifications:
   email:
