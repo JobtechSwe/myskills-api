@@ -1,6 +1,6 @@
 import got from 'got'
 
-const MYDATA_APP_URL = process.env.MYDATA_APP || 'http://mydata-app:1337'
+const MYDATA_APP_URL = process.env.MYDATA_APP
 import { consents } from '../../lib/adapters/mydata'
 import { Login } from '../../lib/__generated__/myskills'
 import { defaultRequest } from '../../lib/services/consents'
