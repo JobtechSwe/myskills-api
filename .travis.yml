@@ -1,18 +1,33 @@
 language: node_js
+
 install:
   - npm ci
+
 script:
   - npm run lint
   - npm run unit
   - bash infrastructure/build.bash
+
 branches:
   except:
     - master
+
 notifications:
   email:
     - radu@iteam.se
+
 env:
   global:
     - secure: VKBsJ7vAFtdxOCZV3tncyk2zO675euPdgpVJGQPFObSmEKHkXQaBa89p8Oe1gYgMz2G+ou/1eoeLxLmnBx2r1Ms2MIZjj2eJc+O/yWJ1RNQ1do3A8tOABTNKfrhkFH1BhwvezF912b0AIC9aUUwamMgkP5vRkmNTIVX7fTuETzI6dsi9u3kbHf9a8fc0ezGc3XViZPMOeNrqlINr08AUglaPf2R2u/wNCTqg1WdZcq6KWxhpiLwAwMTpnmeAXw+mhs+iS8a8V/hcCl8rgnwbCNpo6JzUHMkd77vOYJL42VBdF3T3mIMOzznhpOv5dWreBj0qGE7HZijWddHlLyoIWqPiT1BIbIJYDj8Q9e+Ing16pu1A/4ThyAwl/xESbHtsrSt/BT3QCyv7/EIXxCuGc3S1HA93XzYXHG4bYlARtIzoEdUg0FdaAdPNfK5xoSpKc7k53b+UTsjjioFfkST1Y4WJtnrZ1yWm91Zt1S+KbxvO/BwG/pbE0FPYqfBLsx++71dYTDSIL4A6ebaCBlqItLFWGCTJ3Sx4euK3ocV1epjmPIPtyVkUb3u7gkuQJ78Rim7sEc2IEHaf+kdBmiv209S9280HJob1M6n7NVRrLhUm3NYh4brIZjBW/9wY0iUp/xMMH7+eOsfSoi3F/OKcTH4eWiCd5DTAsDXDWivulzc= #DOCKER_EMAIL
     - secure: Jby38qaPSD5huzuuVrcCBuQFtwvRns0V9c7LZ8u9TXDZGcKTbjN5R4kA9oLr+vALZvdMMbtFC//SqqTqNtqMAlG1qdb2Ge8BWU9JPnl/mj7V/4nsDGmoa/omu22JM3ZkvF5psrprBdA44n7yy2hfb1mmhrH3z6WTKqGfNyAo8EqoRxi+k4mlMRdzQyHVteSthsAZ2wy54DHEQWBCogO7uE1+SFnx+zOSKUZ/5ufQYYAllV37tbyq77zgV33ndpVQzxTXUPPy6QvIge0Bd9iy0nR5YeBrMqqDh9Uz4UainVkAqGACWpSdTCDeEpv4dYv2Mn5ZmBAiWh88X/bC3+S91FuM1nFgDW2/gqxpVZ0B3JrA6wQzPuuWFcFPRIBGEzWooA5SvIhgPNff0bGWJ2d07X/bjmutrE+4Q+p26kiY/EgQoAu4m6ZDFKiziQ1HOVLAAPK4m5m/ehEpBt7Fm2rrlaXQ9Iwpo0ueviQUCm1yOB0z7IUgo9+oRDn7BwnckqO6axYWxrg+pkvSViNCSAJzSFp/8G9N6YxAyJsmQI+mxh0iWdV+3pdGJd7MndMypeSc/TZvMut/h0r3ipWvd5fZqa6kylxxXl5FjmXhqNo3HEEIujuxDgB9b3nrb0lp3B5zWlwLDcEfECaCqzsYHDs4R2QMAu8+nwm6sET10jLJM8Q= #DOCKER_USER
     - secure: mjf4L8Ur4CrZFJYcf8gexpZHL7SqNwQjMK08EtLFRz4XH/4F22fsGKN90BMk+jonJ4SIOmXIpDP0Kp9EUHlSaIiNXln09eVUWo3vHCGiuqPfHYLTxRHy7qZ87S+UN5wnvA+Z3bstNuZ0OpCsC4qlxEln/lTcfuZKIR/wVxExNUulduNjrfCOV3OuRCgllhNq3ZI1NvpwnjOaVJY2mJbUItB/i1LHspuUcP0tH1mAONpsNrUaJGi2EmsIwI0Hs6pJqSAl9eGIQA2RJnkATx015XYEkZ68A/il6DkPENviJKPrHE07PmAzujQ8jSnqJE7jXphnlP1SRxY58MYwohj0JF0EV1SljyXsgKnV0D1Dyhkl03cmTeacjjQ81C7yrhwUu+rxa64i3toya9WsRb3092iiHCnga/HR09fXtZJmpPvWQjtXibWF6rDJ0IMYrVkLGOlh6o6fhH0LQkQl7np/vDgVxLqzlD5f+Vq/IxKh3DpNlJqvuycVySeHXWQlx3VGq79MCG7nak+pJ6uC3IBBzjFfE9II2rwFFEkJa7kO7LNkInRerWL+UB+zHWN7gE4JaV7TpaHeJZUi+rM90vCIFuL/H8hFTOJ5kLrM5iq10ymupz8ubcyUSaPZdkCqNadRwsRbO+LMNVyEGbN+xS1aOzWbNNj1S8N1O0hVfDuQkKc= #DOCKER_PASS
+
+services:
+  - docker
+
+after_success:
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+  - export REPO=jobtechswe/myskills-api
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - docker build -f Dockerfile -t $TAG .
+  - docker push $REPO
