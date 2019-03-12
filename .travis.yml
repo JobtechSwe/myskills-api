@@ -4,9 +4,13 @@ node_js:
 
 install: npm run install
 
+# branches:
+#   except:
+#     - master
+
 branches:
-  except:
-    - master
+  only:
+    - feat/travis
 
 notifications:
   email:
