@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - "10"
+
+install: npm run install
+
+branches:
+  except:
+    - master
+
+notifications:
+  email:
+    - radu@iteam.se
