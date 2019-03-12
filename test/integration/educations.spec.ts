@@ -67,16 +67,31 @@ describe('#educations', () => {
     expect(data.educations[1].name).toBe('PhD')
   })
 
-  it.skip('should be possible to remove an education', async () => {
+  it('should be possible to remove an education', async () => {
+    await mutate({
+      mutation: ADD_EDUCATION,
+      variables: {
+        id: '123456789',
+        name: 'Primary School',
+      },
+    })
+
     const {
       data: { removeEducation },
     } = await mutate({
       mutation: REMOVE_EDUCATION,
       variables: {
-        id: '123',
+        id: '123456789',
       },
     })
-
     expect(removeEducation).toEqual(true)
+
+    const { data: dataAfterDelete } = await query({
+      query: GET_EDUCATIONS,
+    })
+    const success = dataAfterDelete.educations.every(
+      ({ name }) => name !== 'Primary School'
+    )
+    expect(success).toBeTruthy()
   })
 })

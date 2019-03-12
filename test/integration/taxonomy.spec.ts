@@ -24,7 +24,6 @@ const GET_FROM_TAXONOMY = gql`
 
 describe('taxonomy', () => {
   let query: Function
-  let mydata: { getData: any; saveData: any }
 
   const queryVars = {
     offset: 0,
@@ -39,11 +38,7 @@ describe('taxonomy', () => {
   afterAll(async () => await server.stop())
 
   beforeEach(async () => {
-    ;({ query } = getClient(server, {
-      context: {
-        mydata,
-      },
-    }))
+    ;({ query } = getClient(server))
   })
 
   it('should get all within limit from taxonomy', async () => {
@@ -57,7 +52,10 @@ describe('taxonomy', () => {
   })
 
   describe('redis cache taxonomy calls', () => {
-    beforeEach(() => redis.flushall())
+    beforeEach(async () => {
+      const res = await redis.keys('httpcache:*')
+      await redis.del(...res)
+    })
 
     it('should cache requests', async () => {
       await query({
