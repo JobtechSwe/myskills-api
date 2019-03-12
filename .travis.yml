@@ -6,7 +6,6 @@ install:
   - npm ci
 
 script:
-  - npm run lint
   - npm run unit
   - bash infrastructure/build.bash
 
