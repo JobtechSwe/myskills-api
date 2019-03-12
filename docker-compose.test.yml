@@ -5,6 +5,9 @@ services:
       context: .
       target: base
     command: npm run integration
+    volumes:
+      - ./lib:/app/lib
+      - ./test:/app/test
     environment:
       - REDIS_API_HOST=redis-api
       - REDIS_API_PORT=6379
@@ -25,7 +28,12 @@ services:
           - redis-api
     ports:
       - 6380:6379
-
+  mydata-redis:
+    image: redis:5.0
+    networks:
+      myskills:
+        aliases:
+          - mydata-redis
   postgres:
     image: postgres:11
     ports:
@@ -60,7 +68,7 @@ services:
       - PGUSER=postgresuser
       - PGPASSWORD=postgrespassword
       - PGDATABASE=mydata
-      - REDIS=redis://redis-api:6379/
+      - REDIS=redis://mydata-redis:6379/
     command: bash -c "npm run migrate up && npm run start"
     depends_on:
       postgres:

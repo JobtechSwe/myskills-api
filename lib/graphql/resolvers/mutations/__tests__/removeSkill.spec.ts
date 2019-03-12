@@ -12,6 +12,7 @@ test('removes single skill in mydata', async () => {
   expect(ctx.mydata.removeData).toHaveBeenCalledWith({
     area: 'skills',
     token: 'token',
+    key: 'conceptId',
     id: args.id,
   })
 })
