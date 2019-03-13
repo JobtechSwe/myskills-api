@@ -175,6 +175,18 @@
             "deprecationReason": null
           },
           {
+            "name": "taxonomyId",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "name",
             "description": "",
             "args": [],
@@ -205,6 +217,18 @@
         "fields": [
           {
             "name": "id",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxonomyId",
             "description": "",
             "args": [],
             "type": {
@@ -274,7 +298,19 @@
         "description": "",
         "fields": [
           {
-            "name": "conceptId",
+            "name": "id",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxonomyId",
             "description": "",
             "args": [],
             "type": {
@@ -547,7 +583,7 @@
         "description": "",
         "fields": [
           {
-            "name": "conceptId",
+            "name": "taxonomyId",
             "description": "",
             "args": [],
             "type": {
@@ -923,7 +959,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "id",
+            "name": "taxonomyId",
             "description": "",
             "type": {
               "kind": "NON_NULL",
@@ -960,7 +996,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "id",
+            "name": "taxonomyId",
             "description": "",
             "type": {
               "kind": "NON_NULL",
@@ -1018,7 +1054,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "conceptId",
+            "name": "taxonomyId",
             "description": "",
             "type": {
               "kind": "NON_NULL",
@@ -1823,7 +1859,7 @@
         "description": "",
         "fields": [
           {
-            "name": "conceptId",
+            "name": "taxonomyId",
             "description": "",
             "args": [],
             "type": {
@@ -1880,7 +1916,7 @@
         "description": "",
         "fields": [
           {
-            "name": "conceptId",
+            "name": "taxonomyId",
             "description": "",
             "args": [],
             "type": {

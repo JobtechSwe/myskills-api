@@ -3,9 +3,8 @@ import { addSkill } from '../addSkill'
 
 const args = {
   skill: {
-    id: '2',
     name: 'Developer',
-    conceptId: '',
+    taxonomyId: 'someTaxonomyId',
     term: '',
     type: 'skill',
   },
@@ -16,13 +15,13 @@ test('save input in mydata', async () => {
 
   expect(ctx.mydata.saveData).toHaveBeenCalledWith({
     area: 'skills',
-    data: [args.skill],
+    data: [{ id: expect.any(String), ...args.skill }],
     token: 'token',
   })
 })
 
 test('returns updated data', async () => {
-  const result = [args.skill]
+  const result = [{ id: 'sas3224234234', ...args.skill }]
 
   ctx.mydata.saveData.mockResolvedValue(result)
 

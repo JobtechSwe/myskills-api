@@ -37,19 +37,19 @@ export const typeDefs = gql`
   }
 
   interface TaxonomyResult {
-    conceptId: String!
+    taxonomyId: String!
     term: String!
     type: String!
   }
 
   type TaxonomySkillResult implements TaxonomyResult {
-    conceptId: String!
+    taxonomyId: String!
     term: String!
     type: String!
   }
 
   type TaxonomyDefaultResult implements TaxonomyResult {
-    conceptId: String!
+    taxonomyId: String!
     term: String!
     type: String!
     parentId: String

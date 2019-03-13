@@ -3,6 +3,10 @@ import { taxonomy } from '../taxonomy'
 import { TaxonomyQueryArgs } from '../../../../__generated__/myskills'
 
 test('passes query params to taxonomyAPI', async () => {
+  ;(ctx.dataSources.taxonomyAPI.getData as jest.Mock).mockResolvedValue({
+    result: [],
+  })
+
   const testArgs: TaxonomyQueryArgs = {
     params: {
       q: 'someQuery',
