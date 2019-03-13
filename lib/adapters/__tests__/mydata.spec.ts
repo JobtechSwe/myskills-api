@@ -5,7 +5,7 @@ import { auth } from '../../../__mocks__/@mydata/client'
 describe('#removeData', () => {
   test('it should remove a language', async () => {
     auth.read.mockResolvedValue({
-      'http://localhost:3000': {
+      'http://host.docker.internal:3000': {
         languages: { data: ['swedish', 'spanish'] },
       },
     })
@@ -27,7 +27,7 @@ describe('#removeData', () => {
 
   test('it should remove an education', async () => {
     auth.read.mockResolvedValue({
-      'http://localhost:3000': {
+      'http://host.docker.internal:3000': {
         educations: {
           data: [
             { id: '1', name: 'Kindergarden' },
@@ -55,7 +55,7 @@ describe('#removeData', () => {
 
   test('it should remove profile', async () => {
     auth.read.mockResolvedValue({
-      'http://localhost:3000': {
+      'http://host.docker.internal:3000': {
         profile: {
           data: {
             firstName: 'Simon',
