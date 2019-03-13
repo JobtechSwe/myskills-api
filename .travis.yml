@@ -1,4 +1,5 @@
 language: node_js
+cache: npm
 before_install:
   - bash ./infrastructure/travis/install-openshift.sh
 install:
