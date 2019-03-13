@@ -1,4 +1,4 @@
-# myskills-api
+# myskills-api [![Build Status](https://travis-ci.com/JobtechSwe/myskills-api.svg?branch=master)](https://travis-ci.com/JobtechSwe/myskills-api)
 
 ## Start dev environment
 
