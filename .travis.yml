@@ -1,5 +1,6 @@
 language: node_js
 before_install:
+  - sudo apt-get install ruby-full rubygems-integration git-core
   - sudo gem install rhc
 install:
   - npm ci
