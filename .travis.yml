@@ -1,6 +1,6 @@
 language: node_js
 before_install:
-  - sudo bash ./infrastructure/travis/install-openshift.sh
+  - bash ./infrastructure/travis/install-openshift.sh
 install:
   - npm ci
 script:
