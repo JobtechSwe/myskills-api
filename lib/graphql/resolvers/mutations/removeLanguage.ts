@@ -16,6 +16,6 @@ export const removeLanguage: MutationResolvers.RemoveLanguageResolver = async (
 
     return result
   } catch (e) {
-    throw new Error(`Remove anguage error: ${e}`)
+    throw new Error(`Remove language error: ${e}`)
   }
 }

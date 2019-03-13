@@ -5,11 +5,15 @@ services:
       context: .
       target: base
     command: npm run integration
+    volumes:
+      - ./lib:/app/lib
+      - ./test:/app/test
     environment:
       - REDIS_API_HOST=redis-api
       - REDIS_API_PORT=6379
       - SERVER_PORT=3000
       - MYDATA_OPERATOR=http://operator:4000
+      - MYDATA_APP=http://mydata-app:1337
     depends_on:
       - mydata-operator
     networks:
@@ -25,7 +29,12 @@ services:
           - redis-api
     ports:
       - 6380:6379
-
+  mydata-redis:
+    image: redis:5.0
+    networks:
+      myskills:
+        aliases:
+          - mydata-redis
   postgres:
     image: postgres:11
     ports:
@@ -46,7 +55,7 @@ services:
       retries: 5
 
   mydata-operator:
-    image: operator
+    image: jobtechswe/mydata-operator
     networks:
       myskills:
         aliases:
@@ -60,20 +69,20 @@ services:
       - PGUSER=postgresuser
       - PGPASSWORD=postgrespassword
       - PGDATABASE=mydata
-      - REDIS=redis://redis-api:6379/
+      - REDIS=redis://mydata-redis:6379/
     command: bash -c "npm run migrate up && npm run start"
     depends_on:
       postgres:
         condition: service_healthy
 
-  mydata-app-as-server: #This replaces the phone app in the normal flow.
-    image: mydata-app-as-server
+  mydata-app: #This replaces the phone app in the normal flow.
+    image: jobtechswe/mydata-app
     environment:
       - OPERATOR_URL=http://operator:4000/api
     networks:
       myskills:
         aliases:
-          - mydata-app-as-server
+          - mydata-app
 networks:
   myskills:
     external:

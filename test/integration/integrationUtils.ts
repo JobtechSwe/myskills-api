@@ -1,6 +1,6 @@
 import got from 'got'
 
-const E2E_SIMULATOR_URL = 'http://mydata-app-as-server:1337'
+const MYDATA_APP_URL = process.env.MYDATA_APP
 import { consents } from '../../lib/adapters/mydata'
 import { Login } from '../../lib/__generated__/myskills'
 import { defaultRequest } from '../../lib/services/consents'
@@ -54,7 +54,7 @@ const createMyDataAccount = (
   firstName: string = 'Gordon',
   lastName: string = 'Freeman'
 ) => {
-  return got(`${E2E_SIMULATOR_URL}/createAccount`, {
+  return got(`${MYDATA_APP_URL}/createAccount`, {
     method: 'post',
     json: true,
     body: {
@@ -69,7 +69,7 @@ const createMyDataAccount = (
 const approveConsent = async consentRequestId => {
   const {
     body: { data },
-  } = await got(`${E2E_SIMULATOR_URL}/getConsentRequest`, {
+  } = await got(`${MYDATA_APP_URL}/getConsentRequest`, {
     json: true,
     method: 'post',
     body: {
@@ -77,7 +77,7 @@ const approveConsent = async consentRequestId => {
     },
   })
 
-  return got(`${E2E_SIMULATOR_URL}/approveConsentRequest`, {
+  return got(`${MYDATA_APP_URL}/approveConsentRequest`, {
     json: true,
     method: 'post',
     body: {

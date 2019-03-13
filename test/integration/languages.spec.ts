@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-express'
 import server, { appIsReady } from '../../lib/server'
-import { getClient } from './integrationUtils'
+import { getConsentedClient } from './integrationUtils'
 
 const GET_LANGUAGES = gql`
   query languages {
@@ -14,15 +14,18 @@ const ADD_LANGUAGE = gql`
   }
 `
 const REMOVE_LANGUAGE = gql`
-  mutation removeLanguage($id: String!) {
-    removeLanguage(id: $id)
+  mutation removeLanguage($language: Language!) {
+    removeLanguage(language: $language)
   }
 `
+enum Language {
+  Swedish = 'swedish',
+  Spanish = 'spanish',
+}
 
-describe.skip('#Languages', () => {
+describe('#languages', () => {
   let query: any
   let mutate: any
-  let mydata: { getData: any; saveData: any; removeData: any }
 
   beforeAll(async () => {
     await appIsReady
@@ -31,70 +34,54 @@ describe.skip('#Languages', () => {
   afterAll(() => server.stop())
 
   beforeEach(async () => {
-    mydata = {
-      getData: jest.fn(),
-      saveData: jest.fn(),
-      removeData: jest.fn(),
-    }
-    ;({ query, mutate } = getClient(server, {
-      context: {
-        headers: {
-          token: 'sometoken',
-        },
-        mydata,
+    ;({ query, mutate } = await getConsentedClient(server))
+  })
+
+  it('should be possible to add and get languages', async () => {
+    const {
+      data: { addLanguage },
+    } = await mutate({
+      mutation: ADD_LANGUAGE,
+      variables: {
+        language: Language.Swedish,
       },
-    }))
-  })
-
-  describe('languages', () => {
-    beforeEach(() => {
-      mydata.getData.mockResolvedValue(['swedish'])
     })
 
-    it('should get languages', async () => {
-      const { data } = await query({
-        query: GET_LANGUAGES,
-      })
-      expect(data.languages[0]).toBe('swedish')
-    })
-  })
+    expect(addLanguage[0]).toBe('swedish')
 
-  describe('language', () => {
-    enum Language {
-      Swedish = 'swedish',
-      English = 'english',
-    }
-    beforeEach(() => {
-      mydata.saveData.mockResolvedValue(['swedish'])
+    const { data } = await query({
+      query: GET_LANGUAGES,
     })
-
-    it('should be possible to add an experience', async () => {
-      const { data } = await mutate({
-        mutation: ADD_LANGUAGE,
-        variables: {
-          language: Language.Swedish,
-        },
-      })
-      expect(data.addLanguage[0]).toBe('swedish')
-    })
+    expect(data.languages[0]).toBe('swedish')
   })
 
   describe('mutation: removeLanguage', () => {
-    beforeEach(() => {
-      mydata.removeData.mockResolvedValue(true)
-    })
+    it('should be possible to remove a language', async () => {
+      await mutate({
+        mutation: ADD_LANGUAGE,
+        variables: {
+          language: Language.Spanish,
+        },
+      })
 
-    it.skip('should be possible to remove a language', async () => {
       const {
         data: { removeLanguage },
       } = await mutate({
         mutation: REMOVE_LANGUAGE,
         variables: {
-          language: 'swedish',
+          language: Language.Spanish,
         },
       })
-
       expect(removeLanguage).toEqual(true)
+
+      const { data: dataAfterDelete } = await query({
+        query: GET_LANGUAGES,
+      })
+
+      const success = dataAfterDelete.languages.every(
+        language => language !== Language.Spanish
+      )
+      expect(success).toBeTruthy()
     })
   })
 })
