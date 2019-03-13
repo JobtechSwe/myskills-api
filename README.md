@@ -3,6 +3,7 @@
 ## Start dev environment
 
 - Clone [myskills-api](https://github.com/JobtechSwe/myskills-api/) repo
+- Map host.docker.internal to localhost. Add `127.0.0.1 host.docker.internal` to your host file
 - Create local docker network: `docker network create myskills`
 - Run the docker-services: `docker-compose up -d`
 - Run `npm run dev`
