@@ -1,11 +1,12 @@
 import { gql } from 'apollo-server-express'
 import server, { appIsReady } from '../../lib/server'
-import { getClient } from './integrationUtils'
+import { getConsentedClient } from './integrationUtils'
 
 const GET_EXPERIENCES = gql`
   query experiences {
     experiences {
       name
+      years
     }
   }
 `
@@ -20,10 +21,15 @@ const ADD_EXPERIENCE = gql`
   }
 `
 
+const REMOVE_EXPERIENCE = gql`
+  mutation removeExperience($id: String!) {
+    removeExperience(id: $id)
+  }
+`
+
 describe('#experiences', () => {
   let query: any
   let mutate: any
-  let mydata: { getData: any; saveData: any }
 
   beforeAll(async () => {
     await appIsReady
@@ -32,63 +38,65 @@ describe('#experiences', () => {
   afterAll(() => server.stop())
 
   beforeEach(async () => {
-    mydata = {
-      getData: jest.fn(),
-      saveData: jest.fn(),
-    }
-    ;({ query, mutate } = getClient(server, {
-      context: {
-        headers: {
-          token: 'sometoken',
-        },
-        mydata,
+    ;({ query, mutate } = await getConsentedClient(server))
+  })
+
+  it('should be possible to add and get multiple work experiences for user', async () => {
+    const {
+      data: { addExperience },
+    } = await mutate({
+      mutation: ADD_EXPERIENCE,
+      variables: {
+        id: 'id1',
+        name: 'Carpenter',
+        years: '29',
       },
-    }))
+    })
+
+    expect(addExperience[0].name).toBe('Carpenter')
+
+    await mutate({
+      mutation: ADD_EXPERIENCE,
+      variables: {
+        id: 'id5',
+        name: 'Mason',
+        years: '5',
+      },
+    })
+    const { data } = await query({
+      query: GET_EXPERIENCES,
+    })
+
+    expect(data.experiences[0].name).toBe('Carpenter')
+    expect(data.experiences[0].years).toBe('29')
+    expect(data.experiences[1].name).toBe('Mason')
+    expect(data.experiences[1].years).toBe('5')
   })
 
-  describe('experiences', () => {
-    beforeEach(() => {
-      mydata.getData.mockResolvedValue([
-        {
-          name: 'Cookie Eating',
-          years: '5',
-        },
-      ])
+  it('should be possible to remove an experience', async () => {
+    await mutate({
+      mutation: ADD_EXPERIENCE,
+      variables: {
+        id: '42',
+        name: 'Philosopher',
+        years: '29',
+      },
     })
 
-    it('should get experiences', async () => {
-      const { data } = await query({
-        query: GET_EXPERIENCES,
-      })
-
-      expect(data.experiences[0].name).toBe('Cookie Eating')
+    const { data } = await mutate({
+      mutation: REMOVE_EXPERIENCE,
+      variables: {
+        id: '42',
+      },
     })
-  })
+    expect(data.removeExperience).toEqual(true)
 
-  describe('experience', () => {
-    beforeEach(() => {
-      mydata.saveData.mockResolvedValue([
-        {
-          id: '123',
-          name: 'Carpenter',
-          years: '29',
-        },
-      ])
+    const { data: dataAfterDelete } = await query({
+      query: GET_EXPERIENCES,
     })
-
-    it('should be possible to add an experience', async () => {
-      const {
-        data: { addExperience },
-      } = await mutate({
-        mutation: ADD_EXPERIENCE,
-        variables: {
-          id: 'id',
-          name: 'Carpenter',
-          years: '29',
-        },
-      })
-
-      expect(addExperience[0].name).toBe('Carpenter')
-    })
+    const success = dataAfterDelete.experiences.every(
+      ({ name }) => name !== 'Philosopher'
+    )
+    expect(success).toBeTruthy()
   })
 })

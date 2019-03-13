@@ -41,7 +41,7 @@ mutation createProfile {
 }
 ```
 
-- Now you cant start using all the other querys and mutations
+- Now you can start using all the other querys and mutations
 
 ## Environment variables
 
@@ -63,6 +63,12 @@ To overide default environment variables add an `.env` file in root.
 
 ## Services
 
-API dependencies
+**API dependencies**
 
 - Redis - For caching taxonomy responses from Jobtech API and user consents
+
+## Integration tests
+
+To run the integration-tests
+
+1. Run `sh integration-tests.sh`

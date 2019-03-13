@@ -9,6 +9,7 @@ import {
   getData,
   routes as mydataRoutes,
   saveData,
+  removeData,
 } from './adapters/mydata'
 import config from './config'
 import schema from './graphql/schema'
@@ -62,6 +63,7 @@ export const server = new ApolloServer({
       consents,
       getData,
       saveData,
+      removeData,
     },
   }),
   ...schema,
@@ -79,8 +81,9 @@ server.applyMiddleware({
 const port = config.SERVER_PORT
 
 export const appIsReady: Promise<Boolean> = new Promise(resolve =>
-  app.listen(port, () => {
-    mydataConnect()
+  app.listen(port, async () => {
+    await mydataConnect()
+
     console.log(`Listening on port: ${port}`)
     resolve(true)
   })

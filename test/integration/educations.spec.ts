@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-express'
 import server, { appIsReady } from '../../lib/server'
-import { getClient } from './integrationUtils'
+import { getConsentedClient } from './integrationUtils'
 
 const GET_EDUCATIONS = gql`
   query educations {
@@ -19,10 +19,15 @@ const ADD_EDUCATION = gql`
   }
 `
 
+const REMOVE_EDUCATION = gql`
+  mutation removeEducation($id: String!) {
+    removeEducation(id: $id)
+  }
+`
+
 describe('#educations', () => {
   let query: any
   let mutate: any
-  let mydata: { getData: any; saveData: any }
 
   beforeAll(async () => {
     await appIsReady
@@ -31,60 +36,62 @@ describe('#educations', () => {
   afterAll(async () => await server.stop())
 
   beforeEach(async () => {
-    mydata = {
-      getData: jest.fn(),
-      saveData: jest.fn(),
-    }
-    ;({ query, mutate } = getClient(server, {
-      context: {
-        headers: {
-          token: 'sometoken',
-        },
-        mydata,
+    ;({ query, mutate } = await getConsentedClient(server))
+  })
+
+  it('should be possible to add and get multiple education for user', async () => {
+    const {
+      data: { addEducation },
+    } = await mutate({
+      mutation: ADD_EDUCATION,
+      variables: {
+        id: '123456789',
+        name: 'High school',
       },
-    }))
+    })
+    expect(addEducation[0].name).toBe('High school')
+
+    await mutate({
+      mutation: ADD_EDUCATION,
+      variables: {
+        id: '58',
+        name: 'PhD',
+      },
+    })
+
+    const { data } = await query({
+      query: GET_EDUCATIONS,
+    })
+
+    expect(data.educations[0].name).toBe('High school')
+    expect(data.educations[1].name).toBe('PhD')
   })
 
-  describe('educations', () => {
-    beforeEach(() => {
-      mydata.getData.mockResolvedValue([
-        {
-          name: 'Simon',
-        },
-      ])
+  it('should be possible to remove an education', async () => {
+    await mutate({
+      mutation: ADD_EDUCATION,
+      variables: {
+        id: '123456789',
+        name: 'Primary School',
+      },
     })
 
-    it('should get educations', async () => {
-      const { data } = await query({
-        query: GET_EDUCATIONS,
-      })
-
-      expect(data.educations[0].name).toBe('Simon')
+    const {
+      data: { removeEducation },
+    } = await mutate({
+      mutation: REMOVE_EDUCATION,
+      variables: {
+        id: '123456789',
+      },
     })
-  })
+    expect(removeEducation).toEqual(true)
 
-  describe('education', () => {
-    beforeEach(() => {
-      mydata.saveData.mockResolvedValue([
-        {
-          id: '123',
-          name: 'Simon :)',
-        },
-      ])
+    const { data: dataAfterDelete } = await query({
+      query: GET_EDUCATIONS,
     })
-
-    it('should be possible to add an education', async () => {
-      const {
-        data: { addEducation },
-      } = await mutate({
-        mutation: ADD_EDUCATION,
-        variables: {
-          id: 'id',
-          name: 'simon',
-        },
-      })
-
-      expect(addEducation[0].name).toBe('Simon :)')
-    })
+    const success = dataAfterDelete.educations.every(
+      ({ name }) => name !== 'Primary School'
+    )
+    expect(success).toBeTruthy()
   })
 })
