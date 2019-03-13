@@ -28,7 +28,7 @@ env:
     - secure: h6aLR7+kjbKFXNZHa/K1iZ8oSdp9nD1maz+hRARJnAGcFPxYTgKsZ+wo8Xp6JsEbonDvY8XA2q8U1nAbgtdg77lr+g2c26OTSYGDEQ8Kcg4633llFPQb0+xsJSWYFpp8sDqdN08BGUmi6cqVWRr+jwsSeqbNEAIKviGkMjTazD/kqapRAK5BtwBT9tqLveCiMBHONeTG7o0LObrJx1y+HswDpF+TqbdqNvrodOBn1U9FZSW61qZXKTx5FmaVQzROLh8bSJIsMF+J+x3aCjXxRVcFK3GM6sVyHd8oK2T2nXScbS/QjiFWE5KJJ9OXIYW1p3d7DDlFvFB0R39Shdde6W3eJKaVsOXjbR+ZVu4T3sSinfPKgK+dBXWzFJq9jNDYXfvLMw72cj+PDkeZemMl+LieDg/UQueuI1CLzsl5AFGzjR5Q+WmK9zPKF4GVRyL3aL0HC3mRHWLRT3EIShdFgXMO3c5eFj4d0Ok+i/FC8SkHAEn9JJLJrUP7wwEYWroljfIqrbFBNfls/h33Gmmj6K81rtTdDUpNn71PRkaBXwQ6Q7RFTyU3M2kqUK3G30QE3vOIwj46DDbjnaPyGyLjZ3YPDOmdzW8AEtnP3XEKqIr9/fL6AxBAOINNQqZ/I2BtMjI6t67xYRbaAZlbsXtXGWh5zMSfP1MjtJoexdKNbzg= # $OPENSHIFT_PASS
 deploy:
   - provider: script
-    script: bash infrastructure/travis/deploy.sh
+    script: echo pwd && echo ls
     on:
       repo: JobtechSwe/myskills-api
       branch: feat/travis
