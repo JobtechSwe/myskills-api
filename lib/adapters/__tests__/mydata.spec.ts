@@ -5,7 +5,7 @@ import { auth } from '../../../__mocks__/@mydata/client'
 describe('#saveData', () => {
   test('should add data to array if array', async () => {
     auth.read.mockResolvedValue({
-      'http://localhost:3000': {
+      'http://host.docker.internal:3000': {
         languages: { data: ['swedish', 'spanish'] },
       },
     })
@@ -29,7 +29,7 @@ describe('#saveData', () => {
 
   test('that it creates a new array if no existing and input data is array', async () => {
     auth.read.mockResolvedValue({
-      'http://localhost:3000': {
+      'http://host.docker.internal:3000': {
         languages: { data: null },
       },
     })
@@ -53,7 +53,7 @@ describe('#saveData', () => {
 
   test('should replace object if object', async () => {
     auth.read.mockResolvedValue({
-      'http://localhost:3000': {
+      'http://host.docker.internal:3000': {
         profile: {
           data: {
             id: '12345',
