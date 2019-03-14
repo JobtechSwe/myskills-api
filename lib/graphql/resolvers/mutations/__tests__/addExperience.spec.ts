@@ -3,7 +3,7 @@ import { addExperience } from '../addExperience'
 
 const args = {
   experience: {
-    id: '1',
+    taxonomyId: '1',
     name: 'Engineer',
     years: '1',
   },
@@ -14,13 +14,13 @@ test('save input in mydata', async () => {
 
   expect(ctx.mydata.saveData).toHaveBeenCalledWith({
     area: 'experiences',
-    data: [args.experience],
+    data: [{ id: expect.any(String), ...args.experience }],
     token: 'token',
   })
 })
 
 test('returns updated data', async () => {
-  const result = [args.experience]
+  const result = [{ id: '234234', ...args.experience }]
 
   ctx.mydata.saveData.mockResolvedValue(result)
 

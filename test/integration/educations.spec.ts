@@ -11,9 +11,10 @@ const GET_EDUCATIONS = gql`
 `
 
 const ADD_EDUCATION = gql`
-  mutation addEducation($name: String!, $id: String!) {
-    addEducation(education: { name: $name, id: $id }) {
+  mutation addEducation($name: String!, $taxonomyId: String!) {
+    addEducation(education: { name: $name, taxonomyId: $taxonomyId }) {
       id
+      taxonomyId
       name
     }
   }
@@ -45,7 +46,7 @@ describe('#educations', () => {
     } = await mutate({
       mutation: ADD_EDUCATION,
       variables: {
-        id: '123456789',
+        taxonomyId: '123456789',
         name: 'High school',
       },
     })
@@ -54,7 +55,7 @@ describe('#educations', () => {
     await mutate({
       mutation: ADD_EDUCATION,
       variables: {
-        id: '58',
+        taxonomyId: '58',
         name: 'PhD',
       },
     })
@@ -68,22 +69,28 @@ describe('#educations', () => {
   })
 
   it('should be possible to remove an education', async () => {
-    await mutate({
+    const {
+      data: { addEducation },
+    } = await mutate({
       mutation: ADD_EDUCATION,
       variables: {
-        id: '123456789',
+        taxonomyId: '123456789',
         name: 'Primary School',
       },
     })
+
+    const addedEducationId = addEducation.find(x => x.name === 'Primary School')
+      .id
 
     const {
       data: { removeEducation },
     } = await mutate({
       mutation: REMOVE_EDUCATION,
       variables: {
-        id: '123456789',
+        id: addedEducationId,
       },
     })
+
     expect(removeEducation).toEqual(true)
 
     const { data: dataAfterDelete } = await query({

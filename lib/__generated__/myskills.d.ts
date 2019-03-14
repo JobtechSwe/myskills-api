@@ -11,7 +11,7 @@ export interface TaxonomyQueryInput {
 }
 
 export interface ExperienceInput {
-  id: string
+  taxonomyId: string
 
   name?: Maybe<string>
 
@@ -19,7 +19,7 @@ export interface ExperienceInput {
 }
 
 export interface EducationInput {
-  id: string
+  taxonomyId: string
 
   name?: Maybe<string>
 }
@@ -31,7 +31,7 @@ export interface ProfileInput {
 }
 
 export interface SkillInput {
-  conceptId: string
+  taxonomyId: string
 
   term: string
 
@@ -92,7 +92,7 @@ export type Uuid = any
 // ====================================================
 
 export interface TaxonomyResult {
-  conceptId: string
+  taxonomyId: string
 
   term: string
 
@@ -121,11 +121,15 @@ export interface Query {
 export interface Education {
   id: string
 
+  taxonomyId: string
+
   name?: Maybe<string>
 }
 
 export interface Experience {
   id: string
+
+  taxonomyId: string
 
   name?: Maybe<string>
 
@@ -139,7 +143,9 @@ export interface Profile {
 }
 
 export interface Skill {
-  conceptId: string
+  id: string
+
+  taxonomyId: string
 
   term: string
 
@@ -190,7 +196,7 @@ export interface Login {
 }
 
 export interface TaxonomyDefaultResult extends TaxonomyResult {
-  conceptId: string
+  taxonomyId: string
 
   term: string
 
@@ -200,7 +206,7 @@ export interface TaxonomyDefaultResult extends TaxonomyResult {
 }
 
 export interface TaxonomySkillResult extends TaxonomyResult {
-  conceptId: string
+  taxonomyId: string
 
   term: string
 
@@ -361,10 +367,17 @@ export namespace EducationResolvers {
   > {
     id?: IdResolver<string, TypeParent, TContext>
 
+    taxonomyId?: TaxonomyIdResolver<string, TypeParent, TContext>
+
     name?: NameResolver<Maybe<string>, TypeParent, TContext>
   }
 
   export type IdResolver<
+    R = string,
+    Parent = Education,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type TaxonomyIdResolver<
     R = string,
     Parent = Education,
     TContext = ApolloServerContext
@@ -383,12 +396,19 @@ export namespace ExperienceResolvers {
   > {
     id?: IdResolver<string, TypeParent, TContext>
 
+    taxonomyId?: TaxonomyIdResolver<string, TypeParent, TContext>
+
     name?: NameResolver<Maybe<string>, TypeParent, TContext>
 
     years?: YearsResolver<string, TypeParent, TContext>
   }
 
   export type IdResolver<
+    R = string,
+    Parent = Experience,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type TaxonomyIdResolver<
     R = string,
     Parent = Experience,
     TContext = ApolloServerContext
@@ -432,14 +452,21 @@ export namespace SkillResolvers {
     TContext = ApolloServerContext,
     TypeParent = Skill
   > {
-    conceptId?: ConceptIdResolver<string, TypeParent, TContext>
+    id?: IdResolver<string, TypeParent, TContext>
+
+    taxonomyId?: TaxonomyIdResolver<string, TypeParent, TContext>
 
     term?: TermResolver<string, TypeParent, TContext>
 
     type?: TypeResolver<string, TypeParent, TContext>
   }
 
-  export type ConceptIdResolver<
+  export type IdResolver<
+    R = string,
+    Parent = Skill,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type TaxonomyIdResolver<
     R = string,
     Parent = Skill,
     TContext = ApolloServerContext
@@ -653,7 +680,7 @@ export namespace TaxonomyDefaultResultResolvers {
     TContext = ApolloServerContext,
     TypeParent = TaxonomyDefaultResult
   > {
-    conceptId?: ConceptIdResolver<string, TypeParent, TContext>
+    taxonomyId?: TaxonomyIdResolver<string, TypeParent, TContext>
 
     term?: TermResolver<string, TypeParent, TContext>
 
@@ -662,7 +689,7 @@ export namespace TaxonomyDefaultResultResolvers {
     parentId?: ParentIdResolver<Maybe<string>, TypeParent, TContext>
   }
 
-  export type ConceptIdResolver<
+  export type TaxonomyIdResolver<
     R = string,
     Parent = TaxonomyDefaultResult,
     TContext = ApolloServerContext
@@ -689,14 +716,14 @@ export namespace TaxonomySkillResultResolvers {
     TContext = ApolloServerContext,
     TypeParent = TaxonomySkillResult
   > {
-    conceptId?: ConceptIdResolver<string, TypeParent, TContext>
+    taxonomyId?: TaxonomyIdResolver<string, TypeParent, TContext>
 
     term?: TermResolver<string, TypeParent, TContext>
 
     type?: TypeResolver<string, TypeParent, TContext>
   }
 
-  export type ConceptIdResolver<
+  export type TaxonomyIdResolver<
     R = string,
     Parent = TaxonomySkillResult,
     TContext = ApolloServerContext

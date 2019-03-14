@@ -10,7 +10,6 @@ export const removeSkill: MutationResolvers.RemoveSkillResolver = async (
     const result = await mydata.removeData<Skill[]>({
       area: Area.skills,
       id,
-      key: 'conceptId',
       token,
     })
 
