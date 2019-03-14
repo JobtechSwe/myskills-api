@@ -31,3 +31,6 @@ To run the integration-tests
     - [mydata-app-as-server](https://github.com/JobtechSwe/mydata/blob/master/app/Dockerfile) tagged as `mydata-app-as-server`. Important First bump the node version to 10.5. Since the flow won't work without it.
     - [operator](https://github.com/JobtechSwe/mydata/blob/master/operator/Dockerfile) tagged as `operator`
 2. Run `sh integration-tests.sh`
+
+
+# Travis CI
