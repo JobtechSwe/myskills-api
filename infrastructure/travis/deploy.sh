@@ -8,7 +8,7 @@ if [[ "$TRAVIS_BRANCH" == "master" ]]; then
   exitcode=$?
 fi
 
-if [[ -z "$TRAVIS_TAG" ]]; then
+if [[ ! -z "$TRAVIS_TAG" ]]; then
   oc rollout latest api-test
   exitcode=$?
 fi
