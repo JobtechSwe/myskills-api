@@ -51,7 +51,7 @@ spec:
                 secretKeyRef:
                   key: public.key
                   name: mydata-operator
-          image: api:latest
+          image: docker.io/jobtechswe/myskills-api:latest
           imagePullPolicy: Always
           name: api-ci
           ports:
@@ -69,11 +69,11 @@ spec:
       terminationGracePeriodSeconds: 30
   triggers:
     - type: ConfigChange
-    - imageChangeParams:
-        automatic: true
-        containerNames:
-          - api-ci
-        from:
-          kind: ImageStreamTag
-          name: "api:latest"
-      type: ImageChange
+    # - imageChangeParams:
+    #     automatic: true
+    #     containerNames:
+    #       - api-ci
+    #     from:
+    #       kind: ImageStreamTag
+    #       name: "api:latest"
+    #   type: ImageChange
