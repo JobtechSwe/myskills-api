@@ -24,12 +24,11 @@ jobs:
       script: bash infrastructure/travis/deploy.sh
 stages:
   - test
-  # - name: build
-  #   if: branch = master
-  - build
-  # - name: deploy
-  #   if: branch = master
-  - deploy
+  - name: build
+    if: branch = master OR tag IS blank
+    # if: branch = master OR tag IS present
+  - name: deploy
+    if: branch = master OR tag IS present
 branches:
   except:
     - master
