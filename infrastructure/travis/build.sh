@@ -1,4 +1,7 @@
 #!/bin/bash
+err=0
+trap 'err=1' ERR
+
 docker login -u $DOCKER_USER -p $DOCKER_PASS
 REPO=jobtechswe/myskills-api
 
@@ -19,3 +22,4 @@ if [[ ! -z "$TRAVIS_TAG" ]]; then
 fi
 
 docker logout
+exit $err
