@@ -11,9 +11,9 @@ install:
 jobs:
   include:
     - stage: test
-      script: npm run lint
-    - # stage name not required, will continue to use `test`
-      script: npm run unit
+      script:
+        - npm run lint
+        - npm run unit
     - stage: build
       script:
         - docker login -u $DOCKER_USER -p $DOCKER_PASS
