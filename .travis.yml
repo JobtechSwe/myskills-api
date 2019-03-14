@@ -3,7 +3,7 @@ cache: npm
 # before_install:
 #   - bash ./infrastructure/travis/install-openshift.sh
 before_install:
-  - ./infrastructure/travis/install-openshift.sh
+  - bash ./infrastructure/travis/install-openshift.sh
   - export PATH=$PATH:/tmp/oc
 install:
   - npm ci
