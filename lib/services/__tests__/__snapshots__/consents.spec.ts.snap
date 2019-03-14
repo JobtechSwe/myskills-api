@@ -7,7 +7,7 @@ Object {
     Object {
       "area": "languages",
       "description": "languages that you have entered in the service.",
-      "domain": "http://localhost:3000",
+      "domain": "http://host.docker.internal:3000",
       "lawfulBasis": "CONSENT",
       "permissions": Array [
         "write",
@@ -17,7 +17,7 @@ Object {
     Object {
       "area": "educations",
       "description": "educations that you have entered in the service.",
-      "domain": "http://localhost:3000",
+      "domain": "http://host.docker.internal:3000",
       "lawfulBasis": "CONSENT",
       "permissions": Array [
         "write",
@@ -27,7 +27,7 @@ Object {
     Object {
       "area": "experiences",
       "description": "experiences that you have entered in the service.",
-      "domain": "http://localhost:3000",
+      "domain": "http://host.docker.internal:3000",
       "lawfulBasis": "CONSENT",
       "permissions": Array [
         "write",
@@ -37,7 +37,7 @@ Object {
     Object {
       "area": "skills",
       "description": "skills that you have entered in the service.",
-      "domain": "http://localhost:3000",
+      "domain": "http://host.docker.internal:3000",
       "lawfulBasis": "CONSENT",
       "permissions": Array [
         "write",
@@ -47,7 +47,7 @@ Object {
     Object {
       "area": "profile",
       "description": "profile that you have entered in the service.",
-      "domain": "http://localhost:3000",
+      "domain": "http://host.docker.internal:3000",
       "lawfulBasis": "CONSENT",
       "permissions": Array [
         "write",
