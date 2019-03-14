@@ -4,7 +4,7 @@ oc login $OPENSHIFT_URL -u $OPENSHIFT_USER -p $OPENSHIFT_PASS --insecure-skip-tl
 oc project myskills
 exitcode=0
 if [[ "$TRAVIS_BRANCH" == "master" ]]; then
-  $(oc rollout latest api-ci)
+  oc rollout latest api-ci
   exitcode=$?
 fi
 
