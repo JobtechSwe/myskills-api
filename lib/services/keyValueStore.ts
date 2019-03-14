@@ -11,6 +11,7 @@ export const save = async (key: string, value: string, ttl?: number) => {
 }
 
 export const load = (key: string) => redis.get(key)
+
 export const remove = (key: string) => redis.del(key)
 
 export default {
