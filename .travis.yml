@@ -12,6 +12,7 @@ jobs:
   include:
     - stage: test
       script: npm run lint
+    - # stage name not required, will continue to use `test`
       script: npm run unit
     - stage: build
       script:
@@ -22,7 +23,8 @@ jobs:
         - docker push $REPO:$TAG
 stages:
   - test
-  - build
+  - name: build
+    if: branch = master
 branches:
   except:
     - master
