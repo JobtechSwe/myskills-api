@@ -1,10 +1,10 @@
-apiVersion: v1
-kind: ImageStream
-metadata:
-  name: api
-  namespace: myskills
-spec:
-  tags:
-    - name: latest
-      referencePolicy:
-        type: Source
+# apiVersion: v1
+# kind: ImageStream
+# metadata:
+#   name: api
+#   namespace: myskills
+# spec:
+#   tags:
+#     - name: latest
+#       referencePolicy:
+#         type: Source
