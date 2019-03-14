@@ -1,7 +1,10 @@
 language: node_js
 cache: npm
+# before_install:
+#   - bash ./infrastructure/travis/install-openshift.sh
 before_install:
-  - bash ./infrastructure/travis/install-openshift.sh
+  - ./infrastructure/travis/install-openshift.sh
+  - export PATH=$PATH:/tmp/oc
 install:
   - npm ci
 script:
