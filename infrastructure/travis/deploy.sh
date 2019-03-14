@@ -7,7 +7,9 @@ if [[ "$TRAVIS_BRANCH" == "master" ]]; then
   oc rollout latest api-ci
 fi
 
-if [[ -z "$TRAVIS_TAG" ]]; then
+if [[ ! -z "$TRAVIS_TAG" ]]; then
   oc rollout latest api-test
 fi
+
+oc logout
 
