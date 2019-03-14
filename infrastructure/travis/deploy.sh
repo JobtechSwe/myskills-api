@@ -5,10 +5,12 @@ oc project myskills
 
 if [[ "$TRAVIS_BRANCH" == "master" ]]; then
   exitcode=$(oc rollout latest api-ci)
+  exitcode=$?
 fi
 
-if [[ ! -z "$TRAVIS_TAG" ]]; then
-  exitcode=$(oc rollout latest api-test)
+if [[ -z "$TRAVIS_TAG" ]]; then
+  oc rollout latest api-test
+  exitcode=$?
 fi
 
 oc logout
