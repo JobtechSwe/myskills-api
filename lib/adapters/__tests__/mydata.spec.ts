@@ -5,7 +5,7 @@ import { auth } from '../../../__mocks__/@mydata/client'
 describe('#saveData', () => {
   test('should add data to array if array', async () => {
     auth.read.mockResolvedValue({
-      'http://localhost:3000': {
+      'http://host.docker.internal:3000': {
         languages: { data: ['swedish', 'spanish'] },
       },
     })
@@ -29,7 +29,7 @@ describe('#saveData', () => {
 
   test('that it creates a new array if no existing and input data is array', async () => {
     auth.read.mockResolvedValue({
-      'http://localhost:3000': {
+      'http://host.docker.internal:3000': {
         languages: { data: null },
       },
     })
@@ -53,7 +53,7 @@ describe('#saveData', () => {
 
   test('should replace object if object', async () => {
     auth.read.mockResolvedValue({
-      'http://localhost:3000': {
+      'http://host.docker.internal:3000': {
         profile: {
           data: {
             id: '12345',
@@ -99,7 +99,7 @@ describe('#saveData', () => {
 describe('#removeData', () => {
   test('it should remove a language', async () => {
     auth.read.mockResolvedValue({
-      'http://localhost:3000': {
+      'http://host.docker.internal:3000': {
         languages: { data: ['swedish', 'spanish'] },
       },
     })
@@ -121,7 +121,7 @@ describe('#removeData', () => {
 
   test('it should remove an education', async () => {
     auth.read.mockResolvedValue({
-      'http://localhost:3000': {
+      'http://host.docker.internal:3000': {
         educations: {
           data: [
             { id: '1', name: 'Kindergarden' },
@@ -149,7 +149,7 @@ describe('#removeData', () => {
 
   test('it should remove profile', async () => {
     auth.read.mockResolvedValue({
-      'http://localhost:3000': {
+      'http://host.docker.internal:3000': {
         profile: {
           data: {
             firstName: 'Simon',
