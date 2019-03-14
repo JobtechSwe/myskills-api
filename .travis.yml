@@ -1,13 +1,15 @@
 language: node_js
 cache: npm
-before_install:
-  - bash ./infrastructure/travis/install-openshift.sh
-  - export PATH=$PATH:/tmp/openshift
-install:
-  - npm ci
+# before_install:
+#   - bash ./infrastructure/travis/install-openshift.sh
+#   - export PATH=$PATH:/tmp/openshift
+# install:
+#   - npm ci
 jobs:
   include:
     - stage: test
+      install:
+        - npm ci
       script:
         - npm run lint
         - npm run unit
@@ -19,6 +21,9 @@ jobs:
         - docker build -f Dockerfile -t $REPO:$TAG .
         - docker push $REPO:$TAG
     - stage: deploy
+      install:
+        - bash ./infrastructure/travis/install-openshift.sh
+        - export PATH=$PATH:/tmp/openshift
       script: bash infrastructure/travis/deploy.sh
 stages:
   - test
