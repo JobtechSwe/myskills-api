@@ -12,11 +12,7 @@ jobs:
       services:
         - docker
       script:
-        - docker login -u $DOCKER_USER -p $DOCKER_PASS
-        - export REPO=jobtechswe/myskills-api
-        - export TAG="latest"
-        - docker build -f Dockerfile -t $REPO:$TAG .
-        - docker push $REPO:$TAG
+        - bash infrastructure/travis/build.sh
     - stage: deploy
       install:
         - bash ./infrastructure/travis/install-openshift.sh
@@ -25,13 +21,9 @@ jobs:
 stages:
   - test
   - name: build
-    if: branch = master OR tag IS blank
-    # if: branch = master OR tag IS present
+    if: branch = master OR tag IS present
   - name: deploy
     if: branch = master OR tag IS present
-branches:
-  except:
-    - master
 env:
   global:
     - secure: DOYKVqaObpLYa7iaEPykCuHdXeUw2pHnSZL/6fylLKHDsCoMfvFvW939ubEQebsaeU4HHLMVJ0FT6gpQCRRNnxkp+BPypQMUnkcV6OzAKXoM7OSoaq2RzbAXMQXvaF5Jd82j2d3j1Dx2DF0bGdv5KTxNaqL4hqW1u0z7FIpD7EiTazC2NzSVharpp074t5vsTBBor24GY2QXJ9449gILP0Qw8/JImybmBJ5TtINyREWC+xmTkmjYG+i8zdQxLRW1nKIiWnH82ZwrJtrWS6DI1O1ZOtcCnSlPhlSxVLYgvk76BZr3rNrdgRs7QQ9nAI0XOzc+ao5+3PBy+pGIBGF8CO98qvQfRbDI24BO3Da0F6Rn9IzHd9zX42xMk5DySBR2CrXgCzoHPb1mor+rM6qsBG8O5zo9+AcK1q3sllzHF3o9hHZKQHB5audvdUehp+I5ryv2EbkcUXquPGRgpSHsvTGrDRLQwM9Jkf65SQbbzN9TpCEu7iZy4ysq/LiRKb+ebppsPR/qNrTXH1IDxTnAeUzpnCxc02v7/DnadfD7dLL9qQ2ue2ksrDOlqk79QeGogNvj6dsUySvIqPYEIF3T52u1M7VElGRNjmzox+9d1XcYcwCnRo0djLyRCn9xwMD3KkZQFhsFLGzKeM2TAW4mmJmsn1Od9QnHRrw0kiwXzvk= # $DOCKER_EMAIL
@@ -40,14 +32,3 @@ env:
     - secure: eK6qw6sTGwa9iHSOkSFHISh1KfT12twMWL0YDNuv1CMoONXOe5EBeuVeW4htQY4GR8Pne2r3eUpOXaEGPuTne8EvVsn2U5JdNTDzkyuf9brY69h220PmhxAO8uPLaaqarWKR89rhMc6qhYrDB34nxdr71I3HKMenI+21AQ+wullsjtOFJKHZjyKktO/bg/q6QJzjkopnOj3Y6fjDRtl3gi2nwb76QR9mo8VCXHNwDddR1r2lMPFo8xUkP9s5FCtIAVzw6suq/00w15o9s+Fphe91WdzBPd1XVe5sSyIfXJnBrSXYIVGuM+mURgMru0vm6eRm9CJCjn8m48shKWAuThRBHP8oR7yKQUotqnEH0nY0LePPdMvpHDqga53x184IfS5lirhYHlKG5fOSWvTxp/PQ5wqAde/pl8suIxidVmbbSsymX3/mVZW9vJ8TfbjepS5rJbvqQ5b8gaf3xaWBBu1Q2KVRfodCu7e5zAzi6kD9RC/yia18dCqimsfF/7V70vJOyN/2NOlY4apOcsI70zd7DtJkitBXELcGri8TiSHP00Xj9gqbnk7VB/+1pvHp19TotZnH+6Lx8ZlxdQLKQzPoTKvONtZCZRFPzKq31Ia8XRZzSWFwb5m+8MLwituKlU2CmU2OVgkpoWmeebbrImsBdPZwXyetIzcw5pcPwsM= # $OPENSHIFT_URL
     - secure: gTNPryLhaBe/7/MhJ38arh4IK2CN0d8ITDQt89I91zx/wp9neSX0SIEQum/1SixhOcf2a/LA55QM6Mz1AMzWik9Ji9WOmHWWP5EwMFkpQkhfLVZT/FGdARt7N24yqQphEeLL1ZYlb+xvYA/RIuf54qNDRx1iwKQlSBcXXai0AtOkP5cRnPrMwreEHVtkWVL44qN3BXLscEHb891o8DbmRbIdQAyMdrMgqc6JOw2rvM8i1baOc3VC726v6XJB6nJX14TUhDrgJQ2WMx926XgOQnVam+xhcMJUc1gq5aOTnG91ivA5xAzNPL0Vx8VA6+N+wfxlH6d62KqmGoC5NtvmNLTjUi0TdR28VdV4iC368z9ArdNU5Yk1uuVM6bAqh/eW/aCakn/4FN5lrrtAovPpL90kZTgeu/ZTVZ+J7CmSdIJ3vcTZn27ERVTDm27+6JSO0+lTea8IdV/5EiDO99FjSMv4LM9nKzUXsq8yOwpJGIe8kA7aKwSy/tUETOY+RA5AWzYhhtj0cFbU1jyI81PR2ekfIxDQhEm6EPhNdow5CnN7MYI4aCVmUD+iHjLxKUT7Ihas7+Jt8kkFsNM0qRUlRpBO9utrva6pStiBvbQY6QzCpTZHmCML9yrQOHmQZx8ZSfvr7kDjfBnKosGWJtTaMioYb7q0veozWbDtYamWJvo= # $OPENSHIFT_USER
     - secure: h6aLR7+kjbKFXNZHa/K1iZ8oSdp9nD1maz+hRARJnAGcFPxYTgKsZ+wo8Xp6JsEbonDvY8XA2q8U1nAbgtdg77lr+g2c26OTSYGDEQ8Kcg4633llFPQb0+xsJSWYFpp8sDqdN08BGUmi6cqVWRr+jwsSeqbNEAIKviGkMjTazD/kqapRAK5BtwBT9tqLveCiMBHONeTG7o0LObrJx1y+HswDpF+TqbdqNvrodOBn1U9FZSW61qZXKTx5FmaVQzROLh8bSJIsMF+J+x3aCjXxRVcFK3GM6sVyHd8oK2T2nXScbS/QjiFWE5KJJ9OXIYW1p3d7DDlFvFB0R39Shdde6W3eJKaVsOXjbR+ZVu4T3sSinfPKgK+dBXWzFJq9jNDYXfvLMw72cj+PDkeZemMl+LieDg/UQueuI1CLzsl5AFGzjR5Q+WmK9zPKF4GVRyL3aL0HC3mRHWLRT3EIShdFgXMO3c5eFj4d0Ok+i/FC8SkHAEn9JJLJrUP7wwEYWroljfIqrbFBNfls/h33Gmmj6K81rtTdDUpNn71PRkaBXwQ6Q7RFTyU3M2kqUK3G30QE3vOIwj46DDbjnaPyGyLjZ3YPDOmdzW8AEtnP3XEKqIr9/fL6AxBAOINNQqZ/I2BtMjI6t67xYRbaAZlbsXtXGWh5zMSfP1MjtJoexdKNbzg= # $OPENSHIFT_PASS
-# deploy:
-#   - provider: script
-#     script: bash infrastructure/travis/deploy.sh
-#     on:
-#       repo: JobtechSwe/myskills-api
-#       branch: feat/travis
-#   - provider: script
-#     script: chmod +x infrastructure/travis/deploy.sh && bash infrastructure/travis/deploy.sh
-#     on:
-#       repo: JobtechSwe/myskills-api
-#       branch: master
