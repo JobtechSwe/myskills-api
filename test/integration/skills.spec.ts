@@ -45,13 +45,16 @@ describe('#skills', () => {
   })
 
   it('should be possible to add and get multiple skills', async () => {
-    const {
-      data: { addSkill },
-    } = await mutate({
+    const result = await mutate({
       mutation: ADD_SKILL,
       variables: skillInput,
     })
-    expect(addSkill[0]).toEqual({
+    console.log('test result', result)
+
+    const {
+      data: { addSkill },
+    } = result
+    expect(addSkill).toEqual({
       id: expect.any(String),
       ...skillInput,
     })
@@ -75,14 +78,10 @@ describe('#skills', () => {
       variables: skillInput2,
     })
 
-    const addedSkillId = addSkill.find(
-      x => x.taxonomyId === skillInput2.taxonomyId
-    ).id
-
     await mutate({
       mutation: REMOVE_SKILL,
       variables: {
-        id: addedSkillId,
+        id: addSkill.id,
       },
     })
 

@@ -12,23 +12,23 @@ const args = {
 test('save input in mydata', async () => {
   await addExperience({}, args, ctx, {} as any)
 
-  expect(ctx.mydata.saveData).toHaveBeenCalledWith({
+  expect(ctx.mydata.saveDataList).toHaveBeenCalledWith({
     area: 'experiences',
-    data: [{ id: expect.any(String), ...args.experience }],
+    data: { id: expect.any(String), ...args.experience },
     token: 'token',
   })
 })
 
 test('returns updated data', async () => {
-  const result = [{ id: '234234', ...args.experience }]
+  const result = { id: '234234', ...args.experience }
 
-  ctx.mydata.saveData.mockResolvedValue(result)
+  ctx.mydata.saveDataList.mockResolvedValue(result)
 
   await expect(addExperience({}, args, ctx, {} as any)).resolves.toEqual(result)
 })
 
 test('handles errors', async () => {
-  ctx.mydata.saveData.mockRejectedValue('err')
+  ctx.mydata.saveDataList.mockRejectedValue('err')
 
   await expect(addExperience({}, args, ctx, {} as any)).rejects.toThrow('err')
 })

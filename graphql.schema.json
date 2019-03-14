@@ -666,11 +666,7 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": { "kind": "ENUM", "name": "Language", "ofType": null }
-              }
+              "ofType": { "kind": "ENUM", "name": "Language", "ofType": null }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -698,13 +694,9 @@
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Experience",
-                  "ofType": null
-                }
+                "kind": "OBJECT",
+                "name": "Experience",
+                "ofType": null
               }
             },
             "isDeprecated": false,
@@ -733,13 +725,9 @@
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Education",
-                  "ofType": null
-                }
+                "kind": "OBJECT",
+                "name": "Education",
+                "ofType": null
               }
             },
             "isDeprecated": false,
@@ -794,11 +782,7 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": { "kind": "OBJECT", "name": "Skill", "ofType": null }
-              }
+              "ofType": { "kind": "OBJECT", "name": "Skill", "ofType": null }
             },
             "isDeprecated": false,
             "deprecationReason": null

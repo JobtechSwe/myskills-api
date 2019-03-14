@@ -8,9 +8,9 @@ export const addExperience: MutationResolvers.AddExperienceResolver = async (
   { headers: { token }, mydata }
 ) => {
   try {
-    const result = await mydata.saveData<Experience[]>({
+    const result = await mydata.saveDataList<Experience>({
       area: Area.experiences,
-      data: [{ id: uuid(), ...experience }],
+      data: { id: uuid(), ...experience },
       token,
     })
 

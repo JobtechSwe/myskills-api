@@ -1,6 +1,11 @@
-import { getData, saveData, removeData, consents } from '../adapters/mydata'
+import {
+  consents,
+  getData,
+  removeData,
+  saveData,
+  saveDataList,
+} from '../adapters/mydata'
 import TaxonomyAPI from '../adapters/taxonomy'
-import { TaxonomyQueryInput } from 'lib/__generated__/myskills'
 
 export interface ApolloServerContext {
   headers: {
@@ -10,6 +15,7 @@ export interface ApolloServerContext {
     consents: typeof consents
     getData: typeof getData
     saveData: typeof saveData
+    saveDataList: typeof saveDataList
     removeData: typeof removeData
   }
   dataSources: {

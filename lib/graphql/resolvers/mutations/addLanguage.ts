@@ -7,9 +7,9 @@ export const addLanguage: MutationResolvers.AddLanguageResolver = async (
   { headers: { token }, mydata }
 ) => {
   try {
-    const result = await mydata.saveData<Language[]>({
+    const result = await mydata.saveDataList<Language>({
       area: Area.languages,
-      data: [language],
+      data: language,
       token,
     })
 

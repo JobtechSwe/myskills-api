@@ -170,15 +170,15 @@ export interface Mutation {
   /** Login an existing user */
   login: Login
   /** Add languages to user */
-  addLanguage: (Maybe<Language>)[]
+  addLanguage: Language
   /** Add experiences to user */
-  addExperience: (Maybe<Experience>)[]
+  addExperience: Experience
   /** Add education to user */
-  addEducation: (Maybe<Education>)[]
+  addEducation: Education
   /** Add user profile */
   createProfile: Profile
   /** Add skill to user */
-  addSkill: (Maybe<Skill>)[]
+  addSkill: Skill
   /** Remove skill from user */
   removeSkill: boolean
   /** Remove education from user */
@@ -539,23 +539,15 @@ export namespace MutationResolvers {
     /** Login an existing user */
     login?: LoginResolver<Login, TypeParent, TContext>
     /** Add languages to user */
-    addLanguage?: AddLanguageResolver<(Maybe<Language>)[], TypeParent, TContext>
+    addLanguage?: AddLanguageResolver<Language, TypeParent, TContext>
     /** Add experiences to user */
-    addExperience?: AddExperienceResolver<
-      (Maybe<Experience>)[],
-      TypeParent,
-      TContext
-    >
+    addExperience?: AddExperienceResolver<Experience, TypeParent, TContext>
     /** Add education to user */
-    addEducation?: AddEducationResolver<
-      (Maybe<Education>)[],
-      TypeParent,
-      TContext
-    >
+    addEducation?: AddEducationResolver<Education, TypeParent, TContext>
     /** Add user profile */
     createProfile?: CreateProfileResolver<Profile, TypeParent, TContext>
     /** Add skill to user */
-    addSkill?: AddSkillResolver<(Maybe<Skill>)[], TypeParent, TContext>
+    addSkill?: AddSkillResolver<Skill, TypeParent, TContext>
     /** Remove skill from user */
     removeSkill?: RemoveSkillResolver<boolean, TypeParent, TContext>
     /** Remove education from user */
@@ -572,7 +564,7 @@ export namespace MutationResolvers {
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
   export type AddLanguageResolver<
-    R = (Maybe<Language>)[],
+    R = Language,
     Parent = {},
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext, AddLanguageArgs>
@@ -581,7 +573,7 @@ export namespace MutationResolvers {
   }
 
   export type AddExperienceResolver<
-    R = (Maybe<Experience>)[],
+    R = Experience,
     Parent = {},
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext, AddExperienceArgs>
@@ -590,7 +582,7 @@ export namespace MutationResolvers {
   }
 
   export type AddEducationResolver<
-    R = (Maybe<Education>)[],
+    R = Education,
     Parent = {},
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext, AddEducationArgs>
@@ -608,7 +600,7 @@ export namespace MutationResolvers {
   }
 
   export type AddSkillResolver<
-    R = (Maybe<Skill>)[],
+    R = Skill,
     Parent = {},
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext, AddSkillArgs>
