@@ -49,7 +49,6 @@ describe('#skills', () => {
       mutation: ADD_SKILL,
       variables: skillInput,
     })
-    console.log('test result', result)
 
     const {
       data: { addSkill },
