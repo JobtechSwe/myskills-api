@@ -49,7 +49,6 @@ describe('#educations', () => {
         name: 'High school',
       },
     })
-    console.log('addEducation: ', addEducation)
 
     expect(addEducation[0].name).toBe('High school')
 

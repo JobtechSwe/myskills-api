@@ -1,10 +1,15 @@
 import { defaultRequest, onConsentApproved } from '../consents'
 import MockDate from 'mockdate'
 import { saveConsent, saveConsentRequest } from '../db'
+import pubSub from '../../adapters/pubsub'
 
 jest.mock('../db', () => ({
   saveConsent: jest.fn(),
   saveConsentRequest: jest.fn(),
+}))
+
+jest.mock('../../adapters/pubsub', () => ({
+  publish: jest.fn(),
 }))
 
 afterAll(MockDate.reset)
@@ -21,6 +26,7 @@ describe('#onConsentApproved', () => {
   const consent = {
     consentId: '1337',
     consentRequestId: '1338',
+    accessToken: '123',
   }
 
   test('saves consent', async () => {
@@ -33,6 +39,21 @@ describe('#onConsentApproved', () => {
     await onConsentApproved(consent)
 
     expect(saveConsentRequest).toHaveBeenCalledWith(consent)
+  })
+
+  test('publishes access token to apollo subscription/pubsub', async () => {
+    const mockedpubSubData = {
+      consentApproved: {
+        accessToken: consent.accessToken,
+      },
+      consentRequestId: consent.consentRequestId,
+    }
+    await onConsentApproved(consent)
+
+    expect(pubSub.publish).toHaveBeenCalledWith(
+      'Consent given',
+      mockedpubSubData
+    )
   })
 
   test('throw when something goes wrong', async () => {
