@@ -21,17 +21,17 @@ const typeDefs = gql`
     """
     Add languages to user
     """
-    addLanguage(language: Language!): [Language]!
+    addLanguage(language: Language!): Language!
 
     """
     Add experiences to user
     """
-    addExperience(experience: ExperienceInput!): [Experience]!
+    addExperience(experience: ExperienceInput!): Experience!
 
     """
     Add education to user
     """
-    addEducation(education: EducationInput!): [Education]!
+    addEducation(education: EducationInput!): Education!
 
     """
     Add user profile
@@ -41,7 +41,7 @@ const typeDefs = gql`
     """
     Add skill to user
     """
-    addSkill(skill: SkillInput!): [Skill]!
+    addSkill(skill: SkillInput!): Skill!
 
     """
     Remove skill from user

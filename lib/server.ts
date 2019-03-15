@@ -10,6 +10,7 @@ import {
   routes as mydataRoutes,
   saveData,
   removeData,
+  saveDataList,
 } from './adapters/mydata'
 import config from './config'
 import schema from './graphql/schema'
@@ -64,6 +65,7 @@ export const server = new ApolloServer({
       getData,
       saveData,
       removeData,
+      saveDataList,
     },
   }),
   ...schema,

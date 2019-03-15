@@ -60,7 +60,7 @@ describe('#experiences', () => {
       },
     })
 
-    expect(addExperience[0].name).toBe('Carpenter')
+    expect(addExperience.name).toBe('Carpenter')
 
     await mutate({
       mutation: ADD_EXPERIENCE,
@@ -82,7 +82,9 @@ describe('#experiences', () => {
 
   it('should be possible to remove an experience', async () => {
     const {
-      data: { addExperience },
+      data: {
+        addExperience: { id: addedExperienceId },
+      },
     } = await mutate({
       mutation: ADD_EXPERIENCE,
       variables: {
@@ -91,9 +93,6 @@ describe('#experiences', () => {
         years: '29',
       },
     })
-
-    const addedExperienceId = addExperience.find(x => x.name === 'Philosopher')
-      .id
 
     const {
       data: { removeExperience },

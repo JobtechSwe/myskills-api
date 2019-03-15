@@ -50,7 +50,7 @@ describe('#educations', () => {
         name: 'High school',
       },
     })
-    expect(addEducation[0].name).toBe('High school')
+    expect(addEducation.name).toBe('High school')
 
     await mutate({
       mutation: ADD_EDUCATION,
@@ -70,7 +70,9 @@ describe('#educations', () => {
 
   it('should be possible to remove an education', async () => {
     const {
-      data: { addEducation },
+      data: {
+        addEducation: { id: addedEducationId },
+      },
     } = await mutate({
       mutation: ADD_EDUCATION,
       variables: {
@@ -78,9 +80,6 @@ describe('#educations', () => {
         name: 'Primary School',
       },
     })
-
-    const addedEducationId = addEducation.find(x => x.name === 'Primary School')
-      .id
 
     const {
       data: { removeEducation },

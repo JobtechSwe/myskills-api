@@ -36,44 +36,50 @@ export interface RemoveDataInput extends DataInput {
   key?: string
 }
 
-const mydataOperator = create(config)
+export const mydataOperator = create(config)
 const createConfig = (area: Area): Config => ({
   area,
   domain: myConfig.DOMAIN,
 })
 
-async function getData<T>({ area, token }: DataInput): Promise<T> {
+export async function getData<T>({ area, token }: DataInput): Promise<T> {
   const areaConfig = createConfig(area)
   const data = await mydataOperator.data.auth(token).read(areaConfig)
   return data[myConfig.DOMAIN][area].data
 }
 
-async function saveData<T>({
+export async function saveData<T>({
   area,
   data,
   token,
 }: SaveDataInput<T>): Promise<T> {
   const areaConfig = createConfig(area)
-  const currentDataForDomainArea = await getData<T>({ area, token })
 
-  const updatedData = Array.isArray(data)
-    ? {
-        data: Array.isArray(currentDataForDomainArea)
-          ? [...new Set([...currentDataForDomainArea, ...data])]
-          : data,
-      }
-    : {
-        data,
-      }
+  await mydataOperator.data.auth(token).write({ ...areaConfig, data: { data } })
+
+  return data as T
+}
+
+export async function saveDataList<T>({
+  area,
+  data,
+  token,
+}: SaveDataInput<T>): Promise<T> {
+  const areaConfig = createConfig(area)
+  const currentDataForDomainArea = await getData<T[]>({ area, token })
+
+  const updatedData = Array.isArray(currentDataForDomainArea)
+    ? [...new Set([...currentDataForDomainArea, data])]
+    : [data]
 
   await mydataOperator.data
     .auth(token)
-    .write({ ...areaConfig, data: updatedData })
+    .write({ ...areaConfig, data: { data: updatedData } })
 
-  return updatedData.data as T
+  return data as T
 }
 
-async function removeData<T>({
+export async function removeData<T>({
   area,
   id: target,
   key = 'id',
@@ -98,15 +104,4 @@ async function removeData<T>({
   return true
 }
 
-const { connect, consents, routes, events } = mydataOperator
-
-export {
-  connect,
-  consents,
-  getData,
-  mydataOperator,
-  saveData,
-  removeData,
-  routes,
-  events,
-}
+export const { connect, consents, routes, events } = mydataOperator
