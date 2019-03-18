@@ -18,7 +18,7 @@ jobs:
       language: bash
       services:
         - docker
-      scripts:
+      script:
         - bash integration-tests.sh
     - stage: deploy
       install:
