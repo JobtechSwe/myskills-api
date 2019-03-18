@@ -27,6 +27,7 @@ jobs:
       script: bash infrastructure/travis/deploy.sh
 stages:
   - test
+  - integration-tests
   - name: build
     if: (branch = master AND type != pull_request) OR tag IS present
   - name: deploy
