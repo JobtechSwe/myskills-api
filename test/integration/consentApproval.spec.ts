@@ -18,10 +18,11 @@ const CONSENT_APPROVED = gql`
   }
 `
 
-describe('apollo subscriptions', () => {
-  const wait = new Promise(res => setTimeout(() => res(), 500))
+describe('consentApproval subscription', () => {
+  const wait = (ms = 100) => new Promise(res => setTimeout(() => res(), ms))
 
   let client
+  const consentResponse = jest.fn()
   const mockedConsentApprovalData = {
     consentApproved: {
       accessToken: '666',
@@ -36,9 +37,7 @@ describe('apollo subscriptions', () => {
 
   beforeAll(async () => {
     await appIsReady
-  })
 
-  beforeEach(() => {
     client = new ApolloClient({
       link: wsLink,
       cache: new InMemoryCache(),
@@ -48,48 +47,37 @@ describe('apollo subscriptions', () => {
         consentRequestId: '123',
       },
     })
+
+    client.subscribe({
+      next: ({ data: { consentApproved } }) => {
+        consentResponse(consentApproved)
+      },
+    })
+
+    await wait()
   })
 
-  afterEach(() => {
-    client = null
+  beforeEach(async () => {
+    ;(consentResponse as jest.Mock).mockClear()
   })
 
   afterAll(async () => await server.stop())
 
-  it('resolves accessToken given matching consent request id', done => {
-    client.subscribe({
-      next: ({ data: { consentApproved } }) => {
-        expect(consentApproved.accessToken).toEqual('666')
-
-        done()
-      },
-    })
-
-    setTimeout(
-      () => pubSub.publish('Consent given', mockedConsentApprovalData),
-      100
+  it('resolves accessToken given matching consent request id', async () => {
+    pubSub.publish('Consent given', mockedConsentApprovalData)
+    await wait()
+    expect(consentResponse).toHaveBeenCalledWith(
+      expect.objectContaining({ accessToken: '666' })
     )
   })
 
-  it('does not resolve accessToken given different consent request id', async done => {
-    let approvalCount = 0
-
-    client.subscribe({
-      next: ({ data: { consentApproved } }) => {
-        approvalCount++
-        done()
-      },
+  it('does not resolve accessToken given different consent request id', async () => {
+    pubSub.publish('Consent given', {
+      ...mockedConsentApprovalData,
+      consentRequestId: '1234',
     })
 
-    setTimeout(() => {
-      pubSub.publish('Consent given', {
-        ...mockedConsentApprovalData,
-        consentRequestId: '123',
-      })
-    }, 100)
-
-    await wait
-    expect(approvalCount).toEqual(0)
-    done()
+    await wait()
+    expect(consentResponse).not.toHaveBeenCalled()
   })
 })
