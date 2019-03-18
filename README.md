@@ -73,3 +73,69 @@ To overide default environment variables add an `.env` file in root.
 To run the integration-tests
 
 1. Run `sh integration-tests.sh`
+
+# Schema
+
+Following scopes are available.
+
+## languages
+
+List of languages. Current supported languages: `swedish, spanish`
+
+```
+[string]
+```
+
+## educations
+
+List of user educations
+
+```
+[{
+  taxonomyId: string,
+  id: string
+  taxonomyId: string
+  name?: Maybe<string>
+}]
+```
+
+## experiences
+
+List of user experiences
+
+```
+[{
+  id: string (GUID)
+  taxonomyId: string (ConceptId in JobTech taxonomy)
+  name?: Maybe<string>
+  years: string
+}]
+```
+
+## skills
+
+List of user skills
+
+```
+[{
+  id: string (GUID)
+
+  taxonomyId: string (ConceptId in JobTech taxonomy)
+
+  term: string
+
+  type: string
+}]
+```
+
+## profile
+
+User profile
+
+```
+{
+  firstName?: Maybe<string>
+
+  lastName?: Maybe<string>
+}
+```
