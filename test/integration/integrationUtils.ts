@@ -1,16 +1,14 @@
 import got from 'got'
-
-const MYDATA_APP_URL = process.env.MYDATA_APP
 import { consents } from '../../lib/adapters/mydata'
 import { Login } from '../../lib/__generated__/myskills'
 import { defaultRequest } from '../../lib/services/consents'
 import { getConsentRequest } from '../../lib/services/db'
+import { createTestClient } from 'apollo-server-testing'
 
+const MYDATA_APP_URL = process.env.MYDATA_APP || 'http://127.0.0.1:1337'
 export interface options {
   context: any
 }
-
-import { createTestClient } from 'apollo-server-testing'
 
 export const getClient = (
   server,

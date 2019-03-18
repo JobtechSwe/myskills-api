@@ -12,6 +12,7 @@ services:
       - REDIS_API_HOST=redis-api
       - REDIS_API_PORT=6379
       - SERVER_PORT=3000
+      - DOMAIN_HOST=myskills-api
       - MYDATA_OPERATOR=http://operator:4000
       - MYDATA_APP=http://mydata-app:1337
     depends_on:

@@ -60,6 +60,17 @@ services:
       - mydata-operator-postgres
       - mydata-operator-redis
 
+  mydata-app: #This replaces the phone app in the normal flow.
+    image: jobtechswe/mydata-app
+    environment:
+      - OPERATOR_URL=http://mydata-operator:4000/api
+    ports:
+      - 1337:1337
+    networks:
+      myskills:
+        aliases:
+          - mydata-app
+
 networks:
   myskills:
     external:
