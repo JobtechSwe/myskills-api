@@ -3,7 +3,7 @@ import { addEducation } from '../addEducation'
 
 const args = {
   education: {
-    id: '1',
+    taxonomyId: '1',
     name: 'Librarian',
   },
 }
@@ -11,23 +11,23 @@ const args = {
 test('save input in mydata', async () => {
   await addEducation({}, args, ctx, {} as any)
 
-  expect(ctx.mydata.saveData).toHaveBeenCalledWith({
+  expect(ctx.mydata.saveDataList).toHaveBeenCalledWith({
     area: 'educations',
-    data: [args.education],
+    data: { id: expect.any(String), ...args.education },
     token: 'token',
   })
 })
 
 test('returns updated data', async () => {
-  const result = [args.education]
+  const result = { id: '34234jkl234', ...args.education }
 
-  ctx.mydata.saveData.mockResolvedValue(result)
+  ctx.mydata.saveDataList.mockResolvedValue(result)
 
   await expect(addEducation({}, args, ctx, {} as any)).resolves.toEqual(result)
 })
 
 test('handles errors', async () => {
-  ctx.mydata.saveData.mockRejectedValue('err')
+  ctx.mydata.saveDataList.mockRejectedValue('err')
 
   await expect(addEducation({}, args, ctx, {} as any)).rejects.toThrow('err')
 })

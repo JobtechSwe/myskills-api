@@ -14,7 +14,7 @@ const GET_FROM_TAXONOMY = gql`
       }
       total
       result {
-        conceptId
+        taxonomyId
         term
         type
       }

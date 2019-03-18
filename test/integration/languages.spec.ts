@@ -47,7 +47,7 @@ describe('#languages', () => {
       },
     })
 
-    expect(addLanguage[0]).toBe('swedish')
+    expect(addLanguage).toBe('swedish')
 
     const { data } = await query({
       query: GET_LANGUAGES,

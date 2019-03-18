@@ -1,5 +1,6 @@
 import { MutationResolvers, Skill } from '../../../__generated__/myskills'
 import { Area } from '../../../types'
+import { v4 as uuid } from 'uuid'
 
 export const addSkill: MutationResolvers.AddSkillResolver = async (
   _,
@@ -7,13 +8,12 @@ export const addSkill: MutationResolvers.AddSkillResolver = async (
   { headers: { token }, mydata }
 ) => {
   try {
-    const result = await mydata.saveData<Skill[]>({
+    const result = await mydata.saveDataList<Skill>({
       area: Area.skills,
-      data: [skill],
+      data: { id: uuid(), ...skill },
       token,
     })
-
-    return result
+    return result as Skill
   } catch (e) {
     throw new Error(`skill error: ${e}`)
   }

@@ -1,9 +1,9 @@
-import { removeData, saveData } from '../mydata'
+import { removeData, saveData, saveDataList } from '../mydata'
 import { Area } from '../../types'
 import { auth } from '../../../__mocks__/@mydata/client'
 
-describe('#saveData', () => {
-  test('should add data to array if array', async () => {
+describe('#saveDataList', () => {
+  test('should add data to array', async () => {
     auth.read.mockResolvedValue({
       'http://host.docker.internal:3000': {
         languages: { data: ['swedish', 'spanish'] },
@@ -12,11 +12,11 @@ describe('#saveData', () => {
 
     const args = {
       area: Area.languages,
-      data: ['english'],
+      data: 'english',
       token: 'token',
     }
 
-    const result = await saveData(args)
+    const result = await saveDataList(args)
 
     expect(auth.write).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -24,10 +24,10 @@ describe('#saveData', () => {
       })
     )
 
-    expect(result).toEqual(['swedish', 'spanish', 'english'])
+    expect(result).toEqual('english')
   })
 
-  test('that it creates a new array if no existing and input data is array', async () => {
+  test('that it creates a new array if no existing', async () => {
     auth.read.mockResolvedValue({
       'http://host.docker.internal:3000': {
         languages: { data: null },
@@ -36,11 +36,11 @@ describe('#saveData', () => {
 
     const args = {
       area: Area.languages,
-      data: ['english'],
+      data: 'english',
       token: 'token',
     }
 
-    const result = await saveData(args)
+    const result = await saveDataList(args)
 
     expect(auth.write).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -48,10 +48,12 @@ describe('#saveData', () => {
       })
     )
 
-    expect(result).toEqual(['english'])
+    expect(result).toEqual('english')
   })
+})
 
-  test('should replace object if object', async () => {
+describe('#saveData', () => {
+  test('should replace object if existing', async () => {
     auth.read.mockResolvedValue({
       'http://host.docker.internal:3000': {
         profile: {

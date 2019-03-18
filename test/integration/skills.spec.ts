@@ -6,7 +6,7 @@ import { skillInput, skillInput2 } from './__fixtures__/skills'
 const GET_SKILLS = gql`
   query skills {
     skills {
-      conceptId
+      taxonomyId
       term
       type
     }
@@ -14,9 +14,10 @@ const GET_SKILLS = gql`
 `
 
 const ADD_SKILL = gql`
-  mutation addskill($conceptId: String!, $term: String!, $type: String!) {
-    addSkill(skill: { conceptId: $conceptId, term: $term, type: $type }) {
-      conceptId
+  mutation addskill($taxonomyId: String!, $term: String!, $type: String!) {
+    addSkill(skill: { taxonomyId: $taxonomyId, term: $term, type: $type }) {
+      id
+      taxonomyId
       term
       type
     }
@@ -44,13 +45,18 @@ describe('#skills', () => {
   })
 
   it('should be possible to add and get multiple skills', async () => {
-    const {
-      data: { addSkill },
-    } = await mutate({
+    const result = await mutate({
       mutation: ADD_SKILL,
       variables: skillInput,
     })
-    expect(addSkill[0]).toEqual(skillInput)
+
+    const {
+      data: { addSkill },
+    } = result
+    expect(addSkill).toEqual({
+      id: expect.any(String),
+      ...skillInput,
+    })
 
     const {
       data: { skills },
@@ -63,8 +69,10 @@ describe('#skills', () => {
     expect(addedSkill).toEqual(skillInput)
   })
 
-  it('should be possible to remove an experience', async () => {
-    await mutate({
+  it('should be possible to remove a skill', async () => {
+    const {
+      data: { addSkill },
+    } = await mutate({
       mutation: ADD_SKILL,
       variables: skillInput2,
     })
@@ -72,7 +80,7 @@ describe('#skills', () => {
     await mutate({
       mutation: REMOVE_SKILL,
       variables: {
-        id: skillInput2.conceptId,
+        id: addSkill.id,
       },
     })
 
@@ -80,7 +88,7 @@ describe('#skills', () => {
       query: GET_SKILLS,
     })
     const success = dataAfterDelete.skills.every(
-      ({ conceptId }) => conceptId !== skillInput2.conceptId
+      ({ taxonomyId }) => taxonomyId !== skillInput2.taxonomyId
     )
     expect(success).toBeTruthy()
   })

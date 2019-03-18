@@ -1,6 +1,6 @@
 {
   "name": "myskills-api",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -50,7 +50,8 @@
     "graphql-type-json": "^0.2.1",
     "http": "0.0.0",
     "ioredis": "^4.6.2",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.5.2",
@@ -67,6 +68,7 @@
     "@types/lodash": "^4.14.121",
     "@types/mockdate": "^2.0.0",
     "@types/redis": "^2.8.10",
+    "@types/uuid": "^3.4.4",
     "@typescript-eslint/eslint-plugin": "^1.4.1",
     "apollo-server-testing": "^2.4.2",
     "eslint": "^5.14.1",

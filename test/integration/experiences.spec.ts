@@ -12,9 +12,16 @@ const GET_EXPERIENCES = gql`
 `
 
 const ADD_EXPERIENCE = gql`
-  mutation addExperience($name: String!, $id: String!, $years: String!) {
-    addExperience(experience: { name: $name, id: $id, years: $years }) {
+  mutation addExperience(
+    $name: String!
+    $taxonomyId: String!
+    $years: String!
+  ) {
+    addExperience(
+      experience: { name: $name, taxonomyId: $taxonomyId, years: $years }
+    ) {
       id
+      taxonomyId
       name
       years
     }
@@ -47,18 +54,18 @@ describe('#experiences', () => {
     } = await mutate({
       mutation: ADD_EXPERIENCE,
       variables: {
-        id: 'id1',
+        taxonomyId: 'taxonomyId1',
         name: 'Carpenter',
         years: '29',
       },
     })
 
-    expect(addExperience[0].name).toBe('Carpenter')
+    expect(addExperience.name).toBe('Carpenter')
 
     await mutate({
       mutation: ADD_EXPERIENCE,
       variables: {
-        id: 'id5',
+        taxonomyId: 'taxonomyId5',
         name: 'Mason',
         years: '5',
       },
@@ -74,29 +81,36 @@ describe('#experiences', () => {
   })
 
   it('should be possible to remove an experience', async () => {
-    await mutate({
+    const {
+      data: {
+        addExperience: { id: addedExperienceId },
+      },
+    } = await mutate({
       mutation: ADD_EXPERIENCE,
       variables: {
-        id: '42',
+        taxonomyId: '42',
         name: 'Philosopher',
         years: '29',
       },
     })
 
-    const { data } = await mutate({
+    const {
+      data: { removeExperience },
+    } = await mutate({
       mutation: REMOVE_EXPERIENCE,
       variables: {
-        id: '42',
+        id: addedExperienceId,
       },
     })
-    expect(data.removeExperience).toEqual(true)
 
-    const { data: dataAfterDelete } = await query({
+    expect(removeExperience).toEqual(true)
+
+    const {
+      data: { experiences },
+    } = await query({
       query: GET_EXPERIENCES,
     })
-    const success = dataAfterDelete.experiences.every(
-      ({ name }) => name !== 'Philosopher'
-    )
+    const success = experiences.every(({ name }) => name !== 'Philosopher')
     expect(success).toBeTruthy()
   })
 })
