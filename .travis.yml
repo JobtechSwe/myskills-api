@@ -15,7 +15,7 @@ jobs:
       script:
         - bash infrastructure/travis/build.sh
     - stage: integration-tests
-      install: skip
+      language: bash
       services:
         - docker
       scripts:
