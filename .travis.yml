@@ -8,6 +8,11 @@ jobs:
       script:
         - npm run lint
         - npm run unit
+    - stage: integration-test
+      services:
+        - docker
+      script:
+        - bash integration-tests.sh
     - stage: build
       install: skip
       services:
@@ -21,6 +26,7 @@ jobs:
       script: bash infrastructure/travis/deploy.sh
 stages:
   - test
+  - integration-test
   - name: build
     if: (branch = master AND type != pull_request) OR tag IS present
   - name: deploy
