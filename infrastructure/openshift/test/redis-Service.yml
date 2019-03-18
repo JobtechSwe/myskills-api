@@ -2,8 +2,9 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: ci
-  name: redis-ci
+    app: test
+  name: redis-test
+  namespace: myskills
 spec:
   ports:
     - name: redis
@@ -11,6 +12,5 @@ spec:
       protocol: TCP
       targetPort: 6379
   selector:
-    app: ci
-    name: redis-ci
+    name: redis-test
   type: ClusterIP
