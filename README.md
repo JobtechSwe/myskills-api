@@ -1,4 +1,7 @@
-# myskills-api [![Build Status](https://travis-ci.com/JobtechSwe/myskills-api.svg?branch=master)](https://travis-ci.com/JobtechSwe/myskills-api)
+# myskills-api
+
+[![Build Status](https://travis-ci.com/JobtechSwe/myskills-api.svg?branch=master)](https://travis-ci.com/JobtechSwe/myskills-api)
+[![Test Coverage](https://codeclimate.com/github/JobtechSwe/myskills-api/badges/coverage.svg)](https://codeclimate.com/github/JobtechSwe/myskills-api/coverage)
 
 ## Start dev environment
 
