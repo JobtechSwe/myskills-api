@@ -22,7 +22,7 @@ services:
     ports:
       - 3000:3000
     networks:
-      myskills-dev:
+      myskills:
         aliases:
           - myskills-api
   myskills-redis:
@@ -30,7 +30,7 @@ services:
     ports:
       - 6380:6379
     networks:
-      myskills-dev:
+      myskills:
         aliases:
           - myskills-redis
   mydata-operator-redis:
@@ -38,7 +38,7 @@ services:
     ports:
       - 6379:6379
     networks:
-      myskills-dev:
+      myskills:
         aliases:
           - mydata-operator-redis
   mydata-operator-postgres:
@@ -46,7 +46,7 @@ services:
     ports:
       - 5432:5432
     networks:
-      myskills-dev:
+      myskills:
         aliases:
           - mydata-operator-postgres
     environment:
@@ -67,7 +67,7 @@ services:
     ports:
       - 4000:4000
     networks:
-      myskills-dev:
+      myskills:
         aliases:
           - mydata-operator
     environment:
@@ -93,11 +93,11 @@ services:
     ports:
       - 1337:1337
     networks:
-      myskills-dev:
+      myskills:
         aliases:
           - mydata-app
 
 networks:
-  myskills-dev:
+  myskills:
     external:
-      name: myskills-dev
+      name: myskills
