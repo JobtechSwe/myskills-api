@@ -95,7 +95,7 @@ List of user educations
   taxonomyId: string,
   id: string
   taxonomyId: string
-  name?: Maybe<string>
+  name?: string
 }]
 ```
 
@@ -107,7 +107,7 @@ List of user experiences
 [{
   id: string (GUID)
   taxonomyId: string (ConceptId in JobTech taxonomy)
-  name?: Maybe<string>
+  name?: string
   years: string
 }]
 ```
@@ -119,11 +119,8 @@ List of user skills
 ```
 [{
   id: string (GUID)
-
   taxonomyId: string (ConceptId in JobTech taxonomy)
-
   term: string
-
   type: string
 }]
 ```
@@ -134,8 +131,7 @@ User profile
 
 ```
 {
-  firstName?: Maybe<string>
-
-  lastName?: Maybe<string>
+  firstName?: string
+  lastName?: string
 }
 ```
