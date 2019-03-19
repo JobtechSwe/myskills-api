@@ -20,8 +20,7 @@ jobs:
         - DOCKER_COMPOSE_VERSION=1.23.2
       before_install:
         - sudo rm /usr/local/bin/docker-compose
-        - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname
-          -s`-`uname -m` > docker-compose
+        - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
         - chmod +x docker-compose
         - sudo mv docker-compose /usr/local/bin
       services:
@@ -37,9 +36,9 @@ stages:
   - test
   - integration-tests
   - name: build
-    if: "(branch = master AND type != pull_request) OR tag IS present"
+    if: (branch = master AND type != pull_request) OR tag IS present
   - name: deploy
-    if: "(branch = master AND type != pull_request) OR tag IS present"
+    if: (branch = master AND type != pull_request) OR tag IS present
 env:
   global:
     - secure: DOYKVqaObpLYa7iaEPykCuHdXeUw2pHnSZL/6fylLKHDsCoMfvFvW939ubEQebsaeU4HHLMVJ0FT6gpQCRRNnxkp+BPypQMUnkcV6OzAKXoM7OSoaq2RzbAXMQXvaF5Jd82j2d3j1Dx2DF0bGdv5KTxNaqL4hqW1u0z7FIpD7EiTazC2NzSVharpp074t5vsTBBor24GY2QXJ9449gILP0Qw8/JImybmBJ5TtINyREWC+xmTkmjYG+i8zdQxLRW1nKIiWnH82ZwrJtrWS6DI1O1ZOtcCnSlPhlSxVLYgvk76BZr3rNrdgRs7QQ9nAI0XOzc+ao5+3PBy+pGIBGF8CO98qvQfRbDI24BO3Da0F6Rn9IzHd9zX42xMk5DySBR2CrXgCzoHPb1mor+rM6qsBG8O5zo9+AcK1q3sllzHF3o9hHZKQHB5audvdUehp+I5ryv2EbkcUXquPGRgpSHsvTGrDRLQwM9Jkf65SQbbzN9TpCEu7iZy4ysq/LiRKb+ebppsPR/qNrTXH1IDxTnAeUzpnCxc02v7/DnadfD7dLL9qQ2ue2ksrDOlqk79QeGogNvj6dsUySvIqPYEIF3T52u1M7VElGRNjmzox+9d1XcYcwCnRo0djLyRCn9xwMD3KkZQFhsFLGzKeM2TAW4mmJmsn1Od9QnHRrw0kiwXzvk=
