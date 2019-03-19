@@ -17,6 +17,7 @@ import schema from './graphql/schema'
 import { onConsentApproved } from './services/consents'
 import { getConsentRequest } from './services/db'
 import TaxonomyAPI from './adapters/taxonomy'
+import { createServer } from 'http'
 
 const app = express()
 app.set('etag', 'strong')
@@ -49,6 +50,7 @@ mydataEvents.on('CONSENT_APPROVED', onConsentApproved)
 /**
  * GraphQL
  */
+
 export const server = new ApolloServer({
   cache: new RedisCache({
     host: config.REDIS_API_HOST,
@@ -76,6 +78,9 @@ server.applyMiddleware({
   path: '/graphql',
 })
 
+const httpServer = createServer(app)
+server.installSubscriptionHandlers(httpServer)
+
 /**
  * Start
  */
@@ -83,9 +88,8 @@ server.applyMiddleware({
 const port = config.SERVER_PORT
 
 export const appIsReady: Promise<Boolean> = new Promise(resolve =>
-  app.listen(port, async () => {
+  httpServer.listen(port, async () => {
     await mydataConnect()
-
     console.log(`Listening on port: ${port}`)
     resolve(true)
   })

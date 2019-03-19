@@ -5,3 +5,7 @@ export enum Area {
   skills = 'skills',
   profile = 'profile',
 }
+
+export enum SubscriptionMessage {
+  CONSENT_GIVEN = 'Consent given',
+}

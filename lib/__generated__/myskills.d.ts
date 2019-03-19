@@ -195,6 +195,14 @@ export interface Login {
   expires: string
 }
 
+export interface Subscription {
+  consentApproved: ConsentResponse
+}
+
+export interface ConsentResponse {
+  accessToken: string
+}
+
 export interface TaxonomyDefaultResult extends TaxonomyResult {
   taxonomyId: string
 
@@ -246,6 +254,9 @@ export interface RemoveExperienceMutationArgs {
 }
 export interface RemoveLanguageMutationArgs {
   language: Language
+}
+export interface ConsentApprovedSubscriptionArgs {
+  consentRequestId: string
 }
 
 import {
@@ -667,6 +678,40 @@ export namespace LoginResolvers {
   > = Resolver<R, Parent, TContext>
 }
 
+export namespace SubscriptionResolvers {
+  export interface Resolvers<TContext = ApolloServerContext, TypeParent = {}> {
+    consentApproved?: ConsentApprovedResolver<
+      ConsentResponse,
+      TypeParent,
+      TContext
+    >
+  }
+
+  export type ConsentApprovedResolver<
+    R = ConsentResponse,
+    Parent = {},
+    TContext = ApolloServerContext
+  > = SubscriptionResolver<R, Parent, TContext, ConsentApprovedArgs>
+  export interface ConsentApprovedArgs {
+    consentRequestId: string
+  }
+}
+
+export namespace ConsentResponseResolvers {
+  export interface Resolvers<
+    TContext = ApolloServerContext,
+    TypeParent = ConsentResponse
+  > {
+    accessToken?: AccessTokenResolver<string, TypeParent, TContext>
+  }
+
+  export type AccessTokenResolver<
+    R = string,
+    Parent = ConsentResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+}
+
 export namespace TaxonomyDefaultResultResolvers {
   export interface Resolvers<
     TContext = ApolloServerContext,
@@ -807,6 +852,8 @@ export interface IResolvers<TContext = ApolloServerContext> {
   TaxonomySearch?: TaxonomySearchResolvers.Resolvers<TContext>
   Mutation?: MutationResolvers.Resolvers<TContext>
   Login?: LoginResolvers.Resolvers<TContext>
+  Subscription?: SubscriptionResolvers.Resolvers<TContext>
+  ConsentResponse?: ConsentResponseResolvers.Resolvers<TContext>
   TaxonomyDefaultResult?: TaxonomyDefaultResultResolvers.Resolvers<TContext>
   TaxonomySkillResult?: TaxonomySkillResultResolvers.Resolvers<TContext>
   TaxonomyResult?: TaxonomyResultResolvers.Resolvers
