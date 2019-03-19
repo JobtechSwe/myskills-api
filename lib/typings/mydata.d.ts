@@ -43,6 +43,7 @@ declare module '@mydata/client' {
   export interface Consent {
     consentId: string
     consentRequestId: string
+    accessToken: string
   }
 
   type EventsCallback = (consent: Consent) => void

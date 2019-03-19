@@ -18,7 +18,7 @@ Before you begin, this guide assumes that...
 
 ## Steps
 
-#### 1. Secrets
+#### Secrets
 
 - Create a github hook with a secret and store it somewhere (we used Lastpass for it). <br>
   Then use the secret and create an Openshift secret with it
@@ -41,28 +41,42 @@ oc create secret generic mydata-operator --from-file=/tmp/public.key --from-file
 oc create secret generic redis-ci-password --from-literal=database-password=create-a-secret-Secret
 ```
 
-#### 2. Shared resources
-
 ```bash
-# Deploy shared things (BuildConfigs + ImageStreams)
-oc apply -f ./shared
+# Replace create-a-secret-Secret with your secret
+oc create secret generic redis-test-password --from-literal=database-password=create-a-secret-Secret
 ```
 
-#### 3. Prepare dependencies
+#### Prepare dependencies
 
 - Create PVC for Redis (this is done separately so that you can teardown your environment and keep the data)
 
 ```bash
-oc apply -f ./setup/redis-ci-pvc.yml
+oc apply -f ./setup
 ```
 
-#### 4. Deploy the whole stack
+#### Deploy the whole stack
+
+##### CI
 
 ```bash
 oc apply -f ./ci
 ```
 
-#### 5. Delete the whole stack
+##### TEST
+
+```bash
+oc apply -f ./test
+```
+
+#### Delete the whole stack
+
+##### CI
+
+```bash
+oc delete -f ./ci
+```
+
+##### TEST
 
 ```bash
 oc delete -f ./ci
@@ -71,11 +85,25 @@ oc delete -f ./ci
 Optionally you can delete all resources
 
 ```bash
-# Delete also build configs and image streams
-oc delete -f ./shared
+# Delete also setup files (PVCs, ...)
+oc delete -f ./setup
+```
+
+<br>
+<br>
+
+### DEPRECATED NOTICE
+
+Previously we built the images in Openshift. Since we use Travis CI the following instructions are deprecated.
+
+#### Shared resources
+
+```bash
+# Deploy shared things (BuildConfigs + ImageStreams)
+oc apply -f ./shared
 ```
 
 ```bash
-# Delete also setup files (PVCs, ...)
-oc delete -f ./setup
+# Delete also build configs and image streams
+oc delete -f ./shared
 ```

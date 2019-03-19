@@ -91,3 +91,65 @@ To overide default environment variables add an `.env` file in root or edit dock
 
 1. Run dev docker-compose: `docker-compose -f docker-compose.dev.yml up -d`
 2. Run integration tests, i.g.: `docker-compose -f docker-compose.dev.yml exec -T myskills-api npm run integration -- --watchAll`
+
+# Schema
+
+Following scopes are available.
+
+## languages
+
+List of languages. Current supported languages: `swedish, spanish`
+
+```
+[string]
+```
+
+## educations
+
+List of user educations
+
+```
+[{
+  taxonomyId: string,
+  id: string
+  taxonomyId: string
+  name?: string
+}]
+```
+
+## experiences
+
+List of user experiences
+
+```
+[{
+  id: string (GUID)
+  taxonomyId: string (ConceptId in JobTech taxonomy)
+  name?: string
+  years: string
+}]
+```
+
+## skills
+
+List of user skills
+
+```
+[{
+  id: string (GUID)
+  taxonomyId: string (ConceptId in JobTech taxonomy)
+  term: string
+  type: string
+}]
+```
+
+## profile
+
+User profile
+
+```
+{
+  firstName?: string
+  lastName?: string
+}
+```

@@ -1,7 +1,8 @@
 import config from '../config'
-import { Area } from '../types'
+import { Area, SubscriptionMessage } from '../types'
 import { saveConsent, saveConsentRequest } from './db'
 import { Consent } from '@mydata/client'
+import pubSub from '../adapters/pubsub'
 
 export interface Scope {
   area: Area
@@ -41,6 +42,13 @@ const onConsentApproved = async (consent: Consent) => {
   try {
     await saveConsent(consent)
     await saveConsentRequest(consent)
+
+    pubSub.publish(SubscriptionMessage.CONSENT_GIVEN, {
+      consentApproved: {
+        accessToken: consent.accessToken,
+      },
+      consentRequestId: consent.consentRequestId,
+    })
   } catch (e) {
     throw new Error(`write error: ${e}`)
   }

@@ -12,6 +12,10 @@ const typeDefs = gql`
     swedish
   }
 
+  type ConsentResponse {
+    accessToken: String!
+  }
+
   type Mutation {
     """
     Login an existing user
@@ -94,6 +98,10 @@ const typeDefs = gql`
     Get from taxonomy
     """
     taxonomy(params: TaxonomyQueryInput): TaxonomyResponse!
+  }
+
+  type Subscription {
+    consentApproved(consentRequestId: String!): ConsentResponse!
   }
 `
 
