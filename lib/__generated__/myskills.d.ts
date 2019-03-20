@@ -8,6 +8,8 @@ export interface TaxonomyQueryInput {
   q?: Maybe<string>
 
   type?: Maybe<TaxonomyType>
+
+  parentId?: Maybe<(Maybe<string>)[]>
 }
 
 export interface ExperienceInput {

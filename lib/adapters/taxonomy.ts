@@ -11,6 +11,16 @@ export default class TaxonomyAPI extends RESTDataSource {
     this.path = config.TAXONOMY_URL_PATH
   }
 
+  willSendRequest(request: any) {
+    const { params } = request
+
+    for (const [name, value] of params) {
+      if (name === 'parentId') {
+        params.append('parent-id', value)
+      }
+    }
+  }
+
   async getData<T = any>(query: TaxonomyQueryInput): Promise<T> {
     try {
       return this.get(
