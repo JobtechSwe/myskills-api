@@ -31,6 +31,9 @@
   "homepage": "https://github.com/Iteam1337/myskills-api#readme",
   "dependencies": {
     "@mydata/client": "^0.22.3",
+    "@semantic-release/commit-analyzer": "^6.1.0",
+    "@semantic-release/git": "^7.0.8",
+    "@semantic-release/github": "^5.2.10",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-client": "^2.5.1",
     "apollo-codegen": "^0.20.2",
