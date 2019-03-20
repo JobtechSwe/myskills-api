@@ -32,6 +32,9 @@ jobs:
         - bash ./infrastructure/travis/install-openshift.sh
         - export PATH=$PATH:/tmp/openshift
       script: bash infrastructure/travis/deploy.sh
+    - stage: create-release-notes
+      language: node_js
+      script: npx semantic-release
 stages:
   - test
   - integration-tests
