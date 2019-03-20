@@ -21,14 +21,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Iteam1337/myskills-api.git"
+    "url": "git+https://github.com/JobtechSwe/myskills-api.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Iteam1337/myskills-api/issues"
+    "url": "https://github.com/JobtechSwe/myskills-api/issues"
   },
-  "homepage": "https://github.com/Iteam1337/myskills-api#readme",
+  "homepage": "https://github.com/JobtechSwe/myskills-api#readme",
   "dependencies": {
     "@mydata/client": "^0.22.3",
     "apollo-cache-inmemory": "^1.5.1",
