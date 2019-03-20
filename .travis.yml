@@ -32,7 +32,7 @@ jobs:
         - bash ./infrastructure/travis/install-openshift.sh
         - export PATH=$PATH:/tmp/openshift
       script: bash infrastructure/travis/deploy.sh
-    - stage: create-release-notes
+    - stage: create-release
       language: node_js
       install:
         - npm i @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/github
@@ -44,7 +44,7 @@ stages:
     if: (branch = master AND type != pull_request) OR tag IS present
   - name: deploy
     if: (branch = master AND type != pull_request) OR tag IS present
-  - name: create-release-notes
+  - name: create-release
     if:  branch = master AND type != pull_request
 env:
   global:
