@@ -34,7 +34,8 @@ jobs:
       script: bash infrastructure/travis/deploy.sh
     - stage: create-release-notes
       language: node_js
-      script: npx semantic-release
+      install: skip
+      script: npx semantic-release --branch feat/semantic-release
 stages:
   - test
   - integration-tests
