@@ -36,7 +36,7 @@ jobs:
       language: node_js
       install:
         - npm i @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/github
-      script: npx semantic-release --branch feat/semantic-release
+      script: npx semantic-release
 stages:
   - test
   - integration-tests
