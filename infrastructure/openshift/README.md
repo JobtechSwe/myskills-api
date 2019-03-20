@@ -46,6 +46,13 @@ oc create secret generic redis-ci-password --from-literal=database-password=crea
 oc create secret generic redis-test-password --from-literal=database-password=create-a-secret-Secret
 ```
 
+- Create a secret with the TLS certificate
+
+```bash
+# Replace the path below with a path to your TLS certificate file
+oc create secret generic tls --from-file=/tmp/jtech.se.crt
+```
+
 #### Prepare dependencies
 
 - Create PVC for Redis (this is done separately so that you can teardown your environment and keep the data)
