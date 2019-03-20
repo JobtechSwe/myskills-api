@@ -90,7 +90,7 @@ To overide default environment variables add an `.env` file in root or edit dock
 **To develop with integration tests**
 
 1. Run dev docker-compose: `docker-compose -f docker-compose.dev.yml up -d`
-2. Run integration tests, i.g.: `docker-compose -f docker-compose.dev.yml exec -T myskills-api npm run integration -- --watchAll`
+2. Run integration tests, e.g.: `docker-compose -f docker-compose.dev.yml exec -T myskills-api npm run integration -- --watchAll`
 
 # Schema
 
