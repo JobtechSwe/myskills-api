@@ -2,11 +2,20 @@ import { ctx } from '../../../__mocks__/apolloServerContext'
 import { taxonomy } from '../taxonomy'
 import { TaxonomyQueryArgs } from '../../../../__generated__/myskills'
 
-test('passes query params to taxonomyAPI', async () => {
+beforeEach(() => {
   ;(ctx.dataSources.taxonomyAPI.getData as jest.Mock).mockResolvedValue({
-    result: [],
+    result: [
+      {
+        conceptId: '123',
+      },
+      {
+        conceptId: '456',
+      },
+    ],
   })
+})
 
+test('passes query params to taxonomyAPI without parentId', async () => {
   const testArgs: TaxonomyQueryArgs = {
     params: {
       q: 'someQuery',
@@ -15,9 +24,49 @@ test('passes query params to taxonomyAPI', async () => {
 
   await taxonomy({}, testArgs, ctx, {} as any)
 
-  expect(ctx.dataSources.taxonomyAPI.getData).toHaveBeenCalledWith(
-    testArgs.params
-  )
+  expect(ctx.dataSources.taxonomyAPI.getData).toHaveBeenCalledWith({
+    q: 'someQuery',
+  })
+})
+
+test('passes query params to taxonomyAPI with parentId', async () => {
+  const testArgs: TaxonomyQueryArgs = {
+    params: {
+      q: 'someQuery',
+      parentId: ['123_abc'],
+    },
+  }
+
+  await taxonomy({}, testArgs, ctx, {} as any)
+
+  expect(ctx.dataSources.taxonomyAPI.getData).toHaveBeenCalledWith({
+    q: 'someQuery',
+    'parent-id': ['123_abc'],
+  })
+})
+
+test('returnass formted result', async () => {
+  const testArgs: TaxonomyQueryArgs = {
+    params: {
+      q: 'someQuery',
+      parentId: ['123_abc'],
+    },
+  }
+
+  const result = await taxonomy({}, testArgs, ctx, {} as any)
+
+  expect(result).toEqual({
+    result: [
+      {
+        conceptId: '123',
+        taxonomyId: '123',
+      },
+      {
+        conceptId: '456',
+        taxonomyId: '456',
+      },
+    ],
+  })
 })
 
 test('handles errors', async () => {

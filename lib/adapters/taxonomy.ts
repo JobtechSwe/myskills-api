@@ -1,6 +1,7 @@
-import { RESTDataSource } from 'apollo-datasource-rest'
-import { TaxonomyQueryInput } from '../__generated__/myskills'
+import { RESTDataSource, RequestOptions } from 'apollo-datasource-rest'
 import config from '../config'
+import { TaxonomyInputParams } from 'lib/graphql/resolvers/queries/taxonomy'
+import { URLSearchParams } from 'apollo-env'
 
 export default class TaxonomyAPI extends RESTDataSource {
   private path: string
@@ -11,17 +12,29 @@ export default class TaxonomyAPI extends RESTDataSource {
     this.path = config.TAXONOMY_URL_PATH
   }
 
-  willSendRequest(request: any) {
-    const { params } = request
+  adjustUrlSearchParams = (params: URLSearchParams) =>
+    [...params.entries()].reduce(
+      (acc: URLSearchParams, [prop, val]: string[]) => {
+        if (prop === 'parent-id' && val.split(',').length > 1) {
+          val.split(',').forEach((pId: string) => {
+            acc.append('parent-id', pId)
+          })
+          return acc
+        }
 
-    for (const [name, value] of params) {
-      if (name === 'parentId') {
-        params.append('parent-id', value)
-      }
-    }
+        acc.set(prop, val)
+        return acc
+      },
+      new URLSearchParams()
+    )
+
+  willSendRequest(request: RequestOptions): void {
+    request.params = this.adjustUrlSearchParams(
+      request.params as URLSearchParams
+    )
   }
 
-  async getData<T = any>(query: TaxonomyQueryInput): Promise<T> {
+  async getData<T = any>(query: TaxonomyInputParams): Promise<T> {
     try {
       return this.get(
         this.path,
