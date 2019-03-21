@@ -1,6 +1,32 @@
-version: '3'
+version: '2.4'
 
 services:
+  myskills-api:
+    build:
+      context: .
+      target: base
+    volumes:
+      - ./lib:/app/lib
+      - ./test:/app/test
+      - ./.git:/app/.git
+    command: npm run dev
+    environment:
+      - REDIS_API_HOST=myskills-redis
+      - REDIS_API_PORT=6379
+      - SERVER_PORT=3000
+      - DOMAIN_HOST=myskills-api
+      - MYDATA_OPERATOR=http://mydata-operator:4000
+      - MYDATA_APP=http://mydata-app:1337
+    depends_on:
+      - mydata-operator
+      - mydata-app
+      - myskills-redis
+    ports:
+      - 127.0.0.1:3000:3000
+    networks:
+      myskills:
+        aliases:
+          - myskills-api
   myskills-redis:
     image: redis:5.0
     ports:
@@ -57,8 +83,21 @@ services:
       - REDIS=redis://mydata-operator-redis:6379/
       - NODE_ENV=development
     depends_on:
-      - mydata-operator-postgres
-      - mydata-operator-redis
+      mydata-operator-postgres:
+        condition: service_healthy
+      mydata-operator-redis:
+        condition: service_started
+
+  mydata-app: #This replaces the phone app in the normal flow.
+    image: jobtechswe/mydata-app
+    environment:
+      - OPERATOR_URL=http://mydata-operator:4000/api
+    ports:
+      - 127.0.0.1:1337:1337
+    networks:
+      myskills:
+        aliases:
+          - mydata-app
 
 networks:
   myskills:

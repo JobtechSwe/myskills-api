@@ -3,8 +3,7 @@ ARG cache=1
 
 WORKDIR /app
 
-COPY package.json ./
-COPY package-lock.json ./
+COPY package*.json ./
 RUN npm ci
 
 COPY /lib ./lib
@@ -24,8 +23,7 @@ RUN adduser --disabled-password --gecos "" $USER
 
 WORKDIR /app
 
-COPY package.json ./
-COPY package-lock.json ./
+COPY package*.json ./
 RUN npm ci --only=production
 
 COPY --from=base /app/dist ./dist
