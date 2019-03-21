@@ -14,7 +14,7 @@ export default class TaxonomyAPI extends RESTDataSource {
   getUrlSearchParams(query: any): URLSearchParams {
     const strippedQuery = Object.keys(query).reduce(
       (prev: object, curr: string) =>
-        query[curr] ? { ...prev, [curr]: query[curr] } : prev,
+        query[curr] != null ? { ...prev, [curr]: query[curr] } : prev,
       {}
     )
 
