@@ -28,6 +28,7 @@ export const typeDefs = gql`
     limit: Int
     q: String
     type: TaxonomyType
+    parentId: [String]
   }
 
   type TaxonomyResponse {

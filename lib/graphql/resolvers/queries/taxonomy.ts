@@ -1,5 +1,6 @@
 import {
   QueryResolvers,
+  TaxonomyType,
   TaxonomyQueryArgs,
 } from '../../../__generated__/myskills'
 
@@ -8,6 +9,14 @@ interface AfTaxonomyResult {
   term: string
   type: string
   parentId: string
+}
+
+export interface TaxonomyInputParams {
+  offset?: number
+  limit?: number
+  q?: string
+  type?: TaxonomyType
+  'parent-id'?: [string]
 }
 
 interface AfTaxonomyResponse {
@@ -19,16 +28,30 @@ interface AfTaxonomyResponse {
   result: [AfTaxonomyResult]
 }
 
+const renameProp = (
+  oldProp: string,
+  newProp: string,
+  { [oldProp]: old, ...others }: any
+) =>
+  old
+    ? {
+        ...others,
+        [newProp]: old,
+      }
+    : { ...others }
+
 export const taxonomy: QueryResolvers.TaxonomyResolver = async (
   _,
-  args: TaxonomyQueryArgs,
+  { params }: TaxonomyQueryArgs,
   { dataSources: { taxonomyAPI } }
 ) => {
-  try {
-    const data = await taxonomyAPI.getData<AfTaxonomyResponse>(
-      args.params || {}
-    )
+  const taxonomyQuery =
+    params && params.parentId
+      ? renameProp('parentId', 'parent-id', params)
+      : params
 
+  try {
+    const data = await taxonomyAPI.getData<AfTaxonomyResponse>(taxonomyQuery)
     return {
       ...data,
       result: data.result.map(x => ({

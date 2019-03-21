@@ -7,6 +7,7 @@ import TaxonomyAPI from '../taxonomy'
 describe('TaxonomyAPI', () => {
   let taxonomy: TaxonomyAPI
   let mockRESTDataSourceInstance: { get: any }
+
   beforeEach(() => {
     ;(RESTDataSource as jest.Mock).mockClear()
     taxonomy = new TaxonomyAPI()
@@ -23,7 +24,7 @@ describe('TaxonomyAPI', () => {
 
     expect(mockRESTDataSourceInstance.get).toHaveBeenCalledWith(
       config.TAXONOMY_URL_PATH,
-      query,
+      new URLSearchParams(),
       expect.any(Object)
     )
     expect(result).toEqual({ hej: 'hej' })
@@ -35,5 +36,28 @@ describe('TaxonomyAPI', () => {
     })
     const query = {}
     await expect(taxonomy.getData(query)).rejects.toThrow('Error: someError')
+  })
+
+  describe('getUrlSearchParams', () => {
+    test('should handle arrays', () => {
+      const testObject = {
+        limit: undefined,
+        'parent-id': ['some', 'parent'],
+        offset: 10,
+        q: '',
+      }
+
+      const result = taxonomy.getUrlSearchParams(testObject)
+      expect(result.toString()).toEqual(
+        'parent-id=some&parent-id=parent&offset=10'
+      )
+    })
+
+    test('should work with empty objects', () => {
+      const testObject = {}
+
+      const result = taxonomy.getUrlSearchParams(testObject)
+      expect(result.toString()).toBe('')
+    })
   })
 })

@@ -380,6 +380,16 @@
             "description": "",
             "type": { "kind": "ENUM", "name": "TaxonomyType", "ofType": null },
             "defaultValue": null
+          },
+          {
+            "name": "parentId",
+            "description": "",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "defaultValue": null
           }
         ],
         "interfaces": null,
