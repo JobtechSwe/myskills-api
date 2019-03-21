@@ -1,6 +1,5 @@
-import { RESTDataSource, RequestOptions } from 'apollo-datasource-rest'
+import { RESTDataSource } from 'apollo-datasource-rest'
 import config from '../config'
-import { TaxonomyInputParams } from 'lib/graphql/resolvers/queries/taxonomy'
 import { URLSearchParams } from 'apollo-env'
 
 export default class TaxonomyAPI extends RESTDataSource {
@@ -12,44 +11,33 @@ export default class TaxonomyAPI extends RESTDataSource {
     this.path = config.TAXONOMY_URL_PATH
   }
 
-  adjustUrlSearchParams = (params: URLSearchParams) =>
-    [...params.entries()].reduce(
-      (acc: URLSearchParams, [prop, val]: string[]) => {
-        if (prop === 'parent-id' && val.split(',').length > 1) {
-          val.split(',').forEach((pId: string) => {
-            acc.append('parent-id', pId)
-          })
-          return acc
-        }
-
-        acc.set(prop, val)
-        return acc
-      },
-      new URLSearchParams()
+  getUrlSearchParams(query: any): URLSearchParams {
+    const strippedQuery = Object.keys(query).reduce(
+      (prev: object, curr: string) =>
+        query[curr] ? { ...prev, [curr]: query[curr] } : prev,
+      {}
     )
 
-  willSendRequest(request: RequestOptions): void {
-    request.params = this.adjustUrlSearchParams(
-      request.params as URLSearchParams
-    )
+    const params = new URLSearchParams(strippedQuery)
+
+    return [...params].reduce((prev, curr) => {
+      curr[1].split(',').forEach(value => value && prev.append(curr[0], value))
+      return prev
+    }, new URLSearchParams())
   }
 
-  async getData<T = any>(query: TaxonomyInputParams): Promise<T> {
+  async getData<T = any>(query: object): Promise<T> {
+    const params = this.getUrlSearchParams(query)
+
     try {
-      return this.get(
-        this.path,
-        {
-          ...(<object>query),
+      return this.get(this.path, params, {
+        headers: {
+          'api-key': config.TAXONOMY_API_KEY,
         },
-        {
-          headers: {
-            'api-key': config.TAXONOMY_API_KEY,
-          },
-          cacheOptions: {
-            ttl: 60 * 60 * 24 * 30, // 30 days
-          },
-        }
-      )
+        cacheOptions: {
+          ttl: 60 * 60 * 24 * 30, // 30 days
+        },
+      })
     } catch (error) {
       console.log('Error fetching from taxonomy', error)
       throw new Error(error)
