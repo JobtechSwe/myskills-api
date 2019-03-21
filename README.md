@@ -9,6 +9,8 @@ The easiest way to develop is by running everything using the dev docker-compose
 - Run the docker-services: `docker-compose up -d`
 - Go to `localhost:3000/graphql`
 
+Note that only changes in lib and test folders will force a rebuild in the container. I.e. changes in package.json or other config files would need a rebuild: `docker-compose up -d --build`
+
 ## Get started with MyData App
 
 - Start the GraphQl API (see above).
