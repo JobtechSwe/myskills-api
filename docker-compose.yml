@@ -9,6 +9,8 @@ services:
       - ./lib:/app/lib
       - ./test:/app/test
       - ./.git:/app/.git
+      - ./.eslintrc:/app/.eslintrc
+      - ./__mocks__:/app/__mocks__
     command: npm run dev
     environment:
       - REDIS_API_HOST=myskills-redis
