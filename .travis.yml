@@ -7,7 +7,7 @@ jobs:
         - npm ci
       script:
         - npm run lint
-        - npm run unit
+        - npm run unit && exit 125
     - stage: coverage
       language: node_js
       cache: npm
@@ -19,7 +19,7 @@ jobs:
         - chmod +x ./cc-test-reporter
         - "./cc-test-reporter before-build"
       script:
-        - npm run unit -- --coverage && exit 125
+        - npm run unit -- --coverage
       after_script:
         - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
     - stage: integration-tests
