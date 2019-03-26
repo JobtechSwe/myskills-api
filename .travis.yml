@@ -14,20 +14,22 @@ jobs:
       install:
         - npm ci
       before_script:
-        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+          > ./cc-test-reporter
         - chmod +x ./cc-test-reporter
-        - ./cc-test-reporter before-build
+        - "./cc-test-reporter before-build"
       script:
         - npm run unit -- --coverage
       after_script:
-        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+        - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
     - stage: integration-tests
       language: bash
       env:
         - DOCKER_COMPOSE_VERSION=1.23.2
       before_install:
         - sudo rm /usr/local/bin/docker-compose
-        - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+        - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname
+          -s`-`uname -m` > docker-compose
         - chmod +x docker-compose
         - sudo mv docker-compose /usr/local/bin
       services:
@@ -37,7 +39,8 @@ jobs:
     - stage: create-release
       language: node_js
       install:
-        - npm i @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/github
+        - npm i @semantic-release/commit-analyzer @semantic-release/release-notes-generator
+          @semantic-release/github
       script: npx semantic-release
     - stage: build
       install: skip
@@ -58,9 +61,9 @@ stages:
   - name: create-release
     if: branch = master AND type != pull_request
   - name: build
-    if: (branch = master AND type != pull_request) OR tag IS present
+    if: "(branch = master AND type != pull_request) OR tag IS present"
   - name: deploy
-    if: (branch = master AND type != pull_request) OR tag IS present
+    if: "(branch = master AND type != pull_request) OR tag IS present"
 env:
   global:
     - secure: DOYKVqaObpLYa7iaEPykCuHdXeUw2pHnSZL/6fylLKHDsCoMfvFvW939ubEQebsaeU4HHLMVJ0FT6gpQCRRNnxkp+BPypQMUnkcV6OzAKXoM7OSoaq2RzbAXMQXvaF5Jd82j2d3j1Dx2DF0bGdv5KTxNaqL4hqW1u0z7FIpD7EiTazC2NzSVharpp074t5vsTBBor24GY2QXJ9449gILP0Qw8/JImybmBJ5TtINyREWC+xmTkmjYG+i8zdQxLRW1nKIiWnH82ZwrJtrWS6DI1O1ZOtcCnSlPhlSxVLYgvk76BZr3rNrdgRs7QQ9nAI0XOzc+ao5+3PBy+pGIBGF8CO98qvQfRbDI24BO3Da0F6Rn9IzHd9zX42xMk5DySBR2CrXgCzoHPb1mor+rM6qsBG8O5zo9+AcK1q3sllzHF3o9hHZKQHB5audvdUehp+I5ryv2EbkcUXquPGRgpSHsvTGrDRLQwM9Jkf65SQbbzN9TpCEu7iZy4ysq/LiRKb+ebppsPR/qNrTXH1IDxTnAeUzpnCxc02v7/DnadfD7dLL9qQ2ue2ksrDOlqk79QeGogNvj6dsUySvIqPYEIF3T52u1M7VElGRNjmzox+9d1XcYcwCnRo0djLyRCn9xwMD3KkZQFhsFLGzKeM2TAW4mmJmsn1Od9QnHRrw0kiwXzvk=
@@ -69,4 +72,15 @@ env:
     - secure: eK6qw6sTGwa9iHSOkSFHISh1KfT12twMWL0YDNuv1CMoONXOe5EBeuVeW4htQY4GR8Pne2r3eUpOXaEGPuTne8EvVsn2U5JdNTDzkyuf9brY69h220PmhxAO8uPLaaqarWKR89rhMc6qhYrDB34nxdr71I3HKMenI+21AQ+wullsjtOFJKHZjyKktO/bg/q6QJzjkopnOj3Y6fjDRtl3gi2nwb76QR9mo8VCXHNwDddR1r2lMPFo8xUkP9s5FCtIAVzw6suq/00w15o9s+Fphe91WdzBPd1XVe5sSyIfXJnBrSXYIVGuM+mURgMru0vm6eRm9CJCjn8m48shKWAuThRBHP8oR7yKQUotqnEH0nY0LePPdMvpHDqga53x184IfS5lirhYHlKG5fOSWvTxp/PQ5wqAde/pl8suIxidVmbbSsymX3/mVZW9vJ8TfbjepS5rJbvqQ5b8gaf3xaWBBu1Q2KVRfodCu7e5zAzi6kD9RC/yia18dCqimsfF/7V70vJOyN/2NOlY4apOcsI70zd7DtJkitBXELcGri8TiSHP00Xj9gqbnk7VB/+1pvHp19TotZnH+6Lx8ZlxdQLKQzPoTKvONtZCZRFPzKq31Ia8XRZzSWFwb5m+8MLwituKlU2CmU2OVgkpoWmeebbrImsBdPZwXyetIzcw5pcPwsM=
 before_install:
   - openssl aes-256-cbc -K $encrypted_7512648e3e98_key -iv $encrypted_7512648e3e98_iv
-    -in ./infrastructure/travis/openshift-token.enc -out ./infrastructure/travis/openshift-token -d
+    -in ./infrastructure/travis/openshift-token.enc -out ./infrastructure/travis/openshift-token
+    -d
+notifications:
+  slack:
+    on_failure: always
+    on_pull_requests: false
+    on_success: never
+    secure: EIhVhqeEpqRDzR68DT3wWLtnBCaX913KG7po89dXZi77yWNX9/aFdtXT3RpwY1RXdOUhoeTd5wkEvf6eZSbVz541jGCg+uZrJCKWjy3yS1bCZauQOnQ4qBTPwlue2CMZrvF9lKjrYsgisK6dAp/6cRAsdqM1N7M1OPI1BrRuG6aH/td8MAU8gm1VFSqZhvFcgQxwbs8TQxhBc7gJsi2qvlYHp4mEfVynrKOkvJ/lhEhv+0MnRhpspC3CmpStoDlPm5WdrlYfIleLHbWbmQtxwQ++GF5ic34jBaHh4zNrBB6e3VzgOzvBzrI/E8Ub8UEkA0VOE/5Q90zrQuOd5RDtOXG13J/8ZyLWqdAvs3puOlqjAuEMU+xhPMHdyLYHrBSEWbXMkPpT9qN8WBWdFoGTqRAIOIhV+FhEpp0kV2X3UukLwn0RHpi96weSVFVTi9DmF7JShvoGKECwrEI96JbsMt0KdOluOnbUiExPk7zO8v6ADLy2469ewrRI+OcDZyyxy3mgeH/lSYPgRyo0QAvwOJJBJSfvhvv/Abej3AFy9G9Fr1csITg1QJV9mpU2wIKxDYLSS8WkaEkA0sHruU3LR1SnWaIeQMFHCEVUzteIY3pz29QuUlNGqGnl3k9oZLRY1++cDaJcW6imzVm5nrccaIZq9zw1t8XFrEGQy86YHtk=
+    template:
+      - "Repo `%{repository_slug}` *%{result}* build (<%{build_url}|#%{build_number}>) for commit (<%{compare_url}|%{commit}>) on branch `%{branch}`."
+      - "Message: %{commit_message}"
+      - "Execution time: *%{duration}*"
