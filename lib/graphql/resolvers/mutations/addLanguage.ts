@@ -4,7 +4,7 @@ import { Area } from '../../../types'
 export const addLanguage: MutationResolvers.AddLanguageResolver = async (
   _,
   { language },
-  { headers: { token }, mydata }
+  { token, mydata }
 ) => {
   try {
     const result = await mydata.saveDataList<Language>({

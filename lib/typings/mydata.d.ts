@@ -33,7 +33,7 @@ declare module '@mydata/client' {
   type Connect = () => void
 
   interface Data {
-    auth: (token: string) => Auth
+    auth: (token?: string) => Auth
   }
 
   interface Consents {

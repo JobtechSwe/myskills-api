@@ -4,7 +4,7 @@ import { Area } from '../../../types'
 export const removeSkill: MutationResolvers.RemoveSkillResolver = async (
   _,
   { id },
-  { headers: { token }, mydata }
+  { token, mydata }
 ) => {
   try {
     const result = await mydata.removeData<Skill[]>({

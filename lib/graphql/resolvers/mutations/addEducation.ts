@@ -5,7 +5,7 @@ import { v4 as uuid } from 'uuid'
 export const addEducation: MutationResolvers.AddEducationResolver = async (
   _,
   { education },
-  { headers: { token }, mydata }
+  { token, mydata }
 ) => {
   try {
     const result = await mydata.saveDataList<Education>({

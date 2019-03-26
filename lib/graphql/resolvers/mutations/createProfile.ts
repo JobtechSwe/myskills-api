@@ -4,7 +4,7 @@ import { Area } from '../../../types'
 export const createProfile: MutationResolvers.CreateProfileResolver = async (
   _,
   { profile },
-  { headers: { token }, mydata }
+  { token, mydata }
 ) => {
   try {
     const result = await mydata.saveData<Profile>({

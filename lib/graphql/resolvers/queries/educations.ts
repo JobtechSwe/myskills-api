@@ -4,7 +4,7 @@ import { Education, QueryResolvers } from '../../../__generated__/myskills'
 export const educations: QueryResolvers.EducationsResolver = async (
   _,
   _args,
-  { headers: { token }, mydata }
+  { token, mydata }
 ) => {
   try {
     const result = await mydata.getData<Education[]>({

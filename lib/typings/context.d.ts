@@ -8,9 +8,7 @@ import {
 import TaxonomyAPI from '../adapters/taxonomy'
 
 export interface ApolloServerContext {
-  headers: {
-    token: string
-  }
+  token?: string
   mydata: {
     consents: typeof consents
     getData: typeof getData

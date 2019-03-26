@@ -24,7 +24,7 @@ interface Config {
 
 export interface DataInput {
   area: Area
-  token: string
+  token?: string
 }
 
 export interface SaveDataInput<T> extends DataInput {

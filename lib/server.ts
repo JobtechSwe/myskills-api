@@ -18,6 +18,7 @@ import { onConsentApproved } from './services/consents'
 import { getConsentRequest } from './services/db'
 import TaxonomyAPI from './adapters/taxonomy'
 import { createServer } from 'http'
+import authorizationToken from './middleware/authorizationToken'
 
 const app = express()
 app.set('etag', 'strong')
@@ -45,6 +46,7 @@ app.get('/approved/:id', async (req, res) => {
 })
 
 app.use(mydataRoutes)
+app.use(authorizationToken)
 mydataEvents.on('CONSENT_APPROVED', onConsentApproved)
 
 /**
@@ -60,8 +62,8 @@ export const server = new ApolloServer({
   dataSources: () => ({
     taxonomyAPI: new TaxonomyAPI(),
   }),
-  context: ({ req: { headers = {} } = {} }) => ({
-    headers,
+  context: ({ req: { token = null } = {} }) => ({
+    token,
     mydata: {
       consents,
       getData,

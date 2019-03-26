@@ -5,7 +5,7 @@ import { v4 as uuid } from 'uuid'
 export const addSkill: MutationResolvers.AddSkillResolver = async (
   _,
   { skill },
-  { headers: { token }, mydata }
+  { token, mydata }
 ) => {
   try {
     const result = await mydata.saveDataList<Skill>({

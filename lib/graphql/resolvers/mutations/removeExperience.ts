@@ -4,7 +4,7 @@ import { Area } from '../../../types'
 export const removeExperience: MutationResolvers.RemoveExperienceResolver = async (
   _,
   { id },
-  { headers: { token }, mydata }
+  { token, mydata }
 ) => {
   try {
     const result = await mydata.removeData<Experience[]>({

@@ -4,7 +4,7 @@ import { Area } from '../../../types'
 export const removeEducation: MutationResolvers.RemoveEducationResolver = async (
   _,
   { id },
-  { headers: { token }, mydata }
+  { token, mydata }
 ) => {
   try {
     const result = await mydata.removeData<Education[]>({

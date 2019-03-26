@@ -4,7 +4,7 @@ import { Experience, QueryResolvers } from '../../../__generated__/myskills'
 export const experiences: QueryResolvers.ExperiencesResolver = async (
   _,
   _args,
-  { headers: { token }, mydata }
+  { token, mydata }
 ) => {
   try {
     const result = await mydata.getData<Experience[]>({

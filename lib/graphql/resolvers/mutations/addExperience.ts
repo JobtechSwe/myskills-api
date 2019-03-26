@@ -5,7 +5,7 @@ import { v4 as uuid } from 'uuid'
 export const addExperience: MutationResolvers.AddExperienceResolver = async (
   _,
   { experience },
-  { headers: { token }, mydata }
+  { token, mydata }
 ) => {
   try {
     const result = await mydata.saveDataList<Experience>({

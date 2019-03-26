@@ -2,9 +2,7 @@ import TaxonomyAPI from '../../adapters/taxonomy'
 jest.mock('../../adapters/taxonomy')
 
 export const ctx = {
-  headers: {
-    token: 'token',
-  },
+  token: 'token',
   mydata: {
     consents: {
       request: jest.fn(),
