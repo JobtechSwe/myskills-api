@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-express'
 
 export const typeDefs = gql`
   enum TaxonomyType {
-    COUNTY
+    REGION
     EDUCATION_FIELD_1
     EDUCATION_FIELD_2
     EDUCATION_FIELD_3
