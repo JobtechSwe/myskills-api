@@ -5,7 +5,7 @@ metadata:
     app: ci
   name: api-ci
 spec:
-  host: api.myskills-ci.dev.services.jtech.se
+  host: api-myskills-ci.dev.services.jtech.se
   port:
     targetPort: http
   to:
@@ -13,3 +13,9 @@ spec:
     name: api-ci
     weight: 100
   wildcardPolicy: None
+  tls:
+    valueFrom:
+      secretKeyRef:
+        key: jtech.se.crt
+        name: tls
+    termination: edge
