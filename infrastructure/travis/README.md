@@ -3,25 +3,27 @@
 The Travis configuration consists of 3 stages:
 
 - test
-- build
-- deploy
+- integration-test
+- release
 
 ### Test
 
 - It uses node as the language, will install node based on your .nvmrc file and it has cache configured for npm.
 - It runs everytime unaffected by any condition
 
-### Build
+### Integration-tests
 
-- It uses ruby as the default language, it will skip installing any dependencies, activates Docker and with run the docker build + push commands based on the branch
-- It runs if the commit branch is master and not a pull request or if the commit is a tag
-- Based on the above on the master branch we push the tag `latest` to Dockerhub and for a tag we push both the tag (for example `v1.1.0`) and another tag (`latest-tag-release`)
+- It runs everytime unaffected by any condition
+- Starts the application with the docker-compose.test.yml and runs integration tests
 
-### Deploy
+### Release
 
+- It runs if the commit branch is master and not a pull request
+- Creates changelog
+- Creates a new github release based on semantic commit messages
+- Based on the above on the master branch we push the tag `latest` and a new version tag based on semantic commits to Docker Hub
 - It uses ruby as the default language, it will install the openshift client and add it to the path
-- It runs if the commit branch is master and not a pull request or if the commit is a tag
-- Based on the above on the master branch it deploy the ci app and on for tags it deploys the test app
+- Based on the above on the master branch it deploy the ci app
 
 ## <b>How to do things</b>
 
@@ -34,9 +36,8 @@ https://github.com/travis-ci/travis.rb#installation
 These are used for pushing the Docker image to Dockerhub
 
 ```bash
-travis encrypt DOCKER_EMAIL=email --com --add
-travis encrypt DOCKER_USER=user --com --add
-travis encrypt DOCKER_PASS=secret --com --add
+travis encrypt DOCKER_USERNAME=user --com --add
+travis encrypt DOCKER_PASSWORD=secret --com --add
 ```
 
 #### Create Openshift secrets
