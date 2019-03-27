@@ -30,7 +30,7 @@ export const taxonomy = {
       term: 'Bred, generell utbildning',
       type: 'sun-education-field-2',
     },
-    { taxonomyId: 'CifL_Rzy_Mku', term: 'Stockholms län', type: 'county' },
+    { taxonomyId: 'CifL_Rzy_Mku', term: 'Stockholms län', type: 'region' },
     { taxonomyId: 'kTtK_3Y3_Kha', term: 'Afghanistan', type: 'country' },
     {
       taxonomyId: 'PFZr_Syz_cUq',
@@ -96,7 +96,7 @@ export const skill = {
   total: 5514,
 }
 
-export const county = {
+export const region = {
   search: {
     limit: 10,
     offset: 0,
@@ -106,52 +106,52 @@ export const county = {
     {
       taxonomyId: 'CifL_Rzy_Mku',
       term: 'Stockholms län',
-      type: 'county',
+      type: 'region',
     },
     {
       taxonomyId: 'zBon_eET_fFU',
       term: 'Uppsala län',
-      type: 'county',
+      type: 'region',
     },
     {
       taxonomyId: 's93u_BEb_sx2',
       term: 'Södermanlands län',
-      type: 'county',
+      type: 'region',
     },
     {
       taxonomyId: 'oLT3_Q9p_3nn',
       term: 'Östergötlands län',
-      type: 'county',
+      type: 'region',
     },
     {
       taxonomyId: 'MtbE_xWT_eMi',
       term: 'Jönköpings län',
-      type: 'county',
+      type: 'region',
     },
     {
       taxonomyId: 'tF3y_MF9_h5G',
       term: 'Kronobergs län',
-      type: 'county',
+      type: 'region',
     },
     {
       taxonomyId: '9QUH_2bb_6Np',
       term: 'Kalmar län',
-      type: 'county',
+      type: 'region',
     },
     {
       taxonomyId: 'K8iD_VQv_2BA',
       term: 'Gotlands län',
-      type: 'county',
+      type: 'region',
     },
     {
       taxonomyId: 'DQZd_uYs_oKb',
       term: 'Blekinge län',
-      type: 'county',
+      type: 'region',
     },
     {
       taxonomyId: 'CaRE_1nn_cSU',
       term: 'Skåne län',
-      type: 'county',
+      type: 'region',
     },
   ],
 }

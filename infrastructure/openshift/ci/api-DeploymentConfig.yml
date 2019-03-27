@@ -27,7 +27,7 @@ spec:
       containers:
         - env:
             - name: DOMAIN
-              value: "http://api.myskills-ci.dev.services.jtech.se"
+              value: "https://api-myskills-ci.dev.services.jtech.se"
             - name: PORT
               value: "3000"
             - name: REDIS_API_HOST

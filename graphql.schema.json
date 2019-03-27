@@ -415,7 +415,7 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "COUNTY",
+            "name": "REGION",
             "description": "",
             "isDeprecated": false,
             "deprecationReason": null

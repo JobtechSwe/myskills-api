@@ -46,7 +46,7 @@ export enum Language {
 }
 
 export enum TaxonomyType {
-  County = 'COUNTY',
+  Region = 'REGION',
   EducationField_1 = 'EDUCATION_FIELD_1',
   EducationField_2 = 'EDUCATION_FIELD_2',
   EducationField_3 = 'EDUCATION_FIELD_3',
