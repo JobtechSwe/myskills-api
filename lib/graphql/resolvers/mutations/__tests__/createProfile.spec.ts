@@ -9,7 +9,7 @@ const args = {
 }
 
 test('save input in mydata', async () => {
-  await createProfile({}, args, ctx, {} as any)
+  await createProfile({}, args, ctx as any, {} as any)
 
   expect(ctx.mydata.saveData).toHaveBeenCalledWith({
     area: 'profile',
@@ -23,11 +23,15 @@ test('returns updated data', async () => {
 
   ctx.mydata.saveData.mockResolvedValue(result)
 
-  await expect(createProfile({}, args, ctx, {} as any)).resolves.toEqual(result)
+  await expect(createProfile({}, args, ctx as any, {} as any)).resolves.toEqual(
+    result
+  )
 })
 
 test('handles errors', async () => {
   ctx.mydata.saveData.mockRejectedValue('err')
 
-  await expect(createProfile({}, args, ctx, {} as any)).rejects.toThrow('err')
+  await expect(createProfile({}, args, ctx as any, {} as any)).rejects.toThrow(
+    'err'
+  )
 })

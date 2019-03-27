@@ -6,9 +6,10 @@ import {
   saveDataList,
 } from '../adapters/mydata'
 import TaxonomyAPI from '../adapters/taxonomy'
+import { Request } from 'express'
 
 export interface ApolloServerContext {
-  token?: string
+  req: Request
   mydata: {
     consents: typeof consents
     getData: typeof getData

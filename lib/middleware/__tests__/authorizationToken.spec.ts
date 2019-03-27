@@ -16,14 +16,14 @@ describe('authorizationToken', () => {
     }).toThrow()
   })
 
-  test('sets token to undefined if no Authorization is set', () => {
+  test('throws error if no Authorization is set', () => {
     const req: reqType = {
       headers: {},
       token: 'fakeToken',
     }
-    const token = authToken(<Request>req)
-
-    expect(token).toBe(undefined)
+    expect(() => {
+      authToken(<Request>req)
+    }).toThrow()
   })
 
   test(`sets token to whatever follows 'Bearer'`, () => {

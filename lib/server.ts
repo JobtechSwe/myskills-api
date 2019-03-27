@@ -18,7 +18,6 @@ import { onConsentApproved } from './services/consents'
 import { getConsentRequest } from './services/db'
 import TaxonomyAPI from './adapters/taxonomy'
 import { createServer } from 'http'
-import authorizationToken from './middleware/authorizationToken'
 
 const app = express()
 app.set('etag', 'strong')
@@ -63,9 +62,8 @@ export const server = new ApolloServer({
     taxonomyAPI: new TaxonomyAPI(),
   }),
   context: ({ req }: { req: Request }) => {
-    const token = authorizationToken(req)
     return {
-      token,
+      req,
       mydata: {
         consents,
         getData,

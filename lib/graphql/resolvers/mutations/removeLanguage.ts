@@ -1,11 +1,13 @@
 import { Language, MutationResolvers } from '../../../__generated__/myskills'
 import { Area } from '../../../types'
+import authorizationToken from '../../../middleware/authorizationToken'
 
 export const removeLanguage: MutationResolvers.RemoveLanguageResolver = async (
   _,
   { language },
-  { token, mydata }
+  { req, mydata }
 ) => {
+  const token = authorizationToken(req)
   try {
     const result = await mydata.removeData<Language[]>({
       area: Area.languages,
