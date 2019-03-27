@@ -1,13 +1,14 @@
 import { removeLanguage } from '../removeLanguage'
 import { Language } from '../../../../__generated__/myskills'
 import { ctx } from '../../../__mocks__/apolloServerContext'
+import { ApolloServerContext } from '../../../../typings/context'
 
 const args = {
   language: 'swedish' as Language,
 }
 
 test('removes language in mydata', async () => {
-  await removeLanguage({}, args, ctx, {} as any)
+  await removeLanguage({}, args, ctx as any, {} as any)
 
   expect(ctx.mydata.removeData).toHaveBeenCalledWith({
     area: 'languages',
@@ -22,11 +23,15 @@ test('returns true on success', async () => {
 
   ctx.mydata.removeData.mockResolvedValue(result)
 
-  await expect(removeLanguage({}, args, ctx, {} as any)).resolves.toEqual(true)
+  await expect(
+    removeLanguage({}, args, ctx as any, {} as any)
+  ).resolves.toEqual(true)
 })
 
 test('handles errors', async () => {
   ctx.mydata.removeData.mockRejectedValue('err')
 
-  await expect(removeLanguage({}, args, ctx, {} as any)).rejects.toThrow('err')
+  await expect(removeLanguage({}, args, ctx as any, {} as any)).rejects.toThrow(
+    'err'
+  )
 })

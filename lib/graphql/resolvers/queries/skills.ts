@@ -1,11 +1,13 @@
 import { Area } from '../../../types'
 import { QueryResolvers, Skill } from '../../../__generated__/myskills'
+import authorizationToken from '../../../middleware/authorizationToken'
 
 export const skills: QueryResolvers.SkillsResolver = async (
   _,
   _args,
-  { headers: { token }, mydata }
+  { req, mydata }
 ) => {
+  const token = authorizationToken(req)
   try {
     const result = await mydata.getData<Skill[]>({ token, area: Area.skills })
 
