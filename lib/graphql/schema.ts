@@ -28,7 +28,7 @@ const custom = {
     },
   },
   TaxonomyType: {
-    COUNTY: 'county',
+    REGION: 'region',
     EDUCATION_FIELD_1: 'sun-education-field-1',
     EDUCATION_FIELD_2: 'sun-education-field-2',
     EDUCATION_FIELD_3: 'sun-education-field-3',
