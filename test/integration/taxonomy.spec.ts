@@ -75,7 +75,7 @@ describe('taxonomy', () => {
 
   it.each`
     taxonomyType           | fixture
-    ${'COUNTY'}            | ${taxonomyFixture.county}
+    ${'REGION'}            | ${taxonomyFixture.region}
     ${'EDUCATION_FIELD_1'} | ${taxonomyFixture.educationField1}
     ${'EDUCATION_FIELD_2'} | ${taxonomyFixture.educationField2}
     ${'EDUCATION_FIELD_3'} | ${taxonomyFixture.educationField3}
