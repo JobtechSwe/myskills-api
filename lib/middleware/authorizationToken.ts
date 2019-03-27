@@ -1,14 +1,16 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request } from 'express'
+import { AuthenticationError } from 'apollo-server-express'
 
-export default (req: Request, _res: Response, next: NextFunction) => {
-  req.token = undefined
+export default (req: Request) => {
   if (!req.headers.authorization) {
-    return next()
+    return undefined
   }
   const auth = req.headers.authorization
   if (!auth.startsWith('Bearer')) {
-    throw Error('Authorization token malformed. Use "Bearer <token>"')
+    throw new AuthenticationError(
+      'Authorization token malformed. Use "Bearer <token>"'
+    )
   }
-  req.token = auth.replace('Bearer ', '')
-  next()
+
+  return auth.replace('Bearer ', '')
 }
