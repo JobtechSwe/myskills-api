@@ -1,7 +1,7 @@
 import { ctx } from '../../../__mocks__/apolloServerContext'
 import { educations } from '../educations'
 
-test.only('gets data from mydata', async () => {
+test('gets data from mydata', async () => {
   await educations({}, {}, ctx as any, {} as any)
 
   expect(ctx.mydata.getData).toHaveBeenCalledWith({
