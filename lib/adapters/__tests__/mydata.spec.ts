@@ -1,11 +1,12 @@
 import { removeData, saveData, saveDataList } from '../mydata'
 import { Area } from '../../types'
 import { auth } from '../../../__mocks__/@mydata/client'
+jest.mock('../../config', () => ({ DOMAIN: 'myskills-api-domain' }))
 
 describe('#saveDataList', () => {
   test('should add data to array', async () => {
     auth.read.mockResolvedValue({
-      'http://host.docker.internal:3000': {
+      'myskills-api-domain': {
         languages: { data: ['swedish', 'spanish'] },
       },
     })
@@ -29,7 +30,7 @@ describe('#saveDataList', () => {
 
   test('that it creates a new array if no existing', async () => {
     auth.read.mockResolvedValue({
-      'http://host.docker.internal:3000': {
+      'myskills-api-domain': {
         languages: { data: null },
       },
     })
@@ -55,7 +56,7 @@ describe('#saveDataList', () => {
 describe('#saveData', () => {
   test('should replace object if existing', async () => {
     auth.read.mockResolvedValue({
-      'http://host.docker.internal:3000': {
+      'myskills-api-domain': {
         profile: {
           data: {
             id: '12345',
@@ -101,7 +102,7 @@ describe('#saveData', () => {
 describe('#removeData', () => {
   test('it should remove a language', async () => {
     auth.read.mockResolvedValue({
-      'http://host.docker.internal:3000': {
+      'myskills-api-domain': {
         languages: { data: ['swedish', 'spanish'] },
       },
     })
@@ -123,7 +124,7 @@ describe('#removeData', () => {
 
   test('it should remove an education', async () => {
     auth.read.mockResolvedValue({
-      'http://host.docker.internal:3000': {
+      'myskills-api-domain': {
         educations: {
           data: [
             { id: '1', name: 'Kindergarden' },
@@ -151,7 +152,7 @@ describe('#removeData', () => {
 
   test('it should remove profile', async () => {
     auth.read.mockResolvedValue({
-      'http://host.docker.internal:3000': {
+      'myskills-api-domain': {
         profile: {
           data: {
             firstName: 'Simon',

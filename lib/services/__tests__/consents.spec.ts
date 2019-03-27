@@ -2,6 +2,7 @@ import { defaultRequest, onConsentApproved } from '../consents'
 import MockDate from 'mockdate'
 import { saveConsent, saveConsentRequest } from '../db'
 import pubSub from '../../adapters/pubsub'
+jest.mock('../../config', () => ({ DOMAIN: 'myskills-api-domain' }))
 
 jest.mock('../db', () => ({
   saveConsent: jest.fn(),
