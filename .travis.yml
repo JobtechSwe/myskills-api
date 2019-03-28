@@ -35,7 +35,7 @@ jobs:
       language: node_js
       install:
         - npm i -D @semantic-release/commit-analyzer @semantic-release/release-notes-generator
-          @semantic-release/github semantic-release-docker
+          @semantic-release/github @semantic-release/exec semantic-release-docker
         - bash ./infrastructure/travis/install-openshift.sh
         - export PATH=$PATH:/tmp/openshift
       script:
