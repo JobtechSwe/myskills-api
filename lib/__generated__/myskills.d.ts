@@ -12,6 +12,14 @@ export interface TaxonomyQueryInput {
   parentId?: Maybe<(Maybe<string>)[]>
 }
 
+export interface OntologyConceptInput {
+  type?: Maybe<OntologyType>
+
+  limit?: Maybe<number>
+
+  offset?: Maybe<number>
+}
+
 export interface ExperienceInput {
   taxonomyId: string
 
@@ -40,6 +48,12 @@ export interface SkillInput {
   type: string
 }
 
+export interface OntologyConceptTermInput {
+  limit?: Maybe<number>
+
+  offset?: Maybe<number>
+}
+
 export enum Language {
   Spanish = 'spanish',
   Swedish = 'swedish',
@@ -60,6 +74,12 @@ export enum TaxonomyType {
   OccupationName = 'OCCUPATION_NAME',
   Skill = 'SKILL',
   WorktimeExtent = 'WORKTIME_EXTENT',
+}
+
+export enum OntologyType {
+  Skill = 'SKILL',
+  Occupation = 'OCCUPATION',
+  Trait = 'TRAIT',
 }
 
 export enum CacheControlScope {
@@ -118,6 +138,10 @@ export interface Query {
   skills: (Maybe<Skill>)[]
   /** Get from taxonomy */
   taxonomy: TaxonomyResponse
+  /** Get from ontology */
+  ontologyConcepts: (Maybe<OntologyConceptResponse>)[]
+
+  ontologyConcept: OntologyConceptTermResponse
 }
 
 export interface Education {
@@ -166,6 +190,30 @@ export interface TaxonomySearch {
   offset?: Maybe<number>
 
   limit?: Maybe<number>
+}
+
+export interface OntologyConceptResponse {
+  id: string
+
+  name: string
+
+  type: OntologyType
+}
+
+export interface OntologyConceptTermResponse {
+  id: string
+
+  name: string
+
+  type: OntologyType
+
+  terms?: Maybe<(Maybe<OntologyTerm>)[]>
+}
+
+export interface OntologyTerm {
+  name?: Maybe<string>
+
+  type?: Maybe<string>
 }
 
 export interface Mutation {
@@ -229,6 +277,14 @@ export interface TaxonomySkillResult extends TaxonomyResult {
 
 export interface TaxonomyQueryArgs {
   params?: Maybe<TaxonomyQueryInput>
+}
+export interface OntologyConceptsQueryArgs {
+  params?: Maybe<OntologyConceptInput>
+}
+export interface OntologyConceptQueryArgs {
+  id: string
+
+  params?: Maybe<OntologyConceptInput>
 }
 export interface AddLanguageMutationArgs {
   language: Language
@@ -336,6 +392,18 @@ export namespace QueryResolvers {
     skills?: SkillsResolver<(Maybe<Skill>)[], TypeParent, TContext>
     /** Get from taxonomy */
     taxonomy?: TaxonomyResolver<TaxonomyResponse, TypeParent, TContext>
+    /** Get from ontology */
+    ontologyConcepts?: OntologyConceptsResolver<
+      (Maybe<OntologyConceptResponse>)[],
+      TypeParent,
+      TContext
+    >
+
+    ontologyConcept?: OntologyConceptResolver<
+      OntologyConceptTermResponse,
+      TypeParent,
+      TContext
+    >
   }
 
   export type LanguagesResolver<
@@ -370,6 +438,26 @@ export namespace QueryResolvers {
   > = Resolver<R, Parent, TContext, TaxonomyArgs>
   export interface TaxonomyArgs {
     params?: Maybe<TaxonomyQueryInput>
+  }
+
+  export type OntologyConceptsResolver<
+    R = (Maybe<OntologyConceptResponse>)[],
+    Parent = {},
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext, OntologyConceptsArgs>
+  export interface OntologyConceptsArgs {
+    params?: Maybe<OntologyConceptInput>
+  }
+
+  export type OntologyConceptResolver<
+    R = OntologyConceptTermResponse,
+    Parent = {},
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext, OntologyConceptArgs>
+  export interface OntologyConceptArgs {
+    id: string
+
+    params?: Maybe<OntologyConceptInput>
   }
 }
 
@@ -543,6 +631,93 @@ export namespace TaxonomySearchResolvers {
   export type LimitResolver<
     R = Maybe<number>,
     Parent = TaxonomySearch,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+}
+
+export namespace OntologyConceptResponseResolvers {
+  export interface Resolvers<
+    TContext = ApolloServerContext,
+    TypeParent = OntologyConceptResponse
+  > {
+    id?: IdResolver<string, TypeParent, TContext>
+
+    name?: NameResolver<string, TypeParent, TContext>
+
+    type?: TypeResolver<OntologyType, TypeParent, TContext>
+  }
+
+  export type IdResolver<
+    R = string,
+    Parent = OntologyConceptResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type NameResolver<
+    R = string,
+    Parent = OntologyConceptResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type TypeResolver<
+    R = OntologyType,
+    Parent = OntologyConceptResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+}
+
+export namespace OntologyConceptTermResponseResolvers {
+  export interface Resolvers<
+    TContext = ApolloServerContext,
+    TypeParent = OntologyConceptTermResponse
+  > {
+    id?: IdResolver<string, TypeParent, TContext>
+
+    name?: NameResolver<string, TypeParent, TContext>
+
+    type?: TypeResolver<OntologyType, TypeParent, TContext>
+
+    terms?: TermsResolver<Maybe<(Maybe<OntologyTerm>)[]>, TypeParent, TContext>
+  }
+
+  export type IdResolver<
+    R = string,
+    Parent = OntologyConceptTermResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type NameResolver<
+    R = string,
+    Parent = OntologyConceptTermResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type TypeResolver<
+    R = OntologyType,
+    Parent = OntologyConceptTermResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type TermsResolver<
+    R = Maybe<(Maybe<OntologyTerm>)[]>,
+    Parent = OntologyConceptTermResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+}
+
+export namespace OntologyTermResolvers {
+  export interface Resolvers<
+    TContext = ApolloServerContext,
+    TypeParent = OntologyTerm
+  > {
+    name?: NameResolver<Maybe<string>, TypeParent, TContext>
+
+    type?: TypeResolver<Maybe<string>, TypeParent, TContext>
+  }
+
+  export type NameResolver<
+    R = Maybe<string>,
+    Parent = OntologyTerm,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type TypeResolver<
+    R = Maybe<string>,
+    Parent = OntologyTerm,
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
 }
@@ -852,6 +1027,11 @@ export interface IResolvers<TContext = ApolloServerContext> {
   Skill?: SkillResolvers.Resolvers<TContext>
   TaxonomyResponse?: TaxonomyResponseResolvers.Resolvers<TContext>
   TaxonomySearch?: TaxonomySearchResolvers.Resolvers<TContext>
+  OntologyConceptResponse?: OntologyConceptResponseResolvers.Resolvers<TContext>
+  OntologyConceptTermResponse?: OntologyConceptTermResponseResolvers.Resolvers<
+    TContext
+  >
+  OntologyTerm?: OntologyTermResolvers.Resolvers<TContext>
   Mutation?: MutationResolvers.Resolvers<TContext>
   Login?: LoginResolvers.Resolvers<TContext>
   Subscription?: SubscriptionResolvers.Resolvers<TContext>

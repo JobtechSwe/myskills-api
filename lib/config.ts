@@ -17,6 +17,9 @@ const defaults = {
   TAXONOMY_URL_BASE: 'https://sokannonser.dev.services.jtech.se',
   TAXONOMY_URL_PATH: '/vf/search',
   TAXONOMY_API_KEY: 'apa',
+  ONTOLOGY__URL_BASE: 'http://ontologi.arbetsformedlingen.se',
+  ONTOLOGY__URL_PATH: '/ontology/v1',
+  ONTOLOGY__API_KEY: '',
 }
 
 const config = _.pick({ ...defaults, ...process.env }, [
@@ -31,6 +34,9 @@ const config = _.pick({ ...defaults, ...process.env }, [
   'TAXONOMY_URL_BASE',
   'TAXONOMY_URL_PATH',
   'TAXONOMY_API_KEY',
+  'ONTOLOGY__URL_BASE',
+  'ONTOLOGY__URL_PATH',
+  'ONTOLOGY__API_KEY',
 ])
 
 export default config

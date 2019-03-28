@@ -6,6 +6,7 @@ import {
   saveDataList,
 } from '../adapters/mydata'
 import TaxonomyAPI from '../adapters/taxonomy'
+import OntologyAPI from '../adapters/ontology'
 import { Request } from 'express'
 
 export interface ApolloServerContext {
@@ -19,5 +20,6 @@ export interface ApolloServerContext {
   }
   dataSources: {
     taxonomyAPI: TaxonomyAPI
+    ontologyAPI: OntologyAPI
   }
 }
