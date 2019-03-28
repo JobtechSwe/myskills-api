@@ -4,6 +4,10 @@ import {
   OntologyConceptQueryArgs,
   OntologyConceptsQueryArgs,
   OntologyTerm,
+  OntologyRelatedResponse,
+  OntologyRelatedQueryArgs,
+  OntologyRelationResponse,
+  OntologyConceptResponse,
 } from '../../../__generated__/myskills'
 
 interface OntologyConceptApiResponse {
@@ -17,6 +21,22 @@ interface OntologyConceptTermApiResponse extends OntologyConceptApiResponse {
   name: string
   type: OntologyType
   terms: OntologyTerm[]
+}
+
+interface OntologyRelationApiResponse {
+  uuid: string
+  name: string
+  type: OntologyType
+  score: number
+  details: {
+    Word2Vec: number
+  }
+}
+
+interface OntologyRelatedApiResponse {
+  count: number
+  concepts: OntologyConceptApiResponse[]
+  relations: OntologyRelationApiResponse[]
 }
 
 export const ontologyConcepts: QueryResolvers.OntologyConceptsResolver = async (
@@ -57,6 +77,47 @@ export const ontologyConcept: QueryResolvers.OntologyConceptResolver = async (
       type: data.type,
       terms: data.terms,
     }
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+export const ontologyRelated: QueryResolvers.OntologyRelatedResolver = async (
+  _,
+  { params }: OntologyRelatedQueryArgs,
+  { dataSources: { ontologyAPI } }
+) => {
+  try {
+    const data = await ontologyAPI.getData<OntologyRelatedApiResponse>(
+      `concept/related`,
+      params as object
+    )
+
+    return {
+      count: data.count,
+      relations: data.relations.map(
+        x =>
+          ({
+            id: x.uuid,
+            name: x.name,
+            type: x.type,
+            details: x.details.Word2Vec
+              ? {
+                  word2Vec: x.details.Word2Vec,
+                }
+              : {},
+            score: x.score,
+          } as OntologyRelationResponse)
+      ),
+      concepts: data.concepts.map(
+        x =>
+          ({
+            id: x.uuid,
+            name: x.name,
+            type: x.type,
+          } as OntologyConceptResponse)
+      ),
+    } as OntologyRelatedResponse
   } catch (error) {
     throw new Error(error)
   }

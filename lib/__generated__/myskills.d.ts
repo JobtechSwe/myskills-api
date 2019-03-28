@@ -20,6 +20,16 @@ export interface OntologyConceptInput {
   offset?: Maybe<number>
 }
 
+export interface OntologyRelatedInput {
+  concept?: Maybe<string[]>
+
+  uuid?: Maybe<string[]>
+
+  limit?: Maybe<number>
+
+  type?: Maybe<OntologyType>
+}
+
 export interface ExperienceInput {
   taxonomyId: string
 
@@ -142,6 +152,8 @@ export interface Query {
   ontologyConcepts: (Maybe<OntologyConceptResponse>)[]
 
   ontologyConcept: OntologyConceptTermResponse
+
+  ontologyRelated: OntologyRelatedResponse
 }
 
 export interface Education {
@@ -216,6 +228,30 @@ export interface OntologyTerm {
   type?: Maybe<string>
 }
 
+export interface OntologyRelatedResponse {
+  count: number
+
+  concepts: (Maybe<OntologyConceptResponse>)[]
+
+  relations: (Maybe<OntologyRelationResponse>)[]
+}
+
+export interface OntologyRelationResponse {
+  id: string
+
+  name: string
+
+  type: OntologyType
+
+  score: number
+
+  details: OntologyRelationDetails
+}
+
+export interface OntologyRelationDetails {
+  word2Vec?: Maybe<number>
+}
+
 export interface Mutation {
   /** Login an existing user */
   login: Login
@@ -285,6 +321,9 @@ export interface OntologyConceptQueryArgs {
   id: string
 
   params?: Maybe<OntologyConceptInput>
+}
+export interface OntologyRelatedQueryArgs {
+  params?: Maybe<OntologyRelatedInput>
 }
 export interface AddLanguageMutationArgs {
   language: Language
@@ -404,6 +443,12 @@ export namespace QueryResolvers {
       TypeParent,
       TContext
     >
+
+    ontologyRelated?: OntologyRelatedResolver<
+      OntologyRelatedResponse,
+      TypeParent,
+      TContext
+    >
   }
 
   export type LanguagesResolver<
@@ -458,6 +503,15 @@ export namespace QueryResolvers {
     id: string
 
     params?: Maybe<OntologyConceptInput>
+  }
+
+  export type OntologyRelatedResolver<
+    R = OntologyRelatedResponse,
+    Parent = {},
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext, OntologyRelatedArgs>
+  export interface OntologyRelatedArgs {
+    params?: Maybe<OntologyRelatedInput>
   }
 }
 
@@ -718,6 +772,101 @@ export namespace OntologyTermResolvers {
   export type TypeResolver<
     R = Maybe<string>,
     Parent = OntologyTerm,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+}
+
+export namespace OntologyRelatedResponseResolvers {
+  export interface Resolvers<
+    TContext = ApolloServerContext,
+    TypeParent = OntologyRelatedResponse
+  > {
+    count?: CountResolver<number, TypeParent, TContext>
+
+    concepts?: ConceptsResolver<
+      (Maybe<OntologyConceptResponse>)[],
+      TypeParent,
+      TContext
+    >
+
+    relations?: RelationsResolver<
+      (Maybe<OntologyRelationResponse>)[],
+      TypeParent,
+      TContext
+    >
+  }
+
+  export type CountResolver<
+    R = number,
+    Parent = OntologyRelatedResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type ConceptsResolver<
+    R = (Maybe<OntologyConceptResponse>)[],
+    Parent = OntologyRelatedResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type RelationsResolver<
+    R = (Maybe<OntologyRelationResponse>)[],
+    Parent = OntologyRelatedResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+}
+
+export namespace OntologyRelationResponseResolvers {
+  export interface Resolvers<
+    TContext = ApolloServerContext,
+    TypeParent = OntologyRelationResponse
+  > {
+    id?: IdResolver<string, TypeParent, TContext>
+
+    name?: NameResolver<string, TypeParent, TContext>
+
+    type?: TypeResolver<OntologyType, TypeParent, TContext>
+
+    score?: ScoreResolver<number, TypeParent, TContext>
+
+    details?: DetailsResolver<OntologyRelationDetails, TypeParent, TContext>
+  }
+
+  export type IdResolver<
+    R = string,
+    Parent = OntologyRelationResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type NameResolver<
+    R = string,
+    Parent = OntologyRelationResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type TypeResolver<
+    R = OntologyType,
+    Parent = OntologyRelationResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type ScoreResolver<
+    R = number,
+    Parent = OntologyRelationResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type DetailsResolver<
+    R = OntologyRelationDetails,
+    Parent = OntologyRelationResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+}
+
+export namespace OntologyRelationDetailsResolvers {
+  export interface Resolvers<
+    TContext = ApolloServerContext,
+    TypeParent = OntologyRelationDetails
+  > {
+    word2Vec?: Word2VecResolver<Maybe<number>, TypeParent, TContext>
+  }
+
+  export type Word2VecResolver<
+    R = Maybe<number>,
+    Parent = OntologyRelationDetails,
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
 }
@@ -1032,6 +1181,11 @@ export interface IResolvers<TContext = ApolloServerContext> {
     TContext
   >
   OntologyTerm?: OntologyTermResolvers.Resolvers<TContext>
+  OntologyRelatedResponse?: OntologyRelatedResponseResolvers.Resolvers<TContext>
+  OntologyRelationResponse?: OntologyRelationResponseResolvers.Resolvers<
+    TContext
+  >
+  OntologyRelationDetails?: OntologyRelationDetailsResolvers.Resolvers<TContext>
   Mutation?: MutationResolvers.Resolvers<TContext>
   Login?: LoginResolvers.Resolvers<TContext>
   Subscription?: SubscriptionResolvers.Resolvers<TContext>
