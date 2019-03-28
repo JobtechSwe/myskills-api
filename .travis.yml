@@ -5,20 +5,13 @@ jobs:
       cache: npm
       install:
         - npm ci
-      script:
-        - npm run lint
-        - npm run unit
-    - stage: coverage
-      language: node_js
-      cache: npm
-      install:
-        - npm ci
       before_script:
         - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
           > ./cc-test-reporter
         - chmod +x ./cc-test-reporter
         - './cc-test-reporter before-build'
       script:
+        - npm run lint
         - npm run unit -- --coverage
       after_script:
         - './cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT'
@@ -51,8 +44,6 @@ jobs:
 stages:
   - test
   - integration-tests
-  - name: coverage
-    if: branch = master AND type != pull_request
   - name: release
     if: branch = master AND type != pull_request
 env:

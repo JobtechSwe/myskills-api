@@ -46,6 +46,7 @@ app.get('/approved/:id', async (req, res) => {
 
 app.use(mydataRoutes)
 mydataEvents.on('CONSENT_APPROVED', onConsentApproved)
+import { Request } from 'express'
 
 /**
  * GraphQL
@@ -60,16 +61,18 @@ export const server = new ApolloServer({
   dataSources: () => ({
     taxonomyAPI: new TaxonomyAPI(),
   }),
-  context: ({ req: { headers = {} } = {} }) => ({
-    headers,
-    mydata: {
-      consents,
-      getData,
-      saveData,
-      removeData,
-      saveDataList,
-    },
-  }),
+  context: ({ req }: { req: Request }) => {
+    return {
+      req,
+      mydata: {
+        consents,
+        getData,
+        saveData,
+        removeData,
+        saveDataList,
+      },
+    }
+  },
   ...schema,
 })
 

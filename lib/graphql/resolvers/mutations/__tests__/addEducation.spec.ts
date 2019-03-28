@@ -9,7 +9,7 @@ const args = {
 }
 
 test('save input in mydata', async () => {
-  await addEducation({}, args, ctx, {} as any)
+  await addEducation({}, args, ctx as any, {} as any)
 
   expect(ctx.mydata.saveDataList).toHaveBeenCalledWith({
     area: 'educations',
@@ -23,11 +23,15 @@ test('returns updated data', async () => {
 
   ctx.mydata.saveDataList.mockResolvedValue(result)
 
-  await expect(addEducation({}, args, ctx, {} as any)).resolves.toEqual(result)
+  await expect(addEducation({}, args, ctx as any, {} as any)).resolves.toEqual(
+    result
+  )
 })
 
 test('handles errors', async () => {
   ctx.mydata.saveDataList.mockRejectedValue('err')
 
-  await expect(addEducation({}, args, ctx, {} as any)).rejects.toThrow('err')
+  await expect(addEducation({}, args, ctx as any, {} as any)).rejects.toThrow(
+    'err'
+  )
 })

@@ -41,8 +41,10 @@ export const getConsentedClient = async (
 
   return getClient(server, {
     context: {
-      headers: {
-        token: accessToken,
+      req: {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
       },
     },
   })

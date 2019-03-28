@@ -22,7 +22,7 @@ test('passes query params to taxonomyAPI without parentId', async () => {
     },
   }
 
-  await taxonomy({}, testArgs, ctx, {} as any)
+  await taxonomy({}, testArgs, ctx as any, {} as any)
 
   expect(ctx.dataSources.taxonomyAPI.getData).toHaveBeenCalledWith({
     q: 'someQuery',
@@ -37,7 +37,7 @@ test('passes query params to taxonomyAPI with parentId', async () => {
     },
   }
 
-  await taxonomy({}, testArgs, ctx, {} as any)
+  await taxonomy({}, testArgs, ctx as any, {} as any)
 
   expect(ctx.dataSources.taxonomyAPI.getData).toHaveBeenCalledWith({
     q: 'someQuery',
@@ -53,7 +53,7 @@ test('returnass formted result', async () => {
     },
   }
 
-  const result = await taxonomy({}, testArgs, ctx, {} as any)
+  const result = await taxonomy({}, testArgs, ctx as any, {} as any)
 
   expect(result).toEqual({
     result: [
@@ -72,5 +72,5 @@ test('returnass formted result', async () => {
 test('handles errors', async () => {
   ;(ctx.dataSources.taxonomyAPI.getData as jest.Mock).mockRejectedValue('err')
 
-  await expect(taxonomy({}, {}, ctx, {} as any)).rejects.toThrow('err')
+  await expect(taxonomy({}, {}, ctx as any, {} as any)).rejects.toThrow('err')
 })

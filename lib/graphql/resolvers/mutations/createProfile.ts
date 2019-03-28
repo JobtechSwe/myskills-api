@@ -1,11 +1,13 @@
 import { MutationResolvers, Profile } from '../../../__generated__/myskills'
 import { Area } from '../../../types'
+import authorizationToken from '../../../middleware/authorizationToken'
 
 export const createProfile: MutationResolvers.CreateProfileResolver = async (
   _,
   { profile },
-  { headers: { token }, mydata }
+  { req, mydata }
 ) => {
+  const token = authorizationToken(req)
   try {
     const result = await mydata.saveData<Profile>({
       area: Area.profile,

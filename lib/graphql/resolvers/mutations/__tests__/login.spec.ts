@@ -7,7 +7,7 @@ jest.mock('../../../../services/consents', () => ({
 }))
 
 test('creates a consent request', async () => {
-  await login({}, {}, ctx, {} as any)
+  await login({}, {}, ctx as any, {} as any)
 
   expect(defaultRequest).toHaveBeenCalledWith(2678400)
   expect(ctx.mydata.consents.request).toHaveBeenCalledWith('defaultRequest')
@@ -16,5 +16,5 @@ test('creates a consent request', async () => {
 test('handles errors', async () => {
   ctx.mydata.consents.request.mockRejectedValue('err')
 
-  await expect(login({}, {}, ctx, {} as any)).rejects.toThrow('err')
+  await expect(login({}, {}, ctx as any, {} as any)).rejects.toThrow('err')
 })
