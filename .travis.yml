@@ -43,9 +43,9 @@ jobs:
         - npx semantic-release
 stages:
   - test
-  - integration-tests
-  - name: release
-    if: branch = master AND type != pull_request
+  # - integration-tests
+  # - name: release
+  #   if: branch = master AND type != pull_request
 env:
   global:
     - secure: eK6qw6sTGwa9iHSOkSFHISh1KfT12twMWL0YDNuv1CMoONXOe5EBeuVeW4htQY4GR8Pne2r3eUpOXaEGPuTne8EvVsn2U5JdNTDzkyuf9brY69h220PmhxAO8uPLaaqarWKR89rhMc6qhYrDB34nxdr71I3HKMenI+21AQ+wullsjtOFJKHZjyKktO/bg/q6QJzjkopnOj3Y6fjDRtl3gi2nwb76QR9mo8VCXHNwDddR1r2lMPFo8xUkP9s5FCtIAVzw6suq/00w15o9s+Fphe91WdzBPd1XVe5sSyIfXJnBrSXYIVGuM+mURgMru0vm6eRm9CJCjn8m48shKWAuThRBHP8oR7yKQUotqnEH0nY0LePPdMvpHDqga53x184IfS5lirhYHlKG5fOSWvTxp/PQ5wqAde/pl8suIxidVmbbSsymX3/mVZW9vJ8TfbjepS5rJbvqQ5b8gaf3xaWBBu1Q2KVRfodCu7e5zAzi6kD9RC/yia18dCqimsfF/7V70vJOyN/2NOlY4apOcsI70zd7DtJkitBXELcGri8TiSHP00Xj9gqbnk7VB/+1pvHp19TotZnH+6Lx8ZlxdQLKQzPoTKvONtZCZRFPzKq31Ia8XRZzSWFwb5m+8MLwituKlU2CmU2OVgkpoWmeebbrImsBdPZwXyetIzcw5pcPwsM=
