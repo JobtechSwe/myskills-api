@@ -110,6 +110,8 @@ const typeDefs = gql`
     ): OntologyConceptTermResponse!
 
     ontologyRelated(params: OntologyRelatedInput): OntologyRelatedResponse!
+
+    ontologyTextParse(text: String!): [OntologyTextParseResponse]!
   }
 
   type Subscription {

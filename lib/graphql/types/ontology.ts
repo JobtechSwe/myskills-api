@@ -25,7 +25,7 @@ export const typeDefs = gql`
 
   input OntologyRelatedInput {
     concept: [String!]
-    uuid: [String!]
+    id: [String!]
     limit: Int
     type: OntologyType!
   }
@@ -45,6 +45,13 @@ export const typeDefs = gql`
     name: String!
     type: OntologyType!
     terms: [OntologyTerm]
+  }
+
+  type OntologyTextParseResponse {
+    id: String!
+    name: String!
+    type: OntologyType!
+    terms: [String]!
   }
 
   type OntologyRelationResponse {

@@ -23,11 +23,11 @@ export interface OntologyConceptInput {
 export interface OntologyRelatedInput {
   concept?: Maybe<string[]>
 
-  uuid?: Maybe<string[]>
+  id?: Maybe<string[]>
 
   limit?: Maybe<number>
 
-  type?: Maybe<OntologyType>
+  type: OntologyType
 }
 
 export interface ExperienceInput {
@@ -154,6 +154,8 @@ export interface Query {
   ontologyConcept: OntologyConceptTermResponse
 
   ontologyRelated: OntologyRelatedResponse
+
+  ontologyTextParse: (Maybe<OntologyTextParseResponse>)[]
 }
 
 export interface Education {
@@ -252,6 +254,16 @@ export interface OntologyRelationDetails {
   word2Vec?: Maybe<number>
 }
 
+export interface OntologyTextParseResponse {
+  id: string
+
+  name: string
+
+  type: OntologyType
+
+  terms: (Maybe<string>)[]
+}
+
 export interface Mutation {
   /** Login an existing user */
   login: Login
@@ -324,6 +336,9 @@ export interface OntologyConceptQueryArgs {
 }
 export interface OntologyRelatedQueryArgs {
   params?: Maybe<OntologyRelatedInput>
+}
+export interface OntologyTextParseQueryArgs {
+  text: string
 }
 export interface AddLanguageMutationArgs {
   language: Language
@@ -449,6 +464,12 @@ export namespace QueryResolvers {
       TypeParent,
       TContext
     >
+
+    ontologyTextParse?: OntologyTextParseResolver<
+      (Maybe<OntologyTextParseResponse>)[],
+      TypeParent,
+      TContext
+    >
   }
 
   export type LanguagesResolver<
@@ -512,6 +533,15 @@ export namespace QueryResolvers {
   > = Resolver<R, Parent, TContext, OntologyRelatedArgs>
   export interface OntologyRelatedArgs {
     params?: Maybe<OntologyRelatedInput>
+  }
+
+  export type OntologyTextParseResolver<
+    R = (Maybe<OntologyTextParseResponse>)[],
+    Parent = {},
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext, OntologyTextParseArgs>
+  export interface OntologyTextParseArgs {
+    text: string
   }
 }
 
@@ -871,6 +901,42 @@ export namespace OntologyRelationDetailsResolvers {
   > = Resolver<R, Parent, TContext>
 }
 
+export namespace OntologyTextParseResponseResolvers {
+  export interface Resolvers<
+    TContext = ApolloServerContext,
+    TypeParent = OntologyTextParseResponse
+  > {
+    id?: IdResolver<string, TypeParent, TContext>
+
+    name?: NameResolver<string, TypeParent, TContext>
+
+    type?: TypeResolver<OntologyType, TypeParent, TContext>
+
+    terms?: TermsResolver<(Maybe<string>)[], TypeParent, TContext>
+  }
+
+  export type IdResolver<
+    R = string,
+    Parent = OntologyTextParseResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type NameResolver<
+    R = string,
+    Parent = OntologyTextParseResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type TypeResolver<
+    R = OntologyType,
+    Parent = OntologyTextParseResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type TermsResolver<
+    R = (Maybe<string>)[],
+    Parent = OntologyTextParseResponse,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+}
+
 export namespace MutationResolvers {
   export interface Resolvers<TContext = ApolloServerContext, TypeParent = {}> {
     /** Login an existing user */
@@ -1186,6 +1252,9 @@ export interface IResolvers<TContext = ApolloServerContext> {
     TContext
   >
   OntologyRelationDetails?: OntologyRelationDetailsResolvers.Resolvers<TContext>
+  OntologyTextParseResponse?: OntologyTextParseResponseResolvers.Resolvers<
+    TContext
+  >
   Mutation?: MutationResolvers.Resolvers<TContext>
   Login?: LoginResolvers.Resolvers<TContext>
   Subscription?: SubscriptionResolvers.Resolvers<TContext>

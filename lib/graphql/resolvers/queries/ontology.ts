@@ -8,7 +8,9 @@ import {
   OntologyRelatedQueryArgs,
   OntologyRelationResponse,
   OntologyConceptResponse,
+  OntologyTextParseQueryArgs,
 } from '../../../__generated__/myskills'
+import { renameProp } from '../../../../lib/utils/renameProp'
 
 interface OntologyConceptApiResponse {
   uuid: string
@@ -21,6 +23,13 @@ interface OntologyConceptTermApiResponse extends OntologyConceptApiResponse {
   name: string
   type: OntologyType
   terms: OntologyTerm[]
+}
+
+interface OntologyTextParseApiResponse extends OntologyConceptApiResponse {
+  uuid: string
+  name: string
+  type: OntologyType
+  terms: string[]
 }
 
 interface OntologyRelationApiResponse {
@@ -82,15 +91,39 @@ export const ontologyConcept: QueryResolvers.OntologyConceptResolver = async (
   }
 }
 
+export const ontologyTextParse: QueryResolvers.OntologyTextParseResolver = async (
+  _,
+  { text }: OntologyTextParseQueryArgs,
+  { dataSources: { ontologyAPI } }
+) => {
+  try {
+    const data = await ontologyAPI.postData<OntologyTextParseApiResponse[]>(
+      'text-to-structure',
+      { body: text }
+    )
+
+    return data.map(ontology => ({
+      id: ontology.uuid,
+      name: ontology.name,
+      type: ontology.type,
+      terms: ontology.terms,
+    }))
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 export const ontologyRelated: QueryResolvers.OntologyRelatedResolver = async (
   _,
   { params }: OntologyRelatedQueryArgs,
   { dataSources: { ontologyAPI } }
 ) => {
   try {
+    const query = renameProp('id', 'uuid', params)
+
     const data = await ontologyAPI.getData<OntologyRelatedApiResponse>(
       `concept/related`,
-      params as object
+      query
     )
 
     return {

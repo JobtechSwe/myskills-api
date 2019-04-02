@@ -3,6 +3,7 @@ import {
   TaxonomyType,
   TaxonomyQueryArgs,
 } from '../../../__generated__/myskills'
+import { renameProp } from '../../../../lib/utils/renameProp'
 
 interface AfTaxonomyResult {
   conceptId: string
@@ -27,18 +28,6 @@ interface AfTaxonomyResponse {
   total: number
   result: [AfTaxonomyResult]
 }
-
-const renameProp = (
-  oldProp: string,
-  newProp: string,
-  { [oldProp]: old, ...others }: any
-) =>
-  old
-    ? {
-        ...others,
-        [newProp]: old,
-      }
-    : { ...others }
 
 export const taxonomy: QueryResolvers.TaxonomyResolver = async (
   _,
