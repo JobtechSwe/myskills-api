@@ -40,6 +40,14 @@ export interface SkillInput {
   type: string
 }
 
+export interface CvInput {
+  skills?: Maybe<SkillInput[]>
+
+  education?: Maybe<EducationInput[]>
+
+  experience?: Maybe<ExperienceInput[]>
+}
+
 export enum Language {
   Spanish = 'spanish',
   Swedish = 'swedish',
@@ -189,12 +197,22 @@ export interface Mutation {
   removeExperience: boolean
   /** Remove language from user */
   removeLanguage: boolean
+  /** Save the complete cv to user */
+  saveCV: Cv
 }
 
 export interface Login {
   id: string
 
   expires: string
+}
+
+export interface Cv {
+  skills?: Maybe<(Maybe<Skill>)[]>
+
+  education?: Maybe<(Maybe<Education>)[]>
+
+  experience?: Maybe<(Maybe<Experience>)[]>
 }
 
 export interface Subscription {
@@ -256,6 +274,9 @@ export interface RemoveExperienceMutationArgs {
 }
 export interface RemoveLanguageMutationArgs {
   language: Language
+}
+export interface SaveCvMutationArgs {
+  cv: CvInput
 }
 export interface ConsentApprovedSubscriptionArgs {
   consentRequestId: string
@@ -569,6 +590,8 @@ export namespace MutationResolvers {
     removeExperience?: RemoveExperienceResolver<boolean, TypeParent, TContext>
     /** Remove language from user */
     removeLanguage?: RemoveLanguageResolver<boolean, TypeParent, TContext>
+    /** Save the complete cv to user */
+    saveCV?: SaveCvResolver<Cv, TypeParent, TContext>
   }
 
   export type LoginResolver<
@@ -656,6 +679,15 @@ export namespace MutationResolvers {
   export interface RemoveLanguageArgs {
     language: Language
   }
+
+  export type SaveCvResolver<
+    R = Cv,
+    Parent = {},
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext, SaveCvArgs>
+  export interface SaveCvArgs {
+    cv: CvInput
+  }
 }
 
 export namespace LoginResolvers {
@@ -676,6 +708,40 @@ export namespace LoginResolvers {
   export type ExpiresResolver<
     R = string,
     Parent = Login,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+}
+
+export namespace CvResolvers {
+  export interface Resolvers<TContext = ApolloServerContext, TypeParent = Cv> {
+    skills?: SkillsResolver<Maybe<(Maybe<Skill>)[]>, TypeParent, TContext>
+
+    education?: EducationResolver<
+      Maybe<(Maybe<Education>)[]>,
+      TypeParent,
+      TContext
+    >
+
+    experience?: ExperienceResolver<
+      Maybe<(Maybe<Experience>)[]>,
+      TypeParent,
+      TContext
+    >
+  }
+
+  export type SkillsResolver<
+    R = Maybe<(Maybe<Skill>)[]>,
+    Parent = Cv,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type EducationResolver<
+    R = Maybe<(Maybe<Education>)[]>,
+    Parent = Cv,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type ExperienceResolver<
+    R = Maybe<(Maybe<Experience>)[]>,
+    Parent = Cv,
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
 }
@@ -854,6 +920,7 @@ export interface IResolvers<TContext = ApolloServerContext> {
   TaxonomySearch?: TaxonomySearchResolvers.Resolvers<TContext>
   Mutation?: MutationResolvers.Resolvers<TContext>
   Login?: LoginResolvers.Resolvers<TContext>
+  Cv?: CvResolvers.Resolvers<TContext>
   Subscription?: SubscriptionResolvers.Resolvers<TContext>
   ConsentResponse?: ConsentResponseResolvers.Resolvers<TContext>
   TaxonomyDefaultResult?: TaxonomyDefaultResultResolvers.Resolvers<TContext>

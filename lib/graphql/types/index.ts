@@ -66,6 +66,11 @@ const typeDefs = gql`
     Remove language from user
     """
     removeLanguage(language: Language!): Boolean!
+
+    """
+    Save the complete cv to user
+    """
+    saveCV(cv: CVInput!): CV!
   }
 
   type Query {
