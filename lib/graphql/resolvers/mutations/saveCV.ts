@@ -9,6 +9,18 @@ import {
 import { Area } from '../../../types'
 import authorizationToken from '../../../middleware/authorizationToken'
 
+function saveCVArea<T>(data: T, mydata: any, token: string, area: string) {
+  if (Array.isArray(data) && data.length) {
+    return mydata.saveDataList({
+      area,
+      data: data.map(x => ({ id: uuid(), ...x } as T)),
+      token,
+    })
+  }
+
+  return undefined
+}
+
 export const saveCV: MutationResolvers.SaveCvResolver = async (
   _,
   {
@@ -21,40 +33,24 @@ export const saveCV: MutationResolvers.SaveCvResolver = async (
   { req, mydata }
 ): Promise<Cv> => {
   const token = authorizationToken(req)
-  const requests: Promise<any>[] = []
 
   try {
-    if (skillsInput && skillsInput.length) {
-      requests.push(
-        mydata.saveDataList<Skill[]>({
-          area: Area.skills,
-          data: skillsInput.map(x => ({ id: uuid(), ...x } as Skill)),
-          token,
-        })
-      )
-    }
+    const [skills, education, experience] = await Promise.all([
+      saveCVArea<Skill[]>(skillsInput as Skill[], mydata, token, Area.skills),
+      saveCVArea<Education[]>(
+        educationInput as Education[],
+        mydata,
+        token,
+        Area.educations
+      ),
+      saveCVArea<Experience[]>(
+        experienceInput as Experience[],
+        mydata,
+        token,
+        Area.experiences
+      ),
+    ])
 
-    if (educationInput && educationInput.length) {
-      requests.push(
-        mydata.saveDataList<Education[]>({
-          area: Area.educations,
-          data: educationInput.map(x => ({ id: uuid(), ...x } as Education)),
-          token,
-        })
-      )
-    }
-
-    if (experienceInput && experienceInput.length) {
-      requests.push(
-        mydata.saveDataList<Experience[]>({
-          area: Area.experiences,
-          data: experienceInput.map(x => ({ id: uuid(), ...x } as Experience)),
-          token,
-        })
-      )
-    }
-
-    const [skills, education, experience] = await Promise.all(requests)
     return {
       skills,
       education,
