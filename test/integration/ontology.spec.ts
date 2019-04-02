@@ -121,7 +121,7 @@ describe('ontology', () => {
     })
   })
 
-  describe.only('ontologyRelated', () => {
+  describe('ontologyRelated', () => {
     it('should get related by concept', async () => {
       const { data } = await query({
         query: GET_ONTOLOGY_RELATED,

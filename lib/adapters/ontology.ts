@@ -39,7 +39,7 @@ export default class OntologyAPI extends RESTDataSource {
     }
   }
 
-  async postData<T = any>(path: string, query: any): Promise<T> {
+  async postData<T = any>(path: string, query: { body: any }): Promise<T> {
     try {
       return this.post(`${this.basePath}/${path}`, query.body, {
         headers: {

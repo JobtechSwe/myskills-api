@@ -9,3 +9,5 @@ export const renameProp = (
         [newProp]: old,
       }
     : { ...others }
+
+export default renameProp
