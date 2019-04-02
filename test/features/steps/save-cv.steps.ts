@@ -10,9 +10,9 @@ import { SAVE_CV } from '../gql'
 
 let query: any
 let mutate: any
-let skillsInput: SkillInput
-let educationInput: EducationInput
-let experienceInput: ExperienceInput
+let skillsInput: SkillInput[]
+let educationInput: EducationInput[]
+let experienceInput: ExperienceInput[]
 let result
 
 const feature = loadFeature('./test/features/SaveCV.feature')
@@ -28,17 +28,19 @@ defineFeature(feature, test => {
     given('I have a bearer token', async () => {
       ;({ query, mutate } = await getConsentedClient(server))
     })
-    and('I have this skills input:', (skills: SkillInput) => {
+    and('I have this skills input:', (skills: SkillInput[]) => {
       skillsInput = skills
     })
-    and('I have this education input:', (education: EducationInput) => {
+    and('I have this education input:', (education: EducationInput[]) => {
       educationInput = education
     })
-    and('I have this experience input:', (experience: ExperienceInput) => {
+    and('I have this experience input:', (experience: ExperienceInput[]) => {
       experienceInput = experience
     })
     when('I send the cv input to the save method', async () => {
-      ;({ data: result } = await mutate({
+      ;({
+        data: { saveCV: result },
+      } = await mutate({
         mutation: SAVE_CV,
         variables: {
           skills: skillsInput,
@@ -52,15 +54,21 @@ defineFeature(feature, test => {
     })
     and('I will see the skills input under the skills section', () => {
       const { skills } = result
-      expect(skills).toEqual(skillsInput)
+      expect(skills).toEqual(
+        skillsInput.map(x => ({ id: expect.any(String), ...x }))
+      )
     })
     and('I will see the education input under the educations section', () => {
       const { education } = result
-      expect(education).toEqual(educationInput)
+      expect(education).toEqual(
+        educationInput.map(x => ({ id: expect.any(String), ...x }))
+      )
     })
     and('I will see the experience input under the experiences section', () => {
       const { experience } = result
-      expect(experience).toEqual(experienceInput)
+      expect(experience).toEqual(
+        experienceInput.map(x => ({ id: expect.any(String), ...x }))
+      )
     })
   })
 })

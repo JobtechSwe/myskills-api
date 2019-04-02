@@ -68,9 +68,10 @@ export async function saveDataList<T>({
   const areaConfig = createConfig(area)
   const currentDataForDomainArea = await getData<T[]>({ area, token })
 
+  const newData = Array.isArray(data) ? data : [data]
   const updatedData = Array.isArray(currentDataForDomainArea)
-    ? [...new Set([...currentDataForDomainArea, data])]
-    : [data]
+    ? [...new Set([...currentDataForDomainArea, ...newData])]
+    : newData
 
   await mydataOperator.data
     .auth(token)

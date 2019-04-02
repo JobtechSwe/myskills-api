@@ -150,3 +150,43 @@ describe('save experience list', async () => {
     )
   })
 })
+
+describe('result', () => {
+  test('returns a CV object', async () => {
+    ctx.mydata.saveDataList
+      .mockResolvedValueOnce(args.cv.skills)
+      .mockResolvedValueOnce(args.cv.education)
+      .mockResolvedValueOnce(args.cv.experience)
+
+    const result = await saveCV({}, args, ctx as any, {} as any)
+    expect(result).toEqual({
+      skills: [
+        {
+          name: 'Developer',
+          taxonomyId: 'someTaxonomyId',
+          term: '',
+          type: 'skill',
+        },
+      ],
+      education: [
+        {
+          taxonomyId: '123456789',
+          name: 'High school',
+        },
+      ],
+      experience: [
+        {
+          taxonomyId: 'taxonomyId1',
+          name: 'Carpenter',
+          years: '29',
+        },
+      ],
+    })
+  })
+
+  test('handles errors and rejects them nice', async () => {
+    ctx.mydata.saveDataList.mockRejectedValue('err')
+
+    await expect(saveCV({}, args, ctx as any, {} as any)).rejects.toThrow('err')
+  })
+})
