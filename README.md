@@ -18,7 +18,7 @@ Note that only changes in lib and test folders will force a rebuild in the conta
 
 - Start the GraphQl API (see above).
 - Clone [mydata](https://github.com/JobtechSwe/mydata) repo
-- Navigate to app directory and follow [README](https://github.com/JobtechSwe/mydata/blob/master/app/README.md) for setup
+- Navigate to app directory and follow [README](https://github.com/JobtechSwe/mydata/blob/master/app/README.md) for setup (remember to set the env-variables to point to the operator from docker)
 - Create an account in the MyData app
 - Then you run the login mutation:
 
@@ -30,7 +30,7 @@ mutation login {
 }
 ```
 
-- Open the MyData app again and navigate to Manage Consent requests and enter the id you got from login mutation.
+- Open the MyData app again and navigate to Manage Consent requests and enter the id  with the following format: `mydata://register/THE_CONSENT_ID` where the ID is what you got from login mutation.
 - In the MySkills API you should now get an consentRequestId.
 - Add consentRequestId to the header `token`
 - Start by adding an new account:
