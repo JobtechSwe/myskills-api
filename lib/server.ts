@@ -18,6 +18,7 @@ import { onConsentApproved, onLoginApproved } from './services/consents'
 import { getConsentRequest } from './services/db'
 import TaxonomyAPI from './adapters/taxonomy'
 import { createServer } from 'http'
+import { Consent, Login } from '@mydata/client'
 
 const app = express()
 app.set('etag', 'strong')
@@ -45,8 +46,10 @@ app.get('/approved/:id', async (req, res) => {
 })
 
 app.use(mydataRoutes)
-mydataEvents.on('CONSENT_APPROVED', onConsentApproved)
-mydataEvents.on('LOGIN_APPROVED', onLoginApproved)
+
+mydataEvents.on<Consent>('CONSENT_APPROVED', onConsentApproved)
+mydataEvents.on<Login>('LOGIN_APPROVED', onLoginApproved)
+
 import { Request } from 'express'
 
 /**

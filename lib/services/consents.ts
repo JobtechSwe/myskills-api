@@ -1,7 +1,7 @@
 import config from '../config'
 import { Area, SubscriptionMessage } from '../types'
 import { saveConsent, saveConsentRequest } from './db'
-import { Consent } from '@mydata/client'
+import { Consent, Login } from '@mydata/client'
 import pubSub from '../adapters/pubsub'
 
 export interface Scope {
@@ -38,34 +38,32 @@ const defaultRequest = (durationInSeconds: number): DefaultRequest => ({
   ],
 })
 
-const onConsentApproved = async (consent: Consent) => {
+const onConsentApproved = async (payload: Consent) => {
   try {
-    await saveConsent(consent)
-    await saveConsentRequest(consent)
+    await saveConsent(payload)
+    await saveConsentRequest(payload)
 
     pubSub.publish(SubscriptionMessage.CONSENT_GIVEN, {
       consentApproved: {
-        accessToken: consent.accessToken,
+        accessToken: payload.accessToken,
       },
-      consentRequestId: consent.consentRequestId,
+      consentRequestId: payload.consentRequestId,
     })
   } catch (e) {
     throw new Error(`write error: ${e}`)
   }
 }
 
-const onLoginApproved = (consent: any) => {
-  console.log('event: ', consent)
-
+const onLoginApproved = (payload: Login) => {
   /**
    * TODO(@all): Should we save these?
    * */
   try {
     pubSub.publish(SubscriptionMessage.LOGIN_CONSENT_GIVEN, {
       loginApproved: {
-        accessToken: consent.accessToken,
+        accessToken: payload.accessToken,
       },
-      loginRequestId: consent.sessionId,
+      loginRequestId: payload.sessionId,
     })
   } catch (e) {
     throw new Error(`write error: ${e}`)

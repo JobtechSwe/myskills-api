@@ -2,12 +2,12 @@ import { gql } from 'apollo-server-express'
 import * as types from './typesIndex'
 
 const typeDefs = gql`
-  type Login {
+  type Consent {
     id: String!
     expires: String!
   }
 
-  type TempLogin {
+  type Login {
     url: String!
     sessionId: String!
   }
@@ -23,13 +23,14 @@ const typeDefs = gql`
 
   type Mutation {
     """
+    Register consent for a user
+    """
+    consent: Consent!
+
+    """
     Login an existing user
     """
     login: Login!
-    """
-    Login an existing user
-    """
-    tempLogin: TempLogin!
 
     """
     Add languages to user
