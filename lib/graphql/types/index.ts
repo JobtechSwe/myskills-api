@@ -7,6 +7,11 @@ const typeDefs = gql`
     expires: String!
   }
 
+  type TempLogin {
+    url: String!
+    sessionId: String!
+  }
+
   enum Language {
     spanish
     swedish
@@ -21,6 +26,10 @@ const typeDefs = gql`
     Login an existing user
     """
     login: Login!
+    """
+    Login an existing user
+    """
+    tempLogin: TempLogin!
 
     """
     Add languages to user

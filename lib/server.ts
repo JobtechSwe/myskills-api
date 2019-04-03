@@ -28,6 +28,7 @@ app.use(
     extended: true,
   })
 )
+console.log('consents: ', consents.request)
 
 /**
  * MyData - Approval Route
@@ -44,8 +45,13 @@ app.get('/approved/:id', async (req, res) => {
   }
 })
 
+const onLoginApproved = (e: any) => {
+  console.log('event: ', e)
+}
+
 app.use(mydataRoutes)
 mydataEvents.on('CONSENT_APPROVED', onConsentApproved)
+mydataEvents.on('LOGIN_APPROVED', onLoginApproved)
 import { Request } from 'express'
 
 /**
