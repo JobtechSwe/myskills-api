@@ -171,6 +171,8 @@ export interface TaxonomySearch {
 export interface Mutation {
   /** Login an existing user */
   login: Login
+  /** Login an existing user */
+  tempLogin: TempLogin
   /** Add languages to user */
   addLanguage: Language
   /** Add experiences to user */
@@ -197,8 +199,16 @@ export interface Login {
   expires: string
 }
 
+export interface TempLogin {
+  url: string
+
+  sessionId: string
+}
+
 export interface Subscription {
   consentApproved: ConsentResponse
+
+  loginApproved: ConsentResponse
 }
 
 export interface ConsentResponse {
@@ -259,6 +269,9 @@ export interface RemoveLanguageMutationArgs {
 }
 export interface ConsentApprovedSubscriptionArgs {
   consentRequestId: string
+}
+export interface LoginApprovedSubscriptionArgs {
+  loginRequestId: string
 }
 
 import {
@@ -551,6 +564,8 @@ export namespace MutationResolvers {
   export interface Resolvers<TContext = ApolloServerContext, TypeParent = {}> {
     /** Login an existing user */
     login?: LoginResolver<Login, TypeParent, TContext>
+    /** Login an existing user */
+    tempLogin?: TempLoginResolver<TempLogin, TypeParent, TContext>
     /** Add languages to user */
     addLanguage?: AddLanguageResolver<Language, TypeParent, TContext>
     /** Add experiences to user */
@@ -573,6 +588,11 @@ export namespace MutationResolvers {
 
   export type LoginResolver<
     R = Login,
+    Parent = {},
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type TempLoginResolver<
+    R = TempLogin,
     Parent = {},
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
@@ -680,6 +700,28 @@ export namespace LoginResolvers {
   > = Resolver<R, Parent, TContext>
 }
 
+export namespace TempLoginResolvers {
+  export interface Resolvers<
+    TContext = ApolloServerContext,
+    TypeParent = TempLogin
+  > {
+    url?: UrlResolver<string, TypeParent, TContext>
+
+    sessionId?: SessionIdResolver<string, TypeParent, TContext>
+  }
+
+  export type UrlResolver<
+    R = string,
+    Parent = TempLogin,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type SessionIdResolver<
+    R = string,
+    Parent = TempLogin,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+}
+
 export namespace SubscriptionResolvers {
   export interface Resolvers<TContext = ApolloServerContext, TypeParent = {}> {
     consentApproved?: ConsentApprovedResolver<
@@ -687,6 +729,8 @@ export namespace SubscriptionResolvers {
       TypeParent,
       TContext
     >
+
+    loginApproved?: LoginApprovedResolver<ConsentResponse, TypeParent, TContext>
   }
 
   export type ConsentApprovedResolver<
@@ -696,6 +740,15 @@ export namespace SubscriptionResolvers {
   > = SubscriptionResolver<R, Parent, TContext, ConsentApprovedArgs>
   export interface ConsentApprovedArgs {
     consentRequestId: string
+  }
+
+  export type LoginApprovedResolver<
+    R = ConsentResponse,
+    Parent = {},
+    TContext = ApolloServerContext
+  > = SubscriptionResolver<R, Parent, TContext, LoginApprovedArgs>
+  export interface LoginApprovedArgs {
+    loginRequestId: string
   }
 }
 
@@ -854,6 +907,7 @@ export interface IResolvers<TContext = ApolloServerContext> {
   TaxonomySearch?: TaxonomySearchResolvers.Resolvers<TContext>
   Mutation?: MutationResolvers.Resolvers<TContext>
   Login?: LoginResolvers.Resolvers<TContext>
+  TempLogin?: TempLoginResolvers.Resolvers<TContext>
   Subscription?: SubscriptionResolvers.Resolvers<TContext>
   ConsentResponse?: ConsentResponseResolvers.Resolvers<TContext>
   TaxonomyDefaultResult?: TaxonomyDefaultResultResolvers.Resolvers<TContext>

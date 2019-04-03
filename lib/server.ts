@@ -14,7 +14,7 @@ import {
 } from './adapters/mydata'
 import config from './config'
 import schema from './graphql/schema'
-import { onConsentApproved } from './services/consents'
+import { onConsentApproved, onLoginApproved } from './services/consents'
 import { getConsentRequest } from './services/db'
 import TaxonomyAPI from './adapters/taxonomy'
 import { createServer } from 'http'
@@ -28,7 +28,6 @@ app.use(
     extended: true,
   })
 )
-console.log('consents: ', consents.request)
 
 /**
  * MyData - Approval Route
@@ -44,10 +43,6 @@ app.get('/approved/:id', async (req, res) => {
     res.sendStatus(404)
   }
 })
-
-const onLoginApproved = (e: any) => {
-  console.log('event: ', e)
-}
 
 app.use(mydataRoutes)
 mydataEvents.on('CONSENT_APPROVED', onConsentApproved)

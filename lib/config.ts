@@ -3,6 +3,8 @@ import _ from 'lodash'
 
 dotenv.config()
 
+console.log(process.env.DOMAIN_HOST)
+
 const defaults = {
   DOMAIN: `http://${process.env.DOMAIN_HOST}:${process.env.SERVER_PORT}`,
   MYDATA_OPERATOR: 'http://localhost:4000',

@@ -54,4 +54,22 @@ const onConsentApproved = async (consent: Consent) => {
   }
 }
 
-export { defaultRequest, onConsentApproved }
+const onLoginApproved = (consent: any) => {
+  console.log('event: ', consent)
+
+  /**
+   * TODO(@all): Should we save these?
+   * */
+  try {
+    pubSub.publish(SubscriptionMessage.LOGIN_CONSENT_GIVEN, {
+      loginApproved: {
+        accessToken: consent.accessToken,
+      },
+      loginRequestId: consent.sessionId,
+    })
+  } catch (e) {
+    throw new Error(`write error: ${e}`)
+  }
+}
+
+export { defaultRequest, onConsentApproved, onLoginApproved }
