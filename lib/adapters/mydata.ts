@@ -37,7 +37,6 @@ export interface RemoveDataInput extends DataInput {
 }
 
 export const mydataOperator = create(config)
-console.log('mydataoperator: ', mydataOperator.routes)
 
 const createConfig = (area: Area): Config => ({
   area,

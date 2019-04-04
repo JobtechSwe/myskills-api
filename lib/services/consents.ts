@@ -58,6 +58,7 @@ const onLoginApproved = (payload: Login) => {
   /**
    * TODO(@all): Should we save these?
    * */
+
   try {
     pubSub.publish(SubscriptionMessage.LOGIN_CONSENT_GIVEN, {
       loginApproved: {
