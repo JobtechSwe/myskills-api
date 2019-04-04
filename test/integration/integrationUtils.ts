@@ -33,21 +33,28 @@ export const getClient = (
 export const getConsentedClient = async (
   server
 ): Promise<{ query: Function; mutate: Function }> => {
-  await createMyDataAccount()
-  const request = defaultRequest(3600 * 24 * 31)
-  const { url, id } = await consents.request<Consent>(request)
-  await approveConsent(url)
-  const { accessToken } = await getConsentRequest(id)
+  try {
+    await createMyDataAccount()
+    const request = defaultRequest(3600 * 24 * 31)
+    const { url, id } = await consents.request<Consent>(request)
+    await approveConsent(url)
+    const { accessToken } = await getConsentRequest(id)
 
-  return getClient(server, {
-    context: {
-      req: {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
+    return getClient(server, {
+      context: {
+        req: {
+          headers: {
+            authorization: `Bearer ${accessToken}`,
+          },
         },
       },
-    },
-  })
+    })
+  } catch (error) {
+    console.error(
+      `Error when setting up integration tests consented client`,
+      error
+    )
+  }
 }
 
 const createMyDataAccount = (
@@ -88,6 +95,6 @@ const approveConsent = async consentRequestUrl => {
       },
     })
   } catch (e) {
-    console.error('ApproveConsentIntegrationTest:', e)
+    throw Error('ApproveConsentIntegrationTest: ' + e)
   }
 }
