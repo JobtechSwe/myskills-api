@@ -6,6 +6,7 @@ import { SubscriptionResolvers } from '../../../__generated__/myskills'
 export const loginApproved: SubscriptionResolvers.LoginApprovedResolver = {
   subscribe: withFilter(
     () => pubSub.asyncIterator([SubscriptionMessage.LOGIN_CONSENT_GIVEN]),
-    ({ loginRequestId }, args) => loginRequestId === args.loginRequestId
+    ({ loginRequestId }, { loginRequestId: approvedLoginRequestId }) =>
+      loginRequestId === approvedLoginRequestId
   ),
 }
