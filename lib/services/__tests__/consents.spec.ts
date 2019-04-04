@@ -60,7 +60,9 @@ describe('#onConsentApproved', () => {
   test('throw when something goes wrong', async () => {
     ;(saveConsent as jest.Mock).mockRejectedValue('Err')
 
-    await expect(onConsentApproved(consent)).rejects.toThrow('err')
+    await expect(onConsentApproved(consent)).rejects.toThrow(
+      'Error in ConsentApproved: Err'
+    )
   })
 })
 
@@ -88,6 +90,8 @@ describe('#onLoginApproved', () => {
   test('throw when something goes wrong', async () => {
     ;(pubSub.publish as jest.Mock).mockRejectedValue('Err')
 
-    await expect(onConsentApproved(consent)).rejects.toThrow('err')
+    await expect(onConsentApproved(consent)).rejects.toThrow(
+      'Error in ConsentApproved: Err'
+    )
   })
 })

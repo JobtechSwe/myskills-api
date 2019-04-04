@@ -50,7 +50,7 @@ const onConsentApproved = async (payload: Consent) => {
       consentRequestId: payload.consentRequestId,
     })
   } catch (e) {
-    throw new Error(`write error: ${e}`)
+    throw new Error(`Error in ConsentApproved: ${e}`)
   }
 }
 
@@ -58,7 +58,6 @@ const onLoginApproved = (payload: Login) => {
   /**
    * TODO(@all): Should we save these?
    * */
-
   try {
     pubSub.publish(SubscriptionMessage.LOGIN_CONSENT_GIVEN, {
       loginApproved: {
@@ -67,7 +66,7 @@ const onLoginApproved = (payload: Login) => {
       loginRequestId: payload.sessionId,
     })
   } catch (e) {
-    throw new Error(`write error: ${e}`)
+    throw new Error(`Error in LoginApproved: ${e}`)
   }
 }
 

@@ -35,8 +35,8 @@ export const getConsentedClient = async (
 ): Promise<{ query: Function; mutate: Function }> => {
   await createMyDataAccount()
   const request = defaultRequest(3600 * 24 * 31)
-  const { id } = await consents.request<Consent>(request)
-  await approveConsent(id)
+  const { url, id } = await consents.request<Consent>(request)
+  await approveConsent(url)
   const { accessToken } = await getConsentRequest(id)
 
   return getClient(server, {
@@ -66,24 +66,28 @@ const createMyDataAccount = (
   })
 }
 
-const approveConsent = async consentRequestId => {
-  const {
-    body: { data },
-  } = await got(`${MYDATA_APP_URL}/getConsentRequest`, {
-    json: true,
-    method: 'post',
-    body: {
-      args: consentRequestId,
-    },
-  })
-
-  return got(`${MYDATA_APP_URL}/approveConsentRequest`, {
-    json: true,
-    method: 'post',
-    body: {
-      args: {
-        data,
+const approveConsent = async consentRequestUrl => {
+  try {
+    const {
+      body: { data },
+    } = await got(`${MYDATA_APP_URL}/getConsentRequest`, {
+      json: true,
+      method: 'post',
+      body: {
+        args: consentRequestUrl,
       },
-    },
-  })
+    })
+
+    return got(`${MYDATA_APP_URL}/approveConsentRequest`, {
+      json: true,
+      method: 'post',
+      body: {
+        args: {
+          data,
+        },
+      },
+    })
+  } catch (e) {
+    console.error('ApproveConsentIntegrationTest:', e)
+  }
 }

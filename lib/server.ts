@@ -97,7 +97,9 @@ const port = config.SERVER_PORT
 export const appIsReady: Promise<Boolean> = new Promise(resolve =>
   httpServer.listen(port, async () => {
     await mydataConnect()
+
     console.log(`Listening on port: ${port}`)
+
     resolve(true)
   })
 )

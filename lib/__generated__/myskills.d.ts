@@ -196,6 +196,8 @@ export interface Mutation {
 export interface Consent {
   id: string
 
+  url: string
+
   expires: string
 }
 
@@ -685,10 +687,17 @@ export namespace ConsentResolvers {
   > {
     id?: IdResolver<string, TypeParent, TContext>
 
+    url?: UrlResolver<string, TypeParent, TContext>
+
     expires?: ExpiresResolver<string, TypeParent, TContext>
   }
 
   export type IdResolver<
+    R = string,
+    Parent = Consent,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type UrlResolver<
     R = string,
     Parent = Consent,
     TContext = ApolloServerContext

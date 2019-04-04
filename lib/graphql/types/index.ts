@@ -4,6 +4,7 @@ import * as types from './typesIndex'
 const typeDefs = gql`
   type Consent {
     id: String!
+    url: String!
     expires: String!
   }
 
