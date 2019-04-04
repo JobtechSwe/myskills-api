@@ -94,13 +94,15 @@ server.installSubscriptionHandlers(httpServer)
 
 const port = config.SERVER_PORT
 
-export const appIsReady: Promise<Boolean> = new Promise(resolve =>
+export const appIsReady: Promise<Boolean> = new Promise((resolve, reject) =>
   httpServer.listen(port, async () => {
-    await mydataConnect()
-
-    console.log(`Listening on port: ${port}`)
-
-    resolve(true)
+    try {
+      await mydataConnect()
+      console.log(`Listening on port: ${port}`)
+      resolve(true)
+    } catch (e) {
+      reject('Could not connect to mydata-operator: ' + e)
+    }
   })
 )
 
