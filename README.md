@@ -20,17 +20,17 @@ Note that only changes in lib and test folders will force a rebuild in the conta
 - Clone [mydata](https://github.com/JobtechSwe/mydata) repo
 - Navigate to app directory and follow [README](https://github.com/JobtechSwe/mydata/blob/master/app/README.md) for setup
 - Create an account in the MyData app
-- Then you run the login mutation:
+- Then you run the consent mutation:
 
 ```
-mutation login {
-  login {
+mutation consent {
+  consent {
     id
   }
 }
 ```
 
-- Open the MyData app again and navigate to Manage Consent requests and enter the id you got from login mutation.
+- Open the MyData app again and navigate to Manage Consent requests and enter the id you got from the consent mutation.
 - In the MySkills API you should now get an consentRequestId.
 - Add consentRequestId to the header `token`
 - Start by adding an new account:
@@ -43,6 +43,19 @@ mutation createProfile {
   }) {
     firstName
     lastName
+  }
+}
+```
+
+### Login
+
+If you have your consents in place, you can then use the login-mutation in the same way you would use the consent-id:
+
+```
+mutation login {
+  login {
+    url
+    sessionId
   }
 }
 ```
