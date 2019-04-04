@@ -1,4 +1,4 @@
-import { defaultRequest, onConsentApproved } from '../consents'
+import { defaultRequest, onConsentApproved, onLoginApproved } from '../consents'
 import MockDate from 'mockdate'
 import { saveConsent, saveConsentRequest } from '../db'
 import pubSub from '../../adapters/pubsub'
@@ -60,6 +60,38 @@ describe('#onConsentApproved', () => {
   test('throw when something goes wrong', async () => {
     ;(saveConsent as jest.Mock).mockRejectedValue('Err')
 
-    await expect(onConsentApproved(consent)).rejects.toThrow('err')
+    await expect(onConsentApproved(consent)).rejects.toThrow(
+      'Error in ConsentApproved: Err'
+    )
+  })
+})
+
+describe('#onLoginApproved', () => {
+  const consent = {
+    accessToken: '123',
+    sessionId: '321',
+  }
+
+  const mockedpubSubData = {
+    loginApproved: {
+      accessToken: consent.accessToken,
+    },
+    loginRequestId: consent.sessionId,
+  }
+
+  test('publishes access token to apollo subscription/pubsub', () => {
+    onLoginApproved(consent)
+    expect(pubSub.publish).toHaveBeenCalledWith(
+      'Login consent given',
+      mockedpubSubData
+    )
+  })
+
+  test('throw when something goes wrong', async () => {
+    ;(pubSub.publish as jest.Mock).mockRejectedValue('Err')
+
+    await expect(onConsentApproved(consent)).rejects.toThrow(
+      'Error in ConsentApproved: Err'
+    )
   })
 })
