@@ -1,6 +1,6 @@
 import got from 'got'
 import { consents } from '../../lib/adapters/mydata'
-import { Login } from '../../lib/__generated__/myskills'
+import { Consent } from '../../lib/__generated__/myskills'
 import { defaultRequest } from '../../lib/services/consents'
 import { getConsentRequest } from '../../lib/services/db'
 import { createTestClient } from 'apollo-server-testing'
@@ -35,7 +35,7 @@ export const getConsentedClient = async (
 ): Promise<{ query: Function; mutate: Function }> => {
   await createMyDataAccount()
   const request = defaultRequest(3600 * 24 * 31)
-  const { id } = await consents.request<Login>(request)
+  const { id } = await consents.request<Consent>(request)
   await approveConsent(id)
   const { accessToken } = await getConsentRequest(id)
 
