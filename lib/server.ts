@@ -101,7 +101,9 @@ export const appIsReady: Promise<Boolean> = new Promise((resolve, reject) =>
       console.log(`Listening on port: ${port}`)
       resolve(true)
     } catch (e) {
-      reject('Could not connect to mydata-operator: ' + e)
+      reject(
+        `Could not connect to mydata-operator: ${JSON.stringify(e, null, 2)}`
+      )
     }
   })
 )
