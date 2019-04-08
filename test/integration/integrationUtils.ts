@@ -95,6 +95,6 @@ const approveConsent = async consentRequestUrl => {
       },
     })
   } catch (e) {
-    throw Error(`ApproveConsentIntegrationTest:` + JSON.stringify(e, null, 2))
+    throw Error(`ApproveConsentIntegrationTest: ${JSON.stringify(e, null, 2)}`)
   }
 }
