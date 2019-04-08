@@ -11,7 +11,7 @@ import authorizationToken from '../../../middleware/authorizationToken'
 import { ApolloServerContext } from 'lib/typings/context'
 
 function saveCVArea<T>(
-  data: T[],
+  data: T[] | null | undefined,
   mydata: ApolloServerContext['mydata'],
   token: string,
   area: Area
@@ -46,21 +46,44 @@ export const saveCV: MutationResolvers.SaveCvResolver = async (
   const token = authorizationToken(req)
 
   try {
-    const [skills, education, experience] = await Promise.all([
-      saveCVArea<Skill>(skillsInput as Skill[], mydata, token, Area.skills),
-      saveCVArea<Education>(
-        educationInput as Education[],
-        mydata,
-        token,
-        Area.educations
-      ),
-      saveCVArea<Experience>(
-        experienceInput as Experience[],
-        mydata,
-        token,
-        Area.experiences
-      ),
-    ])
+    // TODO: Uncomment this code when https://github.com/JobtechSwe/mydata/issues/72 is fixed
+
+    // const [skills, education, experience] = await Promise.all([
+    //   saveCVArea<Skill>(skillsInput as Skill[], mydata, token, Area.skills),
+    //   saveCVArea<Education>(
+    //     educationInput as Education[],
+    //     mydata,
+    //     token,
+    //     Area.educations
+    //   ),
+    //   saveCVArea<Experience>(
+    //     experienceInput as Experience[],
+    //     mydata,
+    //     token,
+    //     Area.experiences
+    //   ),
+    // ])
+
+    // <TODO>: Remove this code
+    const skills = await saveCVArea<Skill>(
+      skillsInput as Skill[],
+      mydata,
+      token,
+      Area.skills
+    )
+    const education = await saveCVArea<Education>(
+      educationInput as Education[],
+      mydata,
+      token,
+      Area.educations
+    )
+    const experience = await saveCVArea<Experience>(
+      experienceInput as Experience[],
+      mydata,
+      token,
+      Area.experiences
+    )
+    // </TODO>
 
     return {
       skills,
