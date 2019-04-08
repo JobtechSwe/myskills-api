@@ -37,6 +37,7 @@ export interface RemoveDataInput extends DataInput {
 }
 
 export const mydataOperator = create(config)
+
 const createConfig = (area: Area): Config => ({
   area,
   domain: myConfig.DOMAIN,

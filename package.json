@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/JobtechSwe/myskills-api#readme",
   "dependencies": {
-    "@mydata/client": "^0.22.4",
+    "@mydata/client": "^0.24.1",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-client": "^2.5.1",
     "apollo-codegen": "^0.20.2",

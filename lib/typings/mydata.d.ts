@@ -46,10 +46,15 @@ declare module '@mydata/client' {
     accessToken: string
   }
 
-  type EventsCallback = (consent: Consent) => void
+  export interface Login {
+    sessionId: string
+    accessToken: string
+  }
+
+  type EventsCallback<T> = (consent: T) => void
 
   interface Events {
-    on: (name: string, cb: EventsCallback) => void
+    on: <T = Login | Consent>(name: string, cb: EventsCallback<T>) => void
   }
 
   interface Create {

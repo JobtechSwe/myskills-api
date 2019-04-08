@@ -2,9 +2,15 @@ import { gql } from 'apollo-server-express'
 import * as types from './typesIndex'
 
 const typeDefs = gql`
-  type Login {
+  type Consent {
     id: String!
+    url: String!
     expires: String!
+  }
+
+  type Login {
+    url: String!
+    sessionId: String!
   }
 
   enum Language {
@@ -17,6 +23,11 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    """
+    Register consent for a user
+    """
+    consent: Consent!
+
     """
     Login an existing user
     """
@@ -107,6 +118,7 @@ const typeDefs = gql`
 
   type Subscription {
     consentApproved(consentRequestId: String!): ConsentResponse!
+    loginApproved(loginRequestId: String!): ConsentResponse!
   }
 `
 
