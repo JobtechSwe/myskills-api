@@ -118,7 +118,7 @@ List of user educations
   taxonomyId: string,
   id: string
   taxonomyId: string
-  name?: string
+  term?: string
 }]
 ```
 
@@ -130,7 +130,7 @@ List of user experiences
 [{
   id: string (GUID)
   taxonomyId: string (ConceptId in JobTech taxonomy)
-  name?: string
+  term?: string
   years: string
 }]
 ```
