@@ -8,17 +8,28 @@ import {
 } from '../../../__generated__/myskills'
 import { Area } from '../../../types'
 import authorizationToken from '../../../middleware/authorizationToken'
+import { ApolloServerContext } from 'lib/typings/context'
 
-function saveCVArea<T>(data: T, mydata: any, token: string, area: string) {
-  if (Array.isArray(data) && data.length) {
-    return mydata.saveDataList({
+function saveCVArea<T>(
+  data: T[],
+  mydata: ApolloServerContext['mydata'],
+  token: string,
+  area: Area
+): Promise<T[]> {
+  if (data && data.length) {
+    const dataList: T[] = data.map((x: T) => ({
+      id: uuid(),
+      ...x,
+    }))
+
+    return mydata.saveDataList<T[]>({
       area,
-      data: data.map(x => ({ id: uuid(), ...x } as T)),
+      data: dataList,
       token,
     })
   }
 
-  return undefined
+  return Promise.resolve([])
 }
 
 export const saveCV: MutationResolvers.SaveCvResolver = async (
@@ -36,14 +47,14 @@ export const saveCV: MutationResolvers.SaveCvResolver = async (
 
   try {
     const [skills, education, experience] = await Promise.all([
-      saveCVArea<Skill[]>(skillsInput as Skill[], mydata, token, Area.skills),
-      saveCVArea<Education[]>(
+      saveCVArea<Skill>(skillsInput as Skill[], mydata, token, Area.skills),
+      saveCVArea<Education>(
         educationInput as Education[],
         mydata,
         token,
         Area.educations
       ),
-      saveCVArea<Experience[]>(
+      saveCVArea<Experience>(
         experienceInput as Experience[],
         mydata,
         token,

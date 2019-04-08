@@ -8,7 +8,6 @@ import {
 } from '../../../lib/__generated__/myskills'
 import { SAVE_CV } from '../gql'
 
-let query: any
 let mutate: any
 let skillsInput: SkillInput[]
 let educationInput: EducationInput[]
@@ -26,7 +25,7 @@ defineFeature(feature, test => {
   })
   test('Save CV for the first time', ({ given, and, when, then }) => {
     given('I have a bearer token', async () => {
-      ;({ query, mutate } = await getConsentedClient(server))
+      ;({ mutate } = await getConsentedClient(server))
     })
     and('I have this skills input:', (skills: SkillInput[]) => {
       skillsInput = skills
