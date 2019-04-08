@@ -51,8 +51,7 @@ export const getConsentedClient = async (
     })
   } catch (error) {
     console.error(
-      `Error when setting up integration tests consented client`,
-      error
+      `Error when setting up integration tests consented client. ${error}`
     )
   }
 }
@@ -95,6 +94,6 @@ const approveConsent = async consentRequestUrl => {
       },
     })
   } catch (e) {
-    throw Error('ApproveConsentIntegrationTest: ' + e)
+    throw Error(`ApproveConsentIntegrationTest: ${e}`)
   }
 }
