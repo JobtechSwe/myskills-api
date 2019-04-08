@@ -15,13 +15,13 @@ const GET_ONTOLOGY_CONCEPTS = gql`
 
 const GET_ONTOLOGY_RELATED = gql`
   query ontologyRelated(
-    $concept: [String!]
+    $concepts: [String!]
     $id: [String!]
     $limit: Int
     $type: OntologyType!
   ) {
     ontologyRelated(
-      params: { concept: $concept, id: $id, type: $type, limit: $limit }
+      params: { concepts: $concepts, id: $id, type: $type, limit: $limit }
     ) {
       count
       concepts {
@@ -126,7 +126,7 @@ describe('ontology', () => {
       const { data } = await query({
         query: GET_ONTOLOGY_RELATED,
         variables: {
-          concept: ['snickare'],
+          concepts: ['snickare'],
           limit: 10,
           type: 'SKILL',
         },

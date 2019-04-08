@@ -21,7 +21,7 @@ export interface OntologyConceptInput {
 }
 
 export interface OntologyRelatedInput {
-  concept?: Maybe<string[]>
+  concepts?: Maybe<string[]>
 
   id?: Maybe<string[]>
 

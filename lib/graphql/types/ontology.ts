@@ -24,7 +24,7 @@ export const typeDefs = gql`
   }
 
   input OntologyRelatedInput {
-    concept: [String!]
+    concepts: [String!]
     id: [String!]
     limit: Int
     type: OntologyType!

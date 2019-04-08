@@ -981,7 +981,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "concept",
+            "name": "concepts",
             "description": "",
             "type": {
               "kind": "LIST",

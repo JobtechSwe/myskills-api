@@ -6,7 +6,7 @@ import {
   OntologyRelationResponse,
   OntologyConceptResponse,
 } from '../../../__generated__/myskills'
-import { renameProp } from '../../../../lib/utils/renameProp'
+import { renameKeys } from '../../../utils/renameKeys'
 
 interface OntologyConceptApiResponse {
   uuid: string
@@ -36,11 +36,13 @@ export const ontologyRelated: QueryResolvers.OntologyRelatedResolver = async (
   { dataSources: { ontologyAPI } }
 ) => {
   try {
-    const query = params ? renameProp('id', 'uuid', params) : params
+    const query = params
+      ? renameKeys({ id: 'uuid', concepts: 'concept' })(params)
+      : params
 
     const data = await ontologyAPI.getData<OntologyRelatedApiResponse>(
       `concept/related`,
-      query
+      query as any
     )
 
     return {

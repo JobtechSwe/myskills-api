@@ -3,8 +3,9 @@ import {
   OntologyType,
   OntologyConceptQueryArgs,
   OntologyTerm,
+  OntologyConceptTermResponse,
 } from '../../../__generated__/myskills'
-import { renameProp } from '../../../utils/renameProp'
+import { renameKeys } from '../../../utils/renameKeys'
 
 interface OntologyConceptApiResponse {
   uuid: string
@@ -30,7 +31,7 @@ export const ontologyConcept: QueryResolvers.OntologyConceptResolver = async (
       params as object
     )
 
-    return renameProp('uuid', 'id', data)
+    return renameKeys({ uuid: 'id' })(data) as OntologyConceptTermResponse
   } catch (error) {
     throw new Error(error)
   }

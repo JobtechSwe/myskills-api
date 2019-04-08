@@ -1,13 +1,13 @@
-import renameProp from '../renameProp'
+import renameKeys from '../renameKeys'
 
-describe('renameProp', () => {
+describe('renameKeys', () => {
   test('should rename prop in object', () => {
     const testObj = {
       someProp: 'someValue',
       someOtherProp: 'someOtherValue',
     }
 
-    const result = renameProp('someProp', 'newProp', testObj)
+    const result = renameKeys({ someProp: 'newProp' })(testObj)
 
     expect(result).toEqual({
       newProp: 'someValue',
@@ -21,7 +21,7 @@ describe('renameProp', () => {
       someOtherProp: 'someOtherValue',
     }
 
-    const result = renameProp('propNotFound', 'newProp', testObj)
+    const result = renameKeys({ propNotFound: 'newProp' })(testObj)
 
     expect(result).toEqual({
       someProp: 'someValue',
@@ -35,7 +35,7 @@ describe('renameProp', () => {
       someOtherProp: 'someOtherValue',
     }
 
-    const result = renameProp('someProp', 'newProp', testObj)
+    const result = renameKeys({ someProp: 'newProp' })(testObj)
 
     expect(testObj).toEqual({
       someProp: 'someValue',
