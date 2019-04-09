@@ -76,7 +76,7 @@ oc describe secret myskills-deployer-token-d2drr
 travis encrypt-file openshift-token --add --com
 ```
 
-- #### <b>DELETE THE UNENCRYPTED FILE!!!</b>
+- #### <b>DELETE THE UNENCRYPTED FILE!</b>
 
 - we move the generated encrypted file to `./infrastructure/travis` folder <br>
   then we update the `.travis.yml` to use the new path to the encrypted file <br>
