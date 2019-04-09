@@ -5,7 +5,7 @@ import { getConsentedClient } from './integrationUtils'
 const GET_EXPERIENCES = gql`
   query experiences {
     experiences {
-      name
+      term
       years
     }
   }
@@ -13,16 +13,16 @@ const GET_EXPERIENCES = gql`
 
 const ADD_EXPERIENCE = gql`
   mutation addExperience(
-    $name: String!
+    $term: String!
     $taxonomyId: String!
     $years: String!
   ) {
     addExperience(
-      experience: { name: $name, taxonomyId: $taxonomyId, years: $years }
+      experience: { term: $term, taxonomyId: $taxonomyId, years: $years }
     ) {
       id
       taxonomyId
-      name
+      term
       years
     }
   }
@@ -55,18 +55,18 @@ describe('#experiences', () => {
       mutation: ADD_EXPERIENCE,
       variables: {
         taxonomyId: 'taxonomyId1',
-        name: 'Carpenter',
+        term: 'Carpenter',
         years: '29',
       },
     })
 
-    expect(addExperience.name).toBe('Carpenter')
+    expect(addExperience.term).toBe('Carpenter')
 
     await mutate({
       mutation: ADD_EXPERIENCE,
       variables: {
         taxonomyId: 'taxonomyId5',
-        name: 'Mason',
+        term: 'Mason',
         years: '5',
       },
     })
@@ -74,9 +74,9 @@ describe('#experiences', () => {
       query: GET_EXPERIENCES,
     })
 
-    expect(data.experiences[0].name).toBe('Carpenter')
+    expect(data.experiences[0].term).toBe('Carpenter')
     expect(data.experiences[0].years).toBe('29')
-    expect(data.experiences[1].name).toBe('Mason')
+    expect(data.experiences[1].term).toBe('Mason')
     expect(data.experiences[1].years).toBe('5')
   })
 
@@ -89,7 +89,7 @@ describe('#experiences', () => {
       mutation: ADD_EXPERIENCE,
       variables: {
         taxonomyId: '42',
-        name: 'Philosopher',
+        term: 'Philosopher',
         years: '29',
       },
     })
@@ -110,7 +110,7 @@ describe('#experiences', () => {
     } = await query({
       query: GET_EXPERIENCES,
     })
-    const success = experiences.every(({ name }) => name !== 'Philosopher')
+    const success = experiences.every(({ term }) => term !== 'Philosopher')
     expect(success).toBeTruthy()
   })
 })
