@@ -16,11 +16,11 @@ export const SAVE_CV = gql`
       }
       education {
         taxonomyId
-        name
+        term
       }
       experience {
         taxonomyId
-        name
+        term
         years
       }
     }

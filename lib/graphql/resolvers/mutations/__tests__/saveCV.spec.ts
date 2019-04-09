@@ -9,22 +9,21 @@ beforeEach(() => {
     cv: {
       skills: [
         {
-          name: 'Developer',
           taxonomyId: 'someTaxonomyId',
-          term: '',
+          term: 'Developer',
           type: 'skill',
         },
       ],
       education: [
         {
           taxonomyId: '123456789',
-          name: 'High school',
+          term: 'High school',
         },
       ],
       experience: [
         {
           taxonomyId: 'taxonomyId1',
-          name: 'Carpenter',
+          term: 'Carpenter',
           years: '29',
         },
       ],
@@ -162,22 +161,21 @@ describe('result', () => {
     expect(result).toEqual({
       skills: [
         {
-          name: 'Developer',
+          term: 'Developer',
           taxonomyId: 'someTaxonomyId',
-          term: '',
           type: 'skill',
         },
       ],
       education: [
         {
           taxonomyId: '123456789',
-          name: 'High school',
+          term: 'High school',
         },
       ],
       experience: [
         {
           taxonomyId: 'taxonomyId1',
-          name: 'Carpenter',
+          term: 'Carpenter',
           years: '29',
         },
       ],
