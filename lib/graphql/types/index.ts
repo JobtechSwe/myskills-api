@@ -102,7 +102,7 @@ const typeDefs = gql`
     """
     Get from ontology
     """
-    ontologyConcepts(params: OntologyConceptInput): [OntologyConceptResponse]!
+    ontologyConcepts(params: OntologyConceptsInput): [OntologyConceptResponse]!
 
     ontologyConcept(
       id: String!

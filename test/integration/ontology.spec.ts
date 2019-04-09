@@ -2,10 +2,18 @@ import { gql } from 'apollo-server-express'
 import server, { appIsReady } from '../../lib/server'
 import { getClient } from './integrationUtils'
 import * as ontologyFixtures from './__fixtures__/ontology'
+import { OntologyConceptResponse } from '../../lib/__generated__/myskills'
 
 const GET_ONTOLOGY_CONCEPTS = gql`
-  query ontologyConcepts($limit: Int, $offset: Int, $type: OntologyType) {
-    ontologyConcepts(params: { limit: $limit, offset: $offset, type: $type }) {
+  query ontologyConcepts(
+    $limit: Int
+    $offset: Int
+    $type: OntologyType
+    $filter: String
+  ) {
+    ontologyConcepts(
+      params: { limit: $limit, offset: $offset, type: $type, filter: $filter }
+    ) {
       id
       name
       type
@@ -60,13 +68,9 @@ const GET_ONTOLOGY_CONCEPT = gql`
     $offset: Int
     $type: OntologyType
   ) {
-    ontologyConcept(
-      id: $id
-      params: { limit: $limit, offset: $offset, type: $type }
-    ) {
+    ontologyConcept(id: $id, params: { limit: $limit, offset: $offset }) {
       id
       name
-      type
       terms {
         name
         type
@@ -103,6 +107,23 @@ describe('ontology', () => {
 
       expect(data.ontologyConcepts).toEqual(ontologyFixtures.ontologyConcepts)
     })
+
+    it('should get a filtered list of ontology concepts', async () => {
+      const variables = {
+        offset: 0,
+        limit: 10,
+        type: 'SKILL',
+        filter: 'java',
+      }
+
+      const { data } = await query({
+        query: GET_ONTOLOGY_CONCEPTS,
+        variables,
+      })
+      data.ontologyConcepts.map((concept: OntologyConceptResponse) => {
+        expect(concept.name.toLowerCase()).toMatch('java')
+      })
+    })
   })
 
   describe('ontologyConcept', () => {
@@ -113,7 +134,6 @@ describe('ontology', () => {
           id: 'b8460092-7c21-5769-80de-d9b94d142839', // Snickare
           offset: 0,
           limit: 10,
-          type: 'SKILL',
         },
       })
 

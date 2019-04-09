@@ -13,9 +13,15 @@ export const typeDefs = gql`
   }
 
   input OntologyConceptInput {
+    limit: Int
+    offset: Int
+  }
+
+  input OntologyConceptsInput {
     type: OntologyType
     limit: Int
     offset: Int
+    filter: String
   }
 
   input OntologyConceptTermInput {

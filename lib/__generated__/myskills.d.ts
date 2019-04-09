@@ -12,9 +12,17 @@ export interface TaxonomyQueryInput {
   parentId?: Maybe<(Maybe<string>)[]>
 }
 
-export interface OntologyConceptInput {
+export interface OntologyConceptsInput {
   type?: Maybe<OntologyType>
 
+  limit?: Maybe<number>
+
+  offset?: Maybe<number>
+
+  filter?: Maybe<string>
+}
+
+export interface OntologyConceptInput {
   limit?: Maybe<number>
 
   offset?: Maybe<number>
@@ -327,7 +335,7 @@ export interface TaxonomyQueryArgs {
   params?: Maybe<TaxonomyQueryInput>
 }
 export interface OntologyConceptsQueryArgs {
-  params?: Maybe<OntologyConceptInput>
+  params?: Maybe<OntologyConceptsInput>
 }
 export interface OntologyConceptQueryArgs {
   id: string
@@ -512,7 +520,7 @@ export namespace QueryResolvers {
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext, OntologyConceptsArgs>
   export interface OntologyConceptsArgs {
-    params?: Maybe<OntologyConceptInput>
+    params?: Maybe<OntologyConceptsInput>
   }
 
   export type OntologyConceptResolver<

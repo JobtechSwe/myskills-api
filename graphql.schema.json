@@ -137,7 +137,7 @@
                 "description": "",
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "OntologyConceptInput",
+                  "name": "OntologyConceptsInput",
                   "ofType": null
                 },
                 "defaultValue": null
@@ -773,7 +773,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "OntologyConceptInput",
+        "name": "OntologyConceptsInput",
         "description": "",
         "fields": null,
         "inputFields": [
@@ -793,6 +793,12 @@
             "name": "offset",
             "description": "",
             "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
+            "defaultValue": null
+          },
+          {
+            "name": "filter",
+            "description": "",
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
             "defaultValue": null
           }
         ],
@@ -877,6 +883,29 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "OntologyConceptInput",
+        "description": "",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "limit",
+            "description": "",
+            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
+            "defaultValue": null
+          },
+          {
+            "name": "offset",
+            "description": "",
+            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
