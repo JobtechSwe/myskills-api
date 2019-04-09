@@ -1,8 +1,4 @@
-import {
-  QueryResolvers,
-  TaxonomyType,
-  TaxonomyQueryArgs,
-} from '../../../__generated__/myskills'
+import { QueryResolvers, TaxonomyType } from '../../../__generated__/myskills'
 
 interface AfTaxonomyResult {
   conceptId: string
@@ -40,9 +36,9 @@ const renameProp = (
       }
     : { ...others }
 
-export const taxonomy: QueryResolvers.TaxonomyResolver = async (
+export const taxonomy: QueryResolvers['taxonomy'] = async (
   _,
-  { params }: TaxonomyQueryArgs,
+  { params },
   { dataSources: { taxonomyAPI } }
 ) => {
   const taxonomyQuery =

@@ -7,7 +7,7 @@
       {
         "kind": "OBJECT",
         "name": "Query",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "languages",
@@ -107,7 +107,7 @@
             "args": [
               {
                 "name": "params",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
                   "name": "TaxonomyQueryInput",
@@ -137,20 +137,20 @@
       {
         "kind": "ENUM",
         "name": "Language",
-        "description": "",
+        "description": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
           {
             "name": "spanish",
-            "description": "",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "swedish",
-            "description": "",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -160,11 +160,11 @@
       {
         "kind": "OBJECT",
         "name": "Education",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "id",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -176,7 +176,7 @@
           },
           {
             "name": "taxonomyId",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -188,7 +188,7 @@
           },
           {
             "name": "term",
-            "description": "",
+            "description": null,
             "args": [],
             "type": { "kind": "SCALAR", "name": "String", "ofType": null },
             "isDeprecated": false,
@@ -213,11 +213,11 @@
       {
         "kind": "OBJECT",
         "name": "Experience",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "id",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -229,7 +229,7 @@
           },
           {
             "name": "taxonomyId",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -241,7 +241,7 @@
           },
           {
             "name": "term",
-            "description": "",
+            "description": null,
             "args": [],
             "type": { "kind": "SCALAR", "name": "String", "ofType": null },
             "isDeprecated": false,
@@ -249,7 +249,7 @@
           },
           {
             "name": "years",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -268,11 +268,11 @@
       {
         "kind": "OBJECT",
         "name": "Profile",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "firstName",
-            "description": "",
+            "description": null,
             "args": [],
             "type": { "kind": "SCALAR", "name": "String", "ofType": null },
             "isDeprecated": false,
@@ -280,7 +280,7 @@
           },
           {
             "name": "lastName",
-            "description": "",
+            "description": null,
             "args": [],
             "type": { "kind": "SCALAR", "name": "String", "ofType": null },
             "isDeprecated": false,
@@ -295,11 +295,11 @@
       {
         "kind": "OBJECT",
         "name": "Skill",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "id",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -311,7 +311,7 @@
           },
           {
             "name": "taxonomyId",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -323,7 +323,7 @@
           },
           {
             "name": "term",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -335,7 +335,7 @@
           },
           {
             "name": "type",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -354,36 +354,36 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "TaxonomyQueryInput",
-        "description": "",
+        "description": null,
         "fields": null,
         "inputFields": [
           {
             "name": "offset",
-            "description": "",
+            "description": null,
             "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
             "defaultValue": null
           },
           {
             "name": "limit",
-            "description": "",
+            "description": null,
             "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
             "defaultValue": null
           },
           {
             "name": "q",
-            "description": "",
+            "description": null,
             "type": { "kind": "SCALAR", "name": "String", "ofType": null },
             "defaultValue": null
           },
           {
             "name": "type",
-            "description": "",
+            "description": null,
             "type": { "kind": "ENUM", "name": "TaxonomyType", "ofType": null },
             "defaultValue": null
           },
           {
             "name": "parentId",
-            "description": "",
+            "description": null,
             "type": {
               "kind": "LIST",
               "name": null,
@@ -409,92 +409,92 @@
       {
         "kind": "ENUM",
         "name": "TaxonomyType",
-        "description": "",
+        "description": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
           {
             "name": "REGION",
-            "description": "",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "EDUCATION_FIELD_1",
-            "description": "",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "EDUCATION_FIELD_2",
-            "description": "",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "EDUCATION_FIELD_3",
-            "description": "",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "EDUCATION_LEVEL_1",
-            "description": "",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "EDUCATION_LEVEL_2",
-            "description": "",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "EDUCATION_LEVEL_3",
-            "description": "",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "LANGUAGE",
-            "description": "",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "MUNICIPALITY",
-            "description": "",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "OCCUPATION_FIELD",
-            "description": "",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "OCCUPATION_GROUP",
-            "description": "",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "OCCUPATION_NAME",
-            "description": "",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "SKILL",
-            "description": "",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "WORKTIME_EXTENT",
-            "description": "",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -504,11 +504,11 @@
       {
         "kind": "OBJECT",
         "name": "TaxonomyResponse",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "search",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -524,7 +524,7 @@
           },
           {
             "name": "total",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -536,7 +536,7 @@
           },
           {
             "name": "result",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -563,11 +563,11 @@
       {
         "kind": "OBJECT",
         "name": "TaxonomySearch",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "offset",
-            "description": "",
+            "description": null,
             "args": [],
             "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
             "isDeprecated": false,
@@ -575,7 +575,7 @@
           },
           {
             "name": "limit",
-            "description": "",
+            "description": null,
             "args": [],
             "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
             "isDeprecated": false,
@@ -590,11 +590,11 @@
       {
         "kind": "INTERFACE",
         "name": "TaxonomyResult",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "taxonomyId",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -606,7 +606,7 @@
           },
           {
             "name": "term",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -618,7 +618,7 @@
           },
           {
             "name": "type",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -640,7 +640,7 @@
       {
         "kind": "OBJECT",
         "name": "Mutation",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "consent",
@@ -672,7 +672,7 @@
             "args": [
               {
                 "name": "language",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -699,7 +699,7 @@
             "args": [
               {
                 "name": "experience",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -730,7 +730,7 @@
             "args": [
               {
                 "name": "education",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -761,7 +761,7 @@
             "args": [
               {
                 "name": "profile",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -788,7 +788,7 @@
             "args": [
               {
                 "name": "skill",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -815,7 +815,7 @@
             "args": [
               {
                 "name": "id",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -842,7 +842,7 @@
             "args": [
               {
                 "name": "id",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -869,7 +869,7 @@
             "args": [
               {
                 "name": "id",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -896,7 +896,7 @@
             "args": [
               {
                 "name": "language",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -926,11 +926,11 @@
       {
         "kind": "OBJECT",
         "name": "Consent",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "id",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -942,7 +942,7 @@
           },
           {
             "name": "url",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -954,7 +954,7 @@
           },
           {
             "name": "expires",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -973,11 +973,11 @@
       {
         "kind": "OBJECT",
         "name": "Login",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "url",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -989,7 +989,7 @@
           },
           {
             "name": "sessionId",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1008,12 +1008,12 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "ExperienceInput",
-        "description": "",
+        "description": null,
         "fields": null,
         "inputFields": [
           {
             "name": "taxonomyId",
-            "description": "",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -1023,13 +1023,13 @@
           },
           {
             "name": "term",
-            "description": "",
+            "description": null,
             "type": { "kind": "SCALAR", "name": "String", "ofType": null },
             "defaultValue": null
           },
           {
             "name": "years",
-            "description": "",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -1045,12 +1045,12 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "EducationInput",
-        "description": "",
+        "description": null,
         "fields": null,
         "inputFields": [
           {
             "name": "taxonomyId",
-            "description": "",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -1060,7 +1060,7 @@
           },
           {
             "name": "term",
-            "description": "",
+            "description": null,
             "type": { "kind": "SCALAR", "name": "String", "ofType": null },
             "defaultValue": null
           }
@@ -1072,12 +1072,12 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "ProfileInput",
-        "description": "",
+        "description": null,
         "fields": null,
         "inputFields": [
           {
             "name": "firstName",
-            "description": "",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -1087,7 +1087,7 @@
           },
           {
             "name": "lastName",
-            "description": "",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -1103,12 +1103,12 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "SkillInput",
-        "description": "",
+        "description": null,
         "fields": null,
         "inputFields": [
           {
             "name": "taxonomyId",
-            "description": "",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -1118,7 +1118,7 @@
           },
           {
             "name": "term",
-            "description": "",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -1128,7 +1128,7 @@
           },
           {
             "name": "type",
-            "description": "",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -1154,15 +1154,15 @@
       {
         "kind": "OBJECT",
         "name": "Subscription",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "consentApproved",
-            "description": "",
+            "description": null,
             "args": [
               {
                 "name": "consentRequestId",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -1189,11 +1189,11 @@
           },
           {
             "name": "loginApproved",
-            "description": "",
+            "description": null,
             "args": [
               {
                 "name": "loginRequestId",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -1227,11 +1227,11 @@
       {
         "kind": "OBJECT",
         "name": "ConsentResponse",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "accessToken",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1942,20 +1942,20 @@
       {
         "kind": "ENUM",
         "name": "CacheControlScope",
-        "description": "",
+        "description": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
           {
             "name": "PUBLIC",
-            "description": "",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "PRIVATE",
-            "description": "",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -2005,11 +2005,11 @@
       {
         "kind": "OBJECT",
         "name": "TaxonomyDefaultResult",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "taxonomyId",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2021,7 +2021,7 @@
           },
           {
             "name": "term",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2033,7 +2033,7 @@
           },
           {
             "name": "type",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2045,7 +2045,7 @@
           },
           {
             "name": "parentId",
-            "description": "",
+            "description": null,
             "args": [],
             "type": { "kind": "SCALAR", "name": "String", "ofType": null },
             "isDeprecated": false,
@@ -2062,11 +2062,11 @@
       {
         "kind": "OBJECT",
         "name": "TaxonomySkillResult",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "taxonomyId",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2078,7 +2078,7 @@
           },
           {
             "name": "term",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2090,7 +2090,7 @@
           },
           {
             "name": "type",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",

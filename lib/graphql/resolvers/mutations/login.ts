@@ -2,11 +2,7 @@ import { MutationResolvers } from '../../../__generated__/myskills'
 import config from '../../../../lib/config'
 import { v4 as uuid } from 'uuid'
 
-export const login: MutationResolvers.LoginResolver = async (
-  _,
-  _args,
-  _context
-) => {
+export const login: MutationResolvers['login'] = async (_, _args, _context) => {
   const sessionId = uuid()
 
   const loginRequestPayload = JSON.stringify({

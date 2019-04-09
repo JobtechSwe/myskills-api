@@ -2,7 +2,7 @@ import { Language, MutationResolvers } from '../../../__generated__/myskills'
 import { Area } from '../../../types'
 import authorizationToken from '../../../middleware/authorizationToken'
 
-export const addLanguage: MutationResolvers.AddLanguageResolver = async (
+export const addLanguage: MutationResolvers['addLanguage'] = async (
   _,
   { language },
   { req, mydata }

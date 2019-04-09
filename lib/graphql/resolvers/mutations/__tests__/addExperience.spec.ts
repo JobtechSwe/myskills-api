@@ -10,7 +10,7 @@ const args = {
 }
 
 test('save input in mydata', async () => {
-  await addExperience({}, args, ctx as any, {} as any)
+  await addExperience({} as any, args, ctx as any, {} as any)
 
   expect(ctx.mydata.saveDataList).toHaveBeenCalledWith({
     area: 'experiences',
@@ -24,15 +24,15 @@ test('returns updated data', async () => {
 
   ctx.mydata.saveDataList.mockResolvedValue(result)
 
-  await expect(addExperience({}, args, ctx as any, {} as any)).resolves.toEqual(
-    result
-  )
+  await expect(
+    addExperience({} as any, args, ctx as any, {} as any)
+  ).resolves.toEqual(result)
 })
 
 test('handles errors', async () => {
   ctx.mydata.saveDataList.mockRejectedValue('err')
 
-  await expect(addExperience({}, args, ctx as any, {} as any)).rejects.toThrow(
-    'err'
-  )
+  await expect(
+    addExperience({} as any, args, ctx as any, {} as any)
+  ).rejects.toThrow('err')
 })
