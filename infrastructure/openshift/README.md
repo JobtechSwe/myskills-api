@@ -12,7 +12,6 @@ Before you begin, this guide assumes that...
 
 ## Structure
 
-- `shared` (shared resources between environments, BuildConfigs and ImageStreams)
 - `setup` (resources that you should only create once and not care about it after like PVCs for example)
 - `[ci, test, prod]` (environment specific resources; should be as easy as possible to deploy and teardown whenever)
 
@@ -61,7 +60,7 @@ oc create secret generic tls --from-file=/tmp/jtech.se.crt
 oc apply -f ./setup
 ```
 
-#### Deploy the whole stack
+#### Deploy the whole stack (even when you make updates to a resource)
 
 ##### CI
 
@@ -94,23 +93,4 @@ Optionally you can delete all resources
 ```bash
 # Delete also setup files (PVCs, ...)
 oc delete -f ./setup
-```
-
-<br>
-<br>
-
-### DEPRECATED NOTICE
-
-Previously we built the images in Openshift. Since we use Travis CI the following instructions are deprecated.
-
-#### Shared resources
-
-```bash
-# Deploy shared things (BuildConfigs + ImageStreams)
-oc apply -f ./shared
-```
-
-```bash
-# Delete also build configs and image streams
-oc delete -f ./shared
 ```
