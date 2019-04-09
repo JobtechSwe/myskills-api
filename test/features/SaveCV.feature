@@ -7,10 +7,10 @@ Feature: Save CV
       | taxonomyId   | term                    | type  |
       | FQAi_Nxv_4VZ | 3D-grafik-Autodesk Maya | skill |
       And I have this education input:
-      | taxonomyId | name        |
+      | taxonomyId | term        |
       | 123456789  | High school |
       And I have this experience input:
-      | taxonomyId  | name      | years |
+      | taxonomyId  | term      | years |
       | taxonomyId1 | Carpenter | 29    |
      When I send the cv input to the save method
      Then I will receive back what has been stored by this operation
