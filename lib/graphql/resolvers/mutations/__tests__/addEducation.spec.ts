@@ -4,7 +4,7 @@ import { addEducation } from '../addEducation'
 const args = {
   education: {
     taxonomyId: '1',
-    name: 'Librarian',
+    term: 'Librarian',
   },
 }
 

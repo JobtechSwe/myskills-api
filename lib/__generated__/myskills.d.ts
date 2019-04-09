@@ -15,7 +15,7 @@ export interface TaxonomyQueryInput {
 export interface ExperienceInput {
   taxonomyId: string
 
-  name?: Maybe<string>
+  term?: Maybe<string>
 
   years: string
 }
@@ -23,7 +23,7 @@ export interface ExperienceInput {
 export interface EducationInput {
   taxonomyId: string
 
-  name?: Maybe<string>
+  term?: Maybe<string>
 }
 
 export interface ProfileInput {
@@ -125,7 +125,7 @@ export interface Education {
 
   taxonomyId: string
 
-  name?: Maybe<string>
+  term?: Maybe<string>
 }
 
 export interface Experience {
@@ -133,7 +133,7 @@ export interface Experience {
 
   taxonomyId: string
 
-  name?: Maybe<string>
+  term?: Maybe<string>
 
   years: string
 }
@@ -397,7 +397,7 @@ export namespace EducationResolvers {
 
     taxonomyId?: TaxonomyIdResolver<string, TypeParent, TContext>
 
-    name?: NameResolver<Maybe<string>, TypeParent, TContext>
+    term?: TermResolver<Maybe<string>, TypeParent, TContext>
   }
 
   export type IdResolver<
@@ -410,7 +410,7 @@ export namespace EducationResolvers {
     Parent = Education,
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
-  export type NameResolver<
+  export type TermResolver<
     R = Maybe<string>,
     Parent = Education,
     TContext = ApolloServerContext
@@ -426,7 +426,7 @@ export namespace ExperienceResolvers {
 
     taxonomyId?: TaxonomyIdResolver<string, TypeParent, TContext>
 
-    name?: NameResolver<Maybe<string>, TypeParent, TContext>
+    term?: TermResolver<Maybe<string>, TypeParent, TContext>
 
     years?: YearsResolver<string, TypeParent, TContext>
   }
@@ -441,7 +441,7 @@ export namespace ExperienceResolvers {
     Parent = Experience,
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
-  export type NameResolver<
+  export type TermResolver<
     R = Maybe<string>,
     Parent = Experience,
     TContext = ApolloServerContext

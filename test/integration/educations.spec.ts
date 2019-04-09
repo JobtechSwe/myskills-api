@@ -5,17 +5,17 @@ import { getConsentedClient } from './integrationUtils'
 const GET_EDUCATIONS = gql`
   query educations {
     educations {
-      name
+      term
     }
   }
 `
 
 const ADD_EDUCATION = gql`
-  mutation addEducation($name: String!, $taxonomyId: String!) {
-    addEducation(education: { name: $name, taxonomyId: $taxonomyId }) {
+  mutation addEducation($term: String!, $taxonomyId: String!) {
+    addEducation(education: { term: $term, taxonomyId: $taxonomyId }) {
       id
       taxonomyId
-      name
+      term
     }
   }
 `
@@ -47,16 +47,16 @@ describe('#educations', () => {
       mutation: ADD_EDUCATION,
       variables: {
         taxonomyId: '123456789',
-        name: 'High school',
+        term: 'High school',
       },
     })
-    expect(addEducation.name).toBe('High school')
+    expect(addEducation.term).toBe('High school')
 
     await mutate({
       mutation: ADD_EDUCATION,
       variables: {
         taxonomyId: '58',
-        name: 'PhD',
+        term: 'PhD',
       },
     })
 
@@ -64,8 +64,8 @@ describe('#educations', () => {
       query: GET_EDUCATIONS,
     })
 
-    expect(data.educations[0].name).toBe('High school')
-    expect(data.educations[1].name).toBe('PhD')
+    expect(data.educations[0].term).toBe('High school')
+    expect(data.educations[1].term).toBe('PhD')
   })
 
   it('should be possible to remove an education', async () => {
@@ -77,7 +77,7 @@ describe('#educations', () => {
       mutation: ADD_EDUCATION,
       variables: {
         taxonomyId: '123456789',
-        name: 'Primary School',
+        term: 'Primary School',
       },
     })
 
@@ -96,7 +96,7 @@ describe('#educations', () => {
       query: GET_EDUCATIONS,
     })
     const success = dataAfterDelete.educations.every(
-      ({ name }) => name !== 'Primary School'
+      ({ term }) => term !== 'Primary School'
     )
     expect(success).toBeTruthy()
   })

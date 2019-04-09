@@ -3,7 +3,6 @@ import { addSkill } from '../addSkill'
 
 const args = {
   skill: {
-    name: 'Developer',
     taxonomyId: 'someTaxonomyId',
     term: '',
     type: 'skill',
