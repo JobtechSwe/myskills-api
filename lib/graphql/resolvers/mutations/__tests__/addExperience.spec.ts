@@ -4,7 +4,7 @@ import { addExperience } from '../addExperience'
 const args = {
   experience: {
     taxonomyId: '1',
-    name: 'Engineer',
+    term: 'Engineer',
     years: '1',
   },
 }

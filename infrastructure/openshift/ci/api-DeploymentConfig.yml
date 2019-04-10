@@ -69,11 +69,3 @@ spec:
       terminationGracePeriodSeconds: 30
   triggers:
     - type: ConfigChange
-    # - imageChangeParams:
-    #     automatic: true
-    #     containerNames:
-    #       - api-ci
-    #     from:
-    #       kind: ImageStreamTag
-    #       name: "api:latest"
-    #   type: ImageChange

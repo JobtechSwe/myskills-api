@@ -41,7 +41,7 @@ export interface OntologyRelatedInput {
 export interface ExperienceInput {
   taxonomyId: string
 
-  name?: Maybe<string>
+  term?: Maybe<string>
 
   years: string
 }
@@ -49,7 +49,7 @@ export interface ExperienceInput {
 export interface EducationInput {
   taxonomyId: string
 
-  name?: Maybe<string>
+  term?: Maybe<string>
 }
 
 export interface ProfileInput {
@@ -171,7 +171,7 @@ export interface Education {
 
   taxonomyId: string
 
-  name?: Maybe<string>
+  term?: Maybe<string>
 }
 
 export interface Experience {
@@ -179,7 +179,7 @@ export interface Experience {
 
   taxonomyId: string
 
-  name?: Maybe<string>
+  term?: Maybe<string>
 
   years: string
 }
@@ -273,6 +273,8 @@ export interface OntologyTextParseResponse {
 }
 
 export interface Mutation {
+  /** Register consent for a user */
+  consent: Consent
   /** Login an existing user */
   login: Login
   /** Add languages to user */
@@ -295,14 +297,24 @@ export interface Mutation {
   removeLanguage: boolean
 }
 
-export interface Login {
+export interface Consent {
   id: string
+
+  url: string
 
   expires: string
 }
 
+export interface Login {
+  url: string
+
+  sessionId: string
+}
+
 export interface Subscription {
   consentApproved: ConsentResponse
+
+  loginApproved: ConsentResponse
 }
 
 export interface ConsentResponse {
@@ -377,6 +389,9 @@ export interface RemoveLanguageMutationArgs {
 }
 export interface ConsentApprovedSubscriptionArgs {
   consentRequestId: string
+}
+export interface LoginApprovedSubscriptionArgs {
+  loginRequestId: string
 }
 
 import {
@@ -562,7 +577,7 @@ export namespace EducationResolvers {
 
     taxonomyId?: TaxonomyIdResolver<string, TypeParent, TContext>
 
-    name?: NameResolver<Maybe<string>, TypeParent, TContext>
+    term?: TermResolver<Maybe<string>, TypeParent, TContext>
   }
 
   export type IdResolver<
@@ -575,7 +590,7 @@ export namespace EducationResolvers {
     Parent = Education,
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
-  export type NameResolver<
+  export type TermResolver<
     R = Maybe<string>,
     Parent = Education,
     TContext = ApolloServerContext
@@ -591,7 +606,7 @@ export namespace ExperienceResolvers {
 
     taxonomyId?: TaxonomyIdResolver<string, TypeParent, TContext>
 
-    name?: NameResolver<Maybe<string>, TypeParent, TContext>
+    term?: TermResolver<Maybe<string>, TypeParent, TContext>
 
     years?: YearsResolver<string, TypeParent, TContext>
   }
@@ -606,7 +621,7 @@ export namespace ExperienceResolvers {
     Parent = Experience,
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
-  export type NameResolver<
+  export type TermResolver<
     R = Maybe<string>,
     Parent = Experience,
     TContext = ApolloServerContext
@@ -947,6 +962,8 @@ export namespace OntologyTextParseResponseResolvers {
 
 export namespace MutationResolvers {
   export interface Resolvers<TContext = ApolloServerContext, TypeParent = {}> {
+    /** Register consent for a user */
+    consent?: ConsentResolver<Consent, TypeParent, TContext>
     /** Login an existing user */
     login?: LoginResolver<Login, TypeParent, TContext>
     /** Add languages to user */
@@ -969,6 +986,11 @@ export namespace MutationResolvers {
     removeLanguage?: RemoveLanguageResolver<boolean, TypeParent, TContext>
   }
 
+  export type ConsentResolver<
+    R = Consent,
+    Parent = {},
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
   export type LoginResolver<
     R = Login,
     Parent = {},
@@ -1056,22 +1078,51 @@ export namespace MutationResolvers {
   }
 }
 
-export namespace LoginResolvers {
+export namespace ConsentResolvers {
   export interface Resolvers<
     TContext = ApolloServerContext,
-    TypeParent = Login
+    TypeParent = Consent
   > {
     id?: IdResolver<string, TypeParent, TContext>
+
+    url?: UrlResolver<string, TypeParent, TContext>
 
     expires?: ExpiresResolver<string, TypeParent, TContext>
   }
 
   export type IdResolver<
     R = string,
-    Parent = Login,
+    Parent = Consent,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type UrlResolver<
+    R = string,
+    Parent = Consent,
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
   export type ExpiresResolver<
+    R = string,
+    Parent = Consent,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+}
+
+export namespace LoginResolvers {
+  export interface Resolvers<
+    TContext = ApolloServerContext,
+    TypeParent = Login
+  > {
+    url?: UrlResolver<string, TypeParent, TContext>
+
+    sessionId?: SessionIdResolver<string, TypeParent, TContext>
+  }
+
+  export type UrlResolver<
+    R = string,
+    Parent = Login,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type SessionIdResolver<
     R = string,
     Parent = Login,
     TContext = ApolloServerContext
@@ -1085,6 +1136,8 @@ export namespace SubscriptionResolvers {
       TypeParent,
       TContext
     >
+
+    loginApproved?: LoginApprovedResolver<ConsentResponse, TypeParent, TContext>
   }
 
   export type ConsentApprovedResolver<
@@ -1094,6 +1147,15 @@ export namespace SubscriptionResolvers {
   > = SubscriptionResolver<R, Parent, TContext, ConsentApprovedArgs>
   export interface ConsentApprovedArgs {
     consentRequestId: string
+  }
+
+  export type LoginApprovedResolver<
+    R = ConsentResponse,
+    Parent = {},
+    TContext = ApolloServerContext
+  > = SubscriptionResolver<R, Parent, TContext, LoginApprovedArgs>
+  export interface LoginApprovedArgs {
+    loginRequestId: string
   }
 }
 
@@ -1264,6 +1326,7 @@ export interface IResolvers<TContext = ApolloServerContext> {
     TContext
   >
   Mutation?: MutationResolvers.Resolvers<TContext>
+  Consent?: ConsentResolvers.Resolvers<TContext>
   Login?: LoginResolvers.Resolvers<TContext>
   Subscription?: SubscriptionResolvers.Resolvers<TContext>
   ConsentResponse?: ConsentResponseResolvers.Resolvers<TContext>

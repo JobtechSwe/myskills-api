@@ -14,11 +14,12 @@ import {
 } from './adapters/mydata'
 import config from './config'
 import schema from './graphql/schema'
-import { onConsentApproved } from './services/consents'
+import { onConsentApproved, onLoginApproved } from './services/consents'
 import { getConsentRequest } from './services/db'
 import TaxonomyAPI from './adapters/taxonomy'
 import OntologyAPI from './adapters/ontology'
 import { createServer } from 'http'
+import { Consent, Login } from '@mydata/client'
 
 const app = express()
 app.set('etag', 'strong')
@@ -46,7 +47,10 @@ app.get('/approved/:id', async (req, res) => {
 })
 
 app.use(mydataRoutes)
-mydataEvents.on('CONSENT_APPROVED', onConsentApproved)
+
+mydataEvents.on<Consent>('CONSENT_APPROVED', onConsentApproved)
+mydataEvents.on<Login>('LOGIN_APPROVED', onLoginApproved)
+
 import { Request } from 'express'
 
 /**
@@ -92,11 +96,17 @@ server.installSubscriptionHandlers(httpServer)
 
 const port = config.SERVER_PORT
 
-export const appIsReady: Promise<Boolean> = new Promise(resolve =>
+export const appIsReady: Promise<Boolean> = new Promise((resolve, reject) =>
   httpServer.listen(port, async () => {
-    await mydataConnect()
-    console.log(`Listening on port: ${port}`)
-    resolve(true)
+    try {
+      await mydataConnect()
+      console.log(`Listening on port: ${port}`)
+      resolve(true)
+    } catch (e) {
+      reject(
+        `Could not connect to mydata-operator: ${JSON.stringify(e, null, 2)}`
+      )
+    }
   })
 )
 

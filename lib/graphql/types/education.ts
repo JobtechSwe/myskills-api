@@ -4,11 +4,11 @@ export const typeDefs = gql`
   type Education {
     id: String!
     taxonomyId: String!
-    name: String
+    term: String
   }
 
   input EducationInput {
     taxonomyId: String!
-    name: String
+    term: String
   }
 `

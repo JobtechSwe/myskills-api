@@ -31,26 +31,6 @@ The Travis configuration consists of 3 stages:
 
 https://github.com/travis-ci/travis.rb#installation
 
-#### Create Docker secrets
-
-These are used for pushing the Docker image to Dockerhub
-
-```bash
-travis encrypt DOCKER_USERNAME=user --com --add
-travis encrypt DOCKER_PASSWORD=secret --com --add
-```
-
-#### Create Openshift secrets
-
-These are used for issuing Openshift commands in the deploy stage. <br>
-We are going to create a service account so that we don't use admin accounts.
-
-- first add the openshift url (remember to update localhost to the actual URL)
-
-```bash
-travis encrypt OPENSHIFT_URL=localhost:8443 --com --add # --com to specify to use .com (default is .org); --add updates your .travis.yml
-```
-
 #### Service account and token
 
 - create a Service Account in Openshift <br>

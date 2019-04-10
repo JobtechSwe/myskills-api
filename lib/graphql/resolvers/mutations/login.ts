@@ -1,17 +1,27 @@
-import { Login, MutationResolvers } from '../../../__generated__/myskills'
-import { defaultRequest } from '../../../services/consents'
+import { MutationResolvers } from '../../../__generated__/myskills'
+import config from '../../../../lib/config'
+import { v4 as uuid } from 'uuid'
 
 export const login: MutationResolvers.LoginResolver = async (
   _,
   _args,
-  { mydata }
+  _context
 ) => {
-  try {
-    const request = defaultRequest(3600 * 24 * 31)
-    const pendingRequest = await mydata.consents.request<Login>(request)
+  const sessionId = uuid()
 
-    return pendingRequest
-  } catch (e) {
-    throw new Error(e)
+  const loginRequestPayload = JSON.stringify({
+    sessionId,
+    clientId: config.DOMAIN,
+  })
+
+  const base64urlPayload = Buffer.from(loginRequestPayload)
+    .toString('base64')
+    .replace(/=/g, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+
+  return {
+    url: `mydata://login/${base64urlPayload}`,
+    sessionId,
   }
 }

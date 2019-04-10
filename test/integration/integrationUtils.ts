@@ -1,6 +1,6 @@
 import got from 'got'
 import { consents } from '../../lib/adapters/mydata'
-import { Login } from '../../lib/__generated__/myskills'
+import { Consent } from '../../lib/__generated__/myskills'
 import { defaultRequest } from '../../lib/services/consents'
 import { getConsentRequest } from '../../lib/services/db'
 import { createTestClient } from 'apollo-server-testing'
@@ -33,21 +33,28 @@ export const getClient = (
 export const getConsentedClient = async (
   server
 ): Promise<{ query: Function; mutate: Function }> => {
-  await createMyDataAccount()
-  const request = defaultRequest(3600 * 24 * 31)
-  const { id } = await consents.request<Login>(request)
-  await approveConsent(id)
-  const { accessToken } = await getConsentRequest(id)
+  try {
+    await createMyDataAccount()
+    const request = defaultRequest(3600 * 24 * 31)
+    const { url, id } = await consents.request<Consent>(request)
+    await approveConsent(url)
+    const { accessToken } = await getConsentRequest(id)
 
-  return getClient(server, {
-    context: {
-      req: {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
+    return getClient(server, {
+      context: {
+        req: {
+          headers: {
+            authorization: `Bearer ${accessToken}`,
+          },
         },
       },
-    },
-  })
+    })
+  } catch (error) {
+    console.error(
+      'Error when setting up integration tests consented client.',
+      error
+    )
+  }
 }
 
 const createMyDataAccount = (
@@ -66,24 +73,28 @@ const createMyDataAccount = (
   })
 }
 
-const approveConsent = async consentRequestId => {
-  const {
-    body: { data },
-  } = await got(`${MYDATA_APP_URL}/getConsentRequest`, {
-    json: true,
-    method: 'post',
-    body: {
-      args: consentRequestId,
-    },
-  })
-
-  return got(`${MYDATA_APP_URL}/approveConsentRequest`, {
-    json: true,
-    method: 'post',
-    body: {
-      args: {
-        data,
+const approveConsent = async consentRequestUrl => {
+  try {
+    const {
+      body: { data },
+    } = await got(`${MYDATA_APP_URL}/getConsentRequest`, {
+      json: true,
+      method: 'post',
+      body: {
+        args: consentRequestUrl,
       },
-    },
-  })
+    })
+
+    return got(`${MYDATA_APP_URL}/approveConsentRequest`, {
+      json: true,
+      method: 'post',
+      body: {
+        args: {
+          data,
+        },
+      },
+    })
+  } catch (e) {
+    throw Error(`ApproveConsentIntegrationTest: ${JSON.stringify(e, null, 2)}`)
+  }
 }
