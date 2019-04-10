@@ -62,15 +62,11 @@ const GET_ONTOLOGY_TEXT_PARSE = gql`
 `
 
 const GET_ONTOLOGY_CONCEPT = gql`
-  query ontologyConcept(
-    $id: String!
-    $limit: Int
-    $offset: Int
-    $type: OntologyType
-  ) {
+  query ontologyConcept($id: String!, $limit: Int, $offset: Int) {
     ontologyConcept(id: $id, params: { limit: $limit, offset: $offset }) {
       id
       name
+      type
       terms {
         name
         type
