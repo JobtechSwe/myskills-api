@@ -3,22 +3,18 @@
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
     "@semantic-release/github",
-    "semantic-release-docker",
+    [
+      "semantic-release-docker",
+      {
+        "registryUrl": "docker.io",
+        "name": "jobtechswe/myskills-api"
+      }
+    ],
     [
       "@semantic-release/exec",
       {
         "publishCmd": "./infrastructure/travis/deploy.sh ${nextRelease.version}"
       }
     ]
-  ],
-  "release": {
-    "verifyConditions": {
-      "path": "semantic-release-docker",
-      "registryUrl": "docker.io"
-    },
-    "publish": {
-      "path": "semantic-release-docker",
-      "name": "jobtechswe/myskills-api"
-    }
-  }
+  ]
 }
