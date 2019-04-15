@@ -43,6 +43,11 @@ const custom = {
     SKILL: 'skill',
     WORKTIME_EXTENT: 'worktime-extent',
   },
+  OntologyType: {
+    OCCUPATION: 'occupation',
+    TRAIT: 'trait',
+    SKILL: 'skill',
+  },
 }
 
 const customScalarResolvers = {

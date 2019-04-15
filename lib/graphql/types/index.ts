@@ -114,6 +114,20 @@ const typeDefs = gql`
     Get from taxonomy
     """
     taxonomy(params: TaxonomyQueryInput): TaxonomyResponse!
+
+    """
+    Get from ontology
+    """
+    ontologyConcepts(params: OntologyConceptsInput): [OntologyConceptResponse]!
+
+    ontologyConcept(
+      id: String!
+      params: OntologyConceptInput
+    ): OntologyConceptTermResponse!
+
+    ontologyRelated(params: OntologyRelatedInput): OntologyRelatedResponse!
+
+    ontologyTextParse(text: String!): [OntologyTextParseResponse]!
   }
 
   type Subscription {

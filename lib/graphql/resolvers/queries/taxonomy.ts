@@ -3,6 +3,7 @@ import {
   TaxonomyType,
   TaxonomyQueryArgs,
 } from '../../../__generated__/myskills'
+import { renameKeys } from '../../../utils/renameKeys'
 
 interface AfTaxonomyResult {
   conceptId: string
@@ -28,18 +29,6 @@ interface AfTaxonomyResponse {
   result: [AfTaxonomyResult]
 }
 
-const renameProp = (
-  oldProp: string,
-  newProp: string,
-  { [oldProp]: old, ...others }: any
-) =>
-  old
-    ? {
-        ...others,
-        [newProp]: old,
-      }
-    : { ...others }
-
 export const taxonomy: QueryResolvers.TaxonomyResolver = async (
   _,
   { params }: TaxonomyQueryArgs,
@@ -47,7 +36,7 @@ export const taxonomy: QueryResolvers.TaxonomyResolver = async (
 ) => {
   const taxonomyQuery =
     params && params.parentId
-      ? renameProp('parentId', 'parent-id', params)
+      ? (renameKeys({ parentId: 'parent-id' })(params) as any)
       : params
 
   try {

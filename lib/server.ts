@@ -17,6 +17,7 @@ import schema from './graphql/schema'
 import { onConsentApproved, onLoginApproved } from './services/consents'
 import { getConsentRequest } from './services/db'
 import TaxonomyAPI from './adapters/taxonomy'
+import OntologyAPI from './adapters/ontology'
 import { createServer } from 'http'
 import { Consent, Login } from '@mydata/client'
 
@@ -64,6 +65,7 @@ export const server = new ApolloServer({
   }),
   dataSources: () => ({
     taxonomyAPI: new TaxonomyAPI(),
+    ontologyAPI: new OntologyAPI(),
   }),
   context: ({ req }: { req: Request }) => {
     return {

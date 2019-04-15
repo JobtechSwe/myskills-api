@@ -1,5 +1,7 @@
 import TaxonomyAPI from '../../adapters/taxonomy'
+import OntologyAPI from '../../adapters/ontology'
 jest.mock('../../adapters/taxonomy')
+jest.mock('../../adapters/ontology')
 
 export const ctx = {
   req: {
@@ -18,5 +20,6 @@ export const ctx = {
   },
   dataSources: {
     taxonomyAPI: new TaxonomyAPI(),
+    ontologyAPI: new OntologyAPI(),
   },
 }
