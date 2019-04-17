@@ -113,6 +113,9 @@ export enum CacheControlScope {
   Private = 'PRIVATE',
 }
 
+/** The `Upload` scalar type represents a file upload. */
+export type Upload = any
+
 /** A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
 export type Date = any
 
@@ -124,9 +127,6 @@ export type Json = any
 
 /** A password string. Has to be at least 8 characters long. */
 export type Password = any
-
-/** The `Upload` scalar type represents a file upload. */
-export type Upload = any
 
 /** The UUID scalar type represents a UUID. */
 export type Uuid = any
@@ -162,6 +162,8 @@ export interface Query {
   profile: Profile
   /** Get user skills */
   skills: (Maybe<Skill>)[]
+  /** Get user image */
+  image: string
   /** Get from taxonomy */
   taxonomy: TaxonomyResponse
   /** Get from ontology */
@@ -305,6 +307,8 @@ export interface Mutation {
   removeLanguage: boolean
   /** Save the complete cv to user */
   saveCV: Cv
+  /** Save Image as base64 string */
+  uploadImage: ImgFile
 }
 
 export interface Consent {
@@ -327,6 +331,10 @@ export interface Cv {
   education?: Maybe<(Maybe<Education>)[]>
 
   experience?: Maybe<(Maybe<Experience>)[]>
+}
+
+export interface ImgFile {
+  imageString: string
 }
 
 export interface Subscription {
@@ -408,6 +416,9 @@ export interface RemoveLanguageMutationArgs {
 export interface SaveCvMutationArgs {
   cv: CvInput
 }
+export interface UploadImageMutationArgs {
+  file: Upload
+}
 export interface ConsentApprovedSubscriptionArgs {
   consentRequestId: string
 }
@@ -488,6 +499,8 @@ export namespace QueryResolvers {
     profile?: ProfileResolver<Profile, TypeParent, TContext>
     /** Get user skills */
     skills?: SkillsResolver<(Maybe<Skill>)[], TypeParent, TContext>
+    /** Get user image */
+    image?: ImageResolver<string, TypeParent, TContext>
     /** Get from taxonomy */
     taxonomy?: TaxonomyResolver<TaxonomyResponse, TypeParent, TContext>
     /** Get from ontology */
@@ -538,6 +551,11 @@ export namespace QueryResolvers {
   > = Resolver<R, Parent, TContext>
   export type SkillsResolver<
     R = (Maybe<Skill>)[],
+    Parent = {},
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+  export type ImageResolver<
+    R = string,
     Parent = {},
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
@@ -1007,6 +1025,8 @@ export namespace MutationResolvers {
     removeLanguage?: RemoveLanguageResolver<boolean, TypeParent, TContext>
     /** Save the complete cv to user */
     saveCV?: SaveCvResolver<Cv, TypeParent, TContext>
+    /** Save Image as base64 string */
+    uploadImage?: UploadImageResolver<ImgFile, TypeParent, TContext>
   }
 
   export type ConsentResolver<
@@ -1108,6 +1128,15 @@ export namespace MutationResolvers {
   export interface SaveCvArgs {
     cv: CvInput
   }
+
+  export type UploadImageResolver<
+    R = ImgFile,
+    Parent = {},
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext, UploadImageArgs>
+  export interface UploadImageArgs {
+    file: Upload
+  }
 }
 
 export namespace ConsentResolvers {
@@ -1191,6 +1220,21 @@ export namespace CvResolvers {
   export type ExperienceResolver<
     R = Maybe<(Maybe<Experience>)[]>,
     Parent = Cv,
+    TContext = ApolloServerContext
+  > = Resolver<R, Parent, TContext>
+}
+
+export namespace ImgFileResolvers {
+  export interface Resolvers<
+    TContext = ApolloServerContext,
+    TypeParent = ImgFile
+  > {
+    imageString?: ImageStringResolver<string, TypeParent, TContext>
+  }
+
+  export type ImageStringResolver<
+    R = string,
+    Parent = ImgFile,
     TContext = ApolloServerContext
   > = Resolver<R, Parent, TContext>
 }
@@ -1349,6 +1393,10 @@ export interface DeprecatedDirectiveArgs {
   reason?: string
 }
 
+export interface UploadScalarConfig
+  extends GraphQLScalarTypeConfig<Upload, any> {
+  name: 'Upload'
+}
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<Date, any> {
   name: 'Date'
 }
@@ -1361,10 +1409,6 @@ export interface JSONScalarConfig extends GraphQLScalarTypeConfig<Json, any> {
 export interface PasswordScalarConfig
   extends GraphQLScalarTypeConfig<Password, any> {
   name: 'Password'
-}
-export interface UploadScalarConfig
-  extends GraphQLScalarTypeConfig<Upload, any> {
-  name: 'Upload'
 }
 export interface UUIDScalarConfig extends GraphQLScalarTypeConfig<Uuid, any> {
   name: 'UUID'
@@ -1395,16 +1439,17 @@ export interface IResolvers<TContext = ApolloServerContext> {
   Consent?: ConsentResolvers.Resolvers<TContext>
   Login?: LoginResolvers.Resolvers<TContext>
   Cv?: CvResolvers.Resolvers<TContext>
+  ImgFile?: ImgFileResolvers.Resolvers<TContext>
   Subscription?: SubscriptionResolvers.Resolvers<TContext>
   ConsentResponse?: ConsentResponseResolvers.Resolvers<TContext>
   TaxonomyDefaultResult?: TaxonomyDefaultResultResolvers.Resolvers<TContext>
   TaxonomySkillResult?: TaxonomySkillResultResolvers.Resolvers<TContext>
   TaxonomyResult?: TaxonomyResultResolvers.Resolvers
+  Upload?: GraphQLScalarType
   Date?: GraphQLScalarType
   Email?: GraphQLScalarType
   Json?: GraphQLScalarType
   Password?: GraphQLScalarType
-  Upload?: GraphQLScalarType
   Uuid?: GraphQLScalarType
 }
 

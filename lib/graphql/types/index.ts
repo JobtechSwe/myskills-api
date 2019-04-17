@@ -82,6 +82,11 @@ const typeDefs = gql`
     Save the complete cv to user
     """
     saveCV(cv: CVInput!): CV!
+
+    """
+    Save Image as base64 string
+    """
+    uploadImage(file: Upload!): ImgFile!
   }
 
   type Query {
@@ -109,6 +114,11 @@ const typeDefs = gql`
     Get user skills
     """
     skills: [Skill]!
+
+    """
+    Get user image
+    """
+    image: String!
 
     """
     Get from taxonomy

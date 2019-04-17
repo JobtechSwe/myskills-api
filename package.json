@@ -31,6 +31,7 @@
   "homepage": "https://github.com/JobtechSwe/myskills-api#readme",
   "dependencies": {
     "@mydata/client": "^0.24.1",
+    "@types/sharp": "^0.22.1",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-client": "^2.5.1",
     "apollo-codegen": "^0.20.2",
@@ -50,6 +51,7 @@
     "ioredis": "^4.6.2",
     "lodash": "^4.17.11",
     "ramda": "^0.26.1",
+    "sharp": "^0.22.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
