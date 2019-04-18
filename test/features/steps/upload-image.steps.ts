@@ -2,8 +2,9 @@ import { defineFeature, loadFeature } from 'jest-cucumber'
 import { getConsentedClient } from '../../integration/integrationUtils'
 import server, { appIsReady } from '../../../lib/server'
 import fs from 'fs'
-const feature = loadFeature('./test/features/SaveImg.feature')
+const feature = loadFeature('./test/features/UploadImage.feature')
 import { UPLOAD_IMAGE, IMAGE } from '../gql'
+
 defineFeature(feature, test => {
   beforeEach(async () => {
     await appIsReady
@@ -20,16 +21,13 @@ defineFeature(feature, test => {
     when(/^I save the image "(.*)"$/, async imageString => {
       imagePath = `${process.cwd()}/test/assets/${imageString}.jpeg`
       const imageStream = fs.createReadStream(imagePath)
-      console.log('imageStream:', imageStream)
-      const { data, errors } = await mutate({
+      const { data } = await mutate({
         mutation: UPLOAD_IMAGE,
         variables: {
           file: imageStream,
         },
       })
-      console.log('errors:', errors)
       smallImg = data.uploadImage
-      console.log('data:', data.uploadImage)
     })
 
     then(
@@ -38,6 +36,7 @@ defineFeature(feature, test => {
         const expectedImgString = fs.readFileSync(imagePath, {
           encoding: 'base64',
         })
+
         expect(smallImg.imageString).toBe(expectedImgString)
       }
     )
@@ -49,8 +48,8 @@ defineFeature(feature, test => {
           query: IMAGE,
         })
         const imageString = fs.readFileSync(imagePath, { encoding: 'base64' })
-        console.log('imageString:', imageString)
-        expect(data.imageString).toBe(imageString)
+
+        expect(data.image).toBe(imageString)
       }
     )
   })
@@ -59,25 +58,23 @@ defineFeature(feature, test => {
     const croppedImagePath =
       process.cwd() + '/test/assets/cropped-otherperson.jpeg'
     let mutate, query, bigImage
+
     given('I have a bearer token', async () => {
       ;({ mutate, query } = await getConsentedClient(server))
     })
 
     when(
-      /^I save an image that is larger than 800x600: "(.*)"$/,
+      /^I save an image that is larger than 200x200: "(.*)"$/,
       async imageString => {
         const imagePath = `${process.cwd()}/test/assets/${imageString}.jpeg`
         const imageStream = fs.createReadStream(imagePath)
-        console.log('imageStream:', imageStream)
-        const { data, errors } = await mutate({
+        const { data } = await mutate({
           mutation: UPLOAD_IMAGE,
           variables: {
             file: imageStream,
           },
         })
-        console.log('errors:', errors)
         bigImage = data.uploadImage
-        console.log('data:', data.uploadImage)
       }
     )
 
@@ -87,6 +84,7 @@ defineFeature(feature, test => {
         const croppedImage = fs.readFileSync(croppedImagePath, {
           encoding: 'base64',
         })
+
         expect(bigImage.imageString).toBe(croppedImage)
       }
     )
@@ -98,7 +96,8 @@ defineFeature(feature, test => {
       const croppedImage = fs.readFileSync(croppedImagePath, {
         encoding: 'base64',
       })
-      expect(data.imageString).toBe(croppedImage)
+
+      expect(data.image).toBe(croppedImage)
     })
   })
 })

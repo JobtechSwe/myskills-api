@@ -1,9 +1,12 @@
 import { MutationResolvers, ImgFile } from '../../../__generated__/myskills'
 import { Area } from '../../../types'
 import authorizationToken from '../../../middleware/authorizationToken'
-// import sharp from 'sharp'
+import sharp from 'sharp'
 
-async function streamToBase64String(file: any) {
+const MAX_WIDTH = 200
+const MAX_HEIGHT = 200
+
+async function streamToBuffer(file: any) {
   const bufferArray: Array<Buffer> = []
 
   file.on('readable', function() {
@@ -15,7 +18,8 @@ async function streamToBase64String(file: any) {
   const buffer: Buffer = await new Promise(resolve =>
     file.on('end', () => resolve(Buffer.concat(bufferArray)))
   )
-  return buffer.toString('base64')
+
+  return buffer
 }
 
 export const uploadImage: MutationResolvers.UploadImageResolver = async (
@@ -23,16 +27,29 @@ export const uploadImage: MutationResolvers.UploadImageResolver = async (
   { file },
   { req, mydata }
 ): Promise<ImgFile> => {
-  const token = authorizationToken(req)
-  const imageString = await streamToBase64String(file)
+  try {
+    const token = authorizationToken(req)
+    let imageBuffer = await streamToBuffer(file)
+    const {
+      info: { width, height },
+    } = await sharp(imageBuffer).toBuffer({ resolveWithObject: true })
 
-  await mydata.saveData({
-    area: Area.image,
-    data: imageString,
-    token,
-  })
+    if (height > MAX_HEIGHT || width > MAX_WIDTH) {
+      imageBuffer = await sharp(imageBuffer)
+        .resize(MAX_WIDTH, MAX_HEIGHT)
+        .toBuffer()
+    }
 
-  return {
-    imageString,
+    await mydata.saveData<ImgFile>({
+      area: Area.image,
+      data: { imageString: imageBuffer.toString('base64') },
+      token,
+    })
+
+    return {
+      imageString: imageBuffer.toString('base64'),
+    }
+  } catch (e) {
+    throw new Error(`upload image error: ${e}`)
   }
 }

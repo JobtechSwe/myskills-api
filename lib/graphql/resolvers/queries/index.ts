@@ -1,4 +1,5 @@
 export * from './educations'
+export * from './image'
 export * from './experiences'
 export * from './languages'
 export * from './ontologyConcept'

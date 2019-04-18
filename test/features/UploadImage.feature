@@ -7,6 +7,6 @@ Feature: Save Image
         And When I query for it I will receive the image as base64 string
     Scenario: Upload large image
         Given I have a bearer token
-        When I save an image that is larger than 800x600: "otherperson-large"
+        When I save an image that is larger than 200x200: "otherperson-large"
         Then I will receive the cropped image that has been stored by this operation
         And I will see the picture under the picture section

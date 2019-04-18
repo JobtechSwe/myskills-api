@@ -2,37 +2,87 @@ import { uploadImage } from '../uploadImage'
 import { ctx } from '../../../__mocks__/apolloServerContext'
 import { Area } from '../../../../types'
 import fs from 'fs'
-import path from 'path'
+
+declare global {
+  namespace jest {
+    interface Expect {
+      toBeSmallerThan(a: string): any
+    }
+  }
+}
+
+expect.extend({
+  toBeSmallerThan(receivedBuffer: string, compareBuffer: string) {
+    if (compareBuffer.length > receivedBuffer.length) {
+      return {
+        pass: true,
+        message: () =>
+          `expected ${receivedBuffer.length} not to be smaller than ${
+            compareBuffer.length
+          }`,
+      }
+    } else {
+      return {
+        pass: false,
+        message: () =>
+          `expected ${receivedBuffer.length} to be smaller than ${
+            compareBuffer.length
+          }`,
+      }
+    }
+  },
+})
+
 describe('upload image', () => {
-  let args, pathSmallImg
+  let args, smallImgPath, largeImgPath
   beforeEach(() => {
-    pathSmallImg = path.join(__dirname, 'person-small.jpeg')
+    smallImgPath = process.cwd() + '/test/assets/person-small.jpeg'
+    largeImgPath = process.cwd() + '/test/assets/otherperson-large.jpeg'
     args = {
-      file: fs.createReadStream(pathSmallImg),
+      file: fs.createReadStream(smallImgPath),
     }
   })
-  test.only('saves to myData if passes validation', async () => {
-    await uploadImage({}, args, ctx as any, {} as any)
-    const base64String = fs.readFileSync(pathSmallImg, {
+
+  test('calls myData resized if image resolution is too big', async () => {
+    args.file = fs.createReadStream(largeImgPath)
+    const orgBase64Str = fs.readFileSync(largeImgPath, {
       encoding: 'base64',
     })
-    expect(ctx.mydata.saveData).toHaveBeenCalledWith({
+
+    await uploadImage({}, args, ctx as any, {} as any)
+
+    expect(ctx.mydata.saveData).toHaveBeenLastCalledWith({
       area: Area.image,
-      data: base64String,
+      data: { imageString: expect.toBeSmallerThan(orgBase64Str) },
       token: 'token',
     })
   })
-  test('resizes if image resolution is too big', async () => {})
-  test('does not resize if resolution is within limits', async () => {})
-  test('b0rks if not an image', async () => {})
-  test('b0rks if no token', async () => {})
-  test('returns base64 string', async () => {
+
+  test('calls myData uncropped if resolution is within limits', async () => {
+    const base64String = fs.readFileSync(smallImgPath, {
+      encoding: 'base64',
+    })
+
     await uploadImage({}, args, ctx as any, {} as any)
 
     expect(ctx.mydata.saveData).toHaveBeenCalledWith({
       area: Area.image,
-      data: [],
+      data: { imageString: base64String },
       token: 'token',
     })
+  })
+
+  test('returns base64 string', async () => {
+    const { imageString } = await uploadImage({}, args, ctx as any, {} as any)
+
+    expect(imageString.substring(imageString.length - 1)).toBe('=')
+  })
+
+  test('handles errors and rejects them nice', async () => {
+    ctx.mydata.saveData.mockRejectedValue('err')
+
+    await expect(uploadImage({}, args, ctx as any, {} as any)).rejects.toThrow(
+      'err'
+    )
   })
 })

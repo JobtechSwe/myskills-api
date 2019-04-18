@@ -47,8 +47,6 @@ export const UPLOAD_IMAGE = gql`
 
 export const IMAGE = gql`
   query image {
-    image {
-      imageString
-    }
+    image
   }
 `
