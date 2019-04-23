@@ -23,6 +23,12 @@ export type Scalars = {
   UUID: any
 }
 
+export enum OntologyType {
+  Skill = 'SKILL',
+  Occupation = 'OCCUPATION',
+  Trait = 'TRAIT',
+}
+
 export enum CacheControlScope {
   Public = 'PUBLIC',
   Private = 'PRIVATE',

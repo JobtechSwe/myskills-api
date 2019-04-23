@@ -10,6 +10,7 @@
     "format": "prettier --write \"lib/**/*.js\"",
     "integration": "jest --config ./jest.integration-config.js --forceExit",
     "integration:watch": "jest --watch --config ./jest.integration-config.js",
+    "integration:local": "docker-compose up -d && docker exec -it myskills-api_myskills-api_1 npm run integration -- --watchAll",
     "lint": "eslint 'lib/**/*.{ts,tsx}'",
     "build": "npm run lint && npm run unit && npm run build-ts",
     "build-ts": "tsc",
@@ -23,8 +24,7 @@
     "type": "git",
     "url": "git+https://github.com/JobtechSwe/myskills-api.git"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/JobtechSwe/myskills-api/issues"
   },
@@ -49,6 +49,7 @@
     "graphql-type-json": "^0.2.1",
     "ioredis": "^4.6.2",
     "lodash": "^4.17.11",
+    "ramda": "^0.26.1",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
@@ -69,6 +70,7 @@
     "@types/jest": "^24.0.6",
     "@types/lodash": "^4.14.121",
     "@types/mockdate": "^2.0.0",
+    "@types/ramda": "^0.26.6",
     "@types/redis": "^2.8.10",
     "@types/uuid": "^3.4.4",
     "@typescript-eslint/eslint-plugin": "^1.4.1",
@@ -79,6 +81,7 @@
     "husky": "^1.3.1",
     "is-ci-cli": "^1.1.1",
     "jest": "^24.1.0",
+    "jest-cucumber": "^2.0.11",
     "jest-runner-eslint": "^0.7.3",
     "jest-watch-select-projects": "^0.1.1",
     "jest-watch-typeahead": "^0.2.1",

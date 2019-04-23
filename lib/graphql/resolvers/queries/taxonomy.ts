@@ -1,4 +1,5 @@
 import { QueryResolvers, TaxonomyType } from '../../../__generated__/myskills'
+import { renameKeys } from '../../../utils/renameKeys'
 
 interface AfTaxonomyResult {
   conceptId: string
@@ -24,18 +25,6 @@ interface AfTaxonomyResponse {
   result: [AfTaxonomyResult]
 }
 
-const renameProp = (
-  oldProp: string,
-  newProp: string,
-  { [oldProp]: old, ...others }: any
-) =>
-  old
-    ? {
-        ...others,
-        [newProp]: old,
-      }
-    : { ...others }
-
 export const taxonomy: QueryResolvers['taxonomy'] = async (
   _,
   { params },
@@ -43,7 +32,7 @@ export const taxonomy: QueryResolvers['taxonomy'] = async (
 ) => {
   const taxonomyQuery =
     params && params.parentId
-      ? renameProp('parentId', 'parent-id', params)
+      ? (renameKeys({ parentId: 'parent-id' })(params) as any)
       : params
 
   try {

@@ -77,6 +77,11 @@ const typeDefs = gql`
     Remove language from user
     """
     removeLanguage(language: Language!): Boolean!
+
+    """
+    Save the complete cv to user
+    """
+    saveCV(cv: CVInput!): CV!
   }
 
   type Query {
@@ -109,6 +114,20 @@ const typeDefs = gql`
     Get from taxonomy
     """
     taxonomy(params: TaxonomyQueryInput): TaxonomyResponse!
+
+    """
+    Get from ontology
+    """
+    ontologyConcepts(params: OntologyConceptsInput): [OntologyConceptResponse]!
+
+    ontologyConcept(
+      id: String!
+      params: OntologyConceptInput
+    ): OntologyConceptTermResponse!
+
+    ontologyRelated(params: OntologyRelatedInput): OntologyRelatedResponse!
+
+    ontologyTextParse(text: String!): [OntologyTextParseResponse]!
   }
 
   type Subscription {
