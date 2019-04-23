@@ -23,12 +23,6 @@ export type Scalars = {
   UUID: any
 }
 
-export enum OntologyType {
-  Skill = 'SKILL',
-  Occupation = 'OCCUPATION',
-  Trait = 'TRAIT',
-}
-
 export enum CacheControlScope {
   Public = 'PUBLIC',
   Private = 'PRIVATE',
@@ -42,6 +36,18 @@ export type Consent = {
 
 export type ConsentResponse = {
   accessToken: Scalars['String']
+}
+
+export type Cv = {
+  skills?: Maybe<Array<Maybe<Skill>>>
+  education?: Maybe<Array<Maybe<Education>>>
+  experience?: Maybe<Array<Maybe<Experience>>>
+}
+
+export type CvInput = {
+  skills?: Maybe<Array<SkillInput>>
+  education?: Maybe<Array<EducationInput>>
+  experience?: Maybe<Array<ExperienceInput>>
 }
 
 export type Education = {
@@ -101,6 +107,8 @@ export type Mutation = {
   removeExperience: Scalars['Boolean']
   /** Remove language from user */
   removeLanguage: Scalars['Boolean']
+  /** Save the complete cv to user */
+  saveCV: Cv
 }
 
 export type MutationAddLanguageArgs = {
@@ -139,6 +147,83 @@ export type MutationRemoveLanguageArgs = {
   language: Language
 }
 
+export type MutationSaveCvArgs = {
+  cv: CvInput
+}
+
+export type OntologyConceptInput = {
+  limit?: Maybe<Scalars['Int']>
+  offset?: Maybe<Scalars['Int']>
+}
+
+export type OntologyConceptResponse = {
+  id: Scalars['String']
+  name: Scalars['String']
+  type: OntologyType
+}
+
+export type OntologyConceptsInput = {
+  type?: Maybe<OntologyType>
+  limit?: Maybe<Scalars['Int']>
+  offset?: Maybe<Scalars['Int']>
+  filter?: Maybe<Scalars['String']>
+}
+
+export type OntologyConceptTermInput = {
+  limit?: Maybe<Scalars['Int']>
+  offset?: Maybe<Scalars['Int']>
+}
+
+export type OntologyConceptTermResponse = {
+  id: Scalars['String']
+  name: Scalars['String']
+  type: OntologyType
+  terms?: Maybe<Array<Maybe<OntologyTerm>>>
+}
+
+export type OntologyRelatedInput = {
+  concepts?: Maybe<Array<Scalars['String']>>
+  id?: Maybe<Array<Scalars['String']>>
+  limit?: Maybe<Scalars['Int']>
+  type: OntologyType
+}
+
+export type OntologyRelatedResponse = {
+  count: Scalars['Int']
+  concepts: Array<Maybe<OntologyConceptResponse>>
+  relations: Array<Maybe<OntologyRelationResponse>>
+}
+
+export type OntologyRelationDetails = {
+  word2Vec?: Maybe<Scalars['Float']>
+}
+
+export type OntologyRelationResponse = {
+  id: Scalars['String']
+  name: Scalars['String']
+  type: OntologyType
+  score: Scalars['Float']
+  details: OntologyRelationDetails
+}
+
+export type OntologyTerm = {
+  name?: Maybe<Scalars['String']>
+  type?: Maybe<Scalars['String']>
+}
+
+export type OntologyTextParseResponse = {
+  id: Scalars['String']
+  name: Scalars['String']
+  type: OntologyType
+  terms: Array<Maybe<Scalars['String']>>
+}
+
+export enum OntologyType {
+  Skill = 'SKILL',
+  Occupation = 'OCCUPATION',
+  Trait = 'TRAIT',
+}
+
 export type Profile = {
   firstName?: Maybe<Scalars['String']>
   lastName?: Maybe<Scalars['String']>
@@ -162,10 +247,32 @@ export type Query = {
   skills: Array<Maybe<Skill>>
   /** Get from taxonomy */
   taxonomy: TaxonomyResponse
+  /** Get from ontology */
+  ontologyConcepts: Array<Maybe<OntologyConceptResponse>>
+  ontologyConcept: OntologyConceptTermResponse
+  ontologyRelated: OntologyRelatedResponse
+  ontologyTextParse: Array<Maybe<OntologyTextParseResponse>>
 }
 
 export type QueryTaxonomyArgs = {
   params?: Maybe<TaxonomyQueryInput>
+}
+
+export type QueryOntologyConceptsArgs = {
+  params?: Maybe<OntologyConceptsInput>
+}
+
+export type QueryOntologyConceptArgs = {
+  id: Scalars['String']
+  params?: Maybe<OntologyConceptInput>
+}
+
+export type QueryOntologyRelatedArgs = {
+  params?: Maybe<OntologyRelatedInput>
+}
+
+export type QueryOntologyTextParseArgs = {
+  text: Scalars['String']
 }
 
 export type Skill = {
@@ -339,6 +446,18 @@ export type ResolversTypes = {
   TaxonomyResponse: TaxonomyResponse
   TaxonomySearch: TaxonomySearch
   TaxonomyResult: TaxonomyResult
+  OntologyConceptsInput: OntologyConceptsInput
+  OntologyType: OntologyType
+  OntologyConceptResponse: OntologyConceptResponse
+  OntologyConceptInput: OntologyConceptInput
+  OntologyConceptTermResponse: OntologyConceptTermResponse
+  OntologyTerm: OntologyTerm
+  OntologyRelatedInput: OntologyRelatedInput
+  OntologyRelatedResponse: OntologyRelatedResponse
+  OntologyRelationResponse: OntologyRelationResponse
+  Float: Scalars['Float']
+  OntologyRelationDetails: OntologyRelationDetails
+  OntologyTextParseResponse: OntologyTextParseResponse
   Mutation: Mutation
   Consent: Consent
   Login: Login
@@ -347,12 +466,15 @@ export type ResolversTypes = {
   ProfileInput: ProfileInput
   SkillInput: SkillInput
   Boolean: Scalars['Boolean']
+  CVInput: CvInput
+  CV: Cv
   Subscription: Subscription
   ConsentResponse: ConsentResponse
   CacheControlScope: CacheControlScope
   Date: Scalars['Date']
   Email: Scalars['Email']
   JSON: Scalars['JSON']
+  OntologyConceptTermInput: OntologyConceptTermInput
   Password: Scalars['Password']
   TaxonomyDefaultResult: TaxonomyDefaultResult
   TaxonomySkillResult: TaxonomySkillResult
@@ -374,6 +496,27 @@ export type ConsentResponseResolvers<
   ParentType = ResolversTypes['ConsentResponse']
 > = {
   accessToken?: Resolver<ResolversTypes['String'], ParentType, Context>
+}
+
+export type CvResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['CV']
+> = {
+  skills?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Skill']>>>,
+    ParentType,
+    Context
+  >
+  education?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Education']>>>,
+    ParentType,
+    Context
+  >
+  experience?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Experience']>>>,
+    ParentType,
+    Context
+  >
 }
 
 export interface DateScalarConfig
@@ -478,6 +621,92 @@ export type MutationResolvers<
     Context,
     MutationRemoveLanguageArgs
   >
+  saveCV?: Resolver<
+    ResolversTypes['CV'],
+    ParentType,
+    Context,
+    MutationSaveCvArgs
+  >
+}
+
+export type OntologyConceptResponseResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['OntologyConceptResponse']
+> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, Context>
+  name?: Resolver<ResolversTypes['String'], ParentType, Context>
+  type?: Resolver<ResolversTypes['OntologyType'], ParentType, Context>
+}
+
+export type OntologyConceptTermResponseResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['OntologyConceptTermResponse']
+> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, Context>
+  name?: Resolver<ResolversTypes['String'], ParentType, Context>
+  type?: Resolver<ResolversTypes['OntologyType'], ParentType, Context>
+  terms?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['OntologyTerm']>>>,
+    ParentType,
+    Context
+  >
+}
+
+export type OntologyRelatedResponseResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['OntologyRelatedResponse']
+> = {
+  count?: Resolver<ResolversTypes['Int'], ParentType, Context>
+  concepts?: Resolver<
+    Array<Maybe<ResolversTypes['OntologyConceptResponse']>>,
+    ParentType,
+    Context
+  >
+  relations?: Resolver<
+    Array<Maybe<ResolversTypes['OntologyRelationResponse']>>,
+    ParentType,
+    Context
+  >
+}
+
+export type OntologyRelationDetailsResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['OntologyRelationDetails']
+> = {
+  word2Vec?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, Context>
+}
+
+export type OntologyRelationResponseResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['OntologyRelationResponse']
+> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, Context>
+  name?: Resolver<ResolversTypes['String'], ParentType, Context>
+  type?: Resolver<ResolversTypes['OntologyType'], ParentType, Context>
+  score?: Resolver<ResolversTypes['Float'], ParentType, Context>
+  details?: Resolver<
+    ResolversTypes['OntologyRelationDetails'],
+    ParentType,
+    Context
+  >
+}
+
+export type OntologyTermResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['OntologyTerm']
+> = {
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
+  type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
+}
+
+export type OntologyTextParseResponseResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['OntologyTextParseResponse']
+> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, Context>
+  name?: Resolver<ResolversTypes['String'], ParentType, Context>
+  type?: Resolver<ResolversTypes['OntologyType'], ParentType, Context>
+  terms?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, Context>
 }
 
 export interface PasswordScalarConfig
@@ -515,6 +744,30 @@ export type QueryResolvers<
     ParentType,
     Context,
     QueryTaxonomyArgs
+  >
+  ontologyConcepts?: Resolver<
+    Array<Maybe<ResolversTypes['OntologyConceptResponse']>>,
+    ParentType,
+    Context,
+    QueryOntologyConceptsArgs
+  >
+  ontologyConcept?: Resolver<
+    ResolversTypes['OntologyConceptTermResponse'],
+    ParentType,
+    Context,
+    QueryOntologyConceptArgs
+  >
+  ontologyRelated?: Resolver<
+    ResolversTypes['OntologyRelatedResponse'],
+    ParentType,
+    Context,
+    QueryOntologyRelatedArgs
+  >
+  ontologyTextParse?: Resolver<
+    Array<Maybe<ResolversTypes['OntologyTextParseResponse']>>,
+    ParentType,
+    Context,
+    QueryOntologyTextParseArgs
   >
 }
 
@@ -613,6 +866,7 @@ export interface UuidScalarConfig
 export type Resolvers<Context = ApolloServerContext> = {
   Consent?: ConsentResolvers<Context>
   ConsentResponse?: ConsentResponseResolvers<Context>
+  CV?: CvResolvers<Context>
   Date?: GraphQLScalarType
   Education?: EducationResolvers<Context>
   Email?: GraphQLScalarType
@@ -620,6 +874,13 @@ export type Resolvers<Context = ApolloServerContext> = {
   JSON?: GraphQLScalarType
   Login?: LoginResolvers<Context>
   Mutation?: MutationResolvers<Context>
+  OntologyConceptResponse?: OntologyConceptResponseResolvers<Context>
+  OntologyConceptTermResponse?: OntologyConceptTermResponseResolvers<Context>
+  OntologyRelatedResponse?: OntologyRelatedResponseResolvers<Context>
+  OntologyRelationDetails?: OntologyRelationDetailsResolvers<Context>
+  OntologyRelationResponse?: OntologyRelationResponseResolvers<Context>
+  OntologyTerm?: OntologyTermResolvers<Context>
+  OntologyTextParseResponse?: OntologyTextParseResponseResolvers<Context>
   Password?: GraphQLScalarType
   Profile?: ProfileResolvers<Context>
   Query?: QueryResolvers<Context>
