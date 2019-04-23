@@ -1625,7 +1625,7 @@
             "args": [
               {
                 "name": "file",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -2013,11 +2013,11 @@
       {
         "kind": "OBJECT",
         "name": "ImgFile",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "imageString",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",

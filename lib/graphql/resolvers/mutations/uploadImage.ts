@@ -22,7 +22,7 @@ async function streamToBuffer(file: any) {
   return buffer
 }
 
-export const uploadImage: MutationResolvers.UploadImageResolver = async (
+export const uploadImage: MutationResolvers['uploadImage'] = async (
   _,
   { file },
   { req, mydata }

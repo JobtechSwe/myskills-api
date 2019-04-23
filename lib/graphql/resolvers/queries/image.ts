@@ -2,7 +2,7 @@ import { Area } from '../../../types'
 import { QueryResolvers, ImgFile } from '../../../__generated__/myskills'
 import authorizationToken from '../../../middleware/authorizationToken'
 
-export const image: QueryResolvers.ImageResolver = async (
+export const image: QueryResolvers['image'] = async (
   _,
   _args,
   { req, mydata }
