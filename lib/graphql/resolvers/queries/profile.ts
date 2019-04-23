@@ -2,7 +2,7 @@ import { Area } from '../../../types'
 import { QueryResolvers, Profile } from '../../../__generated__/myskills'
 import authorizationToken from '../../../middleware/authorizationToken'
 
-export const profile: QueryResolvers.ProfileResolver = async (
+export const profile: QueryResolvers['profile'] = async (
   _,
   _args,
   { req, mydata }

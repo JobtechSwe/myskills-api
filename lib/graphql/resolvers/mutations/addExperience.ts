@@ -3,7 +3,7 @@ import { Area } from '../../../types'
 import { v4 as uuid } from 'uuid'
 import authorizationToken from '../../../middleware/authorizationToken'
 
-export const addExperience: MutationResolvers.AddExperienceResolver = async (
+export const addExperience: MutationResolvers['addExperience'] = async (
   _,
   { experience },
   { req, mydata }

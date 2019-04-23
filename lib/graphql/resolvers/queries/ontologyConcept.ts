@@ -1,7 +1,6 @@
 import {
   QueryResolvers,
   OntologyType,
-  OntologyConceptQueryArgs,
   OntologyTerm,
   OntologyConceptTermResponse,
 } from '../../../__generated__/myskills'
@@ -20,9 +19,9 @@ interface OntologyConceptTermApiResponse extends OntologyConceptApiResponse {
   terms: OntologyTerm[]
 }
 
-export const ontologyConcept: QueryResolvers.OntologyConceptResolver = async (
+export const ontologyConcept: QueryResolvers['ontologyConcept'] = async (
   _,
-  { id, params }: OntologyConceptQueryArgs,
+  { id, params },
   { dataSources: { ontologyAPI } }
 ) => {
   try {

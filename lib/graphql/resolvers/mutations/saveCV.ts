@@ -32,7 +32,7 @@ function saveCVArea<T>(
   return Promise.resolve([])
 }
 
-export const saveCV: MutationResolvers.SaveCvResolver = async (
+export const saveCV: MutationResolvers['saveCV'] = async (
   _,
   {
     cv: {

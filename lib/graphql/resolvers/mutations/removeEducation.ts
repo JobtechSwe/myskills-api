@@ -2,7 +2,7 @@ import { Education, MutationResolvers } from '../../../__generated__/myskills'
 import { Area } from '../../../types'
 import authorizationToken from '../../../middleware/authorizationToken'
 
-export const removeEducation: MutationResolvers.RemoveEducationResolver = async (
+export const removeEducation: MutationResolvers['removeEducation'] = async (
   _,
   { id },
   { req, mydata }

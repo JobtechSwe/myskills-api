@@ -3,7 +3,7 @@ import { Area } from '../../../types'
 import { v4 as uuid } from 'uuid'
 import authorizationToken from '../../../middleware/authorizationToken'
 
-export const addEducation: MutationResolvers.AddEducationResolver = async (
+export const addEducation: MutationResolvers['addEducation'] = async (
   _,
   { education },
   { req, mydata }
