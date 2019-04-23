@@ -2,7 +2,7 @@ import { Experience, MutationResolvers } from '../../../__generated__/myskills'
 import { Area } from '../../../types'
 import authorizationToken from '../../../middleware/authorizationToken'
 
-export const removeExperience: MutationResolvers.RemoveExperienceResolver = async (
+export const removeExperience: MutationResolvers['removeExperience'] = async (
   _,
   { id },
   { req, mydata }

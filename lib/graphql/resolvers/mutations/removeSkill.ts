@@ -2,7 +2,7 @@ import { Skill, MutationResolvers } from '../../../__generated__/myskills'
 import { Area } from '../../../types'
 import authorizationToken from '../../../middleware/authorizationToken'
 
-export const removeSkill: MutationResolvers.RemoveSkillResolver = async (
+export const removeSkill: MutationResolvers['removeSkill'] = async (
   _,
   { id },
   { req, mydata }

@@ -1,8 +1,4 @@
-import {
-  QueryResolvers,
-  OntologyType,
-  OntologyTextParseQueryArgs,
-} from '../../../__generated__/myskills'
+import { QueryResolvers, OntologyType } from '../../../__generated__/myskills'
 
 interface OntologyConceptApiResponse {
   uuid: string
@@ -17,9 +13,9 @@ interface OntologyTextParseApiResponse extends OntologyConceptApiResponse {
   terms: string[]
 }
 
-export const ontologyTextParse: QueryResolvers.OntologyTextParseResolver = async (
+export const ontologyTextParse: QueryResolvers['ontologyTextParse'] = async (
   _,
-  { text }: OntologyTextParseQueryArgs,
+  { text },
   { dataSources: { ontologyAPI } }
 ) => {
   try {

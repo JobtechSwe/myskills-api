@@ -1,88 +1,342 @@
-export type Maybe<T> = T | null
-
-export interface TaxonomyQueryInput {
-  offset?: Maybe<number>
-
-  limit?: Maybe<number>
-
-  q?: Maybe<string>
-
-  type?: Maybe<TaxonomyType>
-
-  parentId?: Maybe<(Maybe<string>)[]>
+type Maybe<T> = T | null
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string
+  String: string
+  Boolean: boolean
+  Int: number
+  Float: number
+  /** A date string, such as 2007-12-03, compliant with the `full-date` format
+   * outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for
+   * representation of dates and times using the Gregorian calendar.
+   */
+  Date: any
+  /** The Email scalar type represents E-Mail addresses compliant to RFC 822. */
+  Email: any
+  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSON: any
+  /** A password string. Has to be at least 8 characters long. */
+  Password: any
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: any
+  /** The UUID scalar type represents a UUID. */
+  UUID: any
 }
 
-export interface OntologyConceptsInput {
-  type?: Maybe<OntologyType>
-
-  limit?: Maybe<number>
-
-  offset?: Maybe<number>
-
-  filter?: Maybe<string>
+export enum CacheControlScope {
+  Public = 'PUBLIC',
+  Private = 'PRIVATE',
 }
 
-export interface OntologyConceptInput {
-  limit?: Maybe<number>
-
-  offset?: Maybe<number>
+export type Consent = {
+  id: Scalars['String']
+  url: Scalars['String']
+  expires: Scalars['String']
 }
 
-export interface OntologyRelatedInput {
-  concepts?: Maybe<string[]>
-
-  id?: Maybe<string[]>
-
-  limit?: Maybe<number>
-
-  type: OntologyType
+export type ConsentResponse = {
+  accessToken: Scalars['String']
 }
 
-export interface ExperienceInput {
-  taxonomyId: string
-
-  term?: Maybe<string>
-
-  years: string
+export type Cv = {
+  skills?: Maybe<Array<Maybe<Skill>>>
+  education?: Maybe<Array<Maybe<Education>>>
+  experience?: Maybe<Array<Maybe<Experience>>>
 }
 
-export interface EducationInput {
-  taxonomyId: string
-
-  term?: Maybe<string>
+export type CvInput = {
+  skills?: Maybe<Array<SkillInput>>
+  education?: Maybe<Array<EducationInput>>
+  experience?: Maybe<Array<ExperienceInput>>
 }
 
-export interface ProfileInput {
-  firstName: string
-
-  lastName: string
+export type Education = {
+  id: Scalars['String']
+  taxonomyId: Scalars['String']
+  term?: Maybe<Scalars['String']>
 }
 
-export interface SkillInput {
-  taxonomyId: string
-
-  term: string
-
-  type: string
+export type EducationInput = {
+  taxonomyId: Scalars['String']
+  term?: Maybe<Scalars['String']>
 }
 
-export interface CvInput {
-  skills?: Maybe<SkillInput[]>
-
-  education?: Maybe<EducationInput[]>
-
-  experience?: Maybe<ExperienceInput[]>
+export type Experience = {
+  id: Scalars['String']
+  taxonomyId: Scalars['String']
+  term?: Maybe<Scalars['String']>
+  years: Scalars['String']
 }
 
-export interface OntologyConceptTermInput {
-  limit?: Maybe<number>
-
-  offset?: Maybe<number>
+export type ExperienceInput = {
+  taxonomyId: Scalars['String']
+  term?: Maybe<Scalars['String']>
+  years: Scalars['String']
 }
 
 export enum Language {
   Spanish = 'spanish',
   Swedish = 'swedish',
+}
+
+export type Login = {
+  url: Scalars['String']
+  sessionId: Scalars['String']
+}
+
+export type Mutation = {
+  /** Register consent for a user */
+  consent: Consent
+  /** Login an existing user */
+  login: Login
+  /** Add languages to user */
+  addLanguage: Language
+  /** Add experiences to user */
+  addExperience: Experience
+  /** Add education to user */
+  addEducation: Education
+  /** Add user profile */
+  createProfile: Profile
+  /** Add skill to user */
+  addSkill: Skill
+  /** Remove skill from user */
+  removeSkill: Scalars['Boolean']
+  /** Remove education from user */
+  removeEducation: Scalars['Boolean']
+  /** Remove experience from user */
+  removeExperience: Scalars['Boolean']
+  /** Remove language from user */
+  removeLanguage: Scalars['Boolean']
+  /** Save the complete cv to user */
+  saveCV: Cv
+}
+
+export type MutationAddLanguageArgs = {
+  language: Language
+}
+
+export type MutationAddExperienceArgs = {
+  experience: ExperienceInput
+}
+
+export type MutationAddEducationArgs = {
+  education: EducationInput
+}
+
+export type MutationCreateProfileArgs = {
+  profile: ProfileInput
+}
+
+export type MutationAddSkillArgs = {
+  skill: SkillInput
+}
+
+export type MutationRemoveSkillArgs = {
+  id: Scalars['String']
+}
+
+export type MutationRemoveEducationArgs = {
+  id: Scalars['String']
+}
+
+export type MutationRemoveExperienceArgs = {
+  id: Scalars['String']
+}
+
+export type MutationRemoveLanguageArgs = {
+  language: Language
+}
+
+export type MutationSaveCvArgs = {
+  cv: CvInput
+}
+
+export type OntologyConceptInput = {
+  limit?: Maybe<Scalars['Int']>
+  offset?: Maybe<Scalars['Int']>
+}
+
+export type OntologyConceptResponse = {
+  id: Scalars['String']
+  name: Scalars['String']
+  type: OntologyType
+}
+
+export type OntologyConceptsInput = {
+  type?: Maybe<OntologyType>
+  limit?: Maybe<Scalars['Int']>
+  offset?: Maybe<Scalars['Int']>
+  filter?: Maybe<Scalars['String']>
+}
+
+export type OntologyConceptTermInput = {
+  limit?: Maybe<Scalars['Int']>
+  offset?: Maybe<Scalars['Int']>
+}
+
+export type OntologyConceptTermResponse = {
+  id: Scalars['String']
+  name: Scalars['String']
+  type: OntologyType
+  terms?: Maybe<Array<Maybe<OntologyTerm>>>
+}
+
+export type OntologyRelatedInput = {
+  concepts?: Maybe<Array<Scalars['String']>>
+  id?: Maybe<Array<Scalars['String']>>
+  limit?: Maybe<Scalars['Int']>
+  type: OntologyType
+}
+
+export type OntologyRelatedResponse = {
+  count: Scalars['Int']
+  concepts: Array<Maybe<OntologyConceptResponse>>
+  relations: Array<Maybe<OntologyRelationResponse>>
+}
+
+export type OntologyRelationDetails = {
+  word2Vec?: Maybe<Scalars['Float']>
+}
+
+export type OntologyRelationResponse = {
+  id: Scalars['String']
+  name: Scalars['String']
+  type: OntologyType
+  score: Scalars['Float']
+  details: OntologyRelationDetails
+}
+
+export type OntologyTerm = {
+  name?: Maybe<Scalars['String']>
+  type?: Maybe<Scalars['String']>
+}
+
+export type OntologyTextParseResponse = {
+  id: Scalars['String']
+  name: Scalars['String']
+  type: OntologyType
+  terms: Array<Maybe<Scalars['String']>>
+}
+
+export enum OntologyType {
+  Skill = 'SKILL',
+  Occupation = 'OCCUPATION',
+  Trait = 'TRAIT',
+}
+
+export type Profile = {
+  firstName?: Maybe<Scalars['String']>
+  lastName?: Maybe<Scalars['String']>
+}
+
+export type ProfileInput = {
+  firstName: Scalars['String']
+  lastName: Scalars['String']
+}
+
+export type Query = {
+  /** Get user languages */
+  languages: Array<Language>
+  /** Get user educations */
+  educations: Array<Maybe<Education>>
+  /** Get user experiences */
+  experiences: Array<Maybe<Experience>>
+  /** Get user profile */
+  profile: Profile
+  /** Get user skills */
+  skills: Array<Maybe<Skill>>
+  /** Get from taxonomy */
+  taxonomy: TaxonomyResponse
+  /** Get from ontology */
+  ontologyConcepts: Array<Maybe<OntologyConceptResponse>>
+  ontologyConcept: OntologyConceptTermResponse
+  ontologyRelated: OntologyRelatedResponse
+  ontologyTextParse: Array<Maybe<OntologyTextParseResponse>>
+}
+
+export type QueryTaxonomyArgs = {
+  params?: Maybe<TaxonomyQueryInput>
+}
+
+export type QueryOntologyConceptsArgs = {
+  params?: Maybe<OntologyConceptsInput>
+}
+
+export type QueryOntologyConceptArgs = {
+  id: Scalars['String']
+  params?: Maybe<OntologyConceptInput>
+}
+
+export type QueryOntologyRelatedArgs = {
+  params?: Maybe<OntologyRelatedInput>
+}
+
+export type QueryOntologyTextParseArgs = {
+  text: Scalars['String']
+}
+
+export type Skill = {
+  id: Scalars['String']
+  taxonomyId: Scalars['String']
+  term: Scalars['String']
+  type: Scalars['String']
+}
+
+export type SkillInput = {
+  taxonomyId: Scalars['String']
+  term: Scalars['String']
+  type: Scalars['String']
+}
+
+export type Subscription = {
+  consentApproved: ConsentResponse
+  loginApproved: ConsentResponse
+}
+
+export type SubscriptionConsentApprovedArgs = {
+  consentRequestId: Scalars['String']
+}
+
+export type SubscriptionLoginApprovedArgs = {
+  loginRequestId: Scalars['String']
+}
+
+export type TaxonomyDefaultResult = TaxonomyResult & {
+  taxonomyId: Scalars['String']
+  term: Scalars['String']
+  type: Scalars['String']
+  parentId?: Maybe<Scalars['String']>
+}
+
+export type TaxonomyQueryInput = {
+  offset?: Maybe<Scalars['Int']>
+  limit?: Maybe<Scalars['Int']>
+  q?: Maybe<Scalars['String']>
+  type?: Maybe<TaxonomyType>
+  parentId?: Maybe<Array<Maybe<Scalars['String']>>>
+}
+
+export type TaxonomyResponse = {
+  search: TaxonomySearch
+  total: Scalars['Int']
+  result: Array<Maybe<TaxonomyResult>>
+}
+
+export type TaxonomyResult = {
+  taxonomyId: Scalars['String']
+  term: Scalars['String']
+  type: Scalars['String']
+}
+
+export type TaxonomySearch = {
+  offset?: Maybe<Scalars['Int']>
+  limit?: Maybe<Scalars['Int']>
+}
+
+export type TaxonomySkillResult = TaxonomyResult & {
+  taxonomyId: Scalars['String']
+  term: Scalars['String']
+  type: Scalars['String']
 }
 
 export enum TaxonomyType {
@@ -102,318 +356,7 @@ export enum TaxonomyType {
   WorktimeExtent = 'WORKTIME_EXTENT',
 }
 
-export enum OntologyType {
-  Skill = 'SKILL',
-  Occupation = 'OCCUPATION',
-  Trait = 'TRAIT',
-}
-
-export enum CacheControlScope {
-  Public = 'PUBLIC',
-  Private = 'PRIVATE',
-}
-
-/** A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
-export type Date = any
-
-/** The Email scalar type represents E-Mail addresses compliant to RFC 822. */
-export type Email = any
-
-/** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
-export type Json = any
-
-/** A password string. Has to be at least 8 characters long. */
-export type Password = any
-
-/** The `Upload` scalar type represents a file upload. */
-export type Upload = any
-
-/** The UUID scalar type represents a UUID. */
-export type Uuid = any
-
-// ====================================================
-// Scalars
-// ====================================================
-
-// ====================================================
-// Interfaces
-// ====================================================
-
-export interface TaxonomyResult {
-  taxonomyId: string
-
-  term: string
-
-  type: string
-}
-
-// ====================================================
-// Types
-// ====================================================
-
-export interface Query {
-  /** Get user languages */
-  languages: Language[]
-  /** Get user educations */
-  educations: (Maybe<Education>)[]
-  /** Get user experiences */
-  experiences: (Maybe<Experience>)[]
-  /** Get user profile */
-  profile: Profile
-  /** Get user skills */
-  skills: (Maybe<Skill>)[]
-  /** Get from taxonomy */
-  taxonomy: TaxonomyResponse
-  /** Get from ontology */
-  ontologyConcepts: (Maybe<OntologyConceptResponse>)[]
-
-  ontologyConcept: OntologyConceptTermResponse
-
-  ontologyRelated: OntologyRelatedResponse
-
-  ontologyTextParse: (Maybe<OntologyTextParseResponse>)[]
-}
-
-export interface Education {
-  id: string
-
-  taxonomyId: string
-
-  term?: Maybe<string>
-}
-
-export interface Experience {
-  id: string
-
-  taxonomyId: string
-
-  term?: Maybe<string>
-
-  years: string
-}
-
-export interface Profile {
-  firstName?: Maybe<string>
-
-  lastName?: Maybe<string>
-}
-
-export interface Skill {
-  id: string
-
-  taxonomyId: string
-
-  term: string
-
-  type: string
-}
-
-export interface TaxonomyResponse {
-  search: TaxonomySearch
-
-  total: number
-
-  result: (Maybe<TaxonomyResult>)[]
-}
-
-export interface TaxonomySearch {
-  offset?: Maybe<number>
-
-  limit?: Maybe<number>
-}
-
-export interface OntologyConceptResponse {
-  id: string
-
-  name: string
-
-  type: OntologyType
-}
-
-export interface OntologyConceptTermResponse {
-  id: string
-
-  name: string
-
-  type: OntologyType
-
-  terms?: Maybe<(Maybe<OntologyTerm>)[]>
-}
-
-export interface OntologyTerm {
-  name?: Maybe<string>
-
-  type?: Maybe<string>
-}
-
-export interface OntologyRelatedResponse {
-  count: number
-
-  concepts: (Maybe<OntologyConceptResponse>)[]
-
-  relations: (Maybe<OntologyRelationResponse>)[]
-}
-
-export interface OntologyRelationResponse {
-  id: string
-
-  name: string
-
-  type: OntologyType
-
-  score: number
-
-  details: OntologyRelationDetails
-}
-
-export interface OntologyRelationDetails {
-  word2Vec?: Maybe<number>
-}
-
-export interface OntologyTextParseResponse {
-  id: string
-
-  name: string
-
-  type: OntologyType
-
-  terms: (Maybe<string>)[]
-}
-
-export interface Mutation {
-  /** Register consent for a user */
-  consent: Consent
-  /** Login an existing user */
-  login: Login
-  /** Add languages to user */
-  addLanguage: Language
-  /** Add experiences to user */
-  addExperience: Experience
-  /** Add education to user */
-  addEducation: Education
-  /** Add user profile */
-  createProfile: Profile
-  /** Add skill to user */
-  addSkill: Skill
-  /** Remove skill from user */
-  removeSkill: boolean
-  /** Remove education from user */
-  removeEducation: boolean
-  /** Remove experience from user */
-  removeExperience: boolean
-  /** Remove language from user */
-  removeLanguage: boolean
-  /** Save the complete cv to user */
-  saveCV: Cv
-}
-
-export interface Consent {
-  id: string
-
-  url: string
-
-  expires: string
-}
-
-export interface Login {
-  url: string
-
-  sessionId: string
-}
-
-export interface Cv {
-  skills?: Maybe<(Maybe<Skill>)[]>
-
-  education?: Maybe<(Maybe<Education>)[]>
-
-  experience?: Maybe<(Maybe<Experience>)[]>
-}
-
-export interface Subscription {
-  consentApproved: ConsentResponse
-
-  loginApproved: ConsentResponse
-}
-
-export interface ConsentResponse {
-  accessToken: string
-}
-
-export interface TaxonomyDefaultResult extends TaxonomyResult {
-  taxonomyId: string
-
-  term: string
-
-  type: string
-
-  parentId?: Maybe<string>
-}
-
-export interface TaxonomySkillResult extends TaxonomyResult {
-  taxonomyId: string
-
-  term: string
-
-  type: string
-}
-
-// ====================================================
-// Arguments
-// ====================================================
-
-export interface TaxonomyQueryArgs {
-  params?: Maybe<TaxonomyQueryInput>
-}
-export interface OntologyConceptsQueryArgs {
-  params?: Maybe<OntologyConceptsInput>
-}
-export interface OntologyConceptQueryArgs {
-  id: string
-
-  params?: Maybe<OntologyConceptInput>
-}
-export interface OntologyRelatedQueryArgs {
-  params?: Maybe<OntologyRelatedInput>
-}
-export interface OntologyTextParseQueryArgs {
-  text: string
-}
-export interface AddLanguageMutationArgs {
-  language: Language
-}
-export interface AddExperienceMutationArgs {
-  experience: ExperienceInput
-}
-export interface AddEducationMutationArgs {
-  education: EducationInput
-}
-export interface CreateProfileMutationArgs {
-  profile: ProfileInput
-}
-export interface AddSkillMutationArgs {
-  skill: SkillInput
-}
-export interface RemoveSkillMutationArgs {
-  id: string
-}
-export interface RemoveEducationMutationArgs {
-  id: string
-}
-export interface RemoveExperienceMutationArgs {
-  id: string
-}
-export interface RemoveLanguageMutationArgs {
-  language: Language
-}
-export interface SaveCvMutationArgs {
-  cv: CvInput
-}
-export interface ConsentApprovedSubscriptionArgs {
-  consentRequestId: string
-}
-export interface LoginApprovedSubscriptionArgs {
-  loginRequestId: string
-}
+import { ApolloServerContext } from '../typings/context'
 
 import {
   GraphQLResolveInfo,
@@ -421,995 +364,539 @@ import {
   GraphQLScalarTypeConfig,
 } from 'graphql'
 
-import { ApolloServerContext } from '../typings/context'
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
-export type Resolver<Result, Parent = {}, TContext = {}, Args = {}> = (
-  parent: Parent,
-  args: Args,
+export type ResolverFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
-) => Promise<Result> | Result
+) => Promise<TResult> | TResult
 
-export interface ISubscriptionResolverObject<Result, Parent, TContext, Args> {
-  subscribe<R = Result, P = Parent>(
-    parent: P,
-    args: Args,
-    context: TContext,
-    info: GraphQLResolveInfo
-  ): AsyncIterator<R | Result> | Promise<AsyncIterator<R | Result>>
-  resolve?<R = Result, P = Parent>(
-    parent: P,
-    args: Args,
-    context: TContext,
-    info: GraphQLResolveInfo
-  ): R | Result | Promise<R | Result>
-}
-
-export type SubscriptionResolver<
-  Result,
-  Parent = {},
+export type Resolver<
+  TResult,
+  TParent = {},
   TContext = {},
-  Args = {}
-> =
-  | ((
-      ...args: any[]
-    ) => ISubscriptionResolverObject<Result, Parent, TContext, Args>)
-  | ISubscriptionResolverObject<Result, Parent, TContext, Args>
+  TArgs = {}
+> = ResolverFn<TResult, TParent, TContext, TArgs>
 
-export type TypeResolveFn<Types, Parent = {}, TContext = {}> = (
-  parent: Parent,
+export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
-) => Maybe<Types>
+) => AsyncIterator<TResult> | Promise<AsyncIterator<TResult>>
 
-export type NextResolverFn<T> = () => Promise<T>
-
-export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
-  next: NextResolverFn<TResult>,
-  source: any,
+export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
   args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>
 
-export namespace QueryResolvers {
-  export interface Resolvers<TContext = ApolloServerContext, TypeParent = {}> {
-    /** Get user languages */
-    languages?: LanguagesResolver<Language[], TypeParent, TContext>
-    /** Get user educations */
-    educations?: EducationsResolver<(Maybe<Education>)[], TypeParent, TContext>
-    /** Get user experiences */
-    experiences?: ExperiencesResolver<
-      (Maybe<Experience>)[],
-      TypeParent,
-      TContext
-    >
-    /** Get user profile */
-    profile?: ProfileResolver<Profile, TypeParent, TContext>
-    /** Get user skills */
-    skills?: SkillsResolver<(Maybe<Skill>)[], TypeParent, TContext>
-    /** Get from taxonomy */
-    taxonomy?: TaxonomyResolver<TaxonomyResponse, TypeParent, TContext>
-    /** Get from ontology */
-    ontologyConcepts?: OntologyConceptsResolver<
-      (Maybe<OntologyConceptResponse>)[],
-      TypeParent,
-      TContext
-    >
-
-    ontologyConcept?: OntologyConceptResolver<
-      OntologyConceptTermResponse,
-      TypeParent,
-      TContext
-    >
-
-    ontologyRelated?: OntologyRelatedResolver<
-      OntologyRelatedResponse,
-      TypeParent,
-      TContext
-    >
-
-    ontologyTextParse?: OntologyTextParseResolver<
-      (Maybe<OntologyTextParseResponse>)[],
-      TypeParent,
-      TContext
-    >
-  }
-
-  export type LanguagesResolver<
-    R = Language[],
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type EducationsResolver<
-    R = (Maybe<Education>)[],
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type ExperiencesResolver<
-    R = (Maybe<Experience>)[],
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type ProfileResolver<
-    R = Profile,
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type SkillsResolver<
-    R = (Maybe<Skill>)[],
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type TaxonomyResolver<
-    R = TaxonomyResponse,
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext, TaxonomyArgs>
-  export interface TaxonomyArgs {
-    params?: Maybe<TaxonomyQueryInput>
-  }
-
-  export type OntologyConceptsResolver<
-    R = (Maybe<OntologyConceptResponse>)[],
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext, OntologyConceptsArgs>
-  export interface OntologyConceptsArgs {
-    params?: Maybe<OntologyConceptsInput>
-  }
-
-  export type OntologyConceptResolver<
-    R = OntologyConceptTermResponse,
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext, OntologyConceptArgs>
-  export interface OntologyConceptArgs {
-    id: string
-
-    params?: Maybe<OntologyConceptInput>
-  }
-
-  export type OntologyRelatedResolver<
-    R = OntologyRelatedResponse,
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext, OntologyRelatedArgs>
-  export interface OntologyRelatedArgs {
-    params?: Maybe<OntologyRelatedInput>
-  }
-
-  export type OntologyTextParseResolver<
-    R = (Maybe<OntologyTextParseResponse>)[],
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext, OntologyTextParseArgs>
-  export interface OntologyTextParseArgs {
-    text: string
-  }
+export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
+  subscribe: SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs>
+  resolve?: SubscriptionResolveFn<TResult, TParent, TContext, TArgs>
 }
 
-export namespace EducationResolvers {
-  export interface Resolvers<
-    TContext = ApolloServerContext,
-    TypeParent = Education
-  > {
-    id?: IdResolver<string, TypeParent, TContext>
+export type SubscriptionResolver<
+  TResult,
+  TParent = {},
+  TContext = {},
+  TArgs = {}
+> =
+  | ((
+      ...args: any[]
+    ) => SubscriptionResolverObject<TResult, TParent, TContext, TArgs>)
+  | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>
 
-    taxonomyId?: TaxonomyIdResolver<string, TypeParent, TContext>
+export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
+  parent: TParent,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => Maybe<TTypes>
 
-    term?: TermResolver<Maybe<string>, TypeParent, TContext>
-  }
+export type NextResolverFn<T> = () => Promise<T>
 
-  export type IdResolver<
-    R = string,
-    Parent = Education,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type TaxonomyIdResolver<
-    R = string,
-    Parent = Education,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type TermResolver<
-    R = Maybe<string>,
-    Parent = Education,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
+export type DirectiveResolverFn<
+  TResult = {},
+  TParent = {},
+  TContext = {},
+  TArgs = {}
+> = (
+  next: NextResolverFn<TResult>,
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => TResult | Promise<TResult>
+
+/** Mapping between all available schema types and the resolvers types */
+export type ResolversTypes = {
+  Query: Query
+  Language: Language
+  Education: Education
+  String: Scalars['String']
+  Experience: Experience
+  Profile: Profile
+  Skill: Skill
+  TaxonomyQueryInput: TaxonomyQueryInput
+  Int: Scalars['Int']
+  TaxonomyType: TaxonomyType
+  TaxonomyResponse: TaxonomyResponse
+  TaxonomySearch: TaxonomySearch
+  TaxonomyResult: TaxonomyResult
+  OntologyConceptsInput: OntologyConceptsInput
+  OntologyType: OntologyType
+  OntologyConceptResponse: OntologyConceptResponse
+  OntologyConceptInput: OntologyConceptInput
+  OntologyConceptTermResponse: OntologyConceptTermResponse
+  OntologyTerm: OntologyTerm
+  OntologyRelatedInput: OntologyRelatedInput
+  OntologyRelatedResponse: OntologyRelatedResponse
+  OntologyRelationResponse: OntologyRelationResponse
+  Float: Scalars['Float']
+  OntologyRelationDetails: OntologyRelationDetails
+  OntologyTextParseResponse: OntologyTextParseResponse
+  Mutation: Mutation
+  Consent: Consent
+  Login: Login
+  ExperienceInput: ExperienceInput
+  EducationInput: EducationInput
+  ProfileInput: ProfileInput
+  SkillInput: SkillInput
+  Boolean: Scalars['Boolean']
+  CVInput: CvInput
+  CV: Cv
+  Subscription: Subscription
+  ConsentResponse: ConsentResponse
+  CacheControlScope: CacheControlScope
+  Date: Scalars['Date']
+  Email: Scalars['Email']
+  JSON: Scalars['JSON']
+  OntologyConceptTermInput: OntologyConceptTermInput
+  Password: Scalars['Password']
+  TaxonomyDefaultResult: TaxonomyDefaultResult
+  TaxonomySkillResult: TaxonomySkillResult
+  Upload: Scalars['Upload']
+  UUID: Scalars['UUID']
 }
 
-export namespace ExperienceResolvers {
-  export interface Resolvers<
-    TContext = ApolloServerContext,
-    TypeParent = Experience
-  > {
-    id?: IdResolver<string, TypeParent, TContext>
-
-    taxonomyId?: TaxonomyIdResolver<string, TypeParent, TContext>
-
-    term?: TermResolver<Maybe<string>, TypeParent, TContext>
-
-    years?: YearsResolver<string, TypeParent, TContext>
-  }
-
-  export type IdResolver<
-    R = string,
-    Parent = Experience,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type TaxonomyIdResolver<
-    R = string,
-    Parent = Experience,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type TermResolver<
-    R = Maybe<string>,
-    Parent = Experience,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type YearsResolver<
-    R = string,
-    Parent = Experience,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
+export type ConsentResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['Consent']
+> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, Context>
+  url?: Resolver<ResolversTypes['String'], ParentType, Context>
+  expires?: Resolver<ResolversTypes['String'], ParentType, Context>
 }
 
-export namespace ProfileResolvers {
-  export interface Resolvers<
-    TContext = ApolloServerContext,
-    TypeParent = Profile
-  > {
-    firstName?: FirstNameResolver<Maybe<string>, TypeParent, TContext>
-
-    lastName?: LastNameResolver<Maybe<string>, TypeParent, TContext>
-  }
-
-  export type FirstNameResolver<
-    R = Maybe<string>,
-    Parent = Profile,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type LastNameResolver<
-    R = Maybe<string>,
-    Parent = Profile,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
+export type ConsentResponseResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['ConsentResponse']
+> = {
+  accessToken?: Resolver<ResolversTypes['String'], ParentType, Context>
 }
 
-export namespace SkillResolvers {
-  export interface Resolvers<
-    TContext = ApolloServerContext,
-    TypeParent = Skill
-  > {
-    id?: IdResolver<string, TypeParent, TContext>
-
-    taxonomyId?: TaxonomyIdResolver<string, TypeParent, TContext>
-
-    term?: TermResolver<string, TypeParent, TContext>
-
-    type?: TypeResolver<string, TypeParent, TContext>
-  }
-
-  export type IdResolver<
-    R = string,
-    Parent = Skill,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type TaxonomyIdResolver<
-    R = string,
-    Parent = Skill,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type TermResolver<
-    R = string,
-    Parent = Skill,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type TypeResolver<
-    R = string,
-    Parent = Skill,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
+export type CvResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['CV']
+> = {
+  skills?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Skill']>>>,
+    ParentType,
+    Context
+  >
+  education?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Education']>>>,
+    ParentType,
+    Context
+  >
+  experience?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Experience']>>>,
+    ParentType,
+    Context
+  >
 }
 
-export namespace TaxonomyResponseResolvers {
-  export interface Resolvers<
-    TContext = ApolloServerContext,
-    TypeParent = TaxonomyResponse
-  > {
-    search?: SearchResolver<TaxonomySearch, TypeParent, TContext>
-
-    total?: TotalResolver<number, TypeParent, TContext>
-
-    result?: ResultResolver<(Maybe<TaxonomyResult>)[], TypeParent, TContext>
-  }
-
-  export type SearchResolver<
-    R = TaxonomySearch,
-    Parent = TaxonomyResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type TotalResolver<
-    R = number,
-    Parent = TaxonomyResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type ResultResolver<
-    R = (Maybe<TaxonomyResult>)[],
-    Parent = TaxonomyResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-}
-
-export namespace TaxonomySearchResolvers {
-  export interface Resolvers<
-    TContext = ApolloServerContext,
-    TypeParent = TaxonomySearch
-  > {
-    offset?: OffsetResolver<Maybe<number>, TypeParent, TContext>
-
-    limit?: LimitResolver<Maybe<number>, TypeParent, TContext>
-  }
-
-  export type OffsetResolver<
-    R = Maybe<number>,
-    Parent = TaxonomySearch,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type LimitResolver<
-    R = Maybe<number>,
-    Parent = TaxonomySearch,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-}
-
-export namespace OntologyConceptResponseResolvers {
-  export interface Resolvers<
-    TContext = ApolloServerContext,
-    TypeParent = OntologyConceptResponse
-  > {
-    id?: IdResolver<string, TypeParent, TContext>
-
-    name?: NameResolver<string, TypeParent, TContext>
-
-    type?: TypeResolver<OntologyType, TypeParent, TContext>
-  }
-
-  export type IdResolver<
-    R = string,
-    Parent = OntologyConceptResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type NameResolver<
-    R = string,
-    Parent = OntologyConceptResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type TypeResolver<
-    R = OntologyType,
-    Parent = OntologyConceptResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-}
-
-export namespace OntologyConceptTermResponseResolvers {
-  export interface Resolvers<
-    TContext = ApolloServerContext,
-    TypeParent = OntologyConceptTermResponse
-  > {
-    id?: IdResolver<string, TypeParent, TContext>
-
-    name?: NameResolver<string, TypeParent, TContext>
-
-    type?: TypeResolver<OntologyType, TypeParent, TContext>
-
-    terms?: TermsResolver<Maybe<(Maybe<OntologyTerm>)[]>, TypeParent, TContext>
-  }
-
-  export type IdResolver<
-    R = string,
-    Parent = OntologyConceptTermResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type NameResolver<
-    R = string,
-    Parent = OntologyConceptTermResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type TypeResolver<
-    R = OntologyType,
-    Parent = OntologyConceptTermResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type TermsResolver<
-    R = Maybe<(Maybe<OntologyTerm>)[]>,
-    Parent = OntologyConceptTermResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-}
-
-export namespace OntologyTermResolvers {
-  export interface Resolvers<
-    TContext = ApolloServerContext,
-    TypeParent = OntologyTerm
-  > {
-    name?: NameResolver<Maybe<string>, TypeParent, TContext>
-
-    type?: TypeResolver<Maybe<string>, TypeParent, TContext>
-  }
-
-  export type NameResolver<
-    R = Maybe<string>,
-    Parent = OntologyTerm,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type TypeResolver<
-    R = Maybe<string>,
-    Parent = OntologyTerm,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-}
-
-export namespace OntologyRelatedResponseResolvers {
-  export interface Resolvers<
-    TContext = ApolloServerContext,
-    TypeParent = OntologyRelatedResponse
-  > {
-    count?: CountResolver<number, TypeParent, TContext>
-
-    concepts?: ConceptsResolver<
-      (Maybe<OntologyConceptResponse>)[],
-      TypeParent,
-      TContext
-    >
-
-    relations?: RelationsResolver<
-      (Maybe<OntologyRelationResponse>)[],
-      TypeParent,
-      TContext
-    >
-  }
-
-  export type CountResolver<
-    R = number,
-    Parent = OntologyRelatedResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type ConceptsResolver<
-    R = (Maybe<OntologyConceptResponse>)[],
-    Parent = OntologyRelatedResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type RelationsResolver<
-    R = (Maybe<OntologyRelationResponse>)[],
-    Parent = OntologyRelatedResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-}
-
-export namespace OntologyRelationResponseResolvers {
-  export interface Resolvers<
-    TContext = ApolloServerContext,
-    TypeParent = OntologyRelationResponse
-  > {
-    id?: IdResolver<string, TypeParent, TContext>
-
-    name?: NameResolver<string, TypeParent, TContext>
-
-    type?: TypeResolver<OntologyType, TypeParent, TContext>
-
-    score?: ScoreResolver<number, TypeParent, TContext>
-
-    details?: DetailsResolver<OntologyRelationDetails, TypeParent, TContext>
-  }
-
-  export type IdResolver<
-    R = string,
-    Parent = OntologyRelationResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type NameResolver<
-    R = string,
-    Parent = OntologyRelationResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type TypeResolver<
-    R = OntologyType,
-    Parent = OntologyRelationResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type ScoreResolver<
-    R = number,
-    Parent = OntologyRelationResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type DetailsResolver<
-    R = OntologyRelationDetails,
-    Parent = OntologyRelationResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-}
-
-export namespace OntologyRelationDetailsResolvers {
-  export interface Resolvers<
-    TContext = ApolloServerContext,
-    TypeParent = OntologyRelationDetails
-  > {
-    word2Vec?: Word2VecResolver<Maybe<number>, TypeParent, TContext>
-  }
-
-  export type Word2VecResolver<
-    R = Maybe<number>,
-    Parent = OntologyRelationDetails,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-}
-
-export namespace OntologyTextParseResponseResolvers {
-  export interface Resolvers<
-    TContext = ApolloServerContext,
-    TypeParent = OntologyTextParseResponse
-  > {
-    id?: IdResolver<string, TypeParent, TContext>
-
-    name?: NameResolver<string, TypeParent, TContext>
-
-    type?: TypeResolver<OntologyType, TypeParent, TContext>
-
-    terms?: TermsResolver<(Maybe<string>)[], TypeParent, TContext>
-  }
-
-  export type IdResolver<
-    R = string,
-    Parent = OntologyTextParseResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type NameResolver<
-    R = string,
-    Parent = OntologyTextParseResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type TypeResolver<
-    R = OntologyType,
-    Parent = OntologyTextParseResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type TermsResolver<
-    R = (Maybe<string>)[],
-    Parent = OntologyTextParseResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-}
-
-export namespace MutationResolvers {
-  export interface Resolvers<TContext = ApolloServerContext, TypeParent = {}> {
-    /** Register consent for a user */
-    consent?: ConsentResolver<Consent, TypeParent, TContext>
-    /** Login an existing user */
-    login?: LoginResolver<Login, TypeParent, TContext>
-    /** Add languages to user */
-    addLanguage?: AddLanguageResolver<Language, TypeParent, TContext>
-    /** Add experiences to user */
-    addExperience?: AddExperienceResolver<Experience, TypeParent, TContext>
-    /** Add education to user */
-    addEducation?: AddEducationResolver<Education, TypeParent, TContext>
-    /** Add user profile */
-    createProfile?: CreateProfileResolver<Profile, TypeParent, TContext>
-    /** Add skill to user */
-    addSkill?: AddSkillResolver<Skill, TypeParent, TContext>
-    /** Remove skill from user */
-    removeSkill?: RemoveSkillResolver<boolean, TypeParent, TContext>
-    /** Remove education from user */
-    removeEducation?: RemoveEducationResolver<boolean, TypeParent, TContext>
-    /** Remove experience from user */
-    removeExperience?: RemoveExperienceResolver<boolean, TypeParent, TContext>
-    /** Remove language from user */
-    removeLanguage?: RemoveLanguageResolver<boolean, TypeParent, TContext>
-    /** Save the complete cv to user */
-    saveCV?: SaveCvResolver<Cv, TypeParent, TContext>
-  }
-
-  export type ConsentResolver<
-    R = Consent,
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type LoginResolver<
-    R = Login,
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type AddLanguageResolver<
-    R = Language,
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext, AddLanguageArgs>
-  export interface AddLanguageArgs {
-    language: Language
-  }
-
-  export type AddExperienceResolver<
-    R = Experience,
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext, AddExperienceArgs>
-  export interface AddExperienceArgs {
-    experience: ExperienceInput
-  }
-
-  export type AddEducationResolver<
-    R = Education,
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext, AddEducationArgs>
-  export interface AddEducationArgs {
-    education: EducationInput
-  }
-
-  export type CreateProfileResolver<
-    R = Profile,
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext, CreateProfileArgs>
-  export interface CreateProfileArgs {
-    profile: ProfileInput
-  }
-
-  export type AddSkillResolver<
-    R = Skill,
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext, AddSkillArgs>
-  export interface AddSkillArgs {
-    skill: SkillInput
-  }
-
-  export type RemoveSkillResolver<
-    R = boolean,
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext, RemoveSkillArgs>
-  export interface RemoveSkillArgs {
-    id: string
-  }
-
-  export type RemoveEducationResolver<
-    R = boolean,
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext, RemoveEducationArgs>
-  export interface RemoveEducationArgs {
-    id: string
-  }
-
-  export type RemoveExperienceResolver<
-    R = boolean,
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext, RemoveExperienceArgs>
-  export interface RemoveExperienceArgs {
-    id: string
-  }
-
-  export type RemoveLanguageResolver<
-    R = boolean,
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext, RemoveLanguageArgs>
-  export interface RemoveLanguageArgs {
-    language: Language
-  }
-
-  export type SaveCvResolver<
-    R = Cv,
-    Parent = {},
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext, SaveCvArgs>
-  export interface SaveCvArgs {
-    cv: CvInput
-  }
-}
-
-export namespace ConsentResolvers {
-  export interface Resolvers<
-    TContext = ApolloServerContext,
-    TypeParent = Consent
-  > {
-    id?: IdResolver<string, TypeParent, TContext>
-
-    url?: UrlResolver<string, TypeParent, TContext>
-
-    expires?: ExpiresResolver<string, TypeParent, TContext>
-  }
-
-  export type IdResolver<
-    R = string,
-    Parent = Consent,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type UrlResolver<
-    R = string,
-    Parent = Consent,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type ExpiresResolver<
-    R = string,
-    Parent = Consent,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-}
-
-export namespace LoginResolvers {
-  export interface Resolvers<
-    TContext = ApolloServerContext,
-    TypeParent = Login
-  > {
-    url?: UrlResolver<string, TypeParent, TContext>
-
-    sessionId?: SessionIdResolver<string, TypeParent, TContext>
-  }
-
-  export type UrlResolver<
-    R = string,
-    Parent = Login,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type SessionIdResolver<
-    R = string,
-    Parent = Login,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-}
-
-export namespace CvResolvers {
-  export interface Resolvers<TContext = ApolloServerContext, TypeParent = Cv> {
-    skills?: SkillsResolver<Maybe<(Maybe<Skill>)[]>, TypeParent, TContext>
-
-    education?: EducationResolver<
-      Maybe<(Maybe<Education>)[]>,
-      TypeParent,
-      TContext
-    >
-
-    experience?: ExperienceResolver<
-      Maybe<(Maybe<Experience>)[]>,
-      TypeParent,
-      TContext
-    >
-  }
-
-  export type SkillsResolver<
-    R = Maybe<(Maybe<Skill>)[]>,
-    Parent = Cv,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type EducationResolver<
-    R = Maybe<(Maybe<Education>)[]>,
-    Parent = Cv,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type ExperienceResolver<
-    R = Maybe<(Maybe<Experience>)[]>,
-    Parent = Cv,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-}
-
-export namespace SubscriptionResolvers {
-  export interface Resolvers<TContext = ApolloServerContext, TypeParent = {}> {
-    consentApproved?: ConsentApprovedResolver<
-      ConsentResponse,
-      TypeParent,
-      TContext
-    >
-
-    loginApproved?: LoginApprovedResolver<ConsentResponse, TypeParent, TContext>
-  }
-
-  export type ConsentApprovedResolver<
-    R = ConsentResponse,
-    Parent = {},
-    TContext = ApolloServerContext
-  > = SubscriptionResolver<R, Parent, TContext, ConsentApprovedArgs>
-  export interface ConsentApprovedArgs {
-    consentRequestId: string
-  }
-
-  export type LoginApprovedResolver<
-    R = ConsentResponse,
-    Parent = {},
-    TContext = ApolloServerContext
-  > = SubscriptionResolver<R, Parent, TContext, LoginApprovedArgs>
-  export interface LoginApprovedArgs {
-    loginRequestId: string
-  }
-}
-
-export namespace ConsentResponseResolvers {
-  export interface Resolvers<
-    TContext = ApolloServerContext,
-    TypeParent = ConsentResponse
-  > {
-    accessToken?: AccessTokenResolver<string, TypeParent, TContext>
-  }
-
-  export type AccessTokenResolver<
-    R = string,
-    Parent = ConsentResponse,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-}
-
-export namespace TaxonomyDefaultResultResolvers {
-  export interface Resolvers<
-    TContext = ApolloServerContext,
-    TypeParent = TaxonomyDefaultResult
-  > {
-    taxonomyId?: TaxonomyIdResolver<string, TypeParent, TContext>
-
-    term?: TermResolver<string, TypeParent, TContext>
-
-    type?: TypeResolver<string, TypeParent, TContext>
-
-    parentId?: ParentIdResolver<Maybe<string>, TypeParent, TContext>
-  }
-
-  export type TaxonomyIdResolver<
-    R = string,
-    Parent = TaxonomyDefaultResult,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type TermResolver<
-    R = string,
-    Parent = TaxonomyDefaultResult,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type TypeResolver<
-    R = string,
-    Parent = TaxonomyDefaultResult,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type ParentIdResolver<
-    R = Maybe<string>,
-    Parent = TaxonomyDefaultResult,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-}
-
-export namespace TaxonomySkillResultResolvers {
-  export interface Resolvers<
-    TContext = ApolloServerContext,
-    TypeParent = TaxonomySkillResult
-  > {
-    taxonomyId?: TaxonomyIdResolver<string, TypeParent, TContext>
-
-    term?: TermResolver<string, TypeParent, TContext>
-
-    type?: TypeResolver<string, TypeParent, TContext>
-  }
-
-  export type TaxonomyIdResolver<
-    R = string,
-    Parent = TaxonomySkillResult,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type TermResolver<
-    R = string,
-    Parent = TaxonomySkillResult,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-  export type TypeResolver<
-    R = string,
-    Parent = TaxonomySkillResult,
-    TContext = ApolloServerContext
-  > = Resolver<R, Parent, TContext>
-}
-
-export namespace TaxonomyResultResolvers {
-  export interface Resolvers {
-    __resolveType: ResolveType
-  }
-  export type ResolveType<
-    R = 'TaxonomyDefaultResult' | 'TaxonomySkillResult',
-    Parent = TaxonomyDefaultResult | TaxonomySkillResult,
-    TContext = ApolloServerContext
-  > = TypeResolveFn<R, Parent, TContext>
-}
-
-/** Directs the executor to skip this field or fragment when the `if` argument is true. */
-export type SkipDirectiveResolver<Result> = DirectiveResolverFn<
-  Result,
-  SkipDirectiveArgs,
-  ApolloServerContext
->
-export interface SkipDirectiveArgs {
-  /** Skipped when true. */
-  if: boolean
-}
-
-/** Directs the executor to include this field or fragment only when the `if` argument is true. */
-export type IncludeDirectiveResolver<Result> = DirectiveResolverFn<
-  Result,
-  IncludeDirectiveArgs,
-  ApolloServerContext
->
-export interface IncludeDirectiveArgs {
-  /** Included when true. */
-  if: boolean
-}
-
-/** Marks an element of a GraphQL schema as no longer supported. */
-export type DeprecatedDirectiveResolver<Result> = DirectiveResolverFn<
-  Result,
-  DeprecatedDirectiveArgs,
-  ApolloServerContext
->
-export interface DeprecatedDirectiveArgs {
-  /** Explains why this element was deprecated, usually also including a suggestion for how to access supported similar data. Formatted using the Markdown syntax (as specified by [CommonMark](https://commonmark.org/). */
-  reason?: string
-}
-
-export interface DateScalarConfig extends GraphQLScalarTypeConfig<Date, any> {
+export interface DateScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
   name: 'Date'
 }
-export interface EmailScalarConfig extends GraphQLScalarTypeConfig<Email, any> {
+
+export type EducationResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['Education']
+> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, Context>
+  taxonomyId?: Resolver<ResolversTypes['String'], ParentType, Context>
+  term?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
+}
+
+export interface EmailScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes['Email'], any> {
   name: 'Email'
 }
-export interface JSONScalarConfig extends GraphQLScalarTypeConfig<Json, any> {
+
+export type ExperienceResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['Experience']
+> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, Context>
+  taxonomyId?: Resolver<ResolversTypes['String'], ParentType, Context>
+  term?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
+  years?: Resolver<ResolversTypes['String'], ParentType, Context>
+}
+
+export interface JsonScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes['JSON'], any> {
   name: 'JSON'
 }
+
+export type LoginResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['Login']
+> = {
+  url?: Resolver<ResolversTypes['String'], ParentType, Context>
+  sessionId?: Resolver<ResolversTypes['String'], ParentType, Context>
+}
+
+export type MutationResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['Mutation']
+> = {
+  consent?: Resolver<ResolversTypes['Consent'], ParentType, Context>
+  login?: Resolver<ResolversTypes['Login'], ParentType, Context>
+  addLanguage?: Resolver<
+    ResolversTypes['Language'],
+    ParentType,
+    Context,
+    MutationAddLanguageArgs
+  >
+  addExperience?: Resolver<
+    ResolversTypes['Experience'],
+    ParentType,
+    Context,
+    MutationAddExperienceArgs
+  >
+  addEducation?: Resolver<
+    ResolversTypes['Education'],
+    ParentType,
+    Context,
+    MutationAddEducationArgs
+  >
+  createProfile?: Resolver<
+    ResolversTypes['Profile'],
+    ParentType,
+    Context,
+    MutationCreateProfileArgs
+  >
+  addSkill?: Resolver<
+    ResolversTypes['Skill'],
+    ParentType,
+    Context,
+    MutationAddSkillArgs
+  >
+  removeSkill?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    Context,
+    MutationRemoveSkillArgs
+  >
+  removeEducation?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    Context,
+    MutationRemoveEducationArgs
+  >
+  removeExperience?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    Context,
+    MutationRemoveExperienceArgs
+  >
+  removeLanguage?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    Context,
+    MutationRemoveLanguageArgs
+  >
+  saveCV?: Resolver<
+    ResolversTypes['CV'],
+    ParentType,
+    Context,
+    MutationSaveCvArgs
+  >
+}
+
+export type OntologyConceptResponseResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['OntologyConceptResponse']
+> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, Context>
+  name?: Resolver<ResolversTypes['String'], ParentType, Context>
+  type?: Resolver<ResolversTypes['OntologyType'], ParentType, Context>
+}
+
+export type OntologyConceptTermResponseResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['OntologyConceptTermResponse']
+> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, Context>
+  name?: Resolver<ResolversTypes['String'], ParentType, Context>
+  type?: Resolver<ResolversTypes['OntologyType'], ParentType, Context>
+  terms?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['OntologyTerm']>>>,
+    ParentType,
+    Context
+  >
+}
+
+export type OntologyRelatedResponseResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['OntologyRelatedResponse']
+> = {
+  count?: Resolver<ResolversTypes['Int'], ParentType, Context>
+  concepts?: Resolver<
+    Array<Maybe<ResolversTypes['OntologyConceptResponse']>>,
+    ParentType,
+    Context
+  >
+  relations?: Resolver<
+    Array<Maybe<ResolversTypes['OntologyRelationResponse']>>,
+    ParentType,
+    Context
+  >
+}
+
+export type OntologyRelationDetailsResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['OntologyRelationDetails']
+> = {
+  word2Vec?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, Context>
+}
+
+export type OntologyRelationResponseResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['OntologyRelationResponse']
+> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, Context>
+  name?: Resolver<ResolversTypes['String'], ParentType, Context>
+  type?: Resolver<ResolversTypes['OntologyType'], ParentType, Context>
+  score?: Resolver<ResolversTypes['Float'], ParentType, Context>
+  details?: Resolver<
+    ResolversTypes['OntologyRelationDetails'],
+    ParentType,
+    Context
+  >
+}
+
+export type OntologyTermResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['OntologyTerm']
+> = {
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
+  type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
+}
+
+export type OntologyTextParseResponseResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['OntologyTextParseResponse']
+> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, Context>
+  name?: Resolver<ResolversTypes['String'], ParentType, Context>
+  type?: Resolver<ResolversTypes['OntologyType'], ParentType, Context>
+  terms?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, Context>
+}
+
 export interface PasswordScalarConfig
-  extends GraphQLScalarTypeConfig<Password, any> {
+  extends GraphQLScalarTypeConfig<ResolversTypes['Password'], any> {
   name: 'Password'
 }
+
+export type ProfileResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['Profile']
+> = {
+  firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
+  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
+}
+
+export type QueryResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['Query']
+> = {
+  languages?: Resolver<Array<ResolversTypes['Language']>, ParentType, Context>
+  educations?: Resolver<
+    Array<Maybe<ResolversTypes['Education']>>,
+    ParentType,
+    Context
+  >
+  experiences?: Resolver<
+    Array<Maybe<ResolversTypes['Experience']>>,
+    ParentType,
+    Context
+  >
+  profile?: Resolver<ResolversTypes['Profile'], ParentType, Context>
+  skills?: Resolver<Array<Maybe<ResolversTypes['Skill']>>, ParentType, Context>
+  taxonomy?: Resolver<
+    ResolversTypes['TaxonomyResponse'],
+    ParentType,
+    Context,
+    QueryTaxonomyArgs
+  >
+  ontologyConcepts?: Resolver<
+    Array<Maybe<ResolversTypes['OntologyConceptResponse']>>,
+    ParentType,
+    Context,
+    QueryOntologyConceptsArgs
+  >
+  ontologyConcept?: Resolver<
+    ResolversTypes['OntologyConceptTermResponse'],
+    ParentType,
+    Context,
+    QueryOntologyConceptArgs
+  >
+  ontologyRelated?: Resolver<
+    ResolversTypes['OntologyRelatedResponse'],
+    ParentType,
+    Context,
+    QueryOntologyRelatedArgs
+  >
+  ontologyTextParse?: Resolver<
+    Array<Maybe<ResolversTypes['OntologyTextParseResponse']>>,
+    ParentType,
+    Context,
+    QueryOntologyTextParseArgs
+  >
+}
+
+export type SkillResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['Skill']
+> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, Context>
+  taxonomyId?: Resolver<ResolversTypes['String'], ParentType, Context>
+  term?: Resolver<ResolversTypes['String'], ParentType, Context>
+  type?: Resolver<ResolversTypes['String'], ParentType, Context>
+}
+
+export type SubscriptionResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['Subscription']
+> = {
+  consentApproved?: SubscriptionResolver<
+    ResolversTypes['ConsentResponse'],
+    ParentType,
+    Context,
+    SubscriptionConsentApprovedArgs
+  >
+  loginApproved?: SubscriptionResolver<
+    ResolversTypes['ConsentResponse'],
+    ParentType,
+    Context,
+    SubscriptionLoginApprovedArgs
+  >
+}
+
+export type TaxonomyDefaultResultResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['TaxonomyDefaultResult']
+> = {
+  taxonomyId?: Resolver<ResolversTypes['String'], ParentType, Context>
+  term?: Resolver<ResolversTypes['String'], ParentType, Context>
+  type?: Resolver<ResolversTypes['String'], ParentType, Context>
+  parentId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
+}
+
+export type TaxonomyResponseResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['TaxonomyResponse']
+> = {
+  search?: Resolver<ResolversTypes['TaxonomySearch'], ParentType, Context>
+  total?: Resolver<ResolversTypes['Int'], ParentType, Context>
+  result?: Resolver<
+    Array<Maybe<ResolversTypes['TaxonomyResult']>>,
+    ParentType,
+    Context
+  >
+}
+
+export type TaxonomyResultResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['TaxonomyResult']
+> = {
+  __resolveType: TypeResolveFn<
+    'TaxonomyDefaultResult' | 'TaxonomySkillResult',
+    ParentType,
+    Context
+  >
+  taxonomyId?: Resolver<ResolversTypes['String'], ParentType, Context>
+  term?: Resolver<ResolversTypes['String'], ParentType, Context>
+  type?: Resolver<ResolversTypes['String'], ParentType, Context>
+}
+
+export type TaxonomySearchResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['TaxonomySearch']
+> = {
+  offset?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, Context>
+  limit?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, Context>
+}
+
+export type TaxonomySkillResultResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['TaxonomySkillResult']
+> = {
+  taxonomyId?: Resolver<ResolversTypes['String'], ParentType, Context>
+  term?: Resolver<ResolversTypes['String'], ParentType, Context>
+  type?: Resolver<ResolversTypes['String'], ParentType, Context>
+}
+
 export interface UploadScalarConfig
-  extends GraphQLScalarTypeConfig<Upload, any> {
+  extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
   name: 'Upload'
 }
-export interface UUIDScalarConfig extends GraphQLScalarTypeConfig<Uuid, any> {
+
+export interface UuidScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes['UUID'], any> {
   name: 'UUID'
 }
 
-export interface IResolvers<TContext = ApolloServerContext> {
-  Query?: QueryResolvers.Resolvers<TContext>
-  Education?: EducationResolvers.Resolvers<TContext>
-  Experience?: ExperienceResolvers.Resolvers<TContext>
-  Profile?: ProfileResolvers.Resolvers<TContext>
-  Skill?: SkillResolvers.Resolvers<TContext>
-  TaxonomyResponse?: TaxonomyResponseResolvers.Resolvers<TContext>
-  TaxonomySearch?: TaxonomySearchResolvers.Resolvers<TContext>
-  OntologyConceptResponse?: OntologyConceptResponseResolvers.Resolvers<TContext>
-  OntologyConceptTermResponse?: OntologyConceptTermResponseResolvers.Resolvers<
-    TContext
-  >
-  OntologyTerm?: OntologyTermResolvers.Resolvers<TContext>
-  OntologyRelatedResponse?: OntologyRelatedResponseResolvers.Resolvers<TContext>
-  OntologyRelationResponse?: OntologyRelationResponseResolvers.Resolvers<
-    TContext
-  >
-  OntologyRelationDetails?: OntologyRelationDetailsResolvers.Resolvers<TContext>
-  OntologyTextParseResponse?: OntologyTextParseResponseResolvers.Resolvers<
-    TContext
-  >
-  Mutation?: MutationResolvers.Resolvers<TContext>
-  Consent?: ConsentResolvers.Resolvers<TContext>
-  Login?: LoginResolvers.Resolvers<TContext>
-  Cv?: CvResolvers.Resolvers<TContext>
-  Subscription?: SubscriptionResolvers.Resolvers<TContext>
-  ConsentResponse?: ConsentResponseResolvers.Resolvers<TContext>
-  TaxonomyDefaultResult?: TaxonomyDefaultResultResolvers.Resolvers<TContext>
-  TaxonomySkillResult?: TaxonomySkillResultResolvers.Resolvers<TContext>
-  TaxonomyResult?: TaxonomyResultResolvers.Resolvers
+export type Resolvers<Context = ApolloServerContext> = {
+  Consent?: ConsentResolvers<Context>
+  ConsentResponse?: ConsentResponseResolvers<Context>
+  CV?: CvResolvers<Context>
   Date?: GraphQLScalarType
+  Education?: EducationResolvers<Context>
   Email?: GraphQLScalarType
-  Json?: GraphQLScalarType
+  Experience?: ExperienceResolvers<Context>
+  JSON?: GraphQLScalarType
+  Login?: LoginResolvers<Context>
+  Mutation?: MutationResolvers<Context>
+  OntologyConceptResponse?: OntologyConceptResponseResolvers<Context>
+  OntologyConceptTermResponse?: OntologyConceptTermResponseResolvers<Context>
+  OntologyRelatedResponse?: OntologyRelatedResponseResolvers<Context>
+  OntologyRelationDetails?: OntologyRelationDetailsResolvers<Context>
+  OntologyRelationResponse?: OntologyRelationResponseResolvers<Context>
+  OntologyTerm?: OntologyTermResolvers<Context>
+  OntologyTextParseResponse?: OntologyTextParseResponseResolvers<Context>
   Password?: GraphQLScalarType
+  Profile?: ProfileResolvers<Context>
+  Query?: QueryResolvers<Context>
+  Skill?: SkillResolvers<Context>
+  Subscription?: SubscriptionResolvers<Context>
+  TaxonomyDefaultResult?: TaxonomyDefaultResultResolvers<Context>
+  TaxonomyResponse?: TaxonomyResponseResolvers<Context>
+  TaxonomyResult?: TaxonomyResultResolvers
+  TaxonomySearch?: TaxonomySearchResolvers<Context>
+  TaxonomySkillResult?: TaxonomySkillResultResolvers<Context>
   Upload?: GraphQLScalarType
-  Uuid?: GraphQLScalarType
+  UUID?: GraphQLScalarType
 }
 
-export interface IDirectiveResolvers<Result> {
-  skip?: SkipDirectiveResolver<Result>
-  include?: IncludeDirectiveResolver<Result>
-  deprecated?: DeprecatedDirectiveResolver<Result>
-}
+/**
+ * @deprecated
+ * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
+ */
+export type IResolvers<Context = ApolloServerContext> = Resolvers<Context>

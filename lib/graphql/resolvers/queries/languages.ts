@@ -2,7 +2,7 @@ import { Area } from '../../../types'
 import { Language, QueryResolvers } from '../../../__generated__/myskills'
 import authorizationToken from '../../../middleware/authorizationToken'
 
-export const languages: QueryResolvers.LanguagesResolver = async (
+export const languages: QueryResolvers['languages'] = async (
   _,
   _args,
   { req, mydata }

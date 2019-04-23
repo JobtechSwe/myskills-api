@@ -1,6 +1,6 @@
 import { ctx } from '../../../__mocks__/apolloServerContext'
 import { taxonomy } from '../taxonomy'
-import { TaxonomyQueryArgs } from '../../../../__generated__/myskills'
+import { QueryTaxonomyArgs } from '../../../../__generated__/myskills'
 
 beforeEach(() => {
   ;(ctx.dataSources.taxonomyAPI.getData as jest.Mock).mockResolvedValue({
@@ -16,13 +16,13 @@ beforeEach(() => {
 })
 
 test('passes query params to taxonomyAPI without parentId', async () => {
-  const testArgs: TaxonomyQueryArgs = {
+  const testArgs: QueryTaxonomyArgs = {
     params: {
       q: 'someQuery',
     },
   }
 
-  await taxonomy({}, testArgs, ctx as any, {} as any)
+  await taxonomy({} as any, testArgs, ctx as any, {} as any)
 
   expect(ctx.dataSources.taxonomyAPI.getData).toHaveBeenCalledWith({
     q: 'someQuery',
@@ -30,14 +30,14 @@ test('passes query params to taxonomyAPI without parentId', async () => {
 })
 
 test('passes query params to taxonomyAPI with parentId', async () => {
-  const testArgs: TaxonomyQueryArgs = {
+  const testArgs: QueryTaxonomyArgs = {
     params: {
       q: 'someQuery',
       parentId: ['123_abc'],
     },
   }
 
-  await taxonomy({}, testArgs, ctx as any, {} as any)
+  await taxonomy({} as any, testArgs, ctx as any, {} as any)
 
   expect(ctx.dataSources.taxonomyAPI.getData).toHaveBeenCalledWith({
     q: 'someQuery',
@@ -46,14 +46,14 @@ test('passes query params to taxonomyAPI with parentId', async () => {
 })
 
 test('returnass formted result', async () => {
-  const testArgs: TaxonomyQueryArgs = {
+  const testArgs: QueryTaxonomyArgs = {
     params: {
       q: 'someQuery',
       parentId: ['123_abc'],
     },
   }
 
-  const result = await taxonomy({}, testArgs, ctx as any, {} as any)
+  const result = await taxonomy({} as any, testArgs, ctx as any, {} as any)
 
   expect(result).toEqual({
     result: [
@@ -72,5 +72,7 @@ test('returnass formted result', async () => {
 test('handles errors', async () => {
   ;(ctx.dataSources.taxonomyAPI.getData as jest.Mock).mockRejectedValue('err')
 
-  await expect(taxonomy({}, {}, ctx as any, {} as any)).rejects.toThrow('err')
+  await expect(taxonomy({} as any, {}, ctx as any, {} as any)).rejects.toThrow(
+    'err'
+  )
 })

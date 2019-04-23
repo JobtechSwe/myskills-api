@@ -2,7 +2,7 @@ import { Area } from '../../../types'
 import { Experience, QueryResolvers } from '../../../__generated__/myskills'
 import authorizationToken from '../../../middleware/authorizationToken'
 
-export const experiences: QueryResolvers.ExperiencesResolver = async (
+export const experiences: QueryResolvers['experiences'] = async (
   _,
   _args,
   { req, mydata }
