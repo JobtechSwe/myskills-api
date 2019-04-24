@@ -15,6 +15,7 @@ export const addSkill: MutationResolvers['addSkill'] = async (
       data: { id: uuid(), ...skill },
       token,
     })
+
     return result as Skill
   } catch (e) {
     throw new Error(`skill error: ${e}`)

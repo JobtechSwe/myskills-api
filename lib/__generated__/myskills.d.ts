@@ -276,14 +276,14 @@ export type QueryOntologyTextParseArgs = {
 }
 
 export type Skill = {
-  id: Scalars['String']
-  taxonomyId: Scalars['String']
+  sourceId: Scalars['String']
   term: Scalars['String']
   type: Scalars['String']
+  id: Scalars['String']
 }
 
 export type SkillInput = {
-  taxonomyId: Scalars['String']
+  sourceId: Scalars['String']
   term: Scalars['String']
   type: Scalars['String']
 }
@@ -775,10 +775,10 @@ export type SkillResolvers<
   Context = ApolloServerContext,
   ParentType = ResolversTypes['Skill']
 > = {
-  id?: Resolver<ResolversTypes['String'], ParentType, Context>
-  taxonomyId?: Resolver<ResolversTypes['String'], ParentType, Context>
+  sourceId?: Resolver<ResolversTypes['String'], ParentType, Context>
   term?: Resolver<ResolversTypes['String'], ParentType, Context>
   type?: Resolver<ResolversTypes['String'], ParentType, Context>
+  id?: Resolver<ResolversTypes['String'], ParentType, Context>
 }
 
 export type SubscriptionResolvers<

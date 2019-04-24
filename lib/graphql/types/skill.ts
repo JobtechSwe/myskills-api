@@ -2,15 +2,15 @@ import { gql } from 'apollo-server-express'
 
 export const typeDefs = gql`
   input SkillInput {
-    taxonomyId: String!
+    sourceId: String!
     term: String!
     type: String!
   }
 
   type Skill {
-    id: String!
-    taxonomyId: String!
+    sourceId: String!
     term: String!
     type: String!
+    id: String!
   }
 `
