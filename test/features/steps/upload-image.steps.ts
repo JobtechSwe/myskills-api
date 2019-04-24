@@ -4,6 +4,7 @@ import server, { appIsReady } from '../../../lib/server'
 import fs from 'fs'
 const feature = loadFeature('./test/features/UploadImage.feature')
 import { UPLOAD_IMAGE, IMAGE } from '../gql'
+const TEST_ASSETS_FOLDER = `${process.cwd()}/test/assets`
 
 defineFeature(feature, test => {
   beforeEach(async () => {
@@ -19,7 +20,7 @@ defineFeature(feature, test => {
     })
 
     when(/^I save the image "(.*)"$/, async imageString => {
-      imagePath = `${process.cwd()}/test/assets/${imageString}.jpeg`
+      imagePath = `${TEST_ASSETS_FOLDER}/${imageString}.jpeg`
       const imageStream = fs.createReadStream(imagePath)
       const { data } = await mutate({
         mutation: UPLOAD_IMAGE,
@@ -55,8 +56,7 @@ defineFeature(feature, test => {
   })
 
   test('Upload large image', ({ given, and, when, then }) => {
-    const croppedImagePath =
-      process.cwd() + '/test/assets/cropped-otherperson.jpeg'
+    let croppedImagePath
     let mutate, query, bigImage
 
     given('I have a bearer token', async () => {
@@ -66,7 +66,8 @@ defineFeature(feature, test => {
     when(
       /^I save an image that is larger than 200x200: "(.*)"$/,
       async imageString => {
-        const imagePath = `${process.cwd()}/test/assets/${imageString}.jpeg`
+        const imagePath = `${TEST_ASSETS_FOLDER}/${imageString}.jpeg`
+        croppedImagePath = `${TEST_ASSETS_FOLDER}/cropped-${imageString}.jpeg`
         const imageStream = fs.createReadStream(imagePath)
         const { data } = await mutate({
           mutation: UPLOAD_IMAGE,
