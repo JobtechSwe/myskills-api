@@ -8,11 +8,11 @@ import {
 beforeEach(() => {
   ;(ctx.dataSources.ontologyAPI.getData as jest.Mock).mockResolvedValue({
     uuid: 'someUuid',
-    name: 'getConceptsName',
+    term: 'getConceptsName',
     type: 'SKILL',
     terms: [
       {
-        name: 'someTermName',
+        term: 'someTermName',
         type: 'someTermType',
       },
     ],
@@ -51,11 +51,11 @@ test('return a formated result', async () => {
 
   expect(result).toEqual({
     id: 'someUuid',
-    name: 'getConceptsName',
+    term: 'getConceptsName',
     type: 'SKILL',
     terms: [
       {
-        name: 'someTermName',
+        term: 'someTermName',
         type: 'someTermType',
       },
     ],

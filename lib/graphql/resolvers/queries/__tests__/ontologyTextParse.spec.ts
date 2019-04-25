@@ -36,7 +36,7 @@ test('return a formated result', async () => {
   expect(result).toEqual([
     {
       id: 'someUuid',
-      name: 'someName',
+      term: 'someName',
       type: 'SKILL',
       terms: 'someTerms',
     },
