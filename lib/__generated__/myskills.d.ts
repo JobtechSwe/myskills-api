@@ -158,7 +158,7 @@ export type OntologyConceptInput = {
 
 export type OntologyConceptResponse = {
   id: Scalars['String']
-  name: Scalars['String']
+  term: Scalars['String']
   type: OntologyType
 }
 
@@ -176,7 +176,7 @@ export type OntologyConceptTermInput = {
 
 export type OntologyConceptTermResponse = {
   id: Scalars['String']
-  name: Scalars['String']
+  term: Scalars['String']
   type: OntologyType
   terms?: Maybe<Array<Maybe<OntologyTerm>>>
 }
@@ -200,20 +200,20 @@ export type OntologyRelationDetails = {
 
 export type OntologyRelationResponse = {
   id: Scalars['String']
-  name: Scalars['String']
+  term: Scalars['String']
   type: OntologyType
   score: Scalars['Float']
   details: OntologyRelationDetails
 }
 
 export type OntologyTerm = {
-  name?: Maybe<Scalars['String']>
+  term?: Maybe<Scalars['String']>
   type?: Maybe<Scalars['String']>
 }
 
 export type OntologyTextParseResponse = {
   id: Scalars['String']
-  name: Scalars['String']
+  term: Scalars['String']
   type: OntologyType
   terms: Array<Maybe<Scalars['String']>>
 }
@@ -634,7 +634,7 @@ export type OntologyConceptResponseResolvers<
   ParentType = ResolversTypes['OntologyConceptResponse']
 > = {
   id?: Resolver<ResolversTypes['String'], ParentType, Context>
-  name?: Resolver<ResolversTypes['String'], ParentType, Context>
+  term?: Resolver<ResolversTypes['String'], ParentType, Context>
   type?: Resolver<ResolversTypes['OntologyType'], ParentType, Context>
 }
 
@@ -643,7 +643,7 @@ export type OntologyConceptTermResponseResolvers<
   ParentType = ResolversTypes['OntologyConceptTermResponse']
 > = {
   id?: Resolver<ResolversTypes['String'], ParentType, Context>
-  name?: Resolver<ResolversTypes['String'], ParentType, Context>
+  term?: Resolver<ResolversTypes['String'], ParentType, Context>
   type?: Resolver<ResolversTypes['OntologyType'], ParentType, Context>
   terms?: Resolver<
     Maybe<Array<Maybe<ResolversTypes['OntologyTerm']>>>,
@@ -681,7 +681,7 @@ export type OntologyRelationResponseResolvers<
   ParentType = ResolversTypes['OntologyRelationResponse']
 > = {
   id?: Resolver<ResolversTypes['String'], ParentType, Context>
-  name?: Resolver<ResolversTypes['String'], ParentType, Context>
+  term?: Resolver<ResolversTypes['String'], ParentType, Context>
   type?: Resolver<ResolversTypes['OntologyType'], ParentType, Context>
   score?: Resolver<ResolversTypes['Float'], ParentType, Context>
   details?: Resolver<
@@ -695,7 +695,7 @@ export type OntologyTermResolvers<
   Context = ApolloServerContext,
   ParentType = ResolversTypes['OntologyTerm']
 > = {
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
+  term?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
   type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
 }
 
@@ -704,7 +704,7 @@ export type OntologyTextParseResponseResolvers<
   ParentType = ResolversTypes['OntologyTextParseResponse']
 > = {
   id?: Resolver<ResolversTypes['String'], ParentType, Context>
-  name?: Resolver<ResolversTypes['String'], ParentType, Context>
+  term?: Resolver<ResolversTypes['String'], ParentType, Context>
   type?: Resolver<ResolversTypes['OntologyType'], ParentType, Context>
   terms?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, Context>
 }

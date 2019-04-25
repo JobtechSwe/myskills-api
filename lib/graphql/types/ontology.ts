@@ -8,7 +8,7 @@ export const typeDefs = gql`
   }
 
   type OntologyTerm {
-    name: String
+    term: String
     type: String
   }
 
@@ -38,7 +38,7 @@ export const typeDefs = gql`
 
   type OntologyConceptResponse {
     id: String!
-    name: String!
+    term: String!
     type: OntologyType!
   }
 
@@ -48,21 +48,21 @@ export const typeDefs = gql`
 
   type OntologyConceptTermResponse {
     id: String!
-    name: String!
+    term: String!
     type: OntologyType!
     terms: [OntologyTerm]
   }
 
   type OntologyTextParseResponse {
     id: String!
-    name: String!
+    term: String!
     type: OntologyType!
     terms: [String]!
   }
 
   type OntologyRelationResponse {
     id: String!
-    name: String!
+    term: String!
     type: OntologyType!
     score: Float!
     details: OntologyRelationDetails!
