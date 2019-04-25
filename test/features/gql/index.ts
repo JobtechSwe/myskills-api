@@ -36,3 +36,17 @@ export const SKILLS = gql`
     }
   }
 `
+
+export const UPLOAD_IMAGE = gql`
+  mutation uploadImage($file: Upload!) {
+    uploadImage(file: $file) {
+      imageString
+    }
+  }
+`
+
+export const IMAGE = gql`
+  query image {
+    image
+  }
+`
