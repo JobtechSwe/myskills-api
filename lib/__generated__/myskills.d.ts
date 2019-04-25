@@ -51,14 +51,18 @@ export type CvInput = {
 }
 
 export type Education = {
+  programme: Scalars['String']
+  school: Scalars['String']
+  start: Scalars['String']
+  end?: Maybe<Scalars['String']>
   id: Scalars['String']
-  taxonomyId: Scalars['String']
-  term?: Maybe<Scalars['String']>
 }
 
 export type EducationInput = {
-  taxonomyId: Scalars['String']
-  term?: Maybe<Scalars['String']>
+  programme: Scalars['String']
+  school: Scalars['String']
+  start: Scalars['String']
+  end?: Maybe<Scalars['String']>
 }
 
 export type Experience = {
@@ -528,9 +532,11 @@ export type EducationResolvers<
   Context = ApolloServerContext,
   ParentType = ResolversTypes['Education']
 > = {
+  programme?: Resolver<ResolversTypes['String'], ParentType, Context>
+  school?: Resolver<ResolversTypes['String'], ParentType, Context>
+  start?: Resolver<ResolversTypes['String'], ParentType, Context>
+  end?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
   id?: Resolver<ResolversTypes['String'], ParentType, Context>
-  taxonomyId?: Resolver<ResolversTypes['String'], ParentType, Context>
-  term?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
 }
 
 export interface EmailScalarConfig

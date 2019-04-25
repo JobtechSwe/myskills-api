@@ -2,13 +2,17 @@ import { gql } from 'apollo-server-express'
 
 export const typeDefs = gql`
   type Education {
+    programme: String!
+    school: String!
+    start: String!
+    end: String
     id: String!
-    taxonomyId: String!
-    term: String
   }
 
   input EducationInput {
-    taxonomyId: String!
-    term: String
+    programme: String!
+    school: String!
+    start: String!
+    end: String
   }
 `
