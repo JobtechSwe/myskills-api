@@ -39,7 +39,6 @@ export const getConsentedClient = async (
     const { url, id } = await consents.request<Consent>(request)
     await approveConsent(url)
     const { accessToken } = await getConsentRequest(id)
-    console.log('accessTOken: ', accessToken)
 
     return getClient(server, {
       context: {
