@@ -36,7 +36,7 @@ export const ontologyRelated: QueryResolvers['ontologyRelated'] = async (
 ) => {
   try {
     const query = params
-      ? renameKeys({ id: 'uuid', concepts: 'concept' })(params)
+      ? renameKeys({ id: 'uuid', concepts: 'concept' }, params)
       : params
 
     const data = await ontologyAPI.getData<OntologyRelatedApiResponse>(
@@ -50,7 +50,7 @@ export const ontologyRelated: QueryResolvers['ontologyRelated'] = async (
         x =>
           ({
             id: x.uuid,
-            name: x.name,
+            term: x.name,
             type: x.type,
             details: x.details.Word2Vec
               ? {
@@ -64,7 +64,7 @@ export const ontologyRelated: QueryResolvers['ontologyRelated'] = async (
         x =>
           ({
             id: x.uuid,
-            name: x.name,
+            term: x.name,
             type: x.type,
           } as OntologyConceptResponse)
       ),

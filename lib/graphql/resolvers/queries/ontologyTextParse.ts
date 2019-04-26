@@ -26,7 +26,7 @@ export const ontologyTextParse: QueryResolvers['ontologyTextParse'] = async (
 
     return data.map(ontology => ({
       id: ontology.uuid,
-      name: ontology.name,
+      term: ontology.name,
       type: ontology.type,
       terms: ontology.terms,
     }))

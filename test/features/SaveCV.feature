@@ -4,14 +4,14 @@ Feature: Save CV
   Scenario: Save CV for the first time
     Given I have a bearer token
       And I have this skills input:
-      | taxonomyId   | term                    | type  |
+      | sourceId   | term                    | type  |
       | FQAi_Nxv_4VZ | 3D-grafik-Autodesk Maya | skill |
       And I have this education input:
-      | taxonomyId | term        |
-      | 123456789  | High school |
+      | programme | school        | start      |    end     |
+      | Fotboll  | Gubbängsskolan | 1994-06-19 | 2001-08-08 |
       And I have this experience input:
-      | taxonomyId  | term      | years |
-      | taxonomyId1 | Carpenter | 29    |
+      | sourceId  | term      | years |
+      | sourceId1 | Carpenter | 29    |
      When I send the cv input to the save method
      Then I will receive back what has been stored by this operation
       And I will see the skills input under the skills section
@@ -21,15 +21,15 @@ Feature: Save CV
   Scenario: Update the CV
     Given I have a bearer token
       And I have a stored CV with these skills:
-      | taxonomyId   | term                    | type  |
+      | sourceId   | term                    | type  |
       | FQAi_Nxv_4VZ | 3D-grafik-Autodesk Maya | skill |
       And I have this skills input:
-      | taxonomyId   | term                    | type  |
+      | sourceId   | term                    | type  |
       | GHGi_Ngg_1VZ | 2D-grafik-3D Corel Draw | skill |
      When I send the cv input to the save method
      Then I will receive back what has been stored by this operation
       And I will see these skills when I query for skills:
-      | taxonomyId   | term                    | type  |
+      | sourceId   | term                    | type  |
       | FQAi_Nxv_4VZ | 3D-grafik-Autodesk Maya | skill |
       | GHGi_Ngg_1VZ | 2D-grafik-3D Corel Draw | skill |
 

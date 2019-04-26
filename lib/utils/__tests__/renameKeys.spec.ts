@@ -7,7 +7,7 @@ describe('renameKeys', () => {
       someOtherProp: 'someOtherValue',
     }
 
-    const result = renameKeys({ someProp: 'newProp' })(testObj)
+    const result = renameKeys({ someProp: 'newProp' }, testObj)
 
     expect(result).toEqual({
       newProp: 'someValue',
@@ -21,7 +21,7 @@ describe('renameKeys', () => {
       someOtherProp: 'someOtherValue',
     }
 
-    const result = renameKeys({ propNotFound: 'newProp' })(testObj)
+    const result = renameKeys({ propNotFound: 'newProp' }, testObj)
 
     expect(result).toEqual({
       someProp: 'someValue',
@@ -35,7 +35,7 @@ describe('renameKeys', () => {
       someOtherProp: 'someOtherValue',
     }
 
-    const result = renameKeys({ someProp: 'newProp' })(testObj)
+    const result = renameKeys({ someProp: 'newProp' }, testObj)
 
     expect(testObj).toEqual({
       someProp: 'someValue',
@@ -44,6 +44,34 @@ describe('renameKeys', () => {
 
     expect(result).toEqual({
       newProp: 'someValue',
+      someOtherProp: 'someOtherValue',
+    })
+  })
+
+  test('it should rename nested properties', () => {
+    const testObj = {
+      arrayWithSomething: [{ someProp: 'someValue' }],
+      someOtherProp: 'someOtherValue',
+    }
+
+    const result = renameKeys({ someProp: 'newProp' }, testObj)
+
+    expect(result).toEqual({
+      arrayWithSomething: [{ newProp: 'someValue' }],
+      someOtherProp: 'someOtherValue',
+    })
+  })
+
+  test('it should not edit nested array', () => {
+    const testObj = {
+      arrayWithSomething: ['someValue'],
+      someOtherProp: 'someOtherValue',
+    }
+
+    const result = renameKeys({}, testObj)
+
+    expect(result).toEqual({
+      arrayWithSomething: ['someValue'],
       someOtherProp: 'someOtherValue',
     })
   })

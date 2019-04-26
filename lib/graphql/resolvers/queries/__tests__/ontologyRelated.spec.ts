@@ -69,7 +69,7 @@ test('return a formated result', async () => {
     relations: [
       {
         id: 'someRelationId',
-        name: 'someRelationName',
+        term: 'someRelationName',
         type: 'Skill',
         details: {
           word2Vec: 0.41,
@@ -80,7 +80,7 @@ test('return a formated result', async () => {
     concepts: [
       {
         id: 'someConceptId',
-        name: 'someConceptName',
+        term: 'someConceptName',
         type: 'Skill',
       },
     ],

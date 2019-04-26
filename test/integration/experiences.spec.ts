@@ -12,16 +12,12 @@ const GET_EXPERIENCES = gql`
 `
 
 const ADD_EXPERIENCE = gql`
-  mutation addExperience(
-    $term: String!
-    $taxonomyId: String!
-    $years: String!
-  ) {
+  mutation addExperience($term: String!, $sourceId: String!, $years: String!) {
     addExperience(
-      experience: { term: $term, taxonomyId: $taxonomyId, years: $years }
+      experience: { term: $term, sourceId: $sourceId, years: $years }
     ) {
       id
-      taxonomyId
+      sourceId
       term
       years
     }
@@ -54,7 +50,7 @@ describe('#experiences', () => {
     } = await mutate({
       mutation: ADD_EXPERIENCE,
       variables: {
-        taxonomyId: 'taxonomyId1',
+        sourceId: 'taxonomyId1',
         term: 'Carpenter',
         years: '29',
       },
@@ -65,7 +61,7 @@ describe('#experiences', () => {
     await mutate({
       mutation: ADD_EXPERIENCE,
       variables: {
-        taxonomyId: 'taxonomyId5',
+        sourceId: 'taxonomyId5',
         term: 'Mason',
         years: '5',
       },
@@ -88,7 +84,7 @@ describe('#experiences', () => {
     } = await mutate({
       mutation: ADD_EXPERIENCE,
       variables: {
-        taxonomyId: '42',
+        sourceId: '42',
         term: 'Philosopher',
         years: '29',
       },

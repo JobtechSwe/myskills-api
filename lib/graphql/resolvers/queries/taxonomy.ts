@@ -32,7 +32,7 @@ export const taxonomy: QueryResolvers['taxonomy'] = async (
 ) => {
   const taxonomyQuery =
     params && params.parentId
-      ? (renameKeys({ parentId: 'parent-id' })(params) as any)
+      ? (renameKeys({ parentId: 'parent-id' }, params) as any)
       : params
 
   try {

@@ -309,6 +309,50 @@
         "description": null,
         "fields": [
           {
+            "name": "programme",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "school",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "start",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "end",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "id",
             "description": null,
             "args": [],
@@ -317,26 +361,6 @@
               "name": null,
               "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "taxonomyId",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "term",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -374,7 +398,7 @@
             "deprecationReason": null
           },
           {
-            "name": "taxonomyId",
+            "name": "sourceId",
             "description": null,
             "args": [],
             "type": {
@@ -444,19 +468,7 @@
         "description": null,
         "fields": [
           {
-            "name": "id",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "taxonomyId",
+            "name": "sourceId",
             "description": null,
             "args": [],
             "type": {
@@ -481,6 +493,18 @@
           },
           {
             "name": "type",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
             "description": null,
             "args": [],
             "type": {
@@ -865,7 +889,7 @@
             "deprecationReason": null
           },
           {
-            "name": "name",
+            "name": "term",
             "description": null,
             "args": [],
             "type": {
@@ -939,7 +963,7 @@
             "deprecationReason": null
           },
           {
-            "name": "name",
+            "name": "term",
             "description": null,
             "args": [],
             "type": {
@@ -994,7 +1018,7 @@
         "description": null,
         "fields": [
           {
-            "name": "name",
+            "name": "term",
             "description": null,
             "args": [],
             "type": { "kind": "SCALAR", "name": "String", "ofType": null },
@@ -1155,7 +1179,7 @@
             "deprecationReason": null
           },
           {
-            "name": "name",
+            "name": "term",
             "description": null,
             "args": [],
             "type": {
@@ -1263,7 +1287,7 @@
             "deprecationReason": null
           },
           {
-            "name": "name",
+            "name": "term",
             "description": null,
             "args": [],
             "type": {
@@ -1741,7 +1765,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "taxonomyId",
+            "name": "sourceId",
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -1778,7 +1802,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "taxonomyId",
+            "name": "programme",
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -1788,7 +1812,27 @@
             "defaultValue": null
           },
           {
-            "name": "term",
+            "name": "school",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "start",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "end",
             "description": null,
             "type": { "kind": "SCALAR", "name": "String", "ofType": null },
             "defaultValue": null
@@ -1836,7 +1880,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "taxonomyId",
+            "name": "sourceId",
             "description": null,
             "type": {
               "kind": "NON_NULL",

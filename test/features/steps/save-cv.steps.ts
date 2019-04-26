@@ -7,6 +7,7 @@ import {
   ExperienceInput,
 } from '../../../lib/__generated__/myskills'
 import { SAVE_CV, SKILLS } from '../gql'
+import { educations } from '../../../lib/graphql/resolvers/queries'
 
 const feature = loadFeature('./test/features/SaveCV.feature')
 
@@ -56,7 +57,11 @@ defineFeature(feature, test => {
     })
     and('I will see the education input under the educations section', () => {
       const { education } = result
-      expect(education).toEqual(educationInput)
+      const expectedResult = educationInput.map(education => ({
+        id: expect.any(String),
+        ...education,
+      }))
+      expect(education).toEqual(expectedResult)
     })
     and('I will see the experience input under the experiences section', () => {
       const { experience } = result

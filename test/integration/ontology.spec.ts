@@ -15,7 +15,7 @@ const GET_ONTOLOGY_CONCEPTS = gql`
       params: { limit: $limit, offset: $offset, type: $type, filter: $filter }
     ) {
       id
-      name
+      term
       type
     }
   }
@@ -34,12 +34,12 @@ const GET_ONTOLOGY_RELATED = gql`
       count
       concepts {
         id
-        name
+        term
         type
       }
       relations {
         id
-        name
+        term
         type
         score
         details {
@@ -54,7 +54,7 @@ const GET_ONTOLOGY_TEXT_PARSE = gql`
   query ontologyTextParse($text: String!) {
     ontologyTextParse(text: $text) {
       id
-      name
+      term
       type
       terms
     }
@@ -65,10 +65,10 @@ const GET_ONTOLOGY_CONCEPT = gql`
   query ontologyConcept($id: String!, $limit: Int, $offset: Int) {
     ontologyConcept(id: $id, params: { limit: $limit, offset: $offset }) {
       id
-      name
+      term
       type
       terms {
-        name
+        term
         type
       }
     }
@@ -96,7 +96,7 @@ describe('ontology', () => {
         type: 'SKILL',
       }
 
-      const { data } = await query({
+      const { data, errors } = await query({
         query: GET_ONTOLOGY_CONCEPTS,
         variables,
       })
@@ -117,7 +117,7 @@ describe('ontology', () => {
         variables,
       })
       data.ontologyConcepts.map((concept: OntologyConceptResponse) => {
-        expect(concept.name.toLowerCase()).toMatch('java')
+        expect(concept.term.toLowerCase()).toMatch('java')
       })
     })
   })

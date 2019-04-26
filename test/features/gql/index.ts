@@ -10,16 +10,19 @@ export const SAVE_CV = gql`
       cv: { skills: $skills, education: $education, experience: $experience }
     ) {
       skills {
-        taxonomyId
+        sourceId
         term
         type
       }
       education {
-        taxonomyId
-        term
+        id
+        programme
+        school
+        start
+        end
       }
       experience {
-        taxonomyId
+        sourceId
         term
         years
       }
@@ -30,7 +33,7 @@ export const SAVE_CV = gql`
 export const SKILLS = gql`
   query skills {
     skills {
-      taxonomyId
+      sourceId
       term
       type
     }

@@ -6,7 +6,7 @@ import { skillInput, skillInput2 } from './__fixtures__/skills'
 const GET_SKILLS = gql`
   query skills {
     skills {
-      taxonomyId
+      sourceId
       term
       type
     }
@@ -14,10 +14,10 @@ const GET_SKILLS = gql`
 `
 
 const ADD_SKILL = gql`
-  mutation addskill($taxonomyId: String!, $term: String!, $type: String!) {
-    addSkill(skill: { taxonomyId: $taxonomyId, term: $term, type: $type }) {
+  mutation addskill($sourceId: String!, $term: String!, $type: String!) {
+    addSkill(skill: { sourceId: $sourceId, term: $term, type: $type }) {
       id
-      taxonomyId
+      sourceId
       term
       type
     }
@@ -88,7 +88,7 @@ describe('#skills', () => {
       query: GET_SKILLS,
     })
     const success = dataAfterDelete.skills.every(
-      ({ taxonomyId }) => taxonomyId !== skillInput2.taxonomyId
+      ({ sourceId }) => sourceId !== skillInput2.sourceId
     )
     expect(success).toBeTruthy()
   })
