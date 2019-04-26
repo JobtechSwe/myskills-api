@@ -123,7 +123,7 @@ describe('ontology', () => {
   })
 
   describe('ontologyConcept', () => {
-    it.only('should get a concept by id', async () => {
+    it('should get a concept by id', async () => {
       const { data } = await query({
         query: GET_ONTOLOGY_CONCEPT,
         variables: {
