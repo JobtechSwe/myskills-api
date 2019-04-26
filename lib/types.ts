@@ -4,6 +4,7 @@ export enum Area {
   experiences = 'experiences',
   skills = 'skills',
   profile = 'profile',
+  image = 'image',
 }
 
 export enum SubscriptionMessage {

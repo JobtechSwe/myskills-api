@@ -6,6 +6,8 @@ export type Scalars = {
   Boolean: boolean
   Int: number
   Float: number
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: any
   /** A date string, such as 2007-12-03, compliant with the `full-date` format
    * outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for
    * representation of dates and times using the Gregorian calendar.
@@ -17,8 +19,6 @@ export type Scalars = {
   JSON: any
   /** A password string. Has to be at least 8 characters long. */
   Password: any
-  /** The `Upload` scalar type represents a file upload. */
-  Upload: any
   /** The UUID scalar type represents a UUID. */
   UUID: any
 }
@@ -78,6 +78,10 @@ export type ExperienceInput = {
   years: Scalars['String']
 }
 
+export type ImgFile = {
+  imageString: Scalars['String']
+}
+
 export enum Language {
   Spanish = 'spanish',
   Swedish = 'swedish',
@@ -113,6 +117,8 @@ export type Mutation = {
   removeLanguage: Scalars['Boolean']
   /** Save the complete cv to user */
   saveCV: Cv
+  /** Save Image as base64 string */
+  uploadImage: ImgFile
 }
 
 export type MutationAddLanguageArgs = {
@@ -153,6 +159,10 @@ export type MutationRemoveLanguageArgs = {
 
 export type MutationSaveCvArgs = {
   cv: CvInput
+}
+
+export type MutationUploadImageArgs = {
+  file: Scalars['Upload']
 }
 
 export type OntologyConceptInput = {
@@ -249,6 +259,8 @@ export type Query = {
   profile: Profile
   /** Get user skills */
   skills: Array<Maybe<Skill>>
+  /** Get user image */
+  image: Scalars['String']
   /** Get from taxonomy */
   taxonomy: TaxonomyResponse
   /** Get from ontology */
@@ -472,6 +484,8 @@ export type ResolversTypes = {
   Boolean: Scalars['Boolean']
   CVInput: CvInput
   CV: Cv
+  Upload: Scalars['Upload']
+  ImgFile: ImgFile
   Subscription: Subscription
   ConsentResponse: ConsentResponse
   CacheControlScope: CacheControlScope
@@ -482,7 +496,6 @@ export type ResolversTypes = {
   Password: Scalars['Password']
   TaxonomyDefaultResult: TaxonomyDefaultResult
   TaxonomySkillResult: TaxonomySkillResult
-  Upload: Scalars['Upload']
   UUID: Scalars['UUID']
 }
 
@@ -552,6 +565,13 @@ export type ExperienceResolvers<
   sourceId?: Resolver<ResolversTypes['String'], ParentType, Context>
   term?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
   years?: Resolver<ResolversTypes['String'], ParentType, Context>
+}
+
+export type ImgFileResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['ImgFile']
+> = {
+  imageString?: Resolver<ResolversTypes['String'], ParentType, Context>
 }
 
 export interface JsonScalarConfig
@@ -632,6 +652,12 @@ export type MutationResolvers<
     ParentType,
     Context,
     MutationSaveCvArgs
+  >
+  uploadImage?: Resolver<
+    ResolversTypes['ImgFile'],
+    ParentType,
+    Context,
+    MutationUploadImageArgs
   >
 }
 
@@ -745,6 +771,7 @@ export type QueryResolvers<
   >
   profile?: Resolver<ResolversTypes['Profile'], ParentType, Context>
   skills?: Resolver<Array<Maybe<ResolversTypes['Skill']>>, ParentType, Context>
+  image?: Resolver<ResolversTypes['String'], ParentType, Context>
   taxonomy?: Resolver<
     ResolversTypes['TaxonomyResponse'],
     ParentType,
@@ -877,6 +904,7 @@ export type Resolvers<Context = ApolloServerContext> = {
   Education?: EducationResolvers<Context>
   Email?: GraphQLScalarType
   Experience?: ExperienceResolvers<Context>
+  ImgFile?: ImgFileResolvers<Context>
   JSON?: GraphQLScalarType
   Login?: LoginResolvers<Context>
   Mutation?: MutationResolvers<Context>
