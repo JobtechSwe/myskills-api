@@ -34,12 +34,12 @@ const GET_ONTOLOGY_RELATED = gql`
       count
       concepts {
         id
-        name
+        term
         type
       }
       relations {
         id
-        name
+        term
         type
         score
         details {
@@ -54,7 +54,7 @@ const GET_ONTOLOGY_TEXT_PARSE = gql`
   query ontologyTextParse($text: String!) {
     ontologyTextParse(text: $text) {
       id
-      name
+      term
       type
       terms
     }
