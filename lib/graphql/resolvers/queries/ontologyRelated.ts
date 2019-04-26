@@ -36,7 +36,7 @@ export const ontologyRelated: QueryResolvers['ontologyRelated'] = async (
 ) => {
   try {
     const query = params
-      ? renameKeys({ id: 'uuid', concepts: 'concept' })(params)
+      ? renameKeys({ id: 'uuid', concepts: 'concept' }, params)
       : params
 
     const data = await ontologyAPI.getData<OntologyRelatedApiResponse>(

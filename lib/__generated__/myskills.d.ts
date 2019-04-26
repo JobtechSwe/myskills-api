@@ -67,13 +67,13 @@ export type EducationInput = {
 
 export type Experience = {
   id: Scalars['String']
-  taxonomyId: Scalars['String']
+  sourceId: Scalars['String']
   term?: Maybe<Scalars['String']>
   years: Scalars['String']
 }
 
 export type ExperienceInput = {
-  taxonomyId: Scalars['String']
+  sourceId: Scalars['String']
   term?: Maybe<Scalars['String']>
   years: Scalars['String']
 }
@@ -549,7 +549,7 @@ export type ExperienceResolvers<
   ParentType = ResolversTypes['Experience']
 > = {
   id?: Resolver<ResolversTypes['String'], ParentType, Context>
-  taxonomyId?: Resolver<ResolversTypes['String'], ParentType, Context>
+  sourceId?: Resolver<ResolversTypes['String'], ParentType, Context>
   term?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
   years?: Resolver<ResolversTypes['String'], ParentType, Context>
 }

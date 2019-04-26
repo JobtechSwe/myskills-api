@@ -1,63 +1,63 @@
 export const ontologyConcepts = [
   {
     id: '0c100faf-5197-5e04-8b6c-964bff1987ee',
-    name: '111 mmb',
+    term: '111 mmb',
     type: 'SKILL',
   },
   {
     id: '54927eca-d9b3-5ba8-9492-85281d80af23',
-    name: '11g databashanterare',
+    term: '11g databashanterare',
     type: 'SKILL',
   },
   {
     id: 'ed1d4d4c-ea8c-567e-a04b-2984a61f23d0',
-    name: '15n',
+    term: '15n',
     type: 'SKILL',
   },
   {
     id: 'c6e1faf1-4ff1-5cca-a6ac-fa58b68939aa',
-    name: '16 mm film',
+    term: '16 mm film',
     type: 'SKILL',
   },
   {
     id: '663fc6cb-e4f0-5777-b9ac-4ca490645769',
-    name: '1st line',
+    term: '1st line',
     type: 'SKILL',
   },
   {
     id: 'a4c16f7b-761a-5758-881e-dabbb82e8952',
-    name: '1xevdo',
+    term: '1xevdo',
     type: 'SKILL',
   },
   {
     id: 'ec439c72-e29c-5714-ad67-48a5e72a58e4',
-    name: '1xrtt',
+    term: '1xrtt',
     type: 'SKILL',
   },
   {
     id: 'c625dcc2-9dfc-5172-8aa5-f331b58e48d7',
-    name: '2-färgstryck',
+    term: '2-färgstryck',
     type: 'SKILL',
   },
   {
     id: '7c77ceef-afe3-5641-8003-ce8ae19156e5',
-    name: '2003 server',
+    term: '2003 server',
     type: 'SKILL',
   },
   {
     id: '21717f15-07b7-5ea1-8e1f-722b10be7fe6',
-    name: '24seven office',
+    term: '24seven office',
     type: 'SKILL',
   },
 ]
 
 export const ontologyConcept = {
   id: 'b8460092-7c21-5769-80de-d9b94d142839',
-  name: 'Snickare',
+  term: 'Snickare',
   type: 'OCCUPATION',
   terms: [
     {
-      name: 'snickare',
+      term: 'snickare',
       type: 'occupation',
     },
   ],

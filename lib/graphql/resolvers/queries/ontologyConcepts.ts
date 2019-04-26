@@ -24,7 +24,7 @@ export const ontologyConcepts: QueryResolvers['ontologyConcepts'] = async (
 
     return data.map(
       x =>
-        renameKeys({ uuid: 'id', name: 'term' })(x) as OntologyConceptResponse
+        renameKeys({ uuid: 'id', name: 'term' }, x) as OntologyConceptResponse
     )
   } catch (error) {
     throw new Error(error)

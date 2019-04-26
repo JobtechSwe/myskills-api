@@ -1,7 +1,18 @@
-import { reduce, curry, assoc, keys } from 'ramda'
+export const renameKeys = (keysMap: any, obj: any) => {
+  return Object.keys(obj).reduce((acc, key) => {
+    const renamedObject = {
+      [keysMap[key] || key]: obj[key],
+    }
 
-export const renameKeys = curry((keysMap, obj) =>
-  reduce((acc, key) => assoc(keysMap[key] || key, obj[key], acc), {}, keys(obj))
-)
+    if (typeof obj[key] === 'object') {
+      obj[key] = renameKeys(keysMap, obj[key])
+    }
+
+    return {
+      ...acc,
+      ...renamedObject,
+    }
+  }, {})
+}
 
 export default renameKeys

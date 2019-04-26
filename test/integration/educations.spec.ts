@@ -5,17 +5,34 @@ import { getConsentedClient } from './integrationUtils'
 const GET_EDUCATIONS = gql`
   query educations {
     educations {
-      term
+      programme
+      school
+      start
+      end
     }
   }
 `
 
 const ADD_EDUCATION = gql`
-  mutation addEducation($term: String!, $taxonomyId: String!) {
-    addEducation(education: { term: $term, taxonomyId: $taxonomyId }) {
+  mutation addEducation(
+    $programme: String!
+    $school: String!
+    $start: String!
+    $end: String
+  ) {
+    addEducation(
+      education: {
+        programme: $programme
+        school: $school
+        start: $start
+        end: $end
+      }
+    ) {
       id
-      taxonomyId
-      term
+      programme
+      school
+      start
+      end
     }
   }
 `
@@ -46,17 +63,21 @@ describe('#educations', () => {
     } = await mutate({
       mutation: ADD_EDUCATION,
       variables: {
-        taxonomyId: '123456789',
-        term: 'High school',
+        programme: 'Fotboll',
+        school: 'Gubbängsskolan',
+        start: '1994-06-19',
+        end: '2003-09-23',
       },
     })
-    expect(addEducation.term).toBe('High school')
+    expect(addEducation.programme).toBe('Fotboll')
 
     await mutate({
       mutation: ADD_EDUCATION,
       variables: {
-        taxonomyId: '58',
-        term: 'PhD',
+        programme: 'Maskin',
+        school: 'LTU',
+        start: '2004-06-19',
+        end: '2009-09-23',
       },
     })
 
@@ -64,8 +85,8 @@ describe('#educations', () => {
       query: GET_EDUCATIONS,
     })
 
-    expect(data.educations[0].term).toBe('High school')
-    expect(data.educations[1].term).toBe('PhD')
+    expect(data.educations[0].school).toBe('Gubbängsskolan')
+    expect(data.educations[1].school).toBe('LTU')
   })
 
   it('should be possible to remove an education', async () => {
@@ -76,8 +97,10 @@ describe('#educations', () => {
     } = await mutate({
       mutation: ADD_EDUCATION,
       variables: {
-        taxonomyId: '123456789',
-        term: 'Primary School',
+        programme: 'Maskin',
+        school: 'LTU',
+        start: '2004-06-19',
+        end: '2009-09-23',
       },
     })
 
@@ -96,7 +119,7 @@ describe('#educations', () => {
       query: GET_EDUCATIONS,
     })
     const success = dataAfterDelete.educations.every(
-      ({ term }) => term !== 'Primary School'
+      ({ programme }) => programme !== 'Maskin'
     )
     expect(success).toBeTruthy()
   })

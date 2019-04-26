@@ -2,14 +2,14 @@ import { gql } from 'apollo-server-express'
 
 export const typeDefs = gql`
   input ExperienceInput {
-    taxonomyId: String!
+    sourceId: String!
     term: String
     years: String!
   }
 
   type Experience {
     id: String!
-    taxonomyId: String!
+    sourceId: String!
     term: String
     years: String!
   }

@@ -30,7 +30,8 @@ export const ontologyConcept: QueryResolvers['ontologyConcept'] = async (
       params as object
     )
 
-    return renameKeys({ uuid: 'id', name: 'term' })(
+    return renameKeys(
+      { uuid: 'id', name: 'term' },
       data
     ) as OntologyConceptTermResponse
   } catch (error) {
