@@ -66,7 +66,7 @@ services:
       timeout: 5s
       retries: 5
   mydata-operator:
-    image: jobtechswe/mydata-operator:latest
+    image: jobtechswe/mydata-operator:latest-tag
     command: >
       bash -c "npm run migrate up
       && npm start"
@@ -93,7 +93,7 @@ services:
         condition: service_started
 
   mydata-app: #This replaces the phone app in the normal flow.
-    image: jobtechswe/mydata-app
+    image: jobtechswe/mydata-app:latest-tag
     environment:
       - OPERATOR_URL=http://mydata-operator:4000/api
     ports:

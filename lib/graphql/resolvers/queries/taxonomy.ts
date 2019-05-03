@@ -21,7 +21,7 @@ interface AfTaxonomyResponse {
     offset: number
     limit: number
   }
-  total: number
+  total: { value: number }
   result: [AfTaxonomyResult]
 }
 
@@ -37,8 +37,11 @@ export const taxonomy: QueryResolvers['taxonomy'] = async (
 
   try {
     const data = await taxonomyAPI.getData<AfTaxonomyResponse>(taxonomyQuery)
+    const total = data.total.value
+
     return {
-      ...data,
+      total,
+      search: data.search,
       result: data.result.map(x => ({
         taxonomyId: x.conceptId,
         ...x,
