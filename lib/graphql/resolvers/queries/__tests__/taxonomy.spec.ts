@@ -4,6 +4,7 @@ import { QueryTaxonomyArgs } from '../../../../__generated__/myskills'
 
 beforeEach(() => {
   ;(ctx.dataSources.taxonomyAPI.getData as jest.Mock).mockResolvedValue({
+    total: { value: 123 },
     result: [
       {
         conceptId: '123',
@@ -66,6 +67,8 @@ test('returnass formted result', async () => {
         taxonomyId: '456',
       },
     ],
+    search: undefined,
+    total: 123,
   })
 })
 
