@@ -59,6 +59,11 @@ const typeDefs = gql`
     addSkill(skill: SkillInput!): Skill!
 
     """
+    Add user occupation
+    """
+    createOccupation(occupation: OccupationInput!): Occupation!
+
+    """
     Remove skill from user
     """
     removeSkill(id: String!): Boolean!
@@ -104,6 +109,11 @@ const typeDefs = gql`
     Get user experiences
     """
     experiences: [Experience]!
+
+    """
+    Get occupation
+    """
+    occupation: Occupation!
 
     """
     Get user profile
