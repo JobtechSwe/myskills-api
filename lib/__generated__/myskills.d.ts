@@ -239,13 +239,15 @@ export enum OntologyType {
 }
 
 export type Profile = {
-  firstName?: Maybe<Scalars['String']>
-  lastName?: Maybe<Scalars['String']>
+  name: Scalars['String']
+  email: Scalars['String']
+  telephone?: Maybe<Scalars['String']>
 }
 
 export type ProfileInput = {
-  firstName: Scalars['String']
-  lastName: Scalars['String']
+  name: Scalars['String']
+  email: Scalars['String']
+  telephone?: Maybe<Scalars['String']>
 }
 
 export type Query = {
@@ -750,8 +752,9 @@ export type ProfileResolvers<
   Context = ApolloServerContext,
   ParentType = ResolversTypes['Profile']
 > = {
-  firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
-  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
+  name?: Resolver<ResolversTypes['String'], ParentType, Context>
+  email?: Resolver<ResolversTypes['String'], ParentType, Context>
+  telephone?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
 }
 
 export type QueryResolvers<
