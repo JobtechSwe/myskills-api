@@ -37,16 +37,19 @@ defineFeature(feature, test => {
       experienceInput = experience
     })
     when('I send the cv input to the save method', async () => {
-      ;({
-        data: { saveCV: result },
-      } = await mutate({
+      const response = await mutate({
         mutation: SAVE_CV,
         variables: {
           skills: skillsInput,
           education: educationInput,
           experience: experienceInput,
         },
-      }))
+      })
+
+      console.log('response', response)
+      ;({
+        data: { saveCV: result },
+      } = response)
     })
     then('I will receive back what has been stored by this operation', () => {
       expect(result).toBeTruthy()

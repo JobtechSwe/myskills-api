@@ -2,11 +2,11 @@ import { gql } from 'apollo-server-express'
 
 export const typeDefs = gql`
   input OccupationExperienceInput {
-    years: Int
+    years: Int!
   }
 
   type OccupationExperience {
-    years: Int
+    years: Int!
   }
 
   type Occupation {
