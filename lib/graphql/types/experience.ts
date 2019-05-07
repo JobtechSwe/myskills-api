@@ -13,7 +13,7 @@ export const typeDefs = gql`
     id: String!
     employer: String!
     sourceId: String
-    term: String
+    term: String!
     start: String!
     end: String
   }

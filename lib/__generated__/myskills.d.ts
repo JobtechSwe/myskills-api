@@ -69,7 +69,7 @@ export type Experience = {
   id: Scalars['String']
   employer: Scalars['String']
   sourceId?: Maybe<Scalars['String']>
-  term?: Maybe<Scalars['String']>
+  term: Scalars['String']
   start: Scalars['String']
   end?: Maybe<Scalars['String']>
 }
@@ -181,11 +181,11 @@ export type Occupation = {
 }
 
 export type OccupationExperience = {
-  years?: Maybe<Scalars['Int']>
+  years: Scalars['Int']
 }
 
 export type OccupationExperienceInput = {
-  years?: Maybe<Scalars['Int']>
+  years: Scalars['Int']
 }
 
 export type OccupationInput = {
@@ -598,7 +598,7 @@ export type ExperienceResolvers<
   id?: Resolver<ResolversTypes['String'], ParentType, Context>
   employer?: Resolver<ResolversTypes['String'], ParentType, Context>
   sourceId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
-  term?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
+  term?: Resolver<ResolversTypes['String'], ParentType, Context>
   start?: Resolver<ResolversTypes['String'], ParentType, Context>
   end?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
 }
@@ -719,7 +719,7 @@ export type OccupationExperienceResolvers<
   Context = ApolloServerContext,
   ParentType = ResolversTypes['OccupationExperience']
 > = {
-  years?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, Context>
+  years?: Resolver<ResolversTypes['Int'], ParentType, Context>
 }
 
 export type OntologyConceptResponseResolvers<
