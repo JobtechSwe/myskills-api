@@ -1,7 +1,7 @@
 jest.unmock('redis')
 jest.unmock('ioredis')
 jest.unmock('@mydata/client')
-jest.setTimeout(10000)
+jest.setTimeout(30000)
 jest.unmock('../../lib/adapters/taxonomy')
 jest.unmock('../../lib/adapters/pubsub')
 
