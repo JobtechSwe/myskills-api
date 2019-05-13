@@ -67,15 +67,19 @@ export type EducationInput = {
 
 export type Experience = {
   id: Scalars['String']
-  sourceId: Scalars['String']
-  term?: Maybe<Scalars['String']>
-  years: Scalars['String']
+  employer: Scalars['String']
+  sourceId?: Maybe<Scalars['String']>
+  term: Scalars['String']
+  start: Scalars['String']
+  end?: Maybe<Scalars['String']>
 }
 
 export type ExperienceInput = {
-  sourceId: Scalars['String']
-  term?: Maybe<Scalars['String']>
-  years: Scalars['String']
+  sourceId?: Maybe<Scalars['String']>
+  term: Scalars['String']
+  start: Scalars['String']
+  employer: Scalars['String']
+  end?: Maybe<Scalars['String']>
 }
 
 export type ImgFile = {
@@ -107,6 +111,8 @@ export type Mutation = {
   createProfile: Profile
   /** Add skill to user */
   addSkill: Skill
+  /** Add user occupation */
+  createOccupation: Occupation
   /** Remove skill from user */
   removeSkill: Scalars['Boolean']
   /** Remove education from user */
@@ -141,6 +147,10 @@ export type MutationAddSkillArgs = {
   skill: SkillInput
 }
 
+export type MutationCreateOccupationArgs = {
+  occupation: OccupationInput
+}
+
 export type MutationRemoveSkillArgs = {
   id: Scalars['String']
 }
@@ -163,6 +173,24 @@ export type MutationSaveCvArgs = {
 
 export type MutationUploadImageArgs = {
   file: Scalars['Upload']
+}
+
+export type Occupation = {
+  term: Scalars['String']
+  experience?: Maybe<OccupationExperience>
+}
+
+export type OccupationExperience = {
+  years: Scalars['Int']
+}
+
+export type OccupationExperienceInput = {
+  years: Scalars['Int']
+}
+
+export type OccupationInput = {
+  term: Scalars['String']
+  experience?: Maybe<OccupationExperienceInput>
 }
 
 export type OntologyConceptInput = {
@@ -257,6 +285,8 @@ export type Query = {
   educations: Array<Maybe<Education>>
   /** Get user experiences */
   experiences: Array<Maybe<Experience>>
+  /** Get occupation */
+  occupation: Occupation
   /** Get user profile */
   profile: Profile
   /** Get user skills */
@@ -456,10 +486,12 @@ export type ResolversTypes = {
   Education: Education
   String: Scalars['String']
   Experience: Experience
+  Occupation: Occupation
+  OccupationExperience: OccupationExperience
+  Int: Scalars['Int']
   Profile: Profile
   Skill: Skill
   TaxonomyQueryInput: TaxonomyQueryInput
-  Int: Scalars['Int']
   TaxonomyType: TaxonomyType
   TaxonomyResponse: TaxonomyResponse
   TaxonomySearch: TaxonomySearch
@@ -483,6 +515,8 @@ export type ResolversTypes = {
   EducationInput: EducationInput
   ProfileInput: ProfileInput
   SkillInput: SkillInput
+  OccupationInput: OccupationInput
+  OccupationExperienceInput: OccupationExperienceInput
   Boolean: Scalars['Boolean']
   CVInput: CvInput
   CV: Cv
@@ -564,9 +598,11 @@ export type ExperienceResolvers<
   ParentType = ResolversTypes['Experience']
 > = {
   id?: Resolver<ResolversTypes['String'], ParentType, Context>
-  sourceId?: Resolver<ResolversTypes['String'], ParentType, Context>
-  term?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
-  years?: Resolver<ResolversTypes['String'], ParentType, Context>
+  employer?: Resolver<ResolversTypes['String'], ParentType, Context>
+  sourceId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
+  term?: Resolver<ResolversTypes['String'], ParentType, Context>
+  start?: Resolver<ResolversTypes['String'], ParentType, Context>
+  end?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
 }
 
 export type ImgFileResolvers<
@@ -625,6 +661,12 @@ export type MutationResolvers<
     Context,
     MutationAddSkillArgs
   >
+  createOccupation?: Resolver<
+    ResolversTypes['Occupation'],
+    ParentType,
+    Context,
+    MutationCreateOccupationArgs
+  >
   removeSkill?: Resolver<
     ResolversTypes['Boolean'],
     ParentType,
@@ -661,6 +703,25 @@ export type MutationResolvers<
     Context,
     MutationUploadImageArgs
   >
+}
+
+export type OccupationResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['Occupation']
+> = {
+  term?: Resolver<ResolversTypes['String'], ParentType, Context>
+  experience?: Resolver<
+    Maybe<ResolversTypes['OccupationExperience']>,
+    ParentType,
+    Context
+  >
+}
+
+export type OccupationExperienceResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['OccupationExperience']
+> = {
+  years?: Resolver<ResolversTypes['Int'], ParentType, Context>
 }
 
 export type OntologyConceptResponseResolvers<
@@ -772,6 +833,7 @@ export type QueryResolvers<
     ParentType,
     Context
   >
+  occupation?: Resolver<ResolversTypes['Occupation'], ParentType, Context>
   profile?: Resolver<ResolversTypes['Profile'], ParentType, Context>
   skills?: Resolver<Array<Maybe<ResolversTypes['Skill']>>, ParentType, Context>
   image?: Resolver<ResolversTypes['String'], ParentType, Context>
@@ -911,6 +973,8 @@ export type Resolvers<Context = ApolloServerContext> = {
   JSON?: GraphQLScalarType
   Login?: LoginResolvers<Context>
   Mutation?: MutationResolvers<Context>
+  Occupation?: OccupationResolvers<Context>
+  OccupationExperience?: OccupationExperienceResolvers<Context>
   OntologyConceptResponse?: OntologyConceptResponseResolvers<Context>
   OntologyConceptTermResponse?: OntologyConceptTermResponseResolvers<Context>
   OntologyRelatedResponse?: OntologyRelatedResponseResolvers<Context>

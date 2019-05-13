@@ -10,8 +10,8 @@ Feature: Save CV
       | programme | school        | start      |    end     |
       | Fotboll  | Gubbängsskolan | 1994-06-19 | 2001-08-08 |
       And I have this experience input:
-      | sourceId  | term      | years |
-      | sourceId1 | Carpenter | 29    |
+      | sourceId  | term      | employer          | start  | end    |
+      | sourceId1 | Carpenter | Mimmis majbraseri | 201901 | 201902 |
      When I send the cv input to the save method
      Then I will receive back what has been stored by this operation
       And I will see the skills input under the skills section
