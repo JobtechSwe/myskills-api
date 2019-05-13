@@ -35,6 +35,16 @@ Object {
       "purpose": "In order to create a CV using our website.",
     },
     Object {
+      "area": "occupation",
+      "description": "occupation that you have entered in the service.",
+      "domain": "myskills-api-domain",
+      "lawfulBasis": "CONSENT",
+      "permissions": Array [
+        "write",
+      ],
+      "purpose": "In order to create a CV using our website.",
+    },
+    Object {
       "area": "skills",
       "description": "skills that you have entered in the service.",
       "domain": "myskills-api-domain",
