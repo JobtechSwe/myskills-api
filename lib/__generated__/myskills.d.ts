@@ -6,8 +6,6 @@ export type Scalars = {
   Boolean: boolean
   Int: number
   Float: number
-  /** The `Upload` scalar type represents a file upload. */
-  Upload: any
   /** A date string, such as 2007-12-03, compliant with the `full-date` format
    * outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for
    * representation of dates and times using the Gregorian calendar.
@@ -19,6 +17,8 @@ export type Scalars = {
   JSON: any
   /** A password string. Has to be at least 8 characters long. */
   Password: any
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: any
   /** The UUID scalar type represents a UUID. */
   UUID: any
 }
@@ -48,6 +48,7 @@ export type CvInput = {
   skills?: Maybe<Array<SkillInput>>
   education?: Maybe<Array<EducationInput>>
   experience?: Maybe<Array<ExperienceInput>>
+  image: ImgInput
 }
 
 export type Education = {
@@ -79,6 +80,10 @@ export type ExperienceInput = {
 }
 
 export type ImgFile = {
+  imageString: Scalars['String']
+}
+
+export type ImgInput = {
   imageString: Scalars['String']
 }
 
@@ -162,7 +167,7 @@ export type MutationSaveCvArgs = {
 }
 
 export type MutationUploadImageArgs = {
-  file: Scalars['Upload']
+  image: ImgInput
 }
 
 export type OntologyConceptInput = {
@@ -483,8 +488,8 @@ export type ResolversTypes = {
   SkillInput: SkillInput
   Boolean: Scalars['Boolean']
   CVInput: CvInput
+  ImgInput: ImgInput
   CV: Cv
-  Upload: Scalars['Upload']
   ImgFile: ImgFile
   Subscription: Subscription
   ConsentResponse: ConsentResponse
@@ -496,6 +501,7 @@ export type ResolversTypes = {
   Password: Scalars['Password']
   TaxonomyDefaultResult: TaxonomyDefaultResult
   TaxonomySkillResult: TaxonomySkillResult
+  Upload: Scalars['Upload']
   UUID: Scalars['UUID']
 }
 

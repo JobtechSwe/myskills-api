@@ -1648,14 +1648,14 @@
             "description": "Save Image as base64 string",
             "args": [
               {
-                "name": "file",
+                "name": "image",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Upload",
+                    "kind": "INPUT_OBJECT",
+                    "name": "ImgInput",
                     "ofType": null
                   }
                 },
@@ -1983,6 +1983,41 @@
               }
             },
             "defaultValue": null
+          },
+          {
+            "name": "image",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "ImgInput",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "ImgInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "imageString",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "defaultValue": null
           }
         ],
         "interfaces": null,
@@ -2041,16 +2076,6 @@
         ],
         "inputFields": null,
         "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "SCALAR",
-        "name": "Upload",
-        "description": "The `Upload` scalar type represents a file upload.",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -3054,6 +3079,16 @@
         "interfaces": [
           { "kind": "INTERFACE", "name": "TaxonomyResult", "ofType": null }
         ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "SCALAR",
+        "name": "Upload",
+        "description": "The `Upload` scalar type represents a file upload.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },

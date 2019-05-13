@@ -21,13 +21,17 @@ defineFeature(feature, test => {
 
     when(/^I save the image "(.*)"$/, async imageString => {
       imagePath = `${TEST_ASSETS_FOLDER}/${imageString}.jpeg`
-      const imageStream = fs.createReadStream(imagePath)
-      const { data } = await mutate({
+      const base64Image = fs.readFileSync(imagePath, {
+        encoding: 'base64',
+      })
+      const { data, errors } = await mutate({
         mutation: UPLOAD_IMAGE,
         variables: {
-          file: imageStream,
+          image: { imageString: base64Image },
         },
       })
+
+      console.log('data', data, 'error', errors)
       smallImg = data.uploadImage
     })
 
@@ -68,11 +72,13 @@ defineFeature(feature, test => {
       async imageString => {
         const imagePath = `${TEST_ASSETS_FOLDER}/${imageString}.jpeg`
         croppedImagePath = `${TEST_ASSETS_FOLDER}/cropped-${imageString}.jpeg`
-        const imageStream = fs.createReadStream(imagePath)
+        const base64Image = fs.readFileSync(imagePath, {
+          encoding: 'base64',
+        })
         const { data } = await mutate({
           mutation: UPLOAD_IMAGE,
           variables: {
-            file: imageStream,
+            image: { imageString: base64Image },
           },
         })
         bigImage = data.uploadImage
