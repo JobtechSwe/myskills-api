@@ -44,7 +44,7 @@ export const taxonomy = {
     },
   ],
   search: { limit: 10, offset: 0 },
-  total: 12495,
+  total: 10000,
 }
 
 export const skill = {

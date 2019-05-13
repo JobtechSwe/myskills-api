@@ -3,8 +3,9 @@ import { createProfile } from '../createProfile'
 
 const args = {
   profile: {
-    firstName: 'John',
-    lastName: 'Doe',
+    name: 'Lasse Kongo',
+    email: 'lassekongo@example.com',
+    telephone: '0123456789',
   },
 }
 

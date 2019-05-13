@@ -2,12 +2,14 @@ import { gql } from 'apollo-server-express'
 
 export const typeDefs = gql`
   input ProfileInput {
-    firstName: String!
-    lastName: String!
+    name: String!
+    email: String!
+    telephone: String
   }
 
   type Profile {
-    firstName: String
-    lastName: String
+    name: String!
+    email: String!
+    telephone: String
   }
 `

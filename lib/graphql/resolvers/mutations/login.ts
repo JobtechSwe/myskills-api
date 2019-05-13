@@ -1,5 +1,5 @@
 import { MutationResolvers } from '../../../__generated__/myskills'
-import config from '../../../../lib/config'
+import config from '../../../config'
 import { v4 as uuid } from 'uuid'
 
 export const login: MutationResolvers['login'] = async (_, _args, _context) => {

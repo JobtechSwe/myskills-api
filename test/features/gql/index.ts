@@ -24,7 +24,9 @@ export const SAVE_CV = gql`
       experience {
         sourceId
         term
-        years
+        employer
+        start
+        end
       }
     }
   }

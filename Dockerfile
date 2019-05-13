@@ -1,4 +1,4 @@
-FROM node:11.7 as base
+FROM node:11.10 as base
 ARG cache=1
 
 WORKDIR /app
@@ -16,7 +16,7 @@ COPY tsconfig.json ./
 
 RUN npm run build-ts
 
-FROM node:11.7
+FROM node:11.10
 
 ENV USER=api-user
 RUN adduser --disabled-password --gecos "" $USER

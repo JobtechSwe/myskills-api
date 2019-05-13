@@ -1,10 +1,11 @@
 export enum Area {
-  languages = 'languages',
   educations = 'educations',
   experiences = 'experiences',
-  skills = 'skills',
-  profile = 'profile',
   image = 'image',
+  languages = 'languages',
+  occupation = 'occupation',
+  profile = 'profile',
+  skills = 'skills',
 }
 
 export enum SubscriptionMessage {

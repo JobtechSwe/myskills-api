@@ -5,6 +5,8 @@ import config from '../../lib/config'
 import redis from '../../lib/adapters/redis'
 import * as taxonomyFixture from './__fixtures__/taxonomy'
 
+jest.setTimeout(30000)
+
 const GET_FROM_TAXONOMY = gql`
   query taxonomy($limit: Int, $offset: Int, $taxonomyType: TaxonomyType) {
     taxonomy(params: { limit: $limit, offset: $offset, type: $taxonomyType }) {
