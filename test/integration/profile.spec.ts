@@ -5,17 +5,21 @@ import { getConsentedClient } from './integrationUtils'
 const GET_PROFILE = gql`
   query profile {
     profile {
-      firstName
-      lastName
+      name
+      email
+      telephone
     }
   }
 `
 
 const CREATE_PROFILE = gql`
-  mutation createProfile($firstName: String!, $lastName: String!) {
-    createProfile(profile: { firstName: $firstName, lastName: $lastName }) {
-      firstName
-      lastName
+  mutation createProfile($name: String!, $email: String!, $telephone: String) {
+    createProfile(
+      profile: { name: $name, email: $email, telephone: $telephone }
+    ) {
+      name
+      email
+      telephone
     }
   }
 `
@@ -40,15 +44,24 @@ describe('#profile', () => {
     } = await mutate({
       mutation: CREATE_PROFILE,
       variables: {
-        firstName: 'John',
-        lastName: 'Doe',
+        name: 'John Sonsson',
+        email: 'doe@example.com',
+        telephone: '0123456789',
       },
     })
-    expect(createProfile).toEqual({ firstName: 'John', lastName: 'Doe' })
+    expect(createProfile).toEqual({
+      name: 'John Sonsson',
+      email: 'doe@example.com',
+      telephone: '0123456789',
+    })
 
     const { data } = await query({
       query: GET_PROFILE,
     })
-    expect(data.profile).toEqual({ firstName: 'John', lastName: 'Doe' })
+    expect(data.profile).toEqual({
+      name: 'John Sonsson',
+      email: 'doe@example.com',
+      telephone: '0123456789',
+    })
   })
 })

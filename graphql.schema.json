@@ -545,15 +545,31 @@
         "description": null,
         "fields": [
           {
-            "name": "firstName",
+            "name": "name",
             "description": null,
             "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "lastName",
+            "name": "email",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "telephone",
             "description": null,
             "args": [],
             "type": { "kind": "SCALAR", "name": "String", "ofType": null },
@@ -1990,7 +2006,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "firstName",
+            "name": "name",
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -2000,13 +2016,19 @@
             "defaultValue": null
           },
           {
-            "name": "lastName",
+            "name": "email",
             "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
             },
+            "defaultValue": null
+          },
+          {
+            "name": "telephone",
+            "description": null,
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
             "defaultValue": null
           }
         ],
