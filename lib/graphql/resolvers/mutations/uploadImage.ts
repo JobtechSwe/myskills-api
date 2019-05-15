@@ -11,7 +11,6 @@ export const uploadImage: MutationResolvers['uploadImage'] = async (
   { image: { imageString } },
   { req, mydata }
 ): Promise<ImgFile> => {
-  console.log(imageString)
   try {
     const token = authorizationToken(req)
     const imageBuffer = Buffer.from(imageString, 'base64')
