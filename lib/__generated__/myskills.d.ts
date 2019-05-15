@@ -40,14 +40,14 @@ export type ConsentResponse = {
 
 export type Cv = {
   skills?: Maybe<Array<Maybe<Skill>>>
-  education?: Maybe<Array<Maybe<Education>>>
-  experience?: Maybe<Array<Maybe<Experience>>>
+  educations?: Maybe<Array<Maybe<Education>>>
+  experiences?: Maybe<Array<Maybe<Experience>>>
 }
 
 export type CvInput = {
   skills?: Maybe<Array<SkillInput>>
-  education?: Maybe<Array<EducationInput>>
-  experience?: Maybe<Array<ExperienceInput>>
+  educations?: Maybe<Array<EducationInput>>
+  experiences?: Maybe<Array<ExperienceInput>>
 }
 
 export type Education = {
@@ -97,8 +97,6 @@ export type Login = {
 }
 
 export type Mutation = {
-  /** Register consent for a user */
-  consent: Consent
   /** Login an existing user */
   login: Login
   /** Add languages to user */
@@ -279,6 +277,8 @@ export type ProfileInput = {
 }
 
 export type Query = {
+  /** Gets a consent request */
+  consent: Consent
   /** Get user languages */
   languages: Array<Language>
   /** Get user educations */
@@ -482,9 +482,10 @@ export type DirectiveResolverFn<
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Query: Query
+  Consent: Consent
+  String: Scalars['String']
   Language: Language
   Education: Education
-  String: Scalars['String']
   Experience: Experience
   Occupation: Occupation
   OccupationExperience: OccupationExperience
@@ -509,7 +510,6 @@ export type ResolversTypes = {
   OntologyRelationDetails: OntologyRelationDetails
   OntologyTextParseResponse: OntologyTextParseResponse
   Mutation: Mutation
-  Consent: Consent
   Login: Login
   ExperienceInput: ExperienceInput
   EducationInput: EducationInput
@@ -560,12 +560,12 @@ export type CvResolvers<
     ParentType,
     Context
   >
-  education?: Resolver<
+  educations?: Resolver<
     Maybe<Array<Maybe<ResolversTypes['Education']>>>,
     ParentType,
     Context
   >
-  experience?: Resolver<
+  experiences?: Resolver<
     Maybe<Array<Maybe<ResolversTypes['Experience']>>>,
     ParentType,
     Context
@@ -629,7 +629,6 @@ export type MutationResolvers<
   Context = ApolloServerContext,
   ParentType = ResolversTypes['Mutation']
 > = {
-  consent?: Resolver<ResolversTypes['Consent'], ParentType, Context>
   login?: Resolver<ResolversTypes['Login'], ParentType, Context>
   addLanguage?: Resolver<
     ResolversTypes['Language'],
@@ -822,6 +821,7 @@ export type QueryResolvers<
   Context = ApolloServerContext,
   ParentType = ResolversTypes['Query']
 > = {
+  consent?: Resolver<ResolversTypes['Consent'], ParentType, Context>
   languages?: Resolver<Array<ResolversTypes['Language']>, ParentType, Context>
   educations?: Resolver<
     Array<Maybe<ResolversTypes['Education']>>,
