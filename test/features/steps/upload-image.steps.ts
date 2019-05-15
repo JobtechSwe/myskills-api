@@ -31,7 +31,6 @@ defineFeature(feature, test => {
         },
       })
 
-      console.log('data', data, 'error', errors)
       smallImg = data.uploadImage
     })
 
