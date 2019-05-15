@@ -1,7 +1,7 @@
-import { Consent, MutationResolvers } from '../../../__generated__/myskills'
+import { Consent, QueryResolvers } from '../../../__generated__/myskills'
 import { defaultRequest } from '../../../services/consents'
 
-export const consent: MutationResolvers['consent'] = async (
+export const consent: QueryResolvers['consent'] = async (
   _,
   _args,
   { mydata }
