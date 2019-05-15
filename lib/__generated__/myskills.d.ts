@@ -42,12 +42,14 @@ export type Cv = {
   skills?: Maybe<Array<Maybe<Skill>>>
   educations?: Maybe<Array<Maybe<Education>>>
   experiences?: Maybe<Array<Maybe<Experience>>>
+  occupation?: Maybe<Occupation>
 }
 
 export type CvInput = {
   skills?: Maybe<Array<SkillInput>>
   educations?: Maybe<Array<EducationInput>>
   experiences?: Maybe<Array<ExperienceInput>>
+  occupation?: Maybe<OccupationInput>
 }
 
 export type Education = {
@@ -567,6 +569,11 @@ export type CvResolvers<
   >
   experiences?: Resolver<
     Maybe<Array<Maybe<ResolversTypes['Experience']>>>,
+    ParentType,
+    Context
+  >
+  occupation?: Resolver<
+    Maybe<ResolversTypes['Occupation']>,
     ParentType,
     Context
   >

@@ -2198,6 +2198,16 @@
               }
             },
             "defaultValue": null
+          },
+          {
+            "name": "occupation",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "OccupationInput",
+              "ofType": null
+            },
+            "defaultValue": null
           }
         ],
         "interfaces": null,
@@ -2250,6 +2260,14 @@
                 "ofType": null
               }
             },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "occupation",
+            "description": null,
+            "args": [],
+            "type": { "kind": "OBJECT", "name": "Occupation", "ofType": null },
             "isDeprecated": false,
             "deprecationReason": null
           }

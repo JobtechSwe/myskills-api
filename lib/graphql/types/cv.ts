@@ -5,11 +5,13 @@ export const typeDefs = gql`
     skills: [SkillInput!]
     educations: [EducationInput!]
     experiences: [ExperienceInput!]
+    occupation: OccupationInput
   }
 
   type CV {
     skills: [Skill]
     educations: [Education]
     experiences: [Experience]
+    occupation: Occupation
   }
 `

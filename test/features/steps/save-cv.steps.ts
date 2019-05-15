@@ -43,8 +43,8 @@ defineFeature(feature, test => {
         mutation: SAVE_CV,
         variables: {
           skills: skillsInput,
-          education: educationInput,
-          experience: experienceInput,
+          educations: educationInput,
+          experiences: experienceInput,
         },
       }))
     })

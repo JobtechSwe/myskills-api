@@ -14,23 +14,27 @@ beforeEach(() => {
           type: 'skill',
         },
       ],
-      education: [
+      educations: [
         {
           taxonomyId: '123456789',
           term: 'High school',
         },
       ],
-      experience: [
+      experiences: [
         {
           taxonomyId: 'taxonomyId1',
           term: 'Carpenter',
           years: '29',
         },
       ],
+      occupation: {
+        term: 'Snickare',
+      },
     },
   }
 
   ctx.mydata.saveDataList.mockReset()
+  // ctx.mydata.saveData.mockReset()
 })
 
 describe('save skills list', () => {
@@ -78,13 +82,13 @@ describe('save education list', async () => {
 
     expect(ctx.mydata.saveDataList).toHaveBeenCalledWith({
       area: Area.educations,
-      data: [{ id: expect.any(String), ...args.cv.education[0] }],
+      data: [{ id: expect.any(String), ...args.cv.educations[0] }],
       token: 'token',
     })
   })
 
   test('does not call save method when list is empty', async () => {
-    args.cv.education = []
+    args.cv.educations = []
     await saveCV({}, args, ctx as any, {} as any)
 
     expect(ctx.mydata.saveDataList).not.toHaveBeenCalledWith(
@@ -93,7 +97,7 @@ describe('save education list', async () => {
   })
 
   test('does not call save method when list is null', async () => {
-    args.cv.education = null
+    args.cv.educations = null
     await saveCV({}, args, ctx as any, {} as any)
 
     expect(ctx.mydata.saveDataList).not.toHaveBeenCalledWith(
@@ -102,7 +106,7 @@ describe('save education list', async () => {
   })
 
   test('does not call save method when list is undefined', async () => {
-    args.cv.education = undefined
+    args.cv.educations = undefined
     await saveCV({}, args, ctx as any, {} as any)
 
     expect(ctx.mydata.saveDataList).not.toHaveBeenCalledWith(
@@ -117,13 +121,13 @@ describe('save experience list', async () => {
 
     expect(ctx.mydata.saveDataList).toHaveBeenCalledWith({
       area: Area.experiences,
-      data: [{ id: expect.any(String), ...args.cv.experience[0] }],
+      data: [{ id: expect.any(String), ...args.cv.experiences[0] }],
       token: 'token',
     })
   })
 
   test('does not call save method when list is empty', async () => {
-    args.cv.experience = []
+    args.cv.experiences = []
     await saveCV({}, args, ctx as any, {} as any)
 
     expect(ctx.mydata.saveDataList).not.toHaveBeenCalledWith(
@@ -132,7 +136,7 @@ describe('save experience list', async () => {
   })
 
   test('does not call save method when list is null', async () => {
-    args.cv.experience = null
+    args.cv.experiences = null
     await saveCV({}, args, ctx as any, {} as any)
 
     expect(ctx.mydata.saveDataList).not.toHaveBeenCalledWith(
@@ -141,7 +145,7 @@ describe('save experience list', async () => {
   })
 
   test('does not call save method when list is undefined', async () => {
-    args.cv.experience = undefined
+    args.cv.experiences = undefined
     await saveCV({}, args, ctx as any, {} as any)
 
     expect(ctx.mydata.saveDataList).not.toHaveBeenCalledWith(
@@ -154,8 +158,9 @@ describe('result', () => {
   test('returns a CV object', async () => {
     ctx.mydata.saveDataList
       .mockResolvedValueOnce(args.cv.skills)
-      .mockResolvedValueOnce(args.cv.education)
-      .mockResolvedValueOnce(args.cv.experience)
+      .mockResolvedValueOnce(args.cv.educations)
+      .mockResolvedValueOnce(args.cv.experiences)
+    ctx.mydata.saveData.mockResolvedValueOnce(args.cv.occupation)
 
     const result = await saveCV({}, args, ctx as any, {} as any)
     expect(result).toEqual({
@@ -166,19 +171,22 @@ describe('result', () => {
           type: 'skill',
         },
       ],
-      education: [
+      educations: [
         {
           taxonomyId: '123456789',
           term: 'High school',
         },
       ],
-      experience: [
+      experiences: [
         {
           taxonomyId: 'taxonomyId1',
           term: 'Carpenter',
           years: '29',
         },
       ],
+      occupation: {
+        term: 'Snickare',
+      },
     })
   })
 
