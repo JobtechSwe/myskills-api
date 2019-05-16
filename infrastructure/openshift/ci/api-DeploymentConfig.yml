@@ -46,7 +46,7 @@ spec:
                 valueFrom:
                   secretKeyRef:
                     key: url
-                    name: myData-operator-test-url
+                    name: mydata-operator-test-url
             - name: MYDATA_OPERATOR_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
