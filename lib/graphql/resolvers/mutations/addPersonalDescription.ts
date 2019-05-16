@@ -17,6 +17,6 @@ export const addPersonalDescription: MutationResolvers['addPersonalDescription']
 
     return result
   } catch (e) {
-    throw new Error(`trait error: ${e}`)
+    throw new Error(`personalDescription error: ${e}`)
   }
 }
