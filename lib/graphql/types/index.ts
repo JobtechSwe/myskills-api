@@ -135,6 +135,16 @@ const typeDefs = gql`
     skills: [Skill]!
 
     """
+    Get user personalDescription
+    """
+    personalDescription: String
+
+    """
+    Get user traits
+    """
+    traits: [String]!
+
+    """
     Get user image
     """
     image: String!

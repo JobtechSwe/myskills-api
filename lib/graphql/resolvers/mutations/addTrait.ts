@@ -9,7 +9,7 @@ export const addTrait: MutationResolvers['addTrait'] = async (
 ): Promise<string> => {
   const token = authorizationToken(req)
   try {
-    const result = await mydata.saveData<string>({
+    const result = await mydata.saveDataList<string>({
       area: Area.traits,
       data: trait,
       token,
