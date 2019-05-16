@@ -24,6 +24,8 @@ defineFeature(feature, test => {
     let educationsInput: EducationInput[]
     let experiencesInput: ExperienceInput[]
     let occupationInput: OccupationInput
+    let traitsInput: string[]
+    let personalDescriptionInput: string
     let result
     given('I have a bearer token', async () => {
       ;({ mutate } = await getConsentedClient(server))
@@ -37,6 +39,15 @@ defineFeature(feature, test => {
     and('I have this experience input:', (experiences: ExperienceInput[]) => {
       experiencesInput = experiences
     })
+    and('I have this traits input:', (traits: any[]) => {
+      traitsInput = traits.map(t => t.trait)
+    })
+    and(
+      /^I have personalDescription input "(.*)"$/,
+      (personalDescription: string) => {
+        personalDescriptionInput = personalDescription
+      }
+    )
     and(/^I have occupation input "(.*)"$/, (occupation: string) => {
       occupationInput = {
         term: occupation,
@@ -52,6 +63,8 @@ defineFeature(feature, test => {
           educations: educationsInput,
           experiences: experiencesInput,
           occupation: occupationInput,
+          personalDescription: personalDescriptionInput,
+          traits: traitsInput,
         },
       }))
     })
@@ -74,6 +87,19 @@ defineFeature(feature, test => {
       const { experiences } = result
       expect(experiences).toEqual(experiencesInput)
     })
+
+    and('I will see the traits input under the traits section', () => {
+      const { traits } = result
+      expect(traits).toEqual(traitsInput)
+    })
+
+    and(
+      'I will see the personalDescription input under the personalDescription section',
+      () => {
+        const { personalDescription } = result
+        expect(personalDescription).toEqual(personalDescriptionInput)
+      }
+    )
 
     and('I will see the occupation input under the occupations section', () => {
       const { occupation } = result

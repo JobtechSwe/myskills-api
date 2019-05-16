@@ -12,12 +12,19 @@ Feature: Save CV
     And I have this experience input:
       | sourceId  | term      | employer          | start  | end    |
       | sourceId1 | Carpenter | Mimmis majbraseri | 201901 | 201902 |
+    And I have this traits input:
+      | trait |
+      | Glad  |
+      | Rolig |
+    And I have personalDescription input "Jag e rolig o glad"
     And I have occupation input "Snickare"
     When I send the cv input to the save method
     Then I will receive back what has been stored by this operation
     And I will see the skills input under the skills section
     And I will see the education input under the educations section
     And I will see the experience input under the experiences section
+    And I will see the traits input under the traits section
+    And I will see the personalDescription input under the personalDescription section
     And I will see the occupation input under the occupations section
 
   Scenario: Update the CV
