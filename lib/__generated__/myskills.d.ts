@@ -43,6 +43,8 @@ export type Cv = {
   educations?: Maybe<Array<Maybe<Education>>>
   experiences?: Maybe<Array<Maybe<Experience>>>
   occupation?: Maybe<Occupation>
+  traits?: Maybe<Array<Scalars['String']>>
+  personalDescription?: Maybe<Scalars['String']>
 }
 
 export type CvInput = {
@@ -50,6 +52,8 @@ export type CvInput = {
   educations?: Maybe<Array<EducationInput>>
   experiences?: Maybe<Array<ExperienceInput>>
   occupation?: Maybe<OccupationInput>
+  traits?: Maybe<Array<Scalars['String']>>
+  personalDescription?: Maybe<Scalars['String']>
 }
 
 export type Education = {
@@ -590,6 +594,12 @@ export type CvResolvers<
   >
   occupation?: Resolver<
     Maybe<ResolversTypes['Occupation']>,
+    ParentType,
+    Context
+  >
+  traits?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, Context>
+  personalDescription?: Resolver<
+    Maybe<ResolversTypes['String']>,
     ParentType,
     Context
   >

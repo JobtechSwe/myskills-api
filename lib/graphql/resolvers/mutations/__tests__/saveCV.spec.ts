@@ -30,6 +30,8 @@ beforeEach(() => {
       occupation: {
         term: 'Snickare',
       },
+      traits: ['Glad'],
+      personalDescription: 'hejsan',
     },
   }
 
@@ -160,6 +162,8 @@ describe('result', () => {
       .mockResolvedValueOnce(args.cv.skills)
       .mockResolvedValueOnce(args.cv.educations)
       .mockResolvedValueOnce(args.cv.experiences)
+      .mockResolvedValueOnce(args.cv.traits)
+    ctx.mydata.saveData.mockResolvedValueOnce(args.cv.personalDescription)
     ctx.mydata.saveData.mockResolvedValueOnce(args.cv.occupation)
 
     const result = await saveCV({}, args, ctx as any, {} as any)
@@ -184,6 +188,8 @@ describe('result', () => {
           years: '29',
         },
       ],
+      traits: ['Glad'],
+      personalDescription: 'hejsan',
       occupation: {
         term: 'Snickare',
       },
