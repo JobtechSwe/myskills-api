@@ -113,6 +113,10 @@ export type Mutation = {
   addSkill: Skill
   /** Add user occupation */
   createOccupation: Occupation
+  /** Add user trait */
+  addTrait: Scalars['String']
+  /** Add user description */
+  addPersonalDescription: Scalars['String']
   /** Remove skill from user */
   removeSkill: Scalars['Boolean']
   /** Remove education from user */
@@ -149,6 +153,14 @@ export type MutationAddSkillArgs = {
 
 export type MutationCreateOccupationArgs = {
   occupation: OccupationInput
+}
+
+export type MutationAddTraitArgs = {
+  trait: Scalars['String']
+}
+
+export type MutationAddPersonalDescriptionArgs = {
+  body: Scalars['String']
 }
 
 export type MutationRemoveSkillArgs = {
@@ -672,6 +684,18 @@ export type MutationResolvers<
     ParentType,
     Context,
     MutationCreateOccupationArgs
+  >
+  addTrait?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    Context,
+    MutationAddTraitArgs
+  >
+  addPersonalDescription?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    Context,
+    MutationAddPersonalDescriptionArgs
   >
   removeSkill?: Resolver<
     ResolversTypes['Boolean'],
