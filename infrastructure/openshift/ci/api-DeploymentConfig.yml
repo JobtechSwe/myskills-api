@@ -27,20 +27,26 @@ spec:
       containers:
         - env:
             - name: DOMAIN
-              value: "https://api-myskills-ci.dev.services.jtech.se"
+              valueFrom:
+                secretKeyRef:
+                  key: url
+                  name: myskills-api-url
             - name: PORT
-              value: "3000"
+              value: '3000'
             - name: REDIS_API_HOST
-              value: "redis-ci.myskills.svc"
+              value: 'redis-ci.myskills.svc'
             - name: REDIS_API_PORT
-              value: "6379"
+              value: '6379'
             - name: REDIS_API_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: database-password
                   name: redis-ci-password
             - name: MYDATA_OPERATOR
-              value: "https://operator-ci.dev.services.jtech.se"
+                valueFrom:
+                  secretKeyRef:
+                    key: url
+                    name: myData-operator-test-url
             - name: MYDATA_OPERATOR_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
