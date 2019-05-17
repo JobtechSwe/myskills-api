@@ -10,7 +10,7 @@ export const uploadImage: MutationResolvers['uploadImage'] = async (
   _,
   { image: { imageString } },
   { req, mydata }
-): Promise<ImgFile> => {
+): Promise<string> => {
   try {
     const token = authorizationToken(req)
     const imageBuffer = Buffer.from(imageString, 'base64')
@@ -30,9 +30,7 @@ export const uploadImage: MutationResolvers['uploadImage'] = async (
       token,
     })
 
-    return {
-      imageString,
-    }
+    return imageString
   } catch (e) {
     throw new Error(`upload image error: ${e}`)
   }

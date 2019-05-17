@@ -91,7 +91,7 @@ const typeDefs = gql`
     """
     Save Image as base64 string
     """
-    uploadImage(image: ImgInput!): ImgFile!
+    uploadImage(image: ImgInput!): String!
   }
 
   type Query {

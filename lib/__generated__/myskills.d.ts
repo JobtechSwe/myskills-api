@@ -48,7 +48,6 @@ export type CvInput = {
   skills?: Maybe<Array<SkillInput>>
   education?: Maybe<Array<EducationInput>>
   experience?: Maybe<Array<ExperienceInput>>
-  image: ImgInput
 }
 
 export type Education = {
@@ -129,7 +128,7 @@ export type Mutation = {
   /** Save the complete cv to user */
   saveCV: Cv
   /** Save Image as base64 string */
-  uploadImage: ImgFile
+  uploadImage: Scalars['String']
 }
 
 export type MutationAddLanguageArgs = {
@@ -524,14 +523,14 @@ export type ResolversTypes = {
   OccupationExperienceInput: OccupationExperienceInput
   Boolean: Scalars['Boolean']
   CVInput: CvInput
-  ImgInput: ImgInput
   CV: Cv
-  ImgFile: ImgFile
+  ImgInput: ImgInput
   Subscription: Subscription
   ConsentResponse: ConsentResponse
   CacheControlScope: CacheControlScope
   Date: Scalars['Date']
   Email: Scalars['Email']
+  ImgFile: ImgFile
   JSON: Scalars['JSON']
   OntologyConceptTermInput: OntologyConceptTermInput
   Password: Scalars['Password']
@@ -704,7 +703,7 @@ export type MutationResolvers<
     MutationSaveCvArgs
   >
   uploadImage?: Resolver<
-    ResolversTypes['ImgFile'],
+    ResolversTypes['String'],
     ParentType,
     Context,
     MutationUploadImageArgs

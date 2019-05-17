@@ -79,7 +79,7 @@ describe('upload image', () => {
   })
 
   test('returns base64 string', async () => {
-    const { imageString } = await uploadImage({}, args, ctx as any, {} as any)
+    const imageString = await uploadImage({}, args, ctx as any, {} as any)
 
     expect(imageString.substring(imageString.length - 1)).toBe('=')
   })

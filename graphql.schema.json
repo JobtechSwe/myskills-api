@@ -1806,7 +1806,7 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "ImgFile", "ofType": null }
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2198,41 +2198,6 @@
               }
             },
             "defaultValue": null
-          },
-          {
-            "name": "image",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "INPUT_OBJECT",
-                "name": "ImgInput",
-                "ofType": null
-              }
-            },
-            "defaultValue": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "ImgInput",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "imageString",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
-            },
-            "defaultValue": null
           }
         ],
         "interfaces": null,
@@ -2295,25 +2260,23 @@
         "possibleTypes": null
       },
       {
-        "kind": "OBJECT",
-        "name": "ImgFile",
+        "kind": "INPUT_OBJECT",
+        "name": "ImgInput",
         "description": null,
-        "fields": [
+        "fields": null,
+        "inputFields": [
           {
             "name": "imageString",
             "description": null,
-            "args": [],
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "defaultValue": null
           }
         ],
-        "inputFields": null,
-        "interfaces": [],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -3145,6 +3108,29 @@
         "fields": null,
         "inputFields": null,
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ImgFile",
+        "description": null,
+        "fields": [
+          {
+            "name": "imageString",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
