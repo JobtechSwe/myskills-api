@@ -39,12 +39,18 @@ describe('upload image', () => {
     smallImgPath = process.cwd() + '/test/assets/person-small.jpeg'
     largeImgPath = process.cwd() + '/test/assets/otherperson-large.jpeg'
     args = {
-      file: fs.createReadStream(smallImgPath),
+      image: {
+        imageString: fs.readFileSync(smallImgPath, {
+          encoding: 'base64',
+        }),
+      },
     }
   })
 
   test('calls myData resized if image resolution is too big', async () => {
-    args.file = fs.createReadStream(largeImgPath)
+    args.image.imageString = fs.readFileSync(largeImgPath, {
+      encoding: 'base64',
+    })
     const orgBase64Str = fs.readFileSync(largeImgPath, {
       encoding: 'base64',
     })
@@ -73,7 +79,7 @@ describe('upload image', () => {
   })
 
   test('returns base64 string', async () => {
-    const { imageString } = await uploadImage({}, args, ctx as any, {} as any)
+    const imageString = await uploadImage({}, args, ctx as any, {} as any)
 
     expect(imageString.substring(imageString.length - 1)).toBe('=')
   })

@@ -6,8 +6,6 @@ export type Scalars = {
   Boolean: boolean
   Int: number
   Float: number
-  /** The `Upload` scalar type represents a file upload. */
-  Upload: any
   /** A date string, such as 2007-12-03, compliant with the `full-date` format
    * outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for
    * representation of dates and times using the Gregorian calendar.
@@ -19,6 +17,8 @@ export type Scalars = {
   JSON: any
   /** A password string. Has to be at least 8 characters long. */
   Password: any
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: any
   /** The UUID scalar type represents a UUID. */
   UUID: any
 }
@@ -92,6 +92,10 @@ export type ImgFile = {
   imageString: Scalars['String']
 }
 
+export type ImgInput = {
+  imageString: Scalars['String']
+}
+
 export enum Language {
   Spanish = 'spanish',
   Swedish = 'swedish',
@@ -132,7 +136,7 @@ export type Mutation = {
   /** Save the complete cv to user */
   saveCV: Cv
   /** Save Image as base64 string */
-  uploadImage: ImgFile
+  uploadImage: Scalars['String']
 }
 
 export type MutationAddLanguageArgs = {
@@ -188,7 +192,7 @@ export type MutationSaveCvArgs = {
 }
 
 export type MutationUploadImageArgs = {
-  file: Scalars['Upload']
+  image: ImgInput
 }
 
 export type Occupation = {
@@ -542,18 +546,19 @@ export type ResolversTypes = {
   Boolean: Scalars['Boolean']
   CVInput: CvInput
   CV: Cv
-  Upload: Scalars['Upload']
-  ImgFile: ImgFile
+  ImgInput: ImgInput
   Subscription: Subscription
   ConsentResponse: ConsentResponse
   CacheControlScope: CacheControlScope
   Date: Scalars['Date']
   Email: Scalars['Email']
+  ImgFile: ImgFile
   JSON: Scalars['JSON']
   OntologyConceptTermInput: OntologyConceptTermInput
   Password: Scalars['Password']
   TaxonomyDefaultResult: TaxonomyDefaultResult
   TaxonomySkillResult: TaxonomySkillResult
+  Upload: Scalars['Upload']
   UUID: Scalars['UUID']
 }
 
@@ -742,7 +747,7 @@ export type MutationResolvers<
     MutationSaveCvArgs
   >
   uploadImage?: Resolver<
-    ResolversTypes['ImgFile'],
+    ResolversTypes['String'],
     ParentType,
     Context,
     MutationUploadImageArgs
