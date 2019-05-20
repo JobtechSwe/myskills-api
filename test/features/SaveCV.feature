@@ -18,6 +18,7 @@ Feature: Save CV
       | Rolig |
     And I have personalDescription input "Jag e rolig o glad"
     And I have occupation input "Snickare"
+    And I have the image "person-small"
     When I send the cv input to the save method
     Then I will receive back what has been stored by this operation
     And I will see the skills input under the skills section
@@ -26,6 +27,7 @@ Feature: Save CV
     And I will see the traits input under the traits section
     And I will see the personalDescription input under the personalDescription section
     And I will see the occupation input under the occupations section
+    And I will receive the image that has been stored by this operation
 
   Scenario: Update the CV
     Given I have a bearer token

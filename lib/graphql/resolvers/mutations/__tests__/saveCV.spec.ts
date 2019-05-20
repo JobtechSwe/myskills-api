@@ -1,10 +1,12 @@
 import { ctx } from '../../../__mocks__/apolloServerContext'
 import { saveCV } from '../saveCV'
 import { Area } from '../../../../types'
+import fs from 'fs'
 
 let args
 
 beforeEach(() => {
+  const smallImgPath = `${process.cwd()}/test/assets/person-small.jpeg`
   args = {
     cv: {
       skills: [
@@ -27,6 +29,11 @@ beforeEach(() => {
           years: '29',
         },
       ],
+      image: {
+        imageString: fs.readFileSync(smallImgPath, {
+          encoding: 'base64',
+        }),
+      },
       occupation: {
         term: 'Snickare',
       },
@@ -36,7 +43,6 @@ beforeEach(() => {
   }
 
   ctx.mydata.saveDataList.mockReset()
-  // ctx.mydata.saveData.mockReset()
 })
 
 describe('save skills list', () => {
@@ -188,6 +194,7 @@ describe('result', () => {
           years: '29',
         },
       ],
+      image: args.cv.image.imageString,
       traits: ['Glad'],
       personalDescription: 'hejsan',
       occupation: {

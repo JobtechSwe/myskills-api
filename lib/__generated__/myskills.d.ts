@@ -42,6 +42,7 @@ export type Cv = {
   skills?: Maybe<Array<Maybe<Skill>>>
   educations?: Maybe<Array<Maybe<Education>>>
   experiences?: Maybe<Array<Maybe<Experience>>>
+  image?: Maybe<Scalars['String']>
   occupation?: Maybe<Occupation>
   traits?: Maybe<Array<Scalars['String']>>
   personalDescription?: Maybe<Scalars['String']>
@@ -51,6 +52,7 @@ export type CvInput = {
   skills?: Maybe<Array<SkillInput>>
   educations?: Maybe<Array<EducationInput>>
   experiences?: Maybe<Array<ExperienceInput>>
+  image?: Maybe<ImgInput>
   occupation?: Maybe<OccupationInput>
   traits?: Maybe<Array<Scalars['String']>>
   personalDescription?: Maybe<Scalars['String']>
@@ -545,8 +547,8 @@ export type ResolversTypes = {
   OccupationExperienceInput: OccupationExperienceInput
   Boolean: Scalars['Boolean']
   CVInput: CvInput
-  CV: Cv
   ImgInput: ImgInput
+  CV: Cv
   Subscription: Subscription
   ConsentResponse: ConsentResponse
   CacheControlScope: CacheControlScope
@@ -597,6 +599,7 @@ export type CvResolvers<
     ParentType,
     Context
   >
+  image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
   occupation?: Resolver<
     Maybe<ResolversTypes['Occupation']>,
     ParentType,
