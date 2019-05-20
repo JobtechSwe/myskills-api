@@ -59,6 +59,15 @@ const typeDefs = gql`
     createOccupation(occupation: OccupationInput!): Occupation!
 
     """
+    Add user trait
+    """
+    addTrait(trait: String!): String!
+
+    """
+    Add user description
+    """
+    addPersonalDescription(body: String!): String!
+    """
     Remove skill from user
     """
     removeSkill(id: String!): Boolean!
@@ -124,6 +133,16 @@ const typeDefs = gql`
     Get user skills
     """
     skills: [Skill]!
+
+    """
+    Get user personalDescription
+    """
+    personalDescription: String
+
+    """
+    Get user traits
+    """
+    traits: [String]!
 
     """
     Get user image

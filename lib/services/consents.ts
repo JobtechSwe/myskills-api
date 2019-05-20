@@ -37,6 +37,8 @@ const defaultRequest = (durationInSeconds: number): DefaultRequest => ({
     createConsent(Area.skills),
     createConsent(Area.profile),
     createConsent(Area.image),
+    createConsent(Area.personalDescription),
+    createConsent(Area.traits),
   ],
 })
 

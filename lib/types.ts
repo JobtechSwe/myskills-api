@@ -6,6 +6,8 @@ export enum Area {
   occupation = 'occupation',
   profile = 'profile',
   skills = 'skills',
+  traits = 'traits',
+  personalDescription = 'personalDescription',
 }
 
 export enum SubscriptionMessage {

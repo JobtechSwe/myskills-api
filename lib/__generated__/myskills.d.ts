@@ -43,6 +43,8 @@ export type Cv = {
   educations?: Maybe<Array<Maybe<Education>>>
   experiences?: Maybe<Array<Maybe<Experience>>>
   occupation?: Maybe<Occupation>
+  traits?: Maybe<Array<Scalars['String']>>
+  personalDescription?: Maybe<Scalars['String']>
 }
 
 export type CvInput = {
@@ -50,6 +52,8 @@ export type CvInput = {
   educations?: Maybe<Array<EducationInput>>
   experiences?: Maybe<Array<ExperienceInput>>
   occupation?: Maybe<OccupationInput>
+  traits?: Maybe<Array<Scalars['String']>>
+  personalDescription?: Maybe<Scalars['String']>
 }
 
 export type Education = {
@@ -117,6 +121,10 @@ export type Mutation = {
   addSkill: Skill
   /** Add user occupation */
   createOccupation: Occupation
+  /** Add user trait */
+  addTrait: Scalars['String']
+  /** Add user description */
+  addPersonalDescription: Scalars['String']
   /** Remove skill from user */
   removeSkill: Scalars['Boolean']
   /** Remove education from user */
@@ -153,6 +161,14 @@ export type MutationAddSkillArgs = {
 
 export type MutationCreateOccupationArgs = {
   occupation: OccupationInput
+}
+
+export type MutationAddTraitArgs = {
+  trait: Scalars['String']
+}
+
+export type MutationAddPersonalDescriptionArgs = {
+  body: Scalars['String']
 }
 
 export type MutationRemoveSkillArgs = {
@@ -297,6 +313,10 @@ export type Query = {
   profile: Profile
   /** Get user skills */
   skills: Array<Maybe<Skill>>
+  /** Get user personalDescription */
+  personalDescription?: Maybe<Scalars['String']>
+  /** Get user traits */
+  traits: Array<Maybe<Scalars['String']>>
   /** Get user image */
   image: Scalars['String']
   /** Get from taxonomy */
@@ -582,6 +602,12 @@ export type CvResolvers<
     ParentType,
     Context
   >
+  traits?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, Context>
+  personalDescription?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    Context
+  >
 }
 
 export interface DateScalarConfig
@@ -677,6 +703,18 @@ export type MutationResolvers<
     ParentType,
     Context,
     MutationCreateOccupationArgs
+  >
+  addTrait?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    Context,
+    MutationAddTraitArgs
+  >
+  addPersonalDescription?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    Context,
+    MutationAddPersonalDescriptionArgs
   >
   removeSkill?: Resolver<
     ResolversTypes['Boolean'],
@@ -848,6 +886,12 @@ export type QueryResolvers<
   occupation?: Resolver<ResolversTypes['Occupation'], ParentType, Context>
   profile?: Resolver<ResolversTypes['Profile'], ParentType, Context>
   skills?: Resolver<Array<Maybe<ResolversTypes['Skill']>>, ParentType, Context>
+  personalDescription?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    Context
+  >
+  traits?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, Context>
   image?: Resolver<ResolversTypes['String'], ParentType, Context>
   taxonomy?: Resolver<
     ResolversTypes['TaxonomyResponse'],

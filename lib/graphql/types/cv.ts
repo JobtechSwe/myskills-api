@@ -6,6 +6,8 @@ export const typeDefs = gql`
     educations: [EducationInput!]
     experiences: [ExperienceInput!]
     occupation: OccupationInput
+    traits: [String!]
+    personalDescription: String
   }
 
   type CV {
@@ -13,5 +15,7 @@ export const typeDefs = gql`
     educations: [Education]
     experiences: [Experience]
     occupation: Occupation
+    traits: [String!]
+    personalDescription: String
   }
 `
