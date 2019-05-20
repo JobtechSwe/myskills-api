@@ -41,7 +41,7 @@ beforeEach(() => {
 
 describe('save skills list', () => {
   test('saves when there are values', async () => {
-    await saveCV({}, args, ctx as any, {} as any)
+    await saveCV({} as any, args, ctx as any, {} as any)
 
     expect(ctx.mydata.saveDataList).toHaveBeenCalledWith({
       area: Area.skills,
@@ -52,7 +52,7 @@ describe('save skills list', () => {
 
   test('does not call save method when list is empty', async () => {
     args.cv.skills = []
-    await saveCV({}, args, ctx as any, {} as any)
+    await saveCV({} as any, args, ctx as any, {} as any)
 
     expect(ctx.mydata.saveDataList).not.toHaveBeenCalledWith(
       expect.objectContaining({ area: Area.skills })
@@ -61,7 +61,7 @@ describe('save skills list', () => {
 
   test('does not call save method when list is null', async () => {
     args.cv.skills = null
-    await saveCV({}, args, ctx as any, {} as any)
+    await saveCV({} as any, args, ctx as any, {} as any)
 
     expect(ctx.mydata.saveDataList).not.toHaveBeenCalledWith(
       expect.objectContaining({ area: Area.skills })
@@ -70,7 +70,7 @@ describe('save skills list', () => {
 
   test('does not call save method when list is undefined', async () => {
     args.cv.skills = undefined
-    await saveCV({}, args, ctx as any, {} as any)
+    await saveCV({} as any, args, ctx as any, {} as any)
 
     expect(ctx.mydata.saveDataList).not.toHaveBeenCalledWith(
       expect.objectContaining({ area: Area.skills })
@@ -80,7 +80,7 @@ describe('save skills list', () => {
 
 describe('save education list', async () => {
   test('saves when there are values', async () => {
-    await saveCV({}, args, ctx as any, {} as any)
+    await saveCV({} as any, args, ctx as any, {} as any)
 
     expect(ctx.mydata.saveDataList).toHaveBeenCalledWith({
       area: Area.educations,
@@ -91,7 +91,7 @@ describe('save education list', async () => {
 
   test('does not call save method when list is empty', async () => {
     args.cv.educations = []
-    await saveCV({}, args, ctx as any, {} as any)
+    await saveCV({} as any, args, ctx as any, {} as any)
 
     expect(ctx.mydata.saveDataList).not.toHaveBeenCalledWith(
       expect.objectContaining({ area: Area.educations })
@@ -100,7 +100,7 @@ describe('save education list', async () => {
 
   test('does not call save method when list is null', async () => {
     args.cv.educations = null
-    await saveCV({}, args, ctx as any, {} as any)
+    await saveCV({} as any, args, ctx as any, {} as any)
 
     expect(ctx.mydata.saveDataList).not.toHaveBeenCalledWith(
       expect.objectContaining({ area: Area.educations })
@@ -109,7 +109,7 @@ describe('save education list', async () => {
 
   test('does not call save method when list is undefined', async () => {
     args.cv.educations = undefined
-    await saveCV({}, args, ctx as any, {} as any)
+    await saveCV({} as any, args, ctx as any, {} as any)
 
     expect(ctx.mydata.saveDataList).not.toHaveBeenCalledWith(
       expect.objectContaining({ area: Area.educations })
@@ -119,7 +119,7 @@ describe('save education list', async () => {
 
 describe('save experience list', async () => {
   test('saves when there are values', async () => {
-    await saveCV({}, args, ctx as any, {} as any)
+    await saveCV({} as any, args, ctx as any, {} as any)
 
     expect(ctx.mydata.saveDataList).toHaveBeenCalledWith({
       area: Area.experiences,
@@ -130,7 +130,7 @@ describe('save experience list', async () => {
 
   test('does not call save method when list is empty', async () => {
     args.cv.experiences = []
-    await saveCV({}, args, ctx as any, {} as any)
+    await saveCV({} as any, args, ctx as any, {} as any)
 
     expect(ctx.mydata.saveDataList).not.toHaveBeenCalledWith(
       expect.objectContaining({ area: Area.experiences })
@@ -139,7 +139,7 @@ describe('save experience list', async () => {
 
   test('does not call save method when list is null', async () => {
     args.cv.experiences = null
-    await saveCV({}, args, ctx as any, {} as any)
+    await saveCV({} as any, args, ctx as any, {} as any)
 
     expect(ctx.mydata.saveDataList).not.toHaveBeenCalledWith(
       expect.objectContaining({ area: Area.experiences })
@@ -148,7 +148,7 @@ describe('save experience list', async () => {
 
   test('does not call save method when list is undefined', async () => {
     args.cv.experiences = undefined
-    await saveCV({}, args, ctx as any, {} as any)
+    await saveCV({} as any, args, ctx as any, {} as any)
 
     expect(ctx.mydata.saveDataList).not.toHaveBeenCalledWith(
       expect.objectContaining({ area: Area.experiences })
@@ -166,7 +166,7 @@ describe('result', () => {
     ctx.mydata.saveData.mockResolvedValueOnce(args.cv.personalDescription)
     ctx.mydata.saveData.mockResolvedValueOnce(args.cv.occupation)
 
-    const result = await saveCV({}, args, ctx as any, {} as any)
+    const result = await saveCV({} as any, args, ctx as any, {} as any)
     expect(result).toEqual({
       skills: [
         {
@@ -199,6 +199,8 @@ describe('result', () => {
   test('handles errors and rejects them nice', async () => {
     ctx.mydata.saveDataList.mockRejectedValue('err')
 
-    await expect(saveCV({}, args, ctx as any, {} as any)).rejects.toThrow('err')
+    await expect(
+      saveCV({} as any, args, ctx as any, {} as any)
+    ).rejects.toThrow('err')
   })
 })
