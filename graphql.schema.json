@@ -10,6 +10,18 @@
         "description": null,
         "fields": [
           {
+            "name": "consent",
+            "description": "Gets a consent request",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "OBJECT", "name": "Consent", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "languages",
             "description": "Get user languages",
             "args": [],
@@ -297,6 +309,63 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "Consent",
+        "description": null,
+        "fields": [
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "url",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "expires",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "SCALAR",
+        "name": "String",
+        "description": "The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "ENUM",
         "name": "Language",
         "description": null,
@@ -383,16 +452,6 @@
         ],
         "inputFields": null,
         "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "SCALAR",
-        "name": "String",
-        "description": "The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -1452,18 +1511,6 @@
         "description": null,
         "fields": [
           {
-            "name": "consent",
-            "description": "Register consent for a user",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": { "kind": "OBJECT", "name": "Consent", "ofType": null }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "login",
             "description": "Login an existing user",
             "args": [],
@@ -1819,53 +1866,6 @@
       },
       {
         "kind": "OBJECT",
-        "name": "Consent",
-        "description": null,
-        "fields": [
-          {
-            "name": "id",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "url",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "expires",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
         "name": "Login",
         "description": null,
         "fields": [
@@ -2164,7 +2164,7 @@
             "defaultValue": null
           },
           {
-            "name": "education",
+            "name": "educations",
             "description": null,
             "type": {
               "kind": "LIST",
@@ -2182,7 +2182,7 @@
             "defaultValue": null
           },
           {
-            "name": "experience",
+            "name": "experiences",
             "description": null,
             "type": {
               "kind": "LIST",
@@ -2196,6 +2196,16 @@
                   "ofType": null
                 }
               }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "occupation",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "OccupationInput",
+              "ofType": null
             },
             "defaultValue": null
           }
@@ -2222,7 +2232,7 @@
             "deprecationReason": null
           },
           {
-            "name": "education",
+            "name": "educations",
             "description": null,
             "args": [],
             "type": {
@@ -2238,7 +2248,7 @@
             "deprecationReason": null
           },
           {
-            "name": "experience",
+            "name": "experiences",
             "description": null,
             "args": [],
             "type": {
@@ -2250,6 +2260,14 @@
                 "ofType": null
               }
             },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "occupation",
+            "description": null,
+            "args": [],
+            "type": { "kind": "OBJECT", "name": "Occupation", "ofType": null },
             "isDeprecated": false,
             "deprecationReason": null
           }

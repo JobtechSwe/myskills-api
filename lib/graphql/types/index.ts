@@ -24,11 +24,6 @@ const typeDefs = gql`
 
   type Mutation {
     """
-    Register consent for a user
-    """
-    consent: Consent!
-
-    """
     Login an existing user
     """
     login: Login!
@@ -95,6 +90,11 @@ const typeDefs = gql`
   }
 
   type Query {
+    """
+    Gets a consent request
+    """
+    consent: Consent!
+
     """
     Get user languages
     """

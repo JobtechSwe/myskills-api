@@ -5,9 +5,9 @@ import {
   SkillInput,
   EducationInput,
   ExperienceInput,
+  OccupationInput,
 } from '../../../lib/__generated__/myskills'
 import { SAVE_CV, SKILLS } from '../gql'
-import { educations } from '../../../lib/graphql/resolvers/queries'
 
 const feature = loadFeature('./test/features/SaveCV.feature')
 
@@ -21,8 +21,9 @@ defineFeature(feature, test => {
   test('Save CV for the first time', ({ given, and, when, then }) => {
     let mutate: any
     let skillsInput: SkillInput[]
-    let educationInput: EducationInput[]
-    let experienceInput: ExperienceInput[]
+    let educationsInput: EducationInput[]
+    let experiencesInput: ExperienceInput[]
+    let occupationInput: OccupationInput
     let result
     given('I have a bearer token', async () => {
       ;({ mutate } = await getConsentedClient(server))
@@ -30,11 +31,16 @@ defineFeature(feature, test => {
     and('I have this skills input:', (skills: SkillInput[]) => {
       skillsInput = skills
     })
-    and('I have this education input:', (education: EducationInput[]) => {
-      educationInput = education
+    and('I have this education input:', (educations: EducationInput[]) => {
+      educationsInput = educations
     })
-    and('I have this experience input:', (experience: ExperienceInput[]) => {
-      experienceInput = experience
+    and('I have this experience input:', (experiences: ExperienceInput[]) => {
+      experiencesInput = experiences
+    })
+    and(/^I have occupation input "(.*)"$/, (occupation: string) => {
+      occupationInput = {
+        term: occupation,
+      }
     })
     when('I send the cv input to the save method', async () => {
       ;({
@@ -43,8 +49,9 @@ defineFeature(feature, test => {
         mutation: SAVE_CV,
         variables: {
           skills: skillsInput,
-          education: educationInput,
-          experience: experienceInput,
+          educations: educationsInput,
+          experiences: experiencesInput,
+          occupation: occupationInput,
         },
       }))
     })
@@ -56,16 +63,21 @@ defineFeature(feature, test => {
       expect(skills).toEqual(skillsInput)
     })
     and('I will see the education input under the educations section', () => {
-      const { education } = result
-      const expectedResult = educationInput.map(education => ({
+      const { educations } = result
+      const expectedResult = educationsInput.map(education => ({
         id: expect.any(String),
         ...education,
       }))
-      expect(education).toEqual(expectedResult)
+      expect(educations).toEqual(expectedResult)
     })
     and('I will see the experience input under the experiences section', () => {
-      const { experience } = result
-      expect(experience).toEqual(experienceInput)
+      const { experiences } = result
+      expect(experiences).toEqual(experiencesInput)
+    })
+
+    and('I will see the occupation input under the occupations section', () => {
+      const { occupation } = result
+      expect(occupation).toEqual(occupationInput)
     })
   })
 

@@ -5,6 +5,7 @@ import {
   Education,
   Experience,
   Cv,
+  Occupation,
 } from '../../../__generated__/myskills'
 import { Area } from '../../../types'
 import authorizationToken from '../../../middleware/authorizationToken'
@@ -37,8 +38,9 @@ export const saveCV: MutationResolvers['saveCV'] = async (
   {
     cv: {
       skills: skillsInput,
-      education: educationInput,
-      experience: experienceInput,
+      educations: educationsInput,
+      experiences: experiencesInput,
+      occupation: occupationInput,
     },
   },
   { req, mydata }
@@ -46,26 +48,31 @@ export const saveCV: MutationResolvers['saveCV'] = async (
   const token = authorizationToken(req)
 
   try {
-    const [skills, education, experience] = await Promise.all([
+    const [skills, educations, experiences, occupation] = await Promise.all([
       saveCVArea<Skill>(skillsInput as Skill[], mydata, token, Area.skills),
       saveCVArea<Education>(
-        educationInput as Education[],
+        educationsInput as Education[],
         mydata,
         token,
         Area.educations
       ),
       saveCVArea<Experience>(
-        experienceInput as Experience[],
+        experiencesInput as Experience[],
         mydata,
         token,
         Area.experiences
       ),
+      mydata.saveData<Occupation>({
+        area: Area.occupation,
+        data: occupationInput as Occupation,
+        token,
+      }),
     ])
-
     return {
       skills,
-      education,
-      experience,
+      educations,
+      experiences,
+      occupation,
     }
   } catch (e) {
     throw new Error(`save CV error: ${e}`)

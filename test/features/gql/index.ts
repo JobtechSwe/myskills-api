@@ -3,30 +3,39 @@ import { gql } from 'apollo-server-express'
 export const SAVE_CV = gql`
   mutation saveCV(
     $skills: [SkillInput!]
-    $education: [EducationInput!]
-    $experience: [ExperienceInput!]
+    $educations: [EducationInput!]
+    $experiences: [ExperienceInput!]
+    $occupation: OccupationInput
   ) {
     saveCV(
-      cv: { skills: $skills, education: $education, experience: $experience }
+      cv: {
+        skills: $skills
+        educations: $educations
+        experiences: $experiences
+        occupation: $occupation
+      }
     ) {
       skills {
         sourceId
         term
         type
       }
-      education {
+      educations {
         id
         programme
         school
         start
         end
       }
-      experience {
+      experiences {
         sourceId
         term
         employer
         start
         end
+      }
+      occupation {
+        term
       }
     }
   }

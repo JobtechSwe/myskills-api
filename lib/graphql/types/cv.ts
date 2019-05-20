@@ -3,13 +3,15 @@ import { gql } from 'apollo-server-express'
 export const typeDefs = gql`
   input CVInput {
     skills: [SkillInput!]
-    education: [EducationInput!]
-    experience: [ExperienceInput!]
+    educations: [EducationInput!]
+    experiences: [ExperienceInput!]
+    occupation: OccupationInput
   }
 
   type CV {
     skills: [Skill]
-    education: [Education]
-    experience: [Experience]
+    educations: [Education]
+    experiences: [Experience]
+    occupation: Occupation
   }
 `
