@@ -52,10 +52,8 @@ export const SKILLS = gql`
 `
 
 export const UPLOAD_IMAGE = gql`
-  mutation uploadImage($file: Upload!) {
-    uploadImage(file: $file) {
-      imageString
-    }
+  mutation uploadImage($image: ImgInput!) {
+    uploadImage(image: $image)
   }
 `
 

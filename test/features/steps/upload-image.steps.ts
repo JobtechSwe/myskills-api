@@ -21,13 +21,16 @@ defineFeature(feature, test => {
 
     when(/^I save the image "(.*)"$/, async imageString => {
       imagePath = `${TEST_ASSETS_FOLDER}/${imageString}.jpeg`
-      const imageStream = fs.createReadStream(imagePath)
+      const base64Image = fs.readFileSync(imagePath, {
+        encoding: 'base64',
+      })
       const { data } = await mutate({
         mutation: UPLOAD_IMAGE,
         variables: {
-          file: imageStream,
+          image: { imageString: base64Image },
         },
       })
+
       smallImg = data.uploadImage
     })
 
@@ -38,7 +41,7 @@ defineFeature(feature, test => {
           encoding: 'base64',
         })
 
-        expect(smallImg.imageString).toBe(expectedImgString)
+        expect(smallImg).toBe(expectedImgString)
       }
     )
 
@@ -68,13 +71,16 @@ defineFeature(feature, test => {
       async imageString => {
         const imagePath = `${TEST_ASSETS_FOLDER}/${imageString}.jpeg`
         croppedImagePath = `${TEST_ASSETS_FOLDER}/cropped-${imageString}.jpeg`
-        const imageStream = fs.createReadStream(imagePath)
+        const base64Image = fs.readFileSync(imagePath, {
+          encoding: 'base64',
+        })
         const { data } = await mutate({
           mutation: UPLOAD_IMAGE,
           variables: {
-            file: imageStream,
+            image: { imageString: base64Image },
           },
         })
+
         bigImage = data.uploadImage
       }
     )
@@ -86,7 +92,7 @@ defineFeature(feature, test => {
           encoding: 'base64',
         })
 
-        expect(bigImage.imageString).toBe(croppedImage)
+        expect(bigImage).toBe(croppedImage)
       }
     )
 
@@ -94,6 +100,7 @@ defineFeature(feature, test => {
       const { data } = await query({
         query: IMAGE,
       })
+
       const croppedImage = fs.readFileSync(croppedImagePath, {
         encoding: 'base64',
       })
