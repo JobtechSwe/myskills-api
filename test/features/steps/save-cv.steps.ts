@@ -5,9 +5,12 @@ import {
   SkillInput,
   EducationInput,
   ExperienceInput,
+  ImgInput,
   OccupationInput,
 } from '../../../lib/__generated__/myskills'
 import { SAVE_CV, SKILLS } from '../gql'
+import fs from 'fs'
+const TEST_ASSETS_FOLDER = `${process.cwd()}/test/assets`
 
 const feature = loadFeature('./test/features/SaveCV.feature')
 
@@ -25,6 +28,7 @@ defineFeature(feature, test => {
     let experiencesInput: ExperienceInput[]
     let occupationInput: OccupationInput
     let traitsInput: string[]
+    let imageInput: ImgInput
     let personalDescriptionInput: string
     let result
     given('I have a bearer token', async () => {
@@ -53,6 +57,14 @@ defineFeature(feature, test => {
         term: occupation,
       }
     })
+    and(/^I have the image "(.*)"$/, (image: string) => {
+      const imagePath = `${TEST_ASSETS_FOLDER}/${image}.jpeg`
+      imageInput = {
+        imageString: fs.readFileSync(imagePath, {
+          encoding: 'base64',
+        }),
+      }
+    })
     when('I send the cv input to the save method', async () => {
       ;({
         data: { saveCV: result },
@@ -65,9 +77,11 @@ defineFeature(feature, test => {
           occupation: occupationInput,
           personalDescription: personalDescriptionInput,
           traits: traitsInput,
+          image: imageInput,
         },
       }))
     })
+
     then('I will receive back what has been stored by this operation', () => {
       expect(result).toBeTruthy()
     })
@@ -105,6 +119,13 @@ defineFeature(feature, test => {
       const { occupation } = result
       expect(occupation).toEqual(occupationInput)
     })
+    and(
+      'I will receive the image that has been stored by this operation',
+      () => {
+        const { image } = result
+        expect(image).toBe(imageInput.imageString)
+      }
+    )
   })
 
   test('Update the CV', ({ given, and, when, then }) => {

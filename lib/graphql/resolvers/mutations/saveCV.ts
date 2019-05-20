@@ -6,10 +6,12 @@ import {
   Experience,
   Cv,
   Occupation,
+  ImgFile,
 } from '../../../__generated__/myskills'
 import { Area } from '../../../types'
 import authorizationToken from '../../../middleware/authorizationToken'
 import { ApolloServerContext } from 'lib/typings/context'
+import { resizeImage } from '../../../utils/image'
 
 function saveCVArea<T>(
   data: T[] | null | undefined,
@@ -37,17 +39,23 @@ export const saveCV: MutationResolvers['saveCV'] = async (
   _,
   {
     cv: {
-      skills: skillsInput,
       educations: educationsInput,
       experiences: experiencesInput,
+      image,
       occupation: occupationInput,
-      traits: traitsInput,
       personalDescription: personalDescriptionInput,
+      skills: skillsInput,
+      traits: traitsInput,
     },
   },
   { req, mydata }
 ): Promise<Cv> => {
   const token = authorizationToken(req)
+
+  const resizedImage =
+    image && image.imageString
+      ? await resizeImage({ imageString: image.imageString })
+      : ''
 
   try {
     const [
@@ -76,6 +84,7 @@ export const saveCV: MutationResolvers['saveCV'] = async (
         data: traitsInput || [],
         token,
       }),
+
       mydata.saveData<string>({
         area: Area.personalDescription,
         data: personalDescriptionInput || '',
@@ -86,12 +95,18 @@ export const saveCV: MutationResolvers['saveCV'] = async (
         data: occupationInput as Occupation,
         token,
       }),
+      mydata.saveData<ImgFile>({
+        area: Area.image,
+        data: { imageString: resizedImage },
+        token,
+      }),
     ])
     return {
       skills,
       educations,
       experiences,
       traits,
+      image: resizedImage,
       personalDescription,
       occupation,
     }

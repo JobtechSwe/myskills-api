@@ -5,6 +5,7 @@ export const typeDefs = gql`
     skills: [SkillInput!]
     educations: [EducationInput!]
     experiences: [ExperienceInput!]
+    image: ImgInput
     occupation: OccupationInput
     traits: [String!]
     personalDescription: String
@@ -14,6 +15,7 @@ export const typeDefs = gql`
     skills: [Skill]
     educations: [Education]
     experiences: [Experience]
+    image: String
     occupation: Occupation
     traits: [String!]
     personalDescription: String

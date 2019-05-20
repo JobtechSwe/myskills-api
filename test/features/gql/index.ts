@@ -5,6 +5,7 @@ export const SAVE_CV = gql`
     $skills: [SkillInput!]
     $educations: [EducationInput!]
     $experiences: [ExperienceInput!]
+    $image: ImgInput
     $occupation: OccupationInput
     $personalDescription: String
     $traits: [String!]
@@ -14,6 +15,7 @@ export const SAVE_CV = gql`
         skills: $skills
         educations: $educations
         experiences: $experiences
+        image: $image
         occupation: $occupation
         personalDescription: $personalDescription
         traits: $traits
@@ -38,6 +40,7 @@ export const SAVE_CV = gql`
         start
         end
       }
+      image
       occupation {
         term
       }
