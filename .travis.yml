@@ -9,12 +9,12 @@ jobs:
         - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
           > ./cc-test-reporter
         - chmod +x ./cc-test-reporter
-        - './cc-test-reporter before-build'
+        - "./cc-test-reporter before-build"
       script:
         - npm run lint
         - npm run unit -- --coverage
       after_script:
-        - './cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT'
+        - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
     - stage: integration-tests
       language: bash
       env:
@@ -39,7 +39,7 @@ jobs:
           -d
       install:
         - npm i -D @semantic-release/commit-analyzer @semantic-release/release-notes-generator
-          @semantic-release/github @semantic-release/exec semantic-release-docker
+          @semantic-release/github @semantic-release/exec JobtechSwe/semantic-release-docker
         - bash ./infrastructure/travis/install-openshift.sh
         - export PATH=$PATH:/tmp/openshift
       script:
@@ -60,5 +60,5 @@ notifications:
     template:
       - Repo `%{repository_slug}` *%{result}* build (<%{build_url}|#%{build_number}>)
         for commit (<%{compare_url}|%{commit}>) on branch `%{branch}`.
-      - 'Message: %{commit_message}'
-      - 'Execution time: *%{duration}*'
+      - "Message: %{commit_message}"
+      - "Execution time: *%{duration}*"
