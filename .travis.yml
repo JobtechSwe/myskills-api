@@ -39,7 +39,7 @@ jobs:
           -d
       install:
         - npm i -D @semantic-release/commit-analyzer @semantic-release/release-notes-generator
-          @semantic-release/github @semantic-release/exec semantic-release-docker
+          @semantic-release/github @semantic-release/exec JobtechSwe/semantic-release-docker
         - bash ./infrastructure/travis/install-openshift.sh
         - export PATH=$PATH:/tmp/openshift
       script:
