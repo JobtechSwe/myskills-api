@@ -46,6 +46,7 @@ export type Cv = {
   occupation?: Maybe<Occupation>
   traits?: Maybe<Array<Scalars['String']>>
   personalDescription?: Maybe<Scalars['String']>
+  profile?: Maybe<Profile>
 }
 
 export type CvInput = {
@@ -56,6 +57,7 @@ export type CvInput = {
   occupation?: Maybe<OccupationInput>
   traits?: Maybe<Array<Scalars['String']>>
   personalDescription?: Maybe<Scalars['String']>
+  profile?: Maybe<ProfileInput>
 }
 
 export type Education = {
@@ -611,6 +613,7 @@ export type CvResolvers<
     ParentType,
     Context
   >
+  profile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, Context>
 }
 
 export interface DateScalarConfig

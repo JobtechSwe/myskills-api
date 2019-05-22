@@ -9,6 +9,7 @@ export const typeDefs = gql`
     occupation: OccupationInput
     traits: [String!]
     personalDescription: String
+    profile: ProfileInput
   }
 
   type CV {
@@ -19,5 +20,6 @@ export const typeDefs = gql`
     occupation: Occupation
     traits: [String!]
     personalDescription: String
+    profile: Profile
   }
 `
