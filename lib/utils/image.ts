@@ -11,10 +11,14 @@ export const resizeImage = async ({
   MAX_HEIGHT = 200,
   MAX_WIDTH = 200,
 }: ResizeImageProps) => {
-  const imageBuffer = Buffer.from(imageString, 'base64')
+  const validatedImageString =
+    imageString.indexOf('base64') !== -1
+      ? imageString.split(',')[1]
+      : imageString
+
+  const imageBuffer = Buffer.from(validatedImageString, 'base64')
 
   const { height = 0, width = 0 } = await sharp(imageBuffer).metadata()
-
   if (height > MAX_HEIGHT || width > MAX_WIDTH) {
     const resizedBuffer = await sharp(imageBuffer)
       .resize(MAX_WIDTH, MAX_HEIGHT)
@@ -23,5 +27,5 @@ export const resizeImage = async ({
     return resizedBuffer.toString('base64')
   }
 
-  return imageString
+  return validatedImageString
 }
