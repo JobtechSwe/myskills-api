@@ -7,6 +7,7 @@ import {
   Cv,
   Occupation,
   ImgFile,
+  Profile,
 } from '../../../__generated__/myskills'
 import { Area } from '../../../types'
 import authorizationToken from '../../../middleware/authorizationToken'
@@ -46,6 +47,7 @@ export const saveCV: MutationResolvers['saveCV'] = async (
       personalDescription: personalDescriptionInput,
       skills: skillsInput,
       traits: traitsInput,
+      profile: profileInput,
     },
   },
   { req, mydata }
@@ -65,6 +67,7 @@ export const saveCV: MutationResolvers['saveCV'] = async (
       traits,
       personalDescription,
       occupation,
+      profile,
     ] = await Promise.all([
       saveCVArea<Skill>(skillsInput as Skill[], mydata, token, Area.skills),
       saveCVArea<Education>(
@@ -95,6 +98,11 @@ export const saveCV: MutationResolvers['saveCV'] = async (
         data: occupationInput as Occupation,
         token,
       }),
+      mydata.saveData<Profile>({
+        area: Area.profile,
+        data: profileInput as Profile,
+        token,
+      }),
       mydata.saveData<ImgFile>({
         area: Area.image,
         data: { imageString: resizedImage },
@@ -109,6 +117,7 @@ export const saveCV: MutationResolvers['saveCV'] = async (
       image: resizedImage,
       personalDescription,
       occupation,
+      profile,
     }
   } catch (e) {
     throw new Error(`save CV error: ${e}`)
