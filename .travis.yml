@@ -14,7 +14,7 @@ jobs:
         - npm run lint
         - npm run unit -- --coverage
       after_script:
-        - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
+        - './cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT'
     - stage: integration-tests
       language: bash
       env:
