@@ -62,6 +62,7 @@ export type CvInput = {
 
 export type Education = {
   programme: Scalars['String']
+  degree?: Maybe<Scalars['String']>
   school: Scalars['String']
   start: Scalars['String']
   end?: Maybe<Scalars['String']>
@@ -70,6 +71,7 @@ export type Education = {
 
 export type EducationInput = {
   programme: Scalars['String']
+  degree?: Maybe<Scalars['String']>
   school: Scalars['String']
   start: Scalars['String']
   end?: Maybe<Scalars['String']>
@@ -626,6 +628,7 @@ export type EducationResolvers<
   ParentType = ResolversTypes['Education']
 > = {
   programme?: Resolver<ResolversTypes['String'], ParentType, Context>
+  degree?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
   school?: Resolver<ResolversTypes['String'], ParentType, Context>
   start?: Resolver<ResolversTypes['String'], ParentType, Context>
   end?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
