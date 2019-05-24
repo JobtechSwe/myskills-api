@@ -41,7 +41,7 @@ const typeDefs = gql`
     """
     Add education to user
     """
-    addEducation(education: EducationInput!): Education!
+    setEducations(education: [EducationInput]!): [Education]!
 
     """
     Add user profile

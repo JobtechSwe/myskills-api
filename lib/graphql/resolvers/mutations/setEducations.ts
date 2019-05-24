@@ -3,21 +3,25 @@ import { Area } from '../../../types'
 import { v4 as uuid } from 'uuid'
 import authorizationToken from '../../../middleware/authorizationToken'
 
-export const addEducation: MutationResolvers['addEducation'] = async (
+export const setEducations: MutationResolvers['setEducations'] = async (
   _,
-  { education },
+  { educations },
   { req, mydata }
 ) => {
   const token = authorizationToken(req)
   try {
-    const result = await mydata.saveDataList<Education>({
+    const result = await mydata.saveDataList<Education[]>({
       area: Area.educations,
-      data: { id: uuid(), ...education },
+      data: educations.map(education =>
+        education.hasOwnProperty('id')
+          ? education
+          : { ...education, id: uuid() }
+      ),
       token,
     })
 
     return result
   } catch (e) {
-    throw new Error(`Add education error: ${e}`)
+    throw new Error(`Set education error: ${e}`)
   }
 }
