@@ -101,6 +101,10 @@ const typeDefs = gql`
     Edit education
     """
     editEducation(education: EditEducationInput!): Education!
+    """
+    Edit experience
+    """
+    editExperience(experience: EditExperienceInput!): Experience!
   }
 
   type Query {

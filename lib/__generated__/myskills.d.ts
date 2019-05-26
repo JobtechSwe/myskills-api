@@ -69,6 +69,15 @@ export type EditEducationInput = {
   id: Scalars['String']
 }
 
+export type EditExperienceInput = {
+  id: Scalars['String']
+  employer: Scalars['String']
+  sourceId?: Maybe<Scalars['String']>
+  term: Scalars['String']
+  start: Scalars['String']
+  end?: Maybe<Scalars['String']>
+}
+
 export type Education = {
   programme: Scalars['String']
   degree?: Maybe<Scalars['String']>
@@ -154,6 +163,8 @@ export type Mutation = {
   uploadImage: Scalars['String']
   /** Edit education */
   editEducation: Education
+  /** Edit experience */
+  editExperience: Experience
 }
 
 export type MutationAddLanguageArgs = {
@@ -214,6 +225,10 @@ export type MutationUploadImageArgs = {
 
 export type MutationEditEducationArgs = {
   education: EditEducationInput
+}
+
+export type MutationEditExperienceArgs = {
+  experience: EditExperienceInput
 }
 
 export type Occupation = {
@@ -569,6 +584,7 @@ export type ResolversTypes = {
   ImgInput: ImgInput
   CV: Cv
   EditEducationInput: EditEducationInput
+  EditExperienceInput: EditExperienceInput
   Subscription: Subscription
   ConsentResponse: ConsentResponse
   CacheControlScope: CacheControlScope
@@ -782,6 +798,12 @@ export type MutationResolvers<
     ParentType,
     Context,
     MutationEditEducationArgs
+  >
+  editExperience?: Resolver<
+    ResolversTypes['Experience'],
+    ParentType,
+    Context,
+    MutationEditExperienceArgs
   >
 }
 

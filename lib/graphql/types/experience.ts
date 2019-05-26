@@ -17,4 +17,13 @@ export const typeDefs = gql`
     start: String!
     end: String
   }
+
+  input EditExperienceInput {
+    id: String!
+    employer: String!
+    sourceId: String
+    term: String!
+    start: String!
+    end: String
+  }
 `
