@@ -60,6 +60,15 @@ export type CvInput = {
   profile?: Maybe<ProfileInput>
 }
 
+export type EditEducationInput = {
+  programme: Scalars['String']
+  degree?: Maybe<Scalars['String']>
+  school: Scalars['String']
+  start: Scalars['String']
+  end?: Maybe<Scalars['String']>
+  id: Scalars['String']
+}
+
 export type Education = {
   programme: Scalars['String']
   degree?: Maybe<Scalars['String']>
@@ -143,6 +152,8 @@ export type Mutation = {
   saveCV: Cv
   /** Save Image as base64 string */
   uploadImage: Scalars['String']
+  /** Edit education */
+  editEducation: Education
 }
 
 export type MutationAddLanguageArgs = {
@@ -199,6 +210,10 @@ export type MutationSaveCvArgs = {
 
 export type MutationUploadImageArgs = {
   image: ImgInput
+}
+
+export type MutationEditEducationArgs = {
+  education: EditEducationInput
 }
 
 export type Occupation = {
@@ -553,6 +568,7 @@ export type ResolversTypes = {
   CVInput: CvInput
   ImgInput: ImgInput
   CV: Cv
+  EditEducationInput: EditEducationInput
   Subscription: Subscription
   ConsentResponse: ConsentResponse
   CacheControlScope: CacheControlScope
@@ -760,6 +776,12 @@ export type MutationResolvers<
     ParentType,
     Context,
     MutationUploadImageArgs
+  >
+  editEducation?: Resolver<
+    ResolversTypes['Education'],
+    ParentType,
+    Context,
+    MutationEditEducationArgs
   >
 }
 

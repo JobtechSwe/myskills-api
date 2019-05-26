@@ -36,6 +36,12 @@ export interface RemoveDataInput extends DataInput {
   key?: string
 }
 
+export interface UpdateDataInput<T> extends DataInput {
+  newData: T
+  id?: string
+  key?: string
+}
+
 export const mydataOperator = create(config)
 
 const createConfig = (area: Area): Config => ({
@@ -81,6 +87,36 @@ export async function saveDataList<T>({
   return data as T
 }
 
+export async function updateData<T>({
+  area,
+  id: target,
+  newData,
+  key = 'id',
+  token,
+}: UpdateDataInput<T>): Promise<T> {
+  const areaConfig = createConfig(area)
+
+  const currentDataForDomainArea = await getData<T>({ area, token })
+
+  const updatedData = {
+    data: Array.isArray(currentDataForDomainArea)
+      ? currentDataForDomainArea.map(data =>
+          key
+            ? data[key] === target
+              ? { ...newData }
+              : data
+            : data === target
+            ? newData
+            : data
+        )
+      : newData,
+  }
+  await mydataOperator.data
+    .auth(token)
+    .write({ ...areaConfig, data: updatedData })
+
+  return newData
+}
 export async function removeData<T>({
   area,
   id: target,

@@ -2,6 +2,7 @@ import {
   consents,
   getData,
   removeData,
+  updateData,
   saveData,
   saveDataList,
 } from '../adapters/mydata'
@@ -15,6 +16,7 @@ export interface ApolloServerContext {
     consents: typeof consents
     getData: typeof getData
     saveData: typeof saveData
+    updateData: typeof updateData
     saveDataList: typeof saveDataList
     removeData: typeof removeData
   }
