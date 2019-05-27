@@ -24,11 +24,6 @@ const typeDefs = gql`
 
   type Mutation {
     """
-    Login an existing user
-    """
-    login: Login!
-
-    """
     Add languages to user
     """
     addLanguage(language: Language!): Language!
@@ -108,6 +103,10 @@ const typeDefs = gql`
   }
 
   type Query {
+    """
+    Login an existing user
+    """
+    getLoginUrl: Login!
     """
     Gets a consent request
     """

@@ -1,7 +1,7 @@
-import { login } from '../login'
+import { getLoginUrl } from '../getLoginUrl'
 
 test('returns a login consent url', async () => {
-  const loginConsentRequestData = await login(
+  const loginConsentRequestData = await getLoginUrl(
     {} as any,
     {},
     {} as any,
