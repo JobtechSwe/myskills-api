@@ -131,8 +131,6 @@ export type Login = {
 }
 
 export type Mutation = {
-  /** Login an existing user */
-  login: Login
   /** Add languages to user */
   addLanguage: Language
   /** Add experiences to user */
@@ -710,7 +708,6 @@ export type MutationResolvers<
   Context = ApolloServerContext,
   ParentType = ResolversTypes['Mutation']
 > = {
-  login?: Resolver<ResolversTypes['Login'], ParentType, Context>
   addLanguage?: Resolver<
     ResolversTypes['Language'],
     ParentType,

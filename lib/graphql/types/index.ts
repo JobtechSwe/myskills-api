@@ -24,11 +24,6 @@ const typeDefs = gql`
 
   type Mutation {
     """
-    Login an existing user
-    """
-    login: Login!
-
-    """
     Add languages to user
     """
     addLanguage(language: Language!): Language!

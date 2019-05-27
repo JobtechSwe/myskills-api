@@ -1590,18 +1590,6 @@
         "description": null,
         "fields": [
           {
-            "name": "login",
-            "description": "Login an existing user",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": { "kind": "OBJECT", "name": "Login", "ofType": null }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "addLanguage",
             "description": "Add languages to user",
             "args": [
