@@ -13,7 +13,7 @@ export const editExperience: MutationResolvers['editExperience'] = async (
   try {
     const result = await mydata.updateData<Experience>({
       token,
-      area: Area.educations,
+      area: Area.experiences,
       newData: experience,
       id: experience.id,
     })
