@@ -154,6 +154,11 @@ const typeDefs = gql`
     traits: [String]!
 
     """
+    Get occupation trivia
+    """
+    trivia(occupation: String!): Trivia!
+
+    """
     Get user image
     """
     image: String!

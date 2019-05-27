@@ -353,6 +353,8 @@ export type Query = {
   personalDescription?: Maybe<Scalars['String']>
   /** Get user traits */
   traits: Array<Maybe<Scalars['String']>>
+  /** Get occupation trivia */
+  trivia: Trivia
   /** Get user image */
   image: Scalars['String']
   /** Get from taxonomy */
@@ -362,6 +364,10 @@ export type Query = {
   ontologyConcept: OntologyConceptTermResponse
   ontologyRelated: OntologyRelatedResponse
   ontologyTextParse: Array<Maybe<OntologyTextParseResponse>>
+}
+
+export type QueryTriviaArgs = {
+  occupation: Scalars['String']
 }
 
 export type QueryTaxonomyArgs = {
@@ -466,6 +472,11 @@ export enum TaxonomyType {
   WorktimeExtent = 'WORKTIME_EXTENT',
 }
 
+export type Trivia = {
+  info?: Maybe<Scalars['String']>
+  source?: Maybe<Scalars['String']>
+}
+
 import { ApolloServerContext } from '../typings/context'
 
 import {
@@ -554,6 +565,7 @@ export type ResolversTypes = {
   Int: Scalars['Int']
   Profile: Profile
   Skill: Skill
+  Trivia: Trivia
   TaxonomyQueryInput: TaxonomyQueryInput
   TaxonomyType: TaxonomyType
   TaxonomyResponse: TaxonomyResponse
@@ -945,6 +957,12 @@ export type QueryResolvers<
     Context
   >
   traits?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, Context>
+  trivia?: Resolver<
+    ResolversTypes['Trivia'],
+    ParentType,
+    Context,
+    QueryTriviaArgs
+  >
   image?: Resolver<ResolversTypes['String'], ParentType, Context>
   taxonomy?: Resolver<
     ResolversTypes['TaxonomyResponse'],
@@ -1060,6 +1078,14 @@ export type TaxonomySkillResultResolvers<
   type?: Resolver<ResolversTypes['String'], ParentType, Context>
 }
 
+export type TriviaResolvers<
+  Context = ApolloServerContext,
+  ParentType = ResolversTypes['Trivia']
+> = {
+  info?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
+  source?: Resolver<Maybe<ResolversTypes['String']>, ParentType, Context>
+}
+
 export interface UploadScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
   name: 'Upload'
@@ -1101,6 +1127,7 @@ export type Resolvers<Context = ApolloServerContext> = {
   TaxonomyResult?: TaxonomyResultResolvers
   TaxonomySearch?: TaxonomySearchResolvers<Context>
   TaxonomySkillResult?: TaxonomySkillResultResolvers<Context>
+  Trivia?: TriviaResolvers<Context>
   Upload?: GraphQLScalarType
   UUID?: GraphQLScalarType
 }

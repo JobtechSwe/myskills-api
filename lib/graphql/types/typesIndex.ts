@@ -7,6 +7,7 @@ import * as ontology from './ontology'
 import * as profile from './profile'
 import * as skill from './skill'
 import * as taxonomy from './taxonomy'
+import * as trivia from './trivia'
 
 export {
   cv,
@@ -18,4 +19,5 @@ export {
   profile,
   skill,
   taxonomy,
+  trivia,
 }
