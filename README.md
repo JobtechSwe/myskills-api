@@ -52,8 +52,8 @@ mutation createProfile {
 If you have your consents in place, you can then use the login-mutation in the same way you would use the consent-id:
 
 ```
-mutation login {
-  login {
+query getLoginUrl {
+  getLoginUrl {
     url
     sessionId
   }

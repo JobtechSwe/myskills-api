@@ -335,6 +335,8 @@ export type ProfileInput = {
 }
 
 export type Query = {
+  /** Login an existing user */
+  getLoginUrl: Login
   /** Gets a consent request */
   consent: Consent
   /** Get user languages */
@@ -544,8 +546,9 @@ export type DirectiveResolverFn<
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Query: Query
-  Consent: Consent
+  Login: Login
   String: Scalars['String']
+  Consent: Consent
   Language: Language
   Education: Education
   Experience: Experience
@@ -572,7 +575,6 @@ export type ResolversTypes = {
   OntologyRelationDetails: OntologyRelationDetails
   OntologyTextParseResponse: OntologyTextParseResponse
   Mutation: Mutation
-  Login: Login
   ExperienceInput: ExperienceInput
   EducationInput: EducationInput
   ProfileInput: ProfileInput
@@ -924,6 +926,7 @@ export type QueryResolvers<
   Context = ApolloServerContext,
   ParentType = ResolversTypes['Query']
 > = {
+  getLoginUrl?: Resolver<ResolversTypes['Login'], ParentType, Context>
   consent?: Resolver<ResolversTypes['Consent'], ParentType, Context>
   languages?: Resolver<Array<ResolversTypes['Language']>, ParentType, Context>
   educations?: Resolver<

@@ -109,6 +109,10 @@ const typeDefs = gql`
 
   type Query {
     """
+    Login an existing user
+    """
+    getLoginUrl: Login!
+    """
     Gets a consent request
     """
     consent: Consent!
