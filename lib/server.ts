@@ -11,6 +11,7 @@ import {
   saveData,
   removeData,
   saveDataList,
+  updateData,
 } from './adapters/mydata'
 import config from './config'
 import schema from './graphql/schema'
@@ -76,6 +77,7 @@ export const server = new ApolloServer({
         saveData,
         removeData,
         saveDataList,
+        updateData,
       },
     }
   },

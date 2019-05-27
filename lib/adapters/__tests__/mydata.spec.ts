@@ -1,8 +1,47 @@
-import { removeData, saveData, saveDataList } from '../mydata'
+import { removeData, saveData, saveDataList, updateData } from '../mydata'
 import { Area } from '../../types'
 import { auth } from '../../../__mocks__/@mydata/client'
 jest.mock('../../config', () => ({ DOMAIN: 'myskills-api-domain' }))
 
+describe.only('#updateData', () => {
+  test('updates education', async () => {
+    auth.read.mockResolvedValue({
+      'myskills-api-domain': {
+        educations: {
+          data: [
+            { id: '1', programme: 'Kindergarden' },
+            { id: '2', programme: 'University' },
+          ],
+        },
+      },
+    })
+
+    const updatedEducation = {
+      id: '1',
+      programme: 'Webbutvecklare',
+    }
+
+    const args = {
+      area: Area.educations,
+      id: updatedEducation.id,
+      newData: updatedEducation,
+      token: 'token',
+    }
+
+    const result = await updateData(args)
+
+    expect(auth.write).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: {
+          data: [
+            { id: '1', programme: 'Webbutvecklare' },
+            { id: '2', programme: 'University' },
+          ],
+        },
+      })
+    )
+  })
+})
 describe('#saveDataList', () => {
   test('should add data to array', async () => {
     auth.read.mockResolvedValue({

@@ -10,6 +10,15 @@ export const typeDefs = gql`
     id: String!
   }
 
+  input EditEducationInput {
+    programme: String!
+    degree: String
+    school: String!
+    start: String!
+    end: String
+    id: String!
+  }
+
   input EducationInput {
     programme: String!
     degree: String
