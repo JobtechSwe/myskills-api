@@ -38,7 +38,7 @@
     "apollo-errors": "^1.9.0",
     "apollo-link-ws": "^1.0.17",
     "apollo-server-cache-redis": "^0.3.1",
-    "apollo-server-core": "^2.4.6",
+    "apollo-server-core": "^2.14.2",
     "apollo-server-express": "^2.4.2",
     "body-parser": "^1.18.3",
     "dotenv": "^6.2.0",
